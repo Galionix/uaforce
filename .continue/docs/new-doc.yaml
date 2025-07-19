@@ -1,0 +1,6 @@
+name: My doc
+version: 0.0.1
+schema: v1
+docs:
+  - name: My doc
+    startUrl: https://docs.continue.dev
