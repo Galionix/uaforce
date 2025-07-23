@@ -1,8 +1,11 @@
 import {
   AbstractAssetTask,
+  AbstractMesh,
   AssetsManager,
+  MeshAssetTask,
   Observable,
   Scene,
+  TransformNode,
 } from "@babylonjs/core";
 import { initialChunkPos, mapData } from "@ex/constants/chunksData";
 import { useStore } from "@ex/zustand/store";
@@ -33,6 +36,18 @@ export class MapController {
     if (!globalLoadingNode) return;
     globalLoadingNode.style.display = "none";
   };
+  processMeshes(meshes: AbstractMesh[]) {
+    console.log("meshes: ", meshes);
+  }
+  processTransformNodes(tnodes: TransformNode[]) {
+      console.log("tnodes: ", tnodes);
+      tnodes.forEach((tnode) => {
+          if (tnode.id.includes("PLAYER_SPAWN")) {
+              console.log('tnode: ', tnode);
+              this._sceneController.setPlayerPos(tnode.position.clone())
+          }
+      })
+  }
   enableGlobalLoading = () => {};
   private loadChunk = (position: string /* xNyN*/) => {
     const assetsManager = new AssetsManager(this._scene);
@@ -49,9 +64,11 @@ export class MapController {
     );
     const onSuccess = (tasks: AbstractAssetTask[]) => {
       console.log("tasks: ", tasks);
-
-        this.disableGlobalLoading();
-        this._sceneController
+      const task = tasks[0] as MeshAssetTask;
+      this.processMeshes(task.loadedMeshes);
+      this.processTransformNodes(task.loadedTransformNodes);
+      this.disableGlobalLoading();
+      this._sceneController;
     };
     // assetsManager.onProgress = (
     //   remainingCount: number,
