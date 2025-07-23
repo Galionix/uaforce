@@ -3,13 +3,18 @@ import {
   AbstractMesh,
   AssetsManager,
   MeshAssetTask,
+  MeshBuilder,
   Observable,
   Scene,
+  StandardMaterial,
+  Texture,
+  TextureAssetTask,
   TransformNode,
 } from "@babylonjs/core";
 import { initialChunkPos, mapData } from "@ex/constants/chunksData";
 import { useStore } from "@ex/zustand/store";
 import { SceneController } from "./SceneController";
+// import { callAndEnsure, findByIdIncludes } from "@ex/utils/getById";
 
 export class MapController {
   chunksData = mapData;
@@ -18,6 +23,8 @@ export class MapController {
   loaded = false;
   _scene: Scene;
   _sceneController: SceneController;
+  // defaultMesh
+  meshDict;
   constructor({
     scene,
     sceneController,
@@ -25,6 +32,17 @@ export class MapController {
     scene: Scene;
     sceneController: SceneController;
   }) {
+    const defaultMesh = MeshBuilder.CreateBox("ground", {
+      size: 2,
+    }) as AbstractMesh;
+    this.meshDict = {
+      ground: {
+        id_includes: "GROUND",
+        mesh: defaultMesh,
+      },
+      };
+
+
     this.enableGlobalLoading();
     this._scene = scene;
     this._sceneController = sceneController;
@@ -36,62 +54,68 @@ export class MapController {
     if (!globalLoadingNode) return;
     globalLoadingNode.style.display = "none";
   };
-  processMeshes(meshes: AbstractMesh[]) {
-    console.log("meshes: ", meshes);
+  processMeshes(meshes: AbstractMesh[], texture: Texture) {
+    meshes.forEach((mesh) => {
+      if (mesh.id.includes(this.meshDict.ground.id_includes)) {
+        this.meshDict.ground.mesh = mesh;
+      }
+    });
+
+    //   add ground material
+    const roofMat = new StandardMaterial("roofMat", this._scene);
+    roofMat.diffuseTexture = texture;
+    this.meshDict.ground.mesh.material = roofMat;
   }
   processTransformNodes(tnodes: TransformNode[]) {
-      console.log("tnodes: ", tnodes);
-      tnodes.forEach((tnode) => {
-          if (tnode.id.includes("PLAYER_SPAWN")) {
-              console.log('tnode: ', tnode);
-              this._sceneController.setPlayerPos(tnode.position.clone())
-          }
-      })
+    console.log("tnodes: ", tnodes);
+    tnodes.forEach((tnode) => {
+      if (tnode.id.includes("PLAYER_SPAWN")) {
+        console.log("tnode: ", tnode);
+        this._sceneController.setPlayerPos(
+          tnode.position.clone(),
+          tnode.metadata.gltf.extras
+        );
+      }
+    });
   }
   enableGlobalLoading = () => {};
   private loadChunk = (position: string /* xNyN*/) => {
     const assetsManager = new AssetsManager(this._scene);
-
-    //   assetsManager.onProgressObservable = () => {
-
-    // }
     const chunkData = this.chunksData[position];
     const meshTask = assetsManager.addMeshTask(
-      "skull task",
+      "meshTask",
       "",
       "models/",
       `${chunkData.chunkName}.glb`
     );
+    const textureTask = assetsManager.addTextureTask(
+      "groundTexture",
+      `models/${chunkData.chunkName}.png`
+    );
+    console.log("textureTask: ", textureTask);
     const onSuccess = (tasks: AbstractAssetTask[]) => {
+      const meshTask = tasks.find(
+        (task) => task.name === "meshTask"
+      ) as MeshAssetTask;
+      const groundTextureTask = tasks.find(
+        (task) => task.name === "groundTexture"
+      ) as TextureAssetTask;
+
+      if (!meshTask || !groundTextureTask)
+        throw new Error("No meshTask or no Texture task!");
       console.log("tasks: ", tasks);
-      const task = tasks[0] as MeshAssetTask;
-      this.processMeshes(task.loadedMeshes);
-      this.processTransformNodes(task.loadedTransformNodes);
+      //   const task = tasks[0] as MeshAssetTask;
+      console.log("meshTask: ", meshTask);
+
+      this.processMeshes(meshTask.loadedMeshes, groundTextureTask.texture);
+      this.processTransformNodes(meshTask.loadedTransformNodes);
+
       this.disableGlobalLoading();
       this._sceneController;
     };
-    // assetsManager.onProgress = (
-    //   remainingCount: number,
-    //   totalCount: number,
-    //   task: AbstractAssetTask
-    // ) => {
-    //   console.log({
-    //     remainingCount,
-    //     totalCount,
-    //     task,
-    //   });
-    // };
+
     assetsManager.useDefaultLoadingScreen = false;
     assetsManager.onFinish = onSuccess;
     assetsManager.load();
-
-    // meshTask.run(
-    //   this._scene,
-    //   onSuccess,
-    //   (message?: string, exception?: any) => {
-    //     console.log("mesh task errored");
-    //     console.error(message, exception);
-    //   }
-    // );
   };
 }

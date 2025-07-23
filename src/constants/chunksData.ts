@@ -58,7 +58,7 @@ export type ChunksData = Record<string, {
 export const initialChunkPos = 'x0y0'
 export const mapData: ChunksData = {
     'x0y0': {
-        chunkName: 'test collections3',
+        chunkName: 'test collections4-texture-baked',
         chunkXpos: 0,
         chunkYpos: 0,
         surroundingChunks: {

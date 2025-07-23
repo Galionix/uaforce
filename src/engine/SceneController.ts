@@ -13,8 +13,8 @@ export class SceneController {
   get scene() {
     return this._scene;
   }
-  setPlayerPos(pos: Vector3){
-    this._playerController.setInitialPosition(pos)
+  setPlayerPos(pos: Vector3, props: any){
+    this._playerController.setInitialPosition(pos, props)
   }
 
   private createLight(scene: Scene) {
