@@ -1,6 +1,7 @@
 import { Engine, KeyboardInfo, Observable, Scene } from "@babylonjs/core";
 import { SceneController } from "./SceneController";
 import { CameraController } from "./CameraController";
+import { MapController } from './MapController';
 
 export class Game {
   private _canvas;
@@ -9,7 +10,7 @@ export class Game {
   private _engine;
   private _debug: boolean;
   private _scene: Scene;
-
+  private _mapController: MapController;
   constructor(
     canvas: HTMLCanvasElement,
     // particleTextureURL: string,
@@ -27,6 +28,8 @@ export class Game {
     this._sceneController = new SceneController(this._engine);
     this._scene = this._sceneController.scene;
     this._camera = new CameraController(this._canvas, this._scene);
+    this._sceneController.testScene(this._camera.camera);
+    this._mapController = new MapController({ scene: this._scene, sceneController: this._sceneController })
     this._engine.runRenderLoop(() => {
       this._scene.render();
     });
@@ -44,5 +47,3 @@ export class Game {
     return this._scene.onKeyboardObservable;
   }
 }
-
-

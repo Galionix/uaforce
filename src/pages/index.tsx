@@ -12,7 +12,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { useEffect, useRef } from "react";
 import { Inspector } from "@babylonjs/inspector";
 import { Game } from '@ex/engine/Game';
-// import { GameEngine } from "@ex/engine/class";
+import { useStore } from '@ex/zustand/store';
+import { registerBuiltInLoaders } from "@babylonjs/loaders/dynamic";
+registerBuiltInLoaders();
 
 const debug = true;
 
@@ -22,7 +24,7 @@ const debug = true;
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
+  const store = useStore()
   useEffect(() => {
     const initializeBabylon = async () => {
       if (!canvasRef.current) return;
@@ -49,6 +51,10 @@ export default function Home() {
 
   return (
     <>
+      <div
+        id='global-loading'
+
+      ><p>Loading</p></div>
       <canvas
         id="canvas"
         ref={canvasRef}
