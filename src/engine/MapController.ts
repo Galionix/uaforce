@@ -35,6 +35,7 @@ export class MapController {
     const defaultMesh = MeshBuilder.CreateBox("ground", {
       size: 2,
     }) as AbstractMesh;
+      defaultMesh.position.y = -20
     this.meshDict = {
       ground: {
         id_includes: "GROUND",
