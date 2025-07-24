@@ -15,13 +15,14 @@ export class PlayerController {
         this.playerMesh.position = position
 
         this.propsFromBlender = props
+        const playerAggregate = new PhysicsAggregate(this.playerMesh, PhysicsShapeType.BOX, { mass: 1, restitution:0.75}, this.scene);
+        console.log('playerAggregate: ', playerAggregate);
         console.log('this.propsFromBlender: ', this.propsFromBlender);
     }
 
     drawPlayerModel() {
         const player = MeshBuilder.CreateBox("box", { size: 2 });
-        const playerAggregate = new PhysicsAggregate(player, PhysicsShapeType.BOX, { mass: 1, restitution:0.75}, this.scene);
-        console.log('playerAggregate: ', playerAggregate);
+
 
         return player
     }

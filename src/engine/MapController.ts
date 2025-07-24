@@ -5,6 +5,8 @@ import {
   MeshAssetTask,
   MeshBuilder,
   Observable,
+  PhysicsAggregate,
+  PhysicsShapeType,
   Scene,
   StandardMaterial,
   Texture,
@@ -65,7 +67,9 @@ export class MapController {
     //   add ground material
     const roofMat = new StandardMaterial("roofMat", this._scene);
     roofMat.diffuseTexture = texture;
-    this.meshDict.ground.mesh.material = roofMat;
+      this.meshDict.ground.mesh.material = roofMat;
+
+      const groundAggregate = new PhysicsAggregate(this.meshDict.ground.mesh, PhysicsShapeType.MESH, { mass: 0 }, this._scene);
   }
   processTransformNodes(tnodes: TransformNode[]) {
     console.log("tnodes: ", tnodes);
