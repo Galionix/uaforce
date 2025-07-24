@@ -3,6 +3,7 @@ import {
   ActionManager,
   ExecuteCodeAction,
   MeshBuilder,
+  PickingInfo,
   Ray,
   RayHelper,
   Vector3,
@@ -30,13 +31,15 @@ export const createInputController = (sc: SceneController) => {
   rayHelper.show(sc.scene);
   var inputMap: Record<ActionEvent["sourceEvent"]["key"], ActionEvent | false> =
     {};
+    var hitInfo:Array<PickingInfo>
 
   sc.scene.registerBeforeRender(function () {
     // box.rotation.y += .01;
     if (!sc.mapController?.meshDict.ground.mesh) return;
-    var hitInfo = ray.intersectsMeshes([
+    hitInfo = ray.intersectsMeshes([
       sc.mapController?.meshDict.ground.mesh,
     ]);
+    sc.mapController.setGroundHitInfo(hitInfo)
 
     if (hitInfo.length && hitInfo[0].pickedPoint) {
       sphere.setEnabled(true);
@@ -71,6 +74,7 @@ export const createInputController = (sc: SceneController) => {
       isJumping = false;
     }
     if (inputMap["Space"] && onGround) {
+      console.log(hitInfo)
       isJumping = true;
 
       velocity.y = 100;
@@ -96,7 +100,7 @@ export const createInputController = (sc: SceneController) => {
 
     // @ts-ignore
     if (inputMap.ShiftLeft) {
-      speedMult = 2;
+      speedMult = 4;
     }
     if (onGround && inputMap["KeyW"]) {
       const vec = sc.playerController.mesh.forward

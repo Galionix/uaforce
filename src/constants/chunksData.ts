@@ -75,5 +75,24 @@ export const mapData: ChunksData = {
         },
         portals:[]
 
+    },
+    'x1y0': {
+        chunkName: 'test collections4-texture-baked',
+        chunkXpos: 0,
+        chunkYpos: 0,
+        surroundingChunks: {
+            top: {
+                chunkName: 'test collections2',
+                chunkXpos: 0,
+                chunkYpos: 1
+            },
+            right: {
+                chunkName: 'test collections1',
+                chunkXpos: 1,
+                chunkYpos: 0
+            },
+        },
+        portals:[]
+
     }
 }

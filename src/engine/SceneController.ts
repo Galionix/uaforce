@@ -23,6 +23,7 @@ export class SceneController {
   private _playerController: PlayerController;
   private _mapController?: MapController;
   physEngine;
+  // raycastInfo
   setMapController(mapController: MapController) {
     this._mapController = mapController
   }
