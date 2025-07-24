@@ -8,6 +8,7 @@ export class PlayerController {
     scene: Scene
     _aggregate?: PhysicsAggregate;
     hk: HavokPlugin
+    _groundColliderMesh?: Mesh
     footRaycast = new PhysicsRaycastResult();
     constructor(scene: Scene, hk: HavokPlugin) {
         this.playerMesh = this.drawPlayerModel()
@@ -23,12 +24,14 @@ export class PlayerController {
         // this.playerMesh.position = position
 
         this.propsFromBlender = props
-        const playerAggregate = new PhysicsAggregate(this.playerMesh, PhysicsShapeType.CAPSULE, { mass: 0.5, restitution: 0 }, this.scene);
+        const playerAggregate = new PhysicsAggregate(this.playerMesh, PhysicsShapeType.CAPSULE, { mass: 10, restitution: 0.1, center:new Vector3(0, -2, 0) }, this.scene);
         this.playerMesh.checkCollisions = true;
         this._aggregate = playerAggregate
         this._aggregate.body.disablePreStep = false;
         this.aggregate.body.setMassProperties({
-            centerOfMass: new Vector3(0, -2, 0),
+            mass: 10,
+            inertia: new Vector3(0,0,0),
+            centerOfMass: new Vector3(0, -1, 0),
         })
         this._aggregate.body.setMotionType(PhysicsMotionType.DYNAMIC);
         this.hk.setAngularDamping( this._aggregate.body,Number.MAX_SAFE_INTEGER);
@@ -89,12 +92,30 @@ export class PlayerController {
     // };
     drawPlayerModel() {
         const player = MeshBuilder.CreateCapsule("box");
+        const groundCollider = MeshBuilder.CreateBox("ground detect")
+        const nose = MeshBuilder.CreateBox("nose", {
+            width: 0.5,
+            size: 0.2,
+        })
+        nose.position = new Vector3(0, 0.5, 1)
+        nose.rotation = new Vector3(0, Math.PI / 2, 0)
+        nose.parent = player
+        groundCollider.position.y = -0.5;
+        groundCollider.parent = player
+        groundCollider.showBoundingBox = true;
+        groundCollider.isVisible = false
+        this._groundColliderMesh = groundCollider
         player.position.y = 10
+        player.showBoundingBox = true;
         return player
     }
 
     get mesh() {
         return this.playerMesh
+    }
+
+    get groundColliderMesh() {
+        return this._groundColliderMesh;
     }
 
 }
