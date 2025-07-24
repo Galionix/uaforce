@@ -1,4 +1,4 @@
-import { Mesh, MeshBuilder, PhysicsAggregate, PhysicsImpostor, PhysicsShapeType, Scene, Vector3 } from '@babylonjs/core';
+import { Color3, HavokPlugin, KeyboardEventTypes, Mesh, MeshBuilder, PhysicsAggregate, PhysicsBody, PhysicsImpostor, PhysicsMotionType, PhysicsRaycastResult, PhysicsShapeType, Scene, StandardMaterial, Vector3 } from '@babylonjs/core';
 import { SceneController } from './SceneController';
 
 export class PlayerController {
@@ -6,22 +6,90 @@ export class PlayerController {
     playerMesh: Mesh;
     propsFromBlender: any
     scene: Scene
-    constructor(scene: Scene) {
+    _aggregate?: PhysicsAggregate;
+    hk: HavokPlugin
+    footRaycast = new PhysicsRaycastResult();
+    constructor(scene: Scene, hk: HavokPlugin) {
         this.playerMesh = this.drawPlayerModel()
         this.scene = scene
+        this.hk = hk
     }
 
+    get aggregate() {
+        if(!this._aggregate) console.error("this shouldnt happen but actual aggregate undefined")
+        return this._aggregate || new PhysicsAggregate(this.playerMesh, PhysicsShapeType.CAPSULE, { mass: 1, restitution: 0.75 }, this.scene);
+    }
     setInitialPosition(position: Vector3, props: any) {
-        this.playerMesh.position = position
+        // this.playerMesh.position = position
 
         this.propsFromBlender = props
-        const playerAggregate = new PhysicsAggregate(this.playerMesh, PhysicsShapeType.BOX, { mass: 1, restitution:0.75}, this.scene);
+        const playerAggregate = new PhysicsAggregate(this.playerMesh, PhysicsShapeType.CAPSULE, { mass: 0.5, restitution: 0 }, this.scene);
+        this.playerMesh.checkCollisions = true;
+        this._aggregate = playerAggregate
+        this._aggregate.body.disablePreStep = false;
+        this.aggregate.body.setMassProperties({
+            centerOfMass: new Vector3(0, -2, 0),
+        })
+        this._aggregate.body.setMotionType(PhysicsMotionType.DYNAMIC);
+        this.hk.setAngularDamping( this._aggregate.body,Number.MAX_SAFE_INTEGER);
         console.log('playerAggregate: ', playerAggregate);
         console.log('this.propsFromBlender: ', this.propsFromBlender);
+        // this._aggregate.body.applyImpulse(new Vector3(0, 0, 20), this.playerMesh.getAbsolutePosition());
+        // this.scene.onKeyboardObservable.add((kbInfo) => {
+        //     switch (kbInfo.type) {
+        //         case KeyboardEventTypes.KEYDOWN:
+        //             switch (kbInfo.event.key) {
+        //                 case "a":
+        //                 case "A":
+        //                     this.playerMesh.position.x -= 0.1;
+        //                 break
+        //                 case "d":
+        //                 case "D":
+        //                     this.playerMesh.position.x += 0.1;
+        //                 break
+        //                 case "w":
+        //                 case "W":
+        //                     this.playerMesh.position.y += 0.1;
+        //                 break
+        //                 case "s":
+        //                 case "S":
+        //                     this.playerMesh.position.y -= 0.1;
+        //                 break
+        //             }
+        //         break;
+        //     }
+        // });
     }
+    // bindBodyShape = function (mesh, shape, mass, centerOfMass, scene) {
+    //     mesh.material = new StandardMaterial("material");
+    //     mesh.material.diffuseColor = new Color3(0, 0, 1);
+    //     mesh.material.alpha = 0.8;
 
+    //     const body = new PhysicsBody(
+    //         mesh,
+    //         PhysicsMotionType.DYNAMIC,
+    //         false,
+    //         scene
+    //     );
+
+    //     const centerOfMassIndicator = MeshBuilder.CreateSphere(
+    //         "centerOfMassIndicator",
+    //         { diameter: 0.2 }
+    //     );
+    //     centerOfMassIndicator.position = centerOfMass;
+    //     centerOfMassIndicator.parent = mesh;
+    //     centerOfMassIndicator.material = new StandardMaterial(
+    //         "centerOfMassMaterial"
+    //     );
+    //     // centerOfMassIndicator.material = new Color3(1, 0, 0);
+
+    //     shape.material = { friction: 0.2, restitution: 0.3 };
+    //     body.shape = shape;
+    //     body.setMassProperties({ centerOfMass, mass });
+    // };
     drawPlayerModel() {
-        const player = MeshBuilder.CreateBox("box", { size: 2 });
+        const player = MeshBuilder.CreateCapsule("box");
+        player.position.y = 10
         return player
     }
 

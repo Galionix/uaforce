@@ -40,16 +40,16 @@ export default function Home() {
         true
       );
       if (debug) game.toggleDebugLayer();
-      game.onKeyboardObservable.add((e) => {
-        console.log("e: ", e);
-        if (e.type === KeyboardEventTypes.KEYDOWN) {
-          if (e.event.ctrlKey) {
-            if (e.event.key === "i") {
-              game.toggleDebugLayer();
-            }
-          }
-        }
-      });
+      // game.onKeyboardObservable.add((e) => {
+      //   console.log("e: ", e);
+      //   if (e.type === KeyboardEventTypes.KEYDOWN) {
+      //     if (e.event.ctrlKey) {
+      //       if (e.event.key === "i") {
+      //         game.toggleDebugLayer();
+      //       }
+      //     }
+      //   }
+      // });
     };
     initializeBabylon();
   }, []);

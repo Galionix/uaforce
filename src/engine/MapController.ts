@@ -68,7 +68,7 @@ export class MapController {
     const roofMat = new StandardMaterial("roofMat", this._scene);
     roofMat.diffuseTexture = texture;
       this.meshDict.ground.mesh.material = roofMat;
-
+      this.meshDict.ground.mesh.checkCollisions = true
       const groundAggregate = new PhysicsAggregate(this.meshDict.ground.mesh, PhysicsShapeType.MESH, { mass: 0 }, this._scene);
   }
   processTransformNodes(tnodes: TransformNode[]) {
