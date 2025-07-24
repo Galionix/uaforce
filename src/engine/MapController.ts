@@ -80,7 +80,16 @@ export class MapController {
           tnode.position.clone(),
           tnode.metadata.gltf.extras
         );
-      }
+        }
+
+        if (tnode.id === 'Light') {
+            console.log('tnode.id: ', tnode.id);
+            console.log('this._scene.lights: ', this._scene.lights);
+            const mainLight = this._scene.lights.find(light => light.id === 'Light')
+            if (mainLight) {
+                mainLight.intensity = 2
+            }
+        }
     });
   }
   enableGlobalLoading = () => {};

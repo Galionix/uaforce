@@ -22,8 +22,6 @@ export class PlayerController {
 
     drawPlayerModel() {
         const player = MeshBuilder.CreateBox("box", { size: 2 });
-
-
         return player
     }
 

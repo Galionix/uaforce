@@ -10,7 +10,7 @@ export class SceneController {
     this._scene = new Scene(engine);
           this._scene.enablePhysics(new Vector3(0, -9.8, 0), hk);
 
-    this.createLight(this._scene)
+    // this.createLight(this._scene)
 
     // todo: this comes after physics
       this._playerController = new PlayerController(this._scene)
