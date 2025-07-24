@@ -1,4 +1,4 @@
-import { Engine, KeyboardInfo, Observable, Scene } from "@babylonjs/core";
+import { Engine, HavokPlugin, KeyboardInfo, Observable, Scene } from "@babylonjs/core";
 import { SceneController } from "./SceneController";
 import { CameraController } from "./CameraController";
 import { MapController } from './MapController';
@@ -13,6 +13,7 @@ export class Game {
   private _mapController: MapController;
   constructor(
     canvas: HTMLCanvasElement,
+    hk: HavokPlugin,
     // particleTextureURL: string,
     debug = false
   ) {
@@ -25,7 +26,7 @@ export class Game {
       alpha: false,
     });
     this._engine.preventCacheWipeBetweenFrames = true;
-    this._sceneController = new SceneController(this._engine);
+    this._sceneController = new SceneController(this._engine, hk);
     this._scene = this._sceneController.scene;
     this._camera = new CameraController(this._canvas, this._scene);
     this._sceneController.testScene(this._camera.camera);
