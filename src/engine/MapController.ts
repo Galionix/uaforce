@@ -27,7 +27,7 @@ const mapBounds = {
   maxZ: 100, // по точке 3 (z)
 };
 // Пороговое расстояние для загрузки нового чанка
-const LOAD_THRESHOLD = 10.0;
+const LOAD_THRESHOLD = 30.0;
 
 export class MapController {
   chunksData = mapData;
@@ -36,6 +36,7 @@ export class MapController {
   loaded = false;
   _scene: Scene;
   _sceneController: SceneController;
+  loadedChunks:string[]=[]
   groundHitInfo?: PickingInfo;
   // defaultMesh
   meshDict;
@@ -54,6 +55,7 @@ export class MapController {
       ground: {
         id_includes: "GROUND",
         mesh: defaultMesh,
+        allMeshes: [] as AbstractMesh[]
       },
     };
 
@@ -61,6 +63,7 @@ export class MapController {
     this._scene = scene;
     this._sceneController = sceneController;
     this.loadChunk(this.currentChunk);
+    // this.loadNextChunk("x1y0", this.currentChunk);
   }
   setGroundHitInfo(hitInfo: Array<PickingInfo>) {
     this.groundHitInfo = hitInfo[0];
@@ -73,17 +76,23 @@ export class MapController {
       );
       if (!nextChunk) return;
       if (!mapData[nextChunk]) {
-        console.error("map cannot be extended in this ("+nextChunk+") direction!")
+        console.error(
+          "map cannot be extended in this (" + nextChunk + ") direction!"
+        );
+        return;
+      }
+      if (this.loadedChunks.includes(nextChunk)) {
+        console.warn(nextChunk," already loaded")
         return
       }
-      this.loadNextChunk(nextChunk, this.currentChunk)
+      this.loadNextChunk(nextChunk, this.currentChunk);
       console.log("currentChunk: ", this.currentChunk);
       console.log("nextChunk: ", nextChunk);
     }
   }
   extractXY(str: string) {
     const match = str.match(/x(-?\d+)y(-?\d+)/);
-    console.log("match: ", match);
+    // console.log("match: ", match);
     if (!match) return { x: null, y: null };
 
     const x = parseInt(match[1], 10);
@@ -127,20 +136,46 @@ export class MapController {
     if (!globalLoadingNode) return;
     globalLoadingNode.style.display = "none";
   };
-  processMeshes(meshes: AbstractMesh[], texture: Texture) {
+  processMeshes(
+    chunkXY: string,
+    meshes: AbstractMesh[],
+    texture: Texture,
+    extensionDir?: {
+      x: number;
+      y: number;
+    }
+  ) {
+    let groundMesh: AbstractMesh | null = null;
+
     meshes.forEach((mesh) => {
+      mesh.id = `${chunkXY}_${mesh.id} `;
       if (mesh.id.includes(this.meshDict.ground.id_includes)) {
-        this.meshDict.ground.mesh = mesh;
+        this.meshDict.ground.allMeshes.push(mesh)
+        if (!extensionDir) {
+          this.meshDict.ground.mesh = mesh;
+          groundMesh = mesh;
+        }
+        else {
+          groundMesh = mesh;
+          console.log('extensionDir: ', extensionDir);
+          mesh.position.x = extensionDir.x * 200
+          mesh.position.y = extensionDir.y * 200
+        }
       }
+      console.log("mesh.id: ", mesh.id);
     });
 
+    console.log('groundMesh: ', groundMesh);
+    if(!groundMesh) return
     //   add ground material
     const roofMat = new StandardMaterial("roofMat", this._scene);
     roofMat.diffuseTexture = texture;
-    this.meshDict.ground.mesh.material = roofMat;
-    this.meshDict.ground.mesh.checkCollisions = true;
+    // @ts-ignore
+    groundMesh.material = roofMat;
+    // @ts-ignore
+    groundMesh.checkCollisions = true;
     const groundAggregate = new PhysicsAggregate(
-      this.meshDict.ground.mesh,
+      groundMesh,
       PhysicsShapeType.MESH,
       { mass: 0 },
       this._scene
@@ -169,8 +204,9 @@ export class MapController {
       }
     });
   }
-  enableGlobalLoading = () => { };
-  loadNextChunk= (position: string /* xNyN*/, oldPosition: string) => {
+  enableGlobalLoading = () => {};
+  loadNextChunk = (position: string /* xNyN*/, oldPosition: string) => {
+    this.loadedChunks.push(position)
     const assetsManager = new AssetsManager(this._scene);
     const chunkData = this.chunksData[position];
     const meshTask = assetsManager.addMeshTask(
@@ -198,7 +234,33 @@ export class MapController {
       //   const task = tasks[0] as MeshAssetTask;
       console.log("meshTask: ", meshTask);
 
-      // this.processMeshes(meshTask.loadedMeshes, groundTextureTask.texture);
+      const oldPosXY = this.extractXY(oldPosition);
+      console.log('oldPosition: ', oldPosition);
+      const currPosXY = this.extractXY(position);
+      if (
+        oldPosXY.x === null ||
+        oldPosXY.y === null ||
+        currPosXY.x === null ||
+        currPosXY.y === null
+      ) {
+        console.error(
+          "This error very inlikely, coz we should already know our current pos and old pos, but pos: ",
+          currPosXY,
+          "and oldpos: ",
+          oldPosXY
+        );
+        return;
+      }
+      const extensionDir = {
+        x: oldPosXY.x - currPosXY.x,
+        y: oldPosXY.y - currPosXY.y,
+      };
+      this.processMeshes(
+        position,
+        meshTask.loadedMeshes,
+        groundTextureTask.texture,
+        extensionDir
+      );
       // this.processTransformNodes(meshTask.loadedTransformNodes);
 
       // this.disableGlobalLoading();
@@ -224,6 +286,7 @@ export class MapController {
     );
     console.log("textureTask: ", textureTask);
     const onSuccess = (tasks: AbstractAssetTask[]) => {
+      this.loadedChunks.push(position)
       const meshTask = tasks.find(
         (task) => task.name === "meshTask"
       ) as MeshAssetTask;
@@ -237,7 +300,11 @@ export class MapController {
       //   const task = tasks[0] as MeshAssetTask;
       console.log("meshTask: ", meshTask);
 
-      this.processMeshes(meshTask.loadedMeshes, groundTextureTask.texture);
+      this.processMeshes(
+        position,
+        meshTask.loadedMeshes,
+        groundTextureTask.texture
+      );
       this.processTransformNodes(meshTask.loadedTransformNodes);
 
       this.disableGlobalLoading();

@@ -36,9 +36,7 @@ export const createInputController = (sc: SceneController) => {
   sc.scene.registerBeforeRender(function () {
     // box.rotation.y += .01;
     if (!sc.mapController?.meshDict.ground.mesh) return;
-    hitInfo = ray.intersectsMeshes([
-      sc.mapController?.meshDict.ground.mesh,
-    ]);
+    hitInfo = ray.intersectsMeshes(sc.mapController?.meshDict.ground.allMeshes);
     sc.mapController.setGroundHitInfo(hitInfo)
 
     if (hitInfo.length && hitInfo[0].pickedPoint) {
