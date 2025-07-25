@@ -37,6 +37,10 @@ export class Game {
       this._scene.render();
     });
   }
+
+  async asyncInit()  {
+    this._sceneController.asyncInit()
+  }
   public async toggleDebugLayer(): Promise<void> {
     // Rely on code splitting to prevent all of babylon
     // + loaders, serializers... to be downloaded if not necessary

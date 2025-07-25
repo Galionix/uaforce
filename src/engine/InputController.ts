@@ -87,7 +87,7 @@ export const createInputController = (sc: SceneController) => {
   let keydown = false;
   sc.scene.onBeforeRenderObservable.add(() => {
     const heroSpeed = 3;
-    let speedMult = 1;
+    let speedMult = 2;
     const heroSpeedBackwards = 1;
     const heroRotationSpeed = 0.1;
     if (

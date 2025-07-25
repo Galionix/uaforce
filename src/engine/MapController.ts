@@ -27,7 +27,7 @@ const mapBounds = {
   maxZ: 100, // по точке 3 (z)
 };
 // Пороговое расстояние для загрузки нового чанка
-const LOAD_THRESHOLD = 30.0;
+const LOAD_THRESHOLD = 70.0;
 
 export class MapController {
   chunksData = mapData;
@@ -36,7 +36,7 @@ export class MapController {
   loaded = false;
   _scene: Scene;
   _sceneController: SceneController;
-  loadedChunks:string[]=[]
+  loadedChunks: string[] = [];
   groundHitInfo?: PickingInfo;
   // defaultMesh
   meshDict;
@@ -55,7 +55,7 @@ export class MapController {
       ground: {
         id_includes: "GROUND",
         mesh: defaultMesh,
-        allMeshes: [] as AbstractMesh[]
+        allMeshes: [] as AbstractMesh[],
       },
     };
 
@@ -68,26 +68,44 @@ export class MapController {
   setGroundHitInfo(hitInfo: Array<PickingInfo>) {
     this.groundHitInfo = hitInfo[0];
     this.decideNeedToLoad();
+
+    // set current info about actual chunk we are standing on
+    const maybeNewGroundMesh = hitInfo.find(hit => hit.pickedMesh && hit.pickedMesh.id.includes(this.meshDict.ground.id_includes))
+    if (!maybeNewGroundMesh || !maybeNewGroundMesh.pickedMesh) return
+    const maybeNewChunkName = maybeNewGroundMesh.pickedMesh.id.split("_")[0]
+    if (maybeNewChunkName !== this.currentChunk) {
+      this.currentChunk = maybeNewChunkName
+      this._sceneController.guiController?.setCurrentLocation(maybeNewChunkName)
+    console.log("standing on the new chunk!!!")
+  }
   }
   decideNeedToLoad() {
     if (this.groundHitInfo && this.groundHitInfo.pickedPoint) {
-      const nextChunk = this.checkPlayerAtMapEdgeAndGetNextChunk(
+      const nextChunks = this.checkPlayerAtMapEdgeAndGetNextChunks(
         this.groundHitInfo.pickedPoint
       );
-      if (!nextChunk) return;
-      if (!mapData[nextChunk]) {
-        console.error(
-          "map cannot be extended in this (" + nextChunk + ") direction!"
-        );
-        return;
-      }
-      if (this.loadedChunks.includes(nextChunk)) {
-        console.warn(nextChunk," already loaded")
-        return
-      }
-      this.loadNextChunk(nextChunk, this.currentChunk);
-      console.log("currentChunk: ", this.currentChunk);
-      console.log("nextChunk: ", nextChunk);
+      if (!nextChunks?.length) return;
+      // console.log('close to these nextChunks: ', nextChunks, "this.currentChunk", this.currentChunk);
+      // let directionExtensive = false;
+      nextChunks.forEach((nextChunk) => {
+        // directionExtensive =
+        if (!!mapData[nextChunk] && !this.loadedChunks.includes(nextChunk)) {
+          console.log('nextChunk: ', nextChunk);
+          this.loadNextChunk(nextChunk, this.currentChunk);
+          console.log("currentChunk: ", this.currentChunk);
+        }
+      });
+      // if (!mapData[nextChunk]) {
+      //   console.error(
+      //     "map cannot be extended in this (" + nextChunk + ") direction!"
+      //   );
+      //   return;
+      // }
+      // if (this.loadedChunks.includes(nextChunk)) {
+      //   console.warn(nextChunk," already loaded")
+      //   return
+      // }
+
     }
   }
   extractXY(str: string) {
@@ -100,7 +118,39 @@ export class MapController {
 
     return { x, y };
   }
-  checkPlayerAtMapEdgeAndGetNextChunk(playerPosition: Vector3) {
+  // checkPlayerAtMapEdgeAndGetNextChunk(playerPosition: Vector3) {
+  //   // Проверяем близость к каждой границе
+  //   const nearLeft = playerPosition.x <= mapBounds.minX + LOAD_THRESHOLD;
+  //   const nearRight = playerPosition.x >= mapBounds.maxX - LOAD_THRESHOLD;
+  //   const nearBottom = playerPosition.z <= mapBounds.minZ + LOAD_THRESHOLD;
+  //   const nearTop = playerPosition.z >= mapBounds.maxZ - LOAD_THRESHOLD;
+
+  //   // Если не близко ни к одной границе
+  //   if (!(nearLeft || nearRight || nearTop || nearBottom)) {
+  //     return null;
+  //   }
+
+  //   const parsedChunkCoords = this.extractXY(this.currentChunk);
+  //   if (parsedChunkCoords.x === null || parsedChunkCoords.y === null) {
+  //     console.error(
+  //       "Error parsing current map coordinates, altough we know them and can do it any time!!!"
+  //     );
+  //     return;
+  //   }
+  //   // Определяем направление
+  //   let directionX = parsedChunkCoords.x;
+  //   let directionY = parsedChunkCoords.y;
+  //   if (nearLeft) directionX -= 1; // Запад (влево)
+  //   if (nearRight) directionX += 1; // Восток (вправо)
+  //   if (nearTop) directionY += 1; // Север (вверх)
+  //   if (nearBottom) directionY -= 1; // Юг (вниз)
+
+  //   // Возвращаем результат в формате { direction: 'WN', coordinates: 'xNyN' }
+  //   return `x${directionX}y${directionY}`;
+  // }
+  checkPlayerAtMapEdgeAndGetNextChunks(
+    playerPosition: Vector3
+  ): string[] | null {
     // Проверяем близость к каждой границе
     const nearLeft = playerPosition.x <= mapBounds.minX + LOAD_THRESHOLD;
     const nearRight = playerPosition.x >= mapBounds.maxX - LOAD_THRESHOLD;
@@ -112,23 +162,47 @@ export class MapController {
       return null;
     }
 
+    // Парсим текущие координаты чанка
     const parsedChunkCoords = this.extractXY(this.currentChunk);
     if (parsedChunkCoords.x === null || parsedChunkCoords.y === null) {
-      console.error(
-        "Error parsing current map coordinates, altough we know them and can do it any time!!!"
-      );
-      return;
+      console.error("Error parsing current map coordinates");
+      return null;
     }
-    // Определяем направление
-    let directionX = parsedChunkCoords.x;
-    let directionY = parsedChunkCoords.y;
-    if (nearLeft) directionX -= 1; // Запад (влево)
-    if (nearRight) directionX += 1; // Восток (вправо)
-    if (nearTop) directionY += 1; // Север (вверх)
-    if (nearBottom) directionY -= 1; // Юг (вниз)
 
-    // Возвращаем результат в формате { direction: 'WN', coordinates: 'xNyN' }
-    return `x${directionX}y${directionY}`;
+    const nextChunks: string[] = [];
+
+    // Если близко к левой границе → добавляем чанк слева (x-1)
+    if (nearLeft) {
+      nextChunks.push(`x${parsedChunkCoords.x - 1}y${parsedChunkCoords.y}`);
+    }
+    // Если близко к правой границе → добавляем чанк справа (x+1)
+    if (nearRight) {
+      nextChunks.push(`x${parsedChunkCoords.x + 1}y${parsedChunkCoords.y}`);
+    }
+    // Если близко к нижней границе → добавляем чанк снизу (y-1)
+    if (nearBottom) {
+      nextChunks.push(`x${parsedChunkCoords.x}y${parsedChunkCoords.y - 1}`);
+    }
+    // Если близко к верхней границе → добавляем чанк сверху (y+1)
+    if (nearTop) {
+      nextChunks.push(`x${parsedChunkCoords.x}y${parsedChunkCoords.y + 1}`);
+    }
+
+    // Если игрок в углу, добавляем диагональные чанки
+    if (nearLeft && nearBottom) {
+      nextChunks.push(`x${parsedChunkCoords.x - 1}y${parsedChunkCoords.y - 1}`);
+    }
+    if (nearLeft && nearTop) {
+      nextChunks.push(`x${parsedChunkCoords.x - 1}y${parsedChunkCoords.y + 1}`);
+    }
+    if (nearRight && nearBottom) {
+      nextChunks.push(`x${parsedChunkCoords.x + 1}y${parsedChunkCoords.y - 1}`);
+    }
+    if (nearRight && nearTop) {
+      nextChunks.push(`x${parsedChunkCoords.x + 1}y${parsedChunkCoords.y + 1}`);
+    }
+
+    return nextChunks.length > 0 ? nextChunks : null;
   }
   disableGlobalLoading = () => {
     // useStore().removeGlobalLoading()
@@ -150,23 +224,22 @@ export class MapController {
     meshes.forEach((mesh) => {
       mesh.id = `${chunkXY}_${mesh.id} `;
       if (mesh.id.includes(this.meshDict.ground.id_includes)) {
-        this.meshDict.ground.allMeshes.push(mesh)
+        this.meshDict.ground.allMeshes.push(mesh);
         if (!extensionDir) {
           this.meshDict.ground.mesh = mesh;
           groundMesh = mesh;
-        }
-        else {
+        } else {
           groundMesh = mesh;
-          console.log('extensionDir: ', extensionDir);
-          mesh.position.x = extensionDir.x * 200
-          mesh.position.y = extensionDir.y * 200
+          console.log("extensionDir: ", extensionDir);
+          mesh.position.x = extensionDir.x * 200;
+          mesh.position.z = extensionDir.y * -200;
         }
       }
       console.log("mesh.id: ", mesh.id);
     });
 
-    console.log('groundMesh: ', groundMesh);
-    if(!groundMesh) return
+    console.log("groundMesh: ", groundMesh);
+    if (!groundMesh) return;
     //   add ground material
     const roofMat = new StandardMaterial("roofMat", this._scene);
     roofMat.diffuseTexture = texture;
@@ -206,7 +279,7 @@ export class MapController {
   }
   enableGlobalLoading = () => {};
   loadNextChunk = (position: string /* xNyN*/, oldPosition: string) => {
-    this.loadedChunks.push(position)
+    this.loadedChunks.push(position);
     const assetsManager = new AssetsManager(this._scene);
     const chunkData = this.chunksData[position];
     const meshTask = assetsManager.addMeshTask(
@@ -235,7 +308,7 @@ export class MapController {
       console.log("meshTask: ", meshTask);
 
       const oldPosXY = this.extractXY(oldPosition);
-      console.log('oldPosition: ', oldPosition);
+      console.log("oldPosition: ", oldPosition);
       const currPosXY = this.extractXY(position);
       if (
         oldPosXY.x === null ||
@@ -272,6 +345,7 @@ export class MapController {
     assetsManager.load();
   };
   private loadChunk = (position: string /* xNyN*/) => {
+
     const assetsManager = new AssetsManager(this._scene);
     const chunkData = this.chunksData[position];
     const meshTask = assetsManager.addMeshTask(
@@ -286,7 +360,9 @@ export class MapController {
     );
     console.log("textureTask: ", textureTask);
     const onSuccess = (tasks: AbstractAssetTask[]) => {
-      this.loadedChunks.push(position)
+      this._sceneController.guiController?.setCurrentLocation(position)
+
+      this.loadedChunks.push(position);
       const meshTask = tasks.find(
         (task) => task.name === "meshTask"
       ) as MeshAssetTask;

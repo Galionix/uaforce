@@ -14,24 +14,27 @@ import {
 import { PlayerController } from "./PlayerController";
 import HavokPhysics from "@babylonjs/havok";
 import { HavokPlugin } from "@babylonjs/core";
-import { MapController } from './MapController';
-import { createInputController } from './InputController';
+import { MapController } from "./MapController";
+import { createInputController } from "./InputController";
+import { AdvancedDynamicTexture, Control, TextBlock } from "@babylonjs/gui/2D";
+import { GuiController } from './GuiController';
 
 export class SceneController {
   private _scene: Scene;
   private _engine: Engine;
   private _playerController: PlayerController;
   private _mapController?: MapController;
+   guiController?: GuiController;
   physEngine;
   // raycastInfo
   setMapController(mapController: MapController) {
-    this._mapController = mapController
+    this._mapController = mapController;
   }
   get mapController() {
-    return this._mapController
+    return this._mapController;
   }
   get playerController() {
-    return this._playerController
+    return this._playerController;
   }
   constructor(engine: Engine, hk: HavokPlugin) {
     this._scene = new Scene(engine);
@@ -39,6 +42,7 @@ export class SceneController {
     this._scene.enablePhysics(new Vector3(0, -9.8, 0), hk);
     this._engine = engine;
     this.physEngine = hk;
+    this.guiController = new GuiController(this)
 
     // todo: this comes after physics
     this._playerController = new PlayerController(this._scene, hk);
@@ -48,12 +52,15 @@ export class SceneController {
     return this._scene;
   }
 
+  async asyncInit()  {
+    await this.guiController?.loadGui()
+  }
   setPlayerPos(pos: Vector3, props: any) {
     this._playerController.setInitialPosition(pos, props);
   }
-  createInputController = createInputController
+  createInputController = createInputController;
   createInput() {
-    createInputController(this)
+    createInputController(this);
   }
 
   private createLight(scene: Scene) {

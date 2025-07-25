@@ -39,6 +39,7 @@ export default function Home() {
         /* this is to load or not debug layer, need to fix to do it auto mode. for dev - include, for production - disable*/
         true
       );
+      await game.asyncInit()
       if (debug) game.toggleDebugLayer();
       // game.onKeyboardObservable.add((e) => {
       //   console.log("e: ", e);
