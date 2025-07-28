@@ -1,5 +1,9 @@
-import { Color3, HavokPlugin, KeyboardEventTypes, Mesh, MeshBuilder, PhysicsAggregate, PhysicsBody, PhysicsImpostor, PhysicsMotionType, PhysicsRaycastResult, PhysicsShapeType, Scene, StandardMaterial, Vector3 } from '@babylonjs/core';
-import { SceneController } from './SceneController';
+import {
+    HavokPlugin, Mesh, MeshBuilder, PhysicsAggregate, PhysicsMotionType, PhysicsRaycastResult,
+    PhysicsShapeType, Scene, Vector3
+} from '@babylonjs/core';
+
+import { SoundController } from './SoundController';
 
 export class PlayerController {
     // position: Vector3;
@@ -8,10 +12,13 @@ export class PlayerController {
     scene: Scene
     _aggregate?: PhysicsAggregate;
     hk: HavokPlugin
+    soundController: SoundController
+
     _groundColliderMesh?: Mesh
     footRaycast = new PhysicsRaycastResult();
-    constructor(scene: Scene, hk: HavokPlugin) {
+    constructor(scene: Scene, hk: HavokPlugin, soundController: SoundController) {
         this.playerMesh = this.drawPlayerModel()
+        this.soundController = soundController
         this.scene = scene
         this.hk = hk
     }

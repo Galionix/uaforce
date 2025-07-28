@@ -1,23 +1,12 @@
 import {
-  AbstractAssetTask,
-  AbstractMesh,
-  AssetsManager,
-  MeshAssetTask,
-  MeshBuilder,
-  Observable,
-  PhysicsAggregate,
-  PhysicsShapeType,
-  PickingInfo,
-  Scene,
-  StandardMaterial,
-  Texture,
-  TextureAssetTask,
-  TransformNode,
-  Vector3,
-} from "@babylonjs/core";
-import { initialChunkPos, mapData } from "@ex/constants/chunksData";
-import { useStore } from "@ex/zustand/store";
-import { SceneController } from "./SceneController";
+    AbstractAssetTask, AbstractMesh, AssetsManager, MeshAssetTask, MeshBuilder, PhysicsAggregate,
+    PhysicsShapeType, PickingInfo, Scene, StandardMaterial, Texture, TextureAssetTask,
+    TransformNode, Vector3
+} from '@babylonjs/core';
+import { initialChunkPos, mapData } from '@ex/constants/chunksData';
+
+import { SceneController } from './SceneController';
+
 // import { callAndEnsure, findByIdIncludes } from "@ex/utils/getById";
 
 const mapBounds = {
@@ -346,6 +335,12 @@ export class MapController {
   };
   private loadChunk = (position: string /* xNyN*/) => {
 
+    const strtategyTest = async () => {
+
+      const res = await this.loadChunkServerStrategy(position)
+      console.log('res: ', res);
+    }
+    // strtategyTest()
     const assetsManager = new AssetsManager(this._scene);
     const chunkData = this.chunksData[position];
     const meshTask = assetsManager.addMeshTask(
@@ -391,4 +386,25 @@ export class MapController {
     assetsManager.onFinish = onSuccess;
     assetsManager.load();
   };
+
+  async loadChunkServerStrategy(chunkId: string) {
+ // 1. Проверка кеша
+    // const cached = await getFromIndexedDB(chunkId);
+    // if (cached) return cached;
+
+    // 2. Запрос к вашему серверу
+    const response = await fetch(`/api/chunks/${chunkId}`, {
+      headers: {
+        Authorization: `Bearer ${`userToken`}`,
+      },
+    });
+
+    if (!response.ok) throw new Error('Chunk load failed');
+
+    // 3. Сохранение в кеш
+    const blob = await response.blob();
+    // await saveToIndexedDB(chunkId, blob);
+
+    return blob;
+  }
 }

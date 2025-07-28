@@ -1,7 +1,11 @@
-import { Engine, HavokPlugin, KeyboardInfo, Observable, PhysicsViewer, Scene } from "@babylonjs/core";
-import { SceneController } from "./SceneController";
-import { CameraController } from "./CameraController";
+import {
+    Engine, HavokPlugin, KeyboardInfo, Observable, PhysicsViewer, Scene
+} from '@babylonjs/core';
+
+import { CameraController } from './CameraController';
 import { MapController } from './MapController';
+import { SceneController } from './SceneController';
+import { SoundController } from './SoundController';
 
 export class Game {
   private _canvas;
@@ -10,6 +14,7 @@ export class Game {
   private _engine;
   private _debug: boolean;
   private _scene: Scene;
+  soundController: SoundController
   private _mapController: MapController;
   constructor(
     canvas: HTMLCanvasElement,
@@ -25,8 +30,9 @@ export class Game {
       preserveDrawingBuffer: false,
       alpha: false,
     });
+    this.soundController = new SoundController()
     this._engine.preventCacheWipeBetweenFrames = true;
-    this._sceneController = new SceneController(this._engine, hk);
+    this._sceneController = new SceneController(this._engine, hk, this.soundController);
     this._scene = this._sceneController.scene;
     this._camera = new CameraController(this._canvas, this._scene);
     this._sceneController.testScene(this._camera.camera);
@@ -39,7 +45,8 @@ export class Game {
   }
 
   async asyncInit()  {
-    this._sceneController.asyncInit()
+    await this._sceneController.asyncInit()
+    await this.soundController.asyncInit()
   }
   public async toggleDebugLayer(): Promise<void> {
     // Rely on code splitting to prevent all of babylon

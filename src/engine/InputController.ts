@@ -1,14 +1,9 @@
 import {
-  ActionEvent,
-  ActionManager,
-  ExecuteCodeAction,
-  MeshBuilder,
-  PickingInfo,
-  Ray,
-  RayHelper,
-  Vector3,
-} from "@babylonjs/core";
-import { SceneController } from "./SceneController";
+    ActionEvent, ActionManager, ExecuteCodeAction, MeshBuilder, PickingInfo, Ray, RayHelper, Vector3
+} from '@babylonjs/core';
+
+import { SceneController } from './SceneController';
+
 const gravity = new Vector3(0, -0.2, 0);
 
 export const createInputController = (sc: SceneController) => {
@@ -72,7 +67,7 @@ export const createInputController = (sc: SceneController) => {
       isJumping = false;
     }
     if (inputMap["Space"] && onGround) {
-      console.log(hitInfo)
+      // console.log(hitInfo)
       isJumping = true;
 
       velocity.y = 100;
@@ -101,6 +96,17 @@ export const createInputController = (sc: SceneController) => {
       speedMult = 4;
     }
     if (onGround && inputMap["KeyW"]) {
+      sc.soundController.playFootsteps(!!inputMap.ShiftLeft)
+      // sc.physEngine.getTimeStep()
+      // console.log('sc.physEngine.getTimeStep(): ', sc.physEngine.getTimeStep());
+      // if (sc.soundController.Sounds.step1.sound?.state !== SoundState.Started) {
+      //   sc.soundController.Sounds.step1.sound?.play();
+      // }
+
+      // if (sc.soundController.Sounds.step1.sound?.state === SoundState.Stopped) {
+      //   sc.soundController.Sounds.step1.sound?.play();
+      // }
+
       const vec = sc.playerController.mesh.forward
         .scale(heroSpeed * speedMult)
         .add(gravity);

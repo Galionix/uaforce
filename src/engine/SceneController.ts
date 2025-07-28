@@ -1,23 +1,12 @@
 import {
-  ActionEvent,
-  ActionManager,
-  ArcRotateCamera,
-  Engine,
-  EventState,
-  ExecuteCodeAction,
-  HemisphericLight,
-  MeshBuilder,
-  Ray,
-  Scene,
-  Vector3,
-} from "@babylonjs/core";
-import { PlayerController } from "./PlayerController";
-import HavokPhysics from "@babylonjs/havok";
-import { HavokPlugin } from "@babylonjs/core";
-import { MapController } from "./MapController";
-import { createInputController } from "./InputController";
-import { AdvancedDynamicTexture, Control, TextBlock } from "@babylonjs/gui/2D";
+    ArcRotateCamera, Engine, HavokPlugin, HemisphericLight, Scene, Vector3
+} from '@babylonjs/core';
+
 import { GuiController } from './GuiController';
+import { createInputController } from './InputController';
+import { MapController } from './MapController';
+import { PlayerController } from './PlayerController';
+import { SoundController } from './SoundController';
 
 export class SceneController {
   private _scene: Scene;
@@ -26,6 +15,8 @@ export class SceneController {
   private _mapController?: MapController;
    guiController?: GuiController;
   physEngine;
+  soundController: SoundController
+
   // raycastInfo
   setMapController(mapController: MapController) {
     this._mapController = mapController;
@@ -36,8 +27,9 @@ export class SceneController {
   get playerController() {
     return this._playerController;
   }
-  constructor(engine: Engine, hk: HavokPlugin) {
+  constructor(engine: Engine, hk: HavokPlugin, soundController: SoundController) {
     this._scene = new Scene(engine);
+    this.soundController = soundController
     this._scene.collisionsEnabled = true;
     this._scene.enablePhysics(new Vector3(0, -9.8, 0), hk);
     this._engine = engine;
@@ -45,7 +37,7 @@ export class SceneController {
     this.guiController = new GuiController(this)
 
     // todo: this comes after physics
-    this._playerController = new PlayerController(this._scene, hk);
+    this._playerController = new PlayerController(this._scene, hk, this.soundController);
     // this.createInput();
   }
   get scene() {
