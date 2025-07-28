@@ -14,7 +14,7 @@ export class Game {
   private _engine;
   private _debug: boolean;
   private _scene: Scene;
-  soundController: SoundController
+  soundController: SoundController;
   private _mapController: MapController;
   constructor(
     canvas: HTMLCanvasElement,
@@ -30,23 +30,31 @@ export class Game {
       preserveDrawingBuffer: false,
       alpha: false,
     });
-    this.soundController = new SoundController()
+    this.soundController = new SoundController();
     this._engine.preventCacheWipeBetweenFrames = true;
-    this._sceneController = new SceneController(this._engine, hk, this.soundController);
+    this._sceneController = new SceneController(
+      this._engine,
+      hk,
+      this.soundController
+    );
     this._scene = this._sceneController.scene;
     this._camera = new CameraController(this._canvas, this._scene);
     this._sceneController.testScene(this._camera.camera);
-    this._mapController = new MapController({ scene: this._scene, sceneController: this._sceneController })
-    this._sceneController.setMapController(this._mapController)
-    this._sceneController.createInput()
+    this._mapController = new MapController({
+      scene: this._scene,
+      sceneController: this._sceneController,
+    });
+    this._sceneController.setMapController(this._mapController);
+    this._sceneController.createInput();
     this._engine.runRenderLoop(() => {
       this._scene.render();
     });
   }
 
-  async asyncInit()  {
-    await this._sceneController.asyncInit()
-    await this.soundController.asyncInit()
+  async asyncInit() {
+    await this._sceneController.asyncInit();
+    await this.soundController.asyncInit();
+    this.soundController.playTheme();
   }
   public async toggleDebugLayer(): Promise<void> {
     // Rely on code splitting to prevent all of babylon
@@ -55,13 +63,13 @@ export class Game {
       /* webpackChunkName: "debug" */ "./debug/appDebug"
     );
     debugModule.toggleDebugMode(this._scene);
-      const viewer = new PhysicsViewer(this._scene);
-      for (let mesh of this._scene.meshes) {
-        console.log('mesh: ', mesh);
-          if (mesh.physicsBody) {
-              viewer.showBody(mesh.physicsBody);
-          }
+    const viewer = new PhysicsViewer(this._scene);
+    for (let mesh of this._scene.meshes) {
+      console.log("mesh: ", mesh);
+      if (mesh.physicsBody) {
+        viewer.showBody(mesh.physicsBody);
       }
+    }
   }
 
   public get onKeyboardObservable(): Observable<KeyboardInfo> {

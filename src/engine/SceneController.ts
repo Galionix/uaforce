@@ -46,6 +46,7 @@ export class SceneController {
 
   async asyncInit()  {
     await this.guiController?.loadGui()
+
   }
   setPlayerPos(pos: Vector3, props: any) {
     this._playerController.setInitialPosition(pos, props);

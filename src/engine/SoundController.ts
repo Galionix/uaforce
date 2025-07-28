@@ -27,12 +27,21 @@ export class SoundController {
 
     // Wait until audio engine is ready to play sounds.
     await audioEngine.unlockAsync();
+    this.Sounds.step1.sound?.setVolume(.3)
+    this.Sounds.step2.sound?.setVolume(.3)
+    this.Sounds.step3.sound?.setVolume(.3)
     this.footstepsSounds = [
       this.Sounds.step1.sound,
       this.Sounds.step2.sound,
       this.Sounds.step3.sound,
     ];
     this.soundEngine = audioEngine;
+  }
+
+  playTheme() {
+    console.log('this.Sounds.theme: ', this.Sounds.theme);
+    this.Sounds.theme.sound?.setVolume(0.1)
+    // this.Sounds.theme.sound?.play()
   }
   get engine() {
     return this.soundEngine;
@@ -64,11 +73,9 @@ export class SoundController {
     const allStopped = this.footstepsSounds.every(
       (sound) => sound?.state === SoundState.Stopped
     );
-    console.log("footstepsSounds: ", this.footstepsSounds);
     if (!anyStarted) {
       // const random = Math.random() * (this.footstepsSounds.length - 0) + 0;
       const random = Math.floor(Math.random() * this.footstepsSounds.length);
-      console.log("anyStarted random: ", random);
       if (this.footstepsSounds[random]) {
         if (sprint) {
           this.footstepsSounds[random].playbackRate = 1.5;
@@ -82,7 +89,6 @@ export class SoundController {
     if (allStopped) {
       // this.Sounds.step1.sound?.play();
       const random = Math.floor(Math.random() * this.footstepsSounds.length);
-      console.log("allStopped random: ", random);
       if (this.footstepsSounds[random]) {
         if (sprint) {
           this.footstepsSounds[random].playbackRate = 1.5;
