@@ -65,6 +65,10 @@ export const createInputController = (sc: SceneController) => {
     if (onGround) {
       velocity.y = Math.max(0, velocity.y);
       isJumping = false;
+      sc.soundController.stopFall()
+
+    } else {
+      sc.soundController.playFall()
     }
     if (inputMap["Space"] && onGround) {
       // console.log(hitInfo)

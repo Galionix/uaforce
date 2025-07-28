@@ -10,11 +10,12 @@ const enum soundList {
   step1 = "step1",
   step2 = "step2",
   step3 = "step3",
+  wind = "wind",
 }
 export const SoundsMap: Record<keyof typeof soundList, SoundType> = {
   theme: {
     id: soundList.theme,
-    link: "https://assets.babylonjs.com/sound/alarm-1.mp3",
+    link: "sounds/music/top_dungeon.mp3",
   },
   step1: {
     id: soundList.step1,
@@ -27,5 +28,9 @@ export const SoundsMap: Record<keyof typeof soundList, SoundType> = {
   step3: {
     id: soundList.step3,
     link: "sounds/sfx/player/footsteps/stepstone_5.wav",
+  },
+  wind: {
+    id: soundList.wind,
+    link: "sounds/sfx/player/footsteps/wind.mp3",
   },
 };

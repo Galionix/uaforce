@@ -40,6 +40,23 @@ export class SoundController {
   get sounds() {
     return this.Sounds;
   }
+  fallCount = 0;
+  playFall() {
+    if (!this.Sounds.wind.sound) return;
+    if (this.Sounds.wind.sound?.state !== SoundState.Started)
+      this.Sounds.wind.sound?.play();
+    this.Sounds.wind.sound.playbackRate = this.fallCount;
+    this.fallCount += 0.001;
+    console.log('this.fallCount: ', this.fallCount);
+  }
+  stopFall() {
+    if (!this.Sounds.wind.sound) return;
+
+    this.fallCount = 0;
+    this.Sounds.wind.sound.playbackRate = this.fallCount;
+    if (this.Sounds.wind.sound?.state === SoundState.Started)
+      this.Sounds.wind.sound?.stop();
+  }
   playFootsteps(sprint?: boolean) {
     const anyStarted = this.footstepsSounds.some(
       (sound) => sound?.state === SoundState.Started
@@ -55,10 +72,8 @@ export class SoundController {
       if (this.footstepsSounds[random]) {
         if (sprint) {
           this.footstepsSounds[random].playbackRate = 1.5;
-        }
-        else{
+        } else {
           this.footstepsSounds[random].playbackRate = 1;
-
         }
         this.footstepsSounds[random].play();
       }
@@ -71,10 +86,8 @@ export class SoundController {
       if (this.footstepsSounds[random]) {
         if (sprint) {
           this.footstepsSounds[random].playbackRate = 1.5;
-        }
-        else{
+        } else {
           this.footstepsSounds[random].playbackRate = 1;
-
         }
         this.footstepsSounds[random].play();
       }
