@@ -1,9 +1,10 @@
 import {
-    AbstractAssetTask, AbstractMesh, AssetsManager, MeshAssetTask, MeshBuilder, PhysicsAggregate,
-    PhysicsShapeType, PickingInfo, Scene, StandardMaterial, Texture, TextureAssetTask,
-    TransformNode, Vector3
+    AbstractAssetTask, AbstractMesh, AssetsManager, Mesh, MeshAssetTask, MeshBuilder,
+    PhysicsAggregate, PhysicsShapeType, PickingInfo, Scene, StandardMaterial, Texture,
+    TextureAssetTask, TransformNode, Vector3
 } from '@babylonjs/core';
 import { initialChunkPos, mapData } from '@ex/constants/chunksData';
+import { findBy } from '@ex/utils/findBy';
 
 import { SceneController } from './SceneController';
 
@@ -232,14 +233,13 @@ export class MapController {
     //   add ground material
     const roofMat = new StandardMaterial("roofMat", this._scene);
     roofMat.diffuseTexture = texture;
-    // @ts-ignore
-    groundMesh.material = roofMat;
-    // @ts-ignore
-    groundMesh.checkCollisions = true;
+    (groundMesh as Mesh).material = roofMat;
+    (groundMesh as Mesh).checkCollisions = true;
+    // (groundMesh as Mesh).phy
     const groundAggregate = new PhysicsAggregate(
       groundMesh,
       PhysicsShapeType.MESH,
-      { mass: 0 },
+      { mass: 0, friction: 1 },
       this._scene
     );
   }
@@ -283,15 +283,10 @@ export class MapController {
     );
     console.log("textureTask: ", textureTask);
     const onSuccess = (tasks: AbstractAssetTask[]) => {
-      const meshTask = tasks.find(
-        (task) => task.name === "meshTask"
-      ) as MeshAssetTask;
-      const groundTextureTask = tasks.find(
-        (task) => task.name === "groundTexture"
-      ) as TextureAssetTask;
+      const meshTask = findBy(tasks, 'name','meshTask') as MeshAssetTask
 
-      if (!meshTask || !groundTextureTask)
-        throw new Error("No meshTask or no Texture task!");
+      const groundTextureTask = findBy(tasks,'name', 'groundTexture') as TextureAssetTask
+
       console.log("tasks: ", tasks);
       //   const task = tasks[0] as MeshAssetTask;
       console.log("meshTask: ", meshTask);
@@ -358,17 +353,11 @@ export class MapController {
       this._sceneController.guiController?.setCurrentLocation(position)
 
       this.loadedChunks.push(position);
-      const meshTask = tasks.find(
-        (task) => task.name === "meshTask"
-      ) as MeshAssetTask;
-      const groundTextureTask = tasks.find(
-        (task) => task.name === "groundTexture"
-      ) as TextureAssetTask;
+      const meshTask = findBy(tasks, 'name','meshTask') as MeshAssetTask
 
-      if (!meshTask || !groundTextureTask)
-        throw new Error("No meshTask or no Texture task!");
+      const groundTextureTask = findBy(tasks,'name', 'groundTexture') as TextureAssetTask
+
       console.log("tasks: ", tasks);
-      //   const task = tasks[0] as MeshAssetTask;
       console.log("meshTask: ", meshTask);
 
       this.processMeshes(

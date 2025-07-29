@@ -6,17 +6,17 @@ export type SoundType = {
   sound?: StaticSound;
 };
 const enum soundList {
-  theme = "theme",
+//   theme = "theme",
   step1 = "step1",
   step2 = "step2",
   step3 = "step3",
   wind = "wind",
 }
 export const SoundsMap: Record<keyof typeof soundList, SoundType> = {
-  theme: {
-    id: soundList.theme,
-    link: "sounds/music/top_dungeon.mp3",
-  },
+//   theme: {
+//     id: soundList.theme,
+//     link: "sounds/music/top_dungeon.mp3",
+//   },
   step1: {
     id: soundList.step1,
     link: "sounds/sfx/player/footsteps/stepstone_3.wav",

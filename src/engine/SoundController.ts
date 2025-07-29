@@ -39,8 +39,8 @@ export class SoundController {
   }
 
   playTheme() {
-    console.log('this.Sounds.theme: ', this.Sounds.theme);
-    this.Sounds.theme.sound?.setVolume(0.1)
+    // console.log('this.Sounds.theme: ', this.Sounds.theme);
+    // this.Sounds.theme.sound?.setVolume(0.1)
     // this.Sounds.theme.sound?.play()
   }
   get engine() {

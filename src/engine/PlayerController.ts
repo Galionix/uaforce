@@ -31,7 +31,10 @@ export class PlayerController {
         // this.playerMesh.position = position
 
         this.propsFromBlender = props
-        const playerAggregate = new PhysicsAggregate(this.playerMesh, PhysicsShapeType.CAPSULE, { mass: 10, restitution: 0.1, center:new Vector3(0, -2, 0) }, this.scene);
+        const playerAggregate = new PhysicsAggregate(this.playerMesh, PhysicsShapeType.CAPSULE, {
+            friction: 1,
+            mass: 10, restitution: 0.1, center: new Vector3(0, -2, 0)
+        }, this.scene);
         this.playerMesh.checkCollisions = true;
         this._aggregate = playerAggregate
         this._aggregate.body.disablePreStep = false;

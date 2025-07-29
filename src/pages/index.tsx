@@ -1,23 +1,12 @@
-import {
-  ArcRotateCamera,
-  Camera,
-  Engine,
-  HemisphericLight,
-  KeyboardEventTypes,
-  MeshBuilder,
-  Scene,
-  Vector3,
-} from "@babylonjs/core";
-import { Geist, Geist_Mono } from "next/font/google";
-import { useEffect, useRef } from "react";
-import { Inspector } from "@babylonjs/inspector";
-import { Game } from "@ex/engine/Game";
-import { useStore } from "@ex/zustand/store";
-import { registerBuiltInLoaders } from "@babylonjs/loaders/dynamic";
-import HavokPhysics from "@babylonjs/havok";
-import { HavokPlugin } from "@babylonjs/core";
+import { useEffect, useRef } from 'react';
 
-const debug = true;
+import { HavokPlugin } from '@babylonjs/core';
+import HavokPhysics from '@babylonjs/havok';
+import { registerBuiltInLoaders } from '@babylonjs/loaders/dynamic';
+import { Game } from '@ex/engine/Game';
+import { useStore } from '@ex/zustand/store';
+
+const debug = false;
 
 export default function Home() {
   useEffect(() => {
@@ -40,7 +29,7 @@ export default function Home() {
         true
       );
       await game.asyncInit()
-      if (debug) game.toggleDebugLayer();
+      if (debug) await game.toggleDebugLayer();
       // game.onKeyboardObservable.add((e) => {
       //   console.log("e: ", e);
       //   if (e.type === KeyboardEventTypes.KEYDOWN) {
