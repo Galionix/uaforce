@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { Readable } from 'stream';
 
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
@@ -29,16 +30,18 @@ export default async function handler(
     const { Body, ContentType } = await s3.send(command);
     console.log('Body: ', Body);
 
-    //   if(!Body || !Body.pipe) return
+    if (!Body || !(Body instanceof Readable)) {
+      throw new Error('Invalid response body');
+    }
     // Устанавливаем заголовки
     res.setHeader('Content-Type', ContentType || 'model/gltf-binary');
 
     // Потоковая передача данных
-    // if (Body instanceof require('stream').Readable) {
-    //   Body.pipe(res);
-    // } else {
-    //   throw new Error('Invalid response body');
-    // }
+    if (Body instanceof require('stream').Readable) {
+      Body.pipe(res);
+    } else {
+      throw new Error('Invalid response body');
+    }
 
   } catch (error) {
     console.error('Error loading chunk:', error);

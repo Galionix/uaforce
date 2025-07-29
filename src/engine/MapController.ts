@@ -335,7 +335,7 @@ export class MapController {
       const res = await this.loadChunkServerStrategy(position)
       console.log('res: ', res);
     }
-    // strtategyTest()
+    strtategyTest()
     const assetsManager = new AssetsManager(this._scene);
     const chunkData = this.chunksData[position];
     const meshTask = assetsManager.addMeshTask(
