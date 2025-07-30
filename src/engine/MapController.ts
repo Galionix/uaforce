@@ -6,7 +6,7 @@ import {
 import { initialChunkPos, mapData } from '@ex/constants/chunksData';
 import { findBy } from '@ex/utils/findBy';
 
-import { LoaderController } from './LoaderController';
+import { ChunksLoaderController } from './LoaderController';
 import { SceneController } from './SceneController';
 
 // import { callAndEnsure, findByIdIncludes } from "@ex/utils/getById";
@@ -334,7 +334,7 @@ export class MapController {
       // this.disableGlobalLoading();
       // this._sceneController;
     };
-    const loader = new LoaderController(
+    const loader = new ChunksLoaderController(
       // this.processMeshes,
       onSuccess,
       // this.processTransformNodes,
@@ -375,7 +375,7 @@ export class MapController {
       this.disableGlobalLoading();
       this._sceneController;
     };
-    const loader = new LoaderController(
+    const loader = new ChunksLoaderController(
       // this.processMeshes,
       onSuccess,
       // this.processTransformNodes,

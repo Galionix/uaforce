@@ -1,8 +1,8 @@
 import { AbstractAssetTask, AssetsManager, FilesInput, Scene } from '@babylonjs/core';
 
-import { ChunkStore } from './ChunkStore';
+import { ChunkStore } from './stores/ChunkStore';
 
-export class LoaderController {
+export class ChunksLoaderController {
   private chunkStore: ChunkStore;
 
   private onSuccess: (tasks: AbstractAssetTask[]) => void;
@@ -76,7 +76,7 @@ export class LoaderController {
   }
 
   private async fetchNewChunksManifest() {
-    const response = await fetch(`/api/chunks/listv2`, {
+    const response = await fetch(`/api/chunks/metadata`, {
       headers: {
         Authorization: `Bearer ${`userToken`}`,
       },
@@ -89,31 +89,21 @@ export class LoaderController {
     return manifest;
   }
 
-  // private isManifestChanged() {
-  //     const existing = this.chunkStore.getManifest()
-
-  // }
   /**
    * Основной публичный метод — загружает чанк и текстуру, цепляет к AssetsManager.
    */
   public async loadChunk(position: string) {
     console.log("Load chunk:", position);
       const metadataExpired = await this.chunkStore.isExpired();
-    //   this.chunkStore.changedChunks
       console.log('this.chunkStore.changedChunks: ', this.chunkStore.changedChunks);
       console.log("metadataExpired: ", metadataExpired);
       if (metadataExpired) {
           const manifest = await this.fetchNewChunksManifest();
           console.log('manifest: ', manifest);
           console.log('this.chunkStore.changedChunks: ', this.chunkStore.changedChunks);
-    //   if (this.chunkStore.isManifestChanged) {
-        // console.log('this.chunkStore.isManifestChanged: ', this.chunkStore.isManifestChanged);
+
         await this.chunkStore.deleteChangedChunks();
-    //   }
-    //   console.log(
-    //     "this.chunkStore.isManifestChanged: ",
-    //     this.chunkStore.isManifestChanged
-    //   );
+
 
       console.log("manifest: ", manifest);
     }
@@ -140,31 +130,8 @@ export class LoaderController {
       textureURL
     );
 
-    // 3) Обработка
     assetsManager.onFinish = this.onSuccess;
 
     assetsManager.load();
   }
-
-  /**
-   * Переопредели под свою сцену!
-   */
-  //   private processMeshes(
-  //     position: string,
-  //     meshes: AbstractMesh[],
-  //     texture: Texture
-  //   ) {
-  //     console.log(`Processing meshes for ${position}`);
-  //     // твоя логика
-  //   }
-
-  //   private processTransformNodes(nodes: TransformNode[]) {
-  //     console.log(`Processing transform nodes`);
-  //     // твоя логика
-  //   }
-
-  //   private disableGlobalLoading() {
-  //     console.log(`Disable loading screen`);
-  //     // твоя логика
-  //   }
 }
