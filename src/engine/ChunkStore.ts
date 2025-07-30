@@ -1,4 +1,4 @@
-const ENABLE_IMMIDEATE_MANIFEST_CHECK = true;
+const ENABLE_IMMIDEATE_MANIFEST_CHECK = process.env.NEXT_PUBLIC_ENABLE_IMMIDEATE_MANIFEST_CHECK;
 interface ChunkData {
   id: string; // Например: 'x1y1'
   format: "glb" | "png";
