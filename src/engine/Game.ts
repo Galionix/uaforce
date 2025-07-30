@@ -1,6 +1,4 @@
-import {
-    Engine, HavokPlugin, KeyboardInfo, Observable, PhysicsViewer, Scene
-} from '@babylonjs/core';
+import { Engine, HavokPlugin, KeyboardInfo, Observable, Scene } from '@babylonjs/core';
 
 import { CameraController } from './CameraController';
 import { MapController } from './MapController';
@@ -63,13 +61,13 @@ export class Game {
       /* webpackChunkName: "debug" */ "./debug/appDebug"
     );
     debugModule.toggleDebugMode(this._scene);
-    const viewer = new PhysicsViewer(this._scene);
-    for (let mesh of this._scene.meshes) {
-      console.log("mesh: ", mesh);
-      if (mesh.physicsBody) {
-        viewer.showBody(mesh.physicsBody);
-      }
-    }
+    // const viewer = new PhysicsViewer(this._scene);
+    // for (let mesh of this._scene.meshes) {
+    //   console.log("toggleDebugMode for mesh: ", mesh);
+    //   if (mesh.physicsBody) {
+    //     viewer.showBody(mesh.physicsBody);
+    //   }
+    // }
   }
 
   public get onKeyboardObservable(): Observable<KeyboardInfo> {

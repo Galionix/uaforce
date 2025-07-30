@@ -1,11 +1,12 @@
 import {
-    AbstractAssetTask, AbstractMesh, AssetsManager, Mesh, MeshAssetTask, MeshBuilder,
-    PhysicsAggregate, PhysicsShapeType, PickingInfo, Scene, StandardMaterial, Texture,
-    TextureAssetTask, TransformNode, Vector3
+    AbstractAssetTask, AbstractMesh, Mesh, MeshAssetTask, MeshBuilder, PhysicsAggregate,
+    PhysicsShapeType, PickingInfo, Scene, StandardMaterial, Texture, TextureAssetTask,
+    TransformNode, Vector3
 } from '@babylonjs/core';
 import { initialChunkPos, mapData } from '@ex/constants/chunksData';
 import { findBy } from '@ex/utils/findBy';
 
+import { LoaderController } from './LoaderController';
 import { SceneController } from './SceneController';
 
 // import { callAndEnsure, findByIdIncludes } from "@ex/utils/getById";
@@ -28,7 +29,6 @@ export class MapController {
   _sceneController: SceneController;
   loadedChunks: string[] = [];
   groundHitInfo?: PickingInfo;
-  // defaultMesh
   meshDict;
   constructor({
     scene,
@@ -60,14 +60,20 @@ export class MapController {
     this.decideNeedToLoad();
 
     // set current info about actual chunk we are standing on
-    const maybeNewGroundMesh = hitInfo.find(hit => hit.pickedMesh && hit.pickedMesh.id.includes(this.meshDict.ground.id_includes))
-    if (!maybeNewGroundMesh || !maybeNewGroundMesh.pickedMesh) return
-    const maybeNewChunkName = maybeNewGroundMesh.pickedMesh.id.split("_")[0]
+    const maybeNewGroundMesh = hitInfo.find(
+      (hit) =>
+        hit.pickedMesh &&
+        hit.pickedMesh.id.includes(this.meshDict.ground.id_includes)
+    );
+    if (!maybeNewGroundMesh || !maybeNewGroundMesh.pickedMesh) return;
+    const maybeNewChunkName = maybeNewGroundMesh.pickedMesh.id.split("_")[0];
     if (maybeNewChunkName !== this.currentChunk) {
-      this.currentChunk = maybeNewChunkName
-      this._sceneController.guiController?.setCurrentLocation(maybeNewChunkName)
-    console.log("standing on the new chunk!!!")
-  }
+      this.currentChunk = maybeNewChunkName;
+      this._sceneController.guiController?.setCurrentLocation(
+        maybeNewChunkName
+      );
+      console.log("standing on the new chunk!!!");
+    }
   }
   decideNeedToLoad() {
     if (this.groundHitInfo && this.groundHitInfo.pickedPoint) {
@@ -80,7 +86,7 @@ export class MapController {
       nextChunks.forEach((nextChunk) => {
         // directionExtensive =
         if (!!mapData[nextChunk] && !this.loadedChunks.includes(nextChunk)) {
-          console.log('nextChunk: ', nextChunk);
+          console.log("nextChunk: ", nextChunk);
           this.loadNextChunk(nextChunk, this.currentChunk);
           console.log("currentChunk: ", this.currentChunk);
         }
@@ -95,7 +101,6 @@ export class MapController {
       //   console.warn(nextChunk," already loaded")
       //   return
       // }
-
     }
   }
   extractXY(str: string) {
@@ -268,24 +273,29 @@ export class MapController {
   }
   enableGlobalLoading = () => {};
   loadNextChunk = (position: string /* xNyN*/, oldPosition: string) => {
+    // console.log("loadNextChunk position: ", position);
     this.loadedChunks.push(position);
-    const assetsManager = new AssetsManager(this._scene);
-    const chunkData = this.chunksData[position];
-    const meshTask = assetsManager.addMeshTask(
-      "meshTask",
-      "",
-      "models/",
-      `${chunkData.chunkName}.glb`
-    );
-    const textureTask = assetsManager.addTextureTask(
-      "groundTexture",
-      `models/${chunkData.chunkName}.png`
-    );
-    console.log("textureTask: ", textureTask);
+    // const assetsManager = new AssetsManager(this._scene);
+    // const chunkData = this.chunksData[position];
+    // const meshTask = assetsManager.addMeshTask(
+    //   "meshTask",
+    //   "",
+    //   "models/",
+    //   `${chunkData.chunkName}.glb`
+    // );
+    // const textureTask = assetsManager.addTextureTask(
+    //   "groundTexture",
+    //   `models/${chunkData.chunkName}.png`
+    // );
+    // console.log("textureTask: ", textureTask);
     const onSuccess = (tasks: AbstractAssetTask[]) => {
-      const meshTask = findBy(tasks, 'name','meshTask') as MeshAssetTask
+      const meshTask = findBy(tasks, "name", "meshTask") as MeshAssetTask;
 
-      const groundTextureTask = findBy(tasks,'name', 'groundTexture') as TextureAssetTask
+      const groundTextureTask = findBy(
+        tasks,
+        "name",
+        "groundTexture"
+      ) as TextureAssetTask;
 
       console.log("tasks: ", tasks);
       //   const task = tasks[0] as MeshAssetTask;
@@ -319,43 +329,38 @@ export class MapController {
         extensionDir
       );
       // this.processTransformNodes(meshTask.loadedTransformNodes);
+      // this.loadedChunks.push(position);
 
       // this.disableGlobalLoading();
       // this._sceneController;
     };
-
-    assetsManager.useDefaultLoadingScreen = false;
-    assetsManager.onFinish = onSuccess;
-    assetsManager.load();
+    const loader = new LoaderController(
+      // this.processMeshes,
+      onSuccess,
+      // this.processTransformNodes,
+      this._sceneController.scene
+    );
+    const load = async () => {
+      await loader.loadChunk(position);
+    };
+    load();
+    // assetsManager.useDefaultLoadingScreen = false;
+    // assetsManager.onFinish = onSuccess;
+    // assetsManager.load();
   };
   private loadChunk = (position: string /* xNyN*/) => {
-
-    const strtategyTest = async () => {
-
-      const res = await this.loadChunkServerStrategy(position)
-      console.log('res: ', res);
-    }
-    strtategyTest()
-    const assetsManager = new AssetsManager(this._scene);
-    const chunkData = this.chunksData[position];
-    const meshTask = assetsManager.addMeshTask(
-      "meshTask",
-      "",
-      "models/",
-      `${chunkData.chunkName}.glb`
-    );
-    const textureTask = assetsManager.addTextureTask(
-      "groundTexture",
-      `models/${chunkData.chunkName}.png`
-    );
-    console.log("textureTask: ", textureTask);
+    // console.log("loadChunk position: ", position);
     const onSuccess = (tasks: AbstractAssetTask[]) => {
-      this._sceneController.guiController?.setCurrentLocation(position)
+      this._sceneController.guiController?.setCurrentLocation(position);
 
       this.loadedChunks.push(position);
-      const meshTask = findBy(tasks, 'name','meshTask') as MeshAssetTask
+      const meshTask = findBy(tasks, "name", "meshTask") as MeshAssetTask;
 
-      const groundTextureTask = findBy(tasks,'name', 'groundTexture') as TextureAssetTask
+      const groundTextureTask = findBy(
+        tasks,
+        "name",
+        "groundTexture"
+      ) as TextureAssetTask;
 
       console.log("tasks: ", tasks);
       console.log("meshTask: ", meshTask);
@@ -370,30 +375,15 @@ export class MapController {
       this.disableGlobalLoading();
       this._sceneController;
     };
-
-    assetsManager.useDefaultLoadingScreen = false;
-    assetsManager.onFinish = onSuccess;
-    assetsManager.load();
+    const loader = new LoaderController(
+      // this.processMeshes,
+      onSuccess,
+      // this.processTransformNodes,
+      this._sceneController.scene
+    );
+    const load = async () => {
+      await loader.loadChunk(position);
+    };
+    load();
   };
-
-  async loadChunkServerStrategy(chunkId: string) {
- // 1. Проверка кеша
-    // const cached = await getFromIndexedDB(chunkId);
-    // if (cached) return cached;
-
-    // 2. Запрос к вашему серверу
-    const response = await fetch(`/api/chunks/${chunkId}`, {
-      headers: {
-        Authorization: `Bearer ${`userToken`}`,
-      },
-    });
-
-    if (!response.ok) throw new Error('Chunk load failed');
-
-    // 3. Сохранение в кеш
-    const blob = await response.blob();
-    // await saveToIndexedDB(chunkId, blob);
-
-    return blob;
-  }
 }

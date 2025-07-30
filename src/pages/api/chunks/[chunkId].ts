@@ -15,34 +15,37 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { chunkId } = req.query; // Теперь query доступен
+  const { chunkId, format } = req.query;
+  console.log('chunkId, format: ', chunkId, format);
 
   if (typeof chunkId !== 'string') {
     return res.status(400).json({ error: 'Invalid chunk ID' });
   }
 
+  if (typeof format !== 'string' || !['glb', 'png'].includes(format)) {
+    return res.status(400).json({ error: 'Invalid format' });
+  }
+
   try {
     const command = new GetObjectCommand({
       Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET!,
-      Key: `chunks/${chunkId}.glb`,
+      Key: `chunks/${chunkId}`,
     });
 
     const { Body, ContentType } = await s3.send(command);
-    console.log('Body: ', Body);
 
     if (!Body || !(Body instanceof Readable)) {
       throw new Error('Invalid response body');
     }
-    // Устанавливаем заголовки
-    res.setHeader('Content-Type', ContentType || 'model/gltf-binary');
 
-    // Потоковая передача данных
-    if (Body instanceof require('stream').Readable) {
-      Body.pipe(res);
-    } else {
-      throw new Error('Invalid response body');
-    }
+    // Правильный fallback Content-Type
+    const fallbackContentType =
+      format === 'png' ? 'image/png' : 'model/gltf-binary';
 
+    res.setHeader('Content-Type', ContentType || fallbackContentType);
+
+    // Потоковая передача
+    Body.pipe(res);
   } catch (error) {
     console.error('Error loading chunk:', error);
     res.status(500).json({ error: 'Failed to load chunk' });

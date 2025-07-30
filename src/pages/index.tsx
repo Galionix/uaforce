@@ -6,7 +6,7 @@ import { registerBuiltInLoaders } from '@babylonjs/loaders/dynamic';
 import { Game } from '@ex/engine/Game';
 import { useStore } from '@ex/zustand/store';
 
-const debug = false;
+const debug = true;
 
 export default function Home() {
   useEffect(() => {

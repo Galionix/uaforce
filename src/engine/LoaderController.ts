@@ -1,0 +1,197 @@
+import { AbstractAssetTask, AssetsManager, FilesInput, Scene } from '@babylonjs/core';
+
+import { ChunkStore } from './ChunkStore';
+
+export class LoaderController {
+  private chunkStore: ChunkStore;
+  //   private loadChunkServerStrategy: (position: string, format: 'glb' | 'png') => Promise<Blob>;
+  //   private processMeshes: (
+  //     chunkXY: string,
+  //     meshes: AbstractMesh[],
+  //     texture: Texture,
+  //     extensionDir?: {
+  //       x: number;
+  //       y: number;
+  //     }
+  //   ) => void;
+  //   private processTransformNodes: (tnodes: TransformNode[]) => void;
+  private onSuccess: (tasks: AbstractAssetTask[]) => void;
+  private scene: Scene;
+  private loadedChunks: string[] = [];
+
+  constructor(
+    // processMeshes: (
+    //   chunkXY: string,
+    //   meshes: AbstractMesh[],
+    //   texture: Texture,
+    //   extensionDir?: {
+    //     x: number;
+    //     y: number;
+    //   }
+    // ) => void,
+    onSuccess: (tasks: AbstractAssetTask[]) => void,
+    // processTransformNodes: (tnodes: TransformNode[]) => void,
+    scene: Scene
+  ) {
+    this.chunkStore = new ChunkStore();
+    this.onSuccess = onSuccess;
+    // this.processTransformNodes = processTransformNodes;
+    // this.processMeshes = processMeshes;
+    this.scene = scene;
+  }
+
+  private async loadChunkServerStrategy(
+    chunkId: string,
+    format: "glb" | "png"
+  ) {
+    // 1. Проверка кеша
+    // const cached = await getFromIndexedDB(chunkId);
+    // if (cached) return cached;
+
+    // 2. Запрос к вашему серверу
+    const response = await fetch(`/api/chunks/${chunkId}?format=${format}`, {
+      headers: {
+        Authorization: `Bearer ${`userToken`}`,
+      },
+    });
+
+    if (!response.ok) throw new Error("Chunk load failed");
+
+    // 3. Сохранение в кеш
+    const blob = await response.blob();
+    // await saveToIndexedDB(chunkId, blob);
+
+    return blob;
+  }
+  /**
+   * Загружает один чанк, если нужно — берёт из кэша или с сервера.
+   * Регистрирует его в FilesInput и возвращает URL для использования в AssetsManager.
+   */
+  private async getChunkBlob(
+    position: string,
+    format: "glb" | "png"
+  ): Promise<Blob> {
+    let blob = await this.chunkStore.getChunk(position, format);
+    if (blob) {
+      console.log(`Found ${position + "." + format} in IndexedDB!`);
+    } else {
+      console.log(
+        `No ${position + "." + format} in IndexedDB, fetching from server...`
+      );
+      const metadata = await this.chunkStore.getManifestFromDB();
+      if (!metadata) {
+        throw new Error(
+          "Disaster! we dont have metadata to properly fetch chunk by its filename. we need filename here and not just chunkName (coords)"
+        );
+      }
+      const fileName = metadata.chunksMetadata.find(
+        (m) => m.chunkName === position && m.ext === format
+      )?.fileName;
+      if (!fileName) {
+        throw new Error(
+          "Disaster! we dont have metadata to properly fetch chunk by its filename. we need filename here and not just chunkName (coords). we dont find needed chunk in metadata!"
+        );
+      }
+      blob = await this.loadChunkServerStrategy(fileName, format);
+      await this.chunkStore.saveChunk({
+        id: position,
+        format,
+        blob,
+      });
+    }
+    return blob;
+  }
+
+  private async fetchNewChunksManifest() {
+    const response = await fetch(`/api/chunks/listv2`, {
+      headers: {
+        Authorization: `Bearer ${`userToken`}`,
+      },
+    });
+
+    if (!response.ok) throw new Error("Chunk load failed");
+    const manifest = await response.json();
+    console.log('manifest: ', manifest);
+    await this.chunkStore.saveManifest(manifest);
+    return manifest;
+  }
+
+  // private isManifestChanged() {
+  //     const existing = this.chunkStore.getManifest()
+
+  // }
+  /**
+   * Основной публичный метод — загружает чанк и текстуру, цепляет к AssetsManager.
+   */
+  public async loadChunk(position: string) {
+    console.log("Load chunk:", position);
+      const metadataExpired = await this.chunkStore.isExpired();
+    //   this.chunkStore.changedChunks
+      console.log('this.chunkStore.changedChunks: ', this.chunkStore.changedChunks);
+      console.log("metadataExpired: ", metadataExpired);
+      if (metadataExpired) {
+          const manifest = await this.fetchNewChunksManifest();
+          console.log('manifest: ', manifest);
+          console.log('this.chunkStore.changedChunks: ', this.chunkStore.changedChunks);
+    //   if (this.chunkStore.isManifestChanged) {
+        // console.log('this.chunkStore.isManifestChanged: ', this.chunkStore.isManifestChanged);
+        await this.chunkStore.deleteChangedChunks();
+    //   }
+    //   console.log(
+    //     "this.chunkStore.isManifestChanged: ",
+    //     this.chunkStore.isManifestChanged
+    //   );
+
+      console.log("manifest: ", manifest);
+    }
+    const assetsManager = new AssetsManager(this.scene);
+    assetsManager.useDefaultLoadingScreen = false;
+
+    // 1) Загружаем GLB
+    const meshBlob = await this.getChunkBlob(position, "glb");
+    FilesInput.FilesToLoad[`${position}-ground-mesh.glb`] = meshBlob as File;
+    const meshTask = assetsManager.addMeshTask(
+      "meshTask",
+      "",
+      "file:",
+      `${position}-ground-mesh.glb`
+    );
+
+    // 2) Загружаем PNG
+    const textureBlob = await this.getChunkBlob(position, "png");
+    FilesInput.FilesToLoad[`${position}-ground-texture.png`] =
+      textureBlob as File;
+    const textureURL = URL.createObjectURL(textureBlob);
+    const textureTask = assetsManager.addTextureTask(
+      "groundTexture",
+      textureURL
+    );
+
+    // 3) Обработка
+    assetsManager.onFinish = this.onSuccess;
+
+    assetsManager.load();
+  }
+
+  /**
+   * Переопредели под свою сцену!
+   */
+  //   private processMeshes(
+  //     position: string,
+  //     meshes: AbstractMesh[],
+  //     texture: Texture
+  //   ) {
+  //     console.log(`Processing meshes for ${position}`);
+  //     // твоя логика
+  //   }
+
+  //   private processTransformNodes(nodes: TransformNode[]) {
+  //     console.log(`Processing transform nodes`);
+  //     // твоя логика
+  //   }
+
+  //   private disableGlobalLoading() {
+  //     console.log(`Disable loading screen`);
+  //     // твоя логика
+  //   }
+}

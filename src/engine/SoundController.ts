@@ -56,7 +56,6 @@ export class SoundController {
       this.Sounds.wind.sound?.play();
     this.Sounds.wind.sound.playbackRate = this.fallCount;
     this.fallCount += 0.001;
-    console.log('this.fallCount: ', this.fallCount);
   }
   stopFall() {
     if (!this.Sounds.wind.sound) return;
