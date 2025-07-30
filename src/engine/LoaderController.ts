@@ -4,39 +4,19 @@ import { ChunkStore } from './ChunkStore';
 
 export class LoaderController {
   private chunkStore: ChunkStore;
-  //   private loadChunkServerStrategy: (position: string, format: 'glb' | 'png') => Promise<Blob>;
-  //   private processMeshes: (
-  //     chunkXY: string,
-  //     meshes: AbstractMesh[],
-  //     texture: Texture,
-  //     extensionDir?: {
-  //       x: number;
-  //       y: number;
-  //     }
-  //   ) => void;
-  //   private processTransformNodes: (tnodes: TransformNode[]) => void;
+
   private onSuccess: (tasks: AbstractAssetTask[]) => void;
   private scene: Scene;
   private loadedChunks: string[] = [];
 
   constructor(
-    // processMeshes: (
-    //   chunkXY: string,
-    //   meshes: AbstractMesh[],
-    //   texture: Texture,
-    //   extensionDir?: {
-    //     x: number;
-    //     y: number;
-    //   }
-    // ) => void,
+
     onSuccess: (tasks: AbstractAssetTask[]) => void,
-    // processTransformNodes: (tnodes: TransformNode[]) => void,
     scene: Scene
   ) {
     this.chunkStore = new ChunkStore();
     this.onSuccess = onSuccess;
-    // this.processTransformNodes = processTransformNodes;
-    // this.processMeshes = processMeshes;
+
     this.scene = scene;
   }
 
@@ -44,11 +24,6 @@ export class LoaderController {
     chunkId: string,
     format: "glb" | "png"
   ) {
-    // 1. Проверка кеша
-    // const cached = await getFromIndexedDB(chunkId);
-    // if (cached) return cached;
-
-    // 2. Запрос к вашему серверу
     const response = await fetch(`/api/chunks/${chunkId}?format=${format}`, {
       headers: {
         Authorization: `Bearer ${`userToken`}`,
@@ -57,9 +32,7 @@ export class LoaderController {
 
     if (!response.ok) throw new Error("Chunk load failed");
 
-    // 3. Сохранение в кеш
     const blob = await response.blob();
-    // await saveToIndexedDB(chunkId, blob);
 
     return blob;
   }
