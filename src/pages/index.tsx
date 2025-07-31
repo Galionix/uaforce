@@ -7,7 +7,6 @@ import { RESOURCE_PATHS } from '@ex/constants/resources';
 import { Game } from '@ex/engine/Game';
 import { loadAllResources } from '@ex/engine/stores/loadAllResources';
 import { ProgressBar } from '@ex/ReactComponents/ProgressBar/ProgressBar';
-import { useStore } from '@ex/zustand/store';
 
 // import { ResourceLoaderController } from './ResourceLoaderController';
 const manualStart = false;
@@ -42,7 +41,6 @@ export default function Home() {
     registerBuiltInLoaders();
   }, []);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const store = useStore();
   useEffect(() => {
     if (manualStart) return;
     loadAllResources(setLoadInfo, () => setShowButton(false)).then(() =>
