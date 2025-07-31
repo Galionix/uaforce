@@ -16,7 +16,7 @@ export class GuiController {
       this.sceneController.scene
     );
     // let loadedGUI = await advancedTexture.parseFromSnippetAsync("4O9F56#5");
-    let loadedGUI = await advancedTexture.parseFromURLAsync('guiTexture (3).json')
+    let loadedGUI = await advancedTexture.parseFromURLAsync('guiTexture (4).json')
 
     this.gui = loadedGUI;
 
