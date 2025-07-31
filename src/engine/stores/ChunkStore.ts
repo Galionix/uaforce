@@ -43,7 +43,6 @@ export class ChunkStore {
     const now = Date.now();
     const oneHour = 60 * 60 * 1000; // миллисекунды в 1 час
     const manifestExists = await this.getManifestFromDB();
-    console.log("manifestExists: ", manifestExists);
     return now - this.initializedAt >= oneHour || !manifestExists;
   }
   private openDB(): Promise<IDBDatabase> {
@@ -99,7 +98,6 @@ export class ChunkStore {
   public async deleteChangedChunks() {
     this.changedChunks.forEach(async (metadata) => {
       await this.deleteChunk(metadata.chunkName, metadata.ext);
-      console.log("deleted from cache!!: ", metadata.chunkName, metadata.ext);
     });
   }
   public async deleteChunk(id: string, format: "glb" | "png"): Promise<void> {
@@ -125,10 +123,7 @@ export class ChunkStore {
     return this._changedChunks;
   }
   public async saveManifest(newManifestToSave: ManifestData): Promise<void> {
-    console.log("checking");
-    console.log("new manifest: ", newManifestToSave);
     const existingManifest = await this.getManifestFromDB();
-    console.log("existing manifest: ", existingManifest);
     this._isManifestHashChanged =
       newManifestToSave.manifestHash !== existingManifest?.manifestHash;
     if (this._isManifestHashChanged && existingManifest) {
@@ -143,11 +138,9 @@ export class ChunkStore {
           )
             return true;
         });
-        console.log(existingMetadata.fileName, " inTact: ", !!inTact);
         if (!inTact) {
           this._changedChunks.push(existingMetadata);
         }
-        console.log("this._changedChunks: ", this._changedChunks);
       });
     }
     const db = await this.dbPromise;

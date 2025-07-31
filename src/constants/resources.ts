@@ -1,3 +1,4 @@
+
 export const RESOURCES = {
   "audio": {
     "music": {
@@ -17,3 +18,10 @@ export const RESOURCES = {
     }
   }
 };
+export const RESOURCE_PATHS = [
+  "audio/music/top_dungeon.mp3",
+  "audio/sfx/player/behaviour/fallSound(wind2).mp3",
+  "audio/sfx/player/footsteps/stepstone_3.wav",
+  "audio/sfx/player/footsteps/stepstone_4.wav",
+  "audio/sfx/player/footsteps/stepstone_5.wav"
+];

@@ -9,11 +9,7 @@ export class ChunksLoaderController {
   private scene: Scene;
   private loadedChunks: string[] = [];
 
-  constructor(
-
-    onSuccess: (tasks: AbstractAssetTask[]) => void,
-    scene: Scene
-  ) {
+  constructor(onSuccess: (tasks: AbstractAssetTask[]) => void, scene: Scene) {
     this.chunkStore = new ChunkStore();
     this.onSuccess = onSuccess;
 
@@ -48,9 +44,6 @@ export class ChunksLoaderController {
     if (blob) {
       console.log(`Found ${position + "." + format} in IndexedDB!`);
     } else {
-      console.log(
-        `No ${position + "." + format} in IndexedDB, fetching from server...`
-      );
       const metadata = await this.chunkStore.getManifestFromDB();
       if (!metadata) {
         throw new Error(
@@ -84,7 +77,6 @@ export class ChunksLoaderController {
 
     if (!response.ok) throw new Error("Chunk load failed");
     const manifest = await response.json();
-    console.log('manifest: ', manifest);
     await this.chunkStore.saveManifest(manifest);
     return manifest;
   }
@@ -93,19 +85,11 @@ export class ChunksLoaderController {
    * Основной публичный метод — загружает чанк и текстуру, цепляет к AssetsManager.
    */
   public async loadChunk(position: string) {
-    console.log("Load chunk:", position);
-      const metadataExpired = await this.chunkStore.isExpired();
-      console.log('this.chunkStore.changedChunks: ', this.chunkStore.changedChunks);
-      console.log("metadataExpired: ", metadataExpired);
-      if (metadataExpired) {
-          const manifest = await this.fetchNewChunksManifest();
-          console.log('manifest: ', manifest);
-          console.log('this.chunkStore.changedChunks: ', this.chunkStore.changedChunks);
+    const metadataExpired = await this.chunkStore.isExpired();
+    if (metadataExpired) {
+      const manifest = await this.fetchNewChunksManifest();
 
-        await this.chunkStore.deleteChangedChunks();
-
-
-      console.log("manifest: ", manifest);
+      await this.chunkStore.deleteChangedChunks();
     }
     const assetsManager = new AssetsManager(this.scene);
     assetsManager.useDefaultLoadingScreen = false;

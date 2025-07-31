@@ -1,54 +1,79 @@
-import { useEffect, useRef } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 
 import { HavokPlugin } from '@babylonjs/core';
 import HavokPhysics from '@babylonjs/havok';
 import { registerBuiltInLoaders } from '@babylonjs/loaders/dynamic';
+import { RESOURCE_PATHS } from '@ex/constants/resources';
 import { Game } from '@ex/engine/Game';
+import { loadAllResources } from '@ex/engine/stores/loadAllResources';
+import { ProgressBar } from '@ex/ReactComponents/ProgressBar/ProgressBar';
 import { useStore } from '@ex/zustand/store';
 
+// import { ResourceLoaderController } from './ResourceLoaderController';
+const manualStart = false;
 const debug = true;
 
+const initializeBabylon = async (
+  canvasRef: RefObject<HTMLCanvasElement | null>
+) => {
+  if (!canvasRef.current) return;
+  const havokInstance = await HavokPhysics();
+  const hk = new HavokPlugin(true, havokInstance);
+
+  // @ts-ignore
+  globalThis.HK = havokInstance;
+  const game = new Game(
+    canvasRef.current,
+    hk,
+    /* this is to load or not debug layer, need to fix to do it auto mode. for dev - include, for production - disable*/
+    true
+  );
+  await game.asyncInit();
+  if (debug) await game.toggleDebugLayer();
+};
 export default function Home() {
+  const [loadInfo, setLoadInfo] = useState({
+    current: 0,
+    total: RESOURCE_PATHS.length,
+    message: "Started",
+  });
+  const [showButton, setShowButton] = useState(manualStart);
   useEffect(() => {
     registerBuiltInLoaders();
   }, []);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const store = useStore();
   useEffect(() => {
-    const initializeBabylon = async () => {
-      if (!canvasRef.current) return;
-      const havokInstance = await HavokPhysics();
-      const hk = new HavokPlugin(true, havokInstance);
-
-      // @ts-ignore
-      globalThis.HK = havokInstance;
-      const game = new Game(
-        canvasRef.current,
-        hk,
-        /* this is to load or not debug layer, need to fix to do it auto mode. for dev - include, for production - disable*/
-        true
-      );
-      await game.asyncInit()
-      if (debug) await game.toggleDebugLayer();
-      // game.onKeyboardObservable.add((e) => {
-      //   console.log("e: ", e);
-      //   if (e.type === KeyboardEventTypes.KEYDOWN) {
-      //     if (e.event.ctrlKey) {
-      //       if (e.event.key === "i") {
-      //         game.toggleDebugLayer();
-      //       }
-      //     }
-      //   }
-      // });
-    };
-    initializeBabylon();
+    if (manualStart) return;
+    loadAllResources(setLoadInfo, () => setShowButton(false)).then(() =>
+      initializeBabylon(canvasRef)
+    );
   }, []);
 
   return (
     <>
-      <div id="global-loading">
-        <p>Loading</p>
-      </div>
+      {showButton ? (
+        <div id="global-loading">
+          <button
+            onClick={async () => {
+              await loadAllResources(setLoadInfo, () =>
+                setShowButton(false)
+              ).then(() => initializeBabylon(canvasRef));
+            }}
+          >
+            Start
+          </button>
+        </div>
+      ) : (
+        <div id="global-loading">
+          <p>Loading</p>
+          <ProgressBar
+            current={loadInfo.current}
+            message={loadInfo.message}
+            total={loadInfo.total}
+          />
+        </div>
+      )}
       <canvas
         id="canvas"
         ref={canvasRef}

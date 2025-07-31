@@ -1,9 +1,7 @@
 import { Engine, HavokPlugin, KeyboardInfo, Observable, Scene } from '@babylonjs/core';
-import { RESOURCES } from '@ex/constants/resources';
 
 import { CameraController } from './CameraController';
 import { MapController } from './MapController';
-import { ResourceLoaderController } from './ResourceLoaderController';
 import { SceneController } from './SceneController';
 import { SoundController } from './SoundController';
 
@@ -16,7 +14,7 @@ export class Game {
   private _scene: Scene;
   soundController: SoundController;
   private _mapController: MapController;
-  public resourceLoaderController: ResourceLoaderController
+  // public resourceLoaderController: ResourceLoaderController
   constructor(
     canvas: HTMLCanvasElement,
     hk: HavokPlugin,
@@ -25,7 +23,7 @@ export class Game {
   ) {
     this._debug = debug;
     this._canvas = canvas;
-    this.resourceLoaderController = new ResourceLoaderController()
+    // this.resourceLoaderController = new ResourceLoaderController()
 
     // Create our engine to hold on the canvas
     this._engine = new Engine(canvas, true, {
@@ -54,9 +52,7 @@ export class Game {
   }
 
   async asyncInit() {
-    const manifest = await this.resourceLoaderController.fetchNewManifest(RESOURCES.audio.music.top_dungeon)
-    const res = await this.resourceLoaderController.getResource(RESOURCES.audio.music.top_dungeon)
-    console.log('res: ',res, res.type);
+
     await this._sceneController.asyncInit();
     await this.soundController.asyncInit();
     this.soundController.playTheme();

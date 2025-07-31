@@ -1,3 +1,5 @@
+import { getFilePath } from '@ex/utils/getFilePath';
+
 interface ResourceData {
     path: string; // Пример: 'audio/music/track1.mp3'
     blob: Blob;
@@ -11,12 +13,15 @@ interface ResourceData {
     hash: string;
   }
 
-  interface ResourceManifest {
+  export interface ResourceManifest {
     generatedAt: string;
     manifestHash: string;
     files: ResourceMetadata[];
   }
-
+  interface StoredManifest {
+    manifest: ResourceManifest;
+    lastFetchedAt: number; // timestamp в ms
+  }
   export class ResourceStore {
     private dbName: string;
     private filesStoreName: string;
@@ -93,19 +98,24 @@ interface ResourceData {
       return new Promise<void>((resolve, reject) => {
         const tx = db.transaction(this.metadataStoreName, 'readwrite');
         const store = tx.objectStore(this.metadataStoreName);
-        store.put(manifest, path);
+        const entry: StoredManifest = {
+          manifest,
+          lastFetchedAt: Date.now(),
+        };
+        store.put(entry, path);
         tx.oncomplete = () => resolve();
         tx.onerror = () => reject(tx.error);
       });
     }
 
-    public async getManifest(): Promise<ResourceManifest | undefined> {
+    public async getManifest(file: string): Promise<StoredManifest | undefined> {
+      const key = getFilePath(file)
       const db = await this.dbPromise;
       return new Promise((resolve, reject) => {
         const tx = db.transaction(this.metadataStoreName, 'readonly');
         const store = tx.objectStore(this.metadataStoreName);
-        const req = store.get('manifest');
-        req.onsuccess = () => resolve(req.result as ResourceManifest | undefined);
+        const req = store.get(key);
+        req.onsuccess = () => resolve(req.result as StoredManifest | undefined);
         req.onerror = () => reject(req.error);
       });
     }

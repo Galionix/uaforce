@@ -18,6 +18,7 @@ export default async function handler(
 ) {
   const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET!;
   const { path } = req.query;
+  console.log("GET MANIFEST CALLED FOR "+ path)
   if (typeof path !== "string") {
     return res.status(400).json({ error: "Invalid path" });
   }

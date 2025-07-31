@@ -15,12 +15,15 @@ const s3 = new S3Client({
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET!;
   const { path: s3Path } = req.query;
+  console.log("GET RESOURCE CALLED FOR "+ s3Path)
 
   if (typeof s3Path !== "string") {
     return res.status(400).json({ error: "Invalid path" });
   }
+  console.log('s3Path: ', s3Path);
 
   const ext = p.extname(s3Path).slice(1); // .mp3 -> mp3
+  console.log('ext: ', ext);
 
   const EXTENSION_CONTENT_TYPE: Record<string, string> = {
     mp3: 'audio/mpeg',
