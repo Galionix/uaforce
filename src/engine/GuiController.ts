@@ -40,8 +40,9 @@ export class GuiController {
     burger.isVisible = this.isTouchDevice();
     console.log('MainMenu: ', MainMenu);
     const continue_game = this.getGuiControlOrFail<TextBlock>("continue_game");
-    continue_game.onPointerClickObservable.addOnce(() => {
-      this.toggleMainMenu()
+    continue_game.onPointerClickObservable.add(() => {
+      const MainMenu = this.getGuiControlOrFail<TextBlock>("MainMenu");
+      MainMenu.isVisible = false;
     })
   }
   toggleMainMenu() {
