@@ -47,11 +47,9 @@ export class Game {
     this._scene = this._sceneController.scene;
     this._camera = new CameraController(this._canvas, this._scene);
 
-    if (this.isTouchDevice()) {
-
-
+    if (this.isTouchDevice() || true) {
       this._camera.camera.inputs.clear()
-      this._camera.camera.inputs.add(new FreeCameraTouchVirtualJoystickInput())
+      this._camera.camera.inputs.add(new FreeCameraTouchVirtualJoystickInput(this._camera.camera))
       this._camera.camera.attachControl(canvas, true);
     }
 
