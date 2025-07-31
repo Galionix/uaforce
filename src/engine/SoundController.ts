@@ -8,61 +8,51 @@ import { ResourceStore } from './stores/ResourceStore';
 type ReplaceLeaves<T, LeafType> = {
   [K in keyof T]: T[K] extends string
     ? LeafType
-    : ReplaceLeaves<T[K], LeafType>
+    : ReplaceLeaves<T[K], LeafType>;
 };
-type AudioMap = ReplaceLeaves<typeof RESOURCES.audio, StaticSound>
+type AudioMap = ReplaceLeaves<typeof RESOURCES.audio, StaticSound>;
 export class SoundController {
+  initialized = false;
   soundEngine?: AudioEngineV2;
-  resourceStore: ResourceStore
+  resourceStore: ResourceStore;
   constructor() {
-    this.resourceStore = new ResourceStore()
+    this.resourceStore = new ResourceStore();
   }
-  Sounds = RESOURCES.audio
-  _SoundsAudios: AudioMap | null = null
+  // Sounds = RESOURCES.audio
+  _SoundsAudios: AudioMap | null = null;
   get SoundsAudios(): AudioMap {
-    if (!this._SoundsAudios) {
-      throw new Error("Sound map not initialized!")
+    // console.log("this.initialized: ", this.initialized);
+    if (this.initialized && !this._SoundsAudios) {
+      throw new Error("Sound map not initialized!");
     }
-    return this.SoundsAudios
+    // @ts-ignore wtf is this
+    return this._SoundsAudios;
   }
-  footstepsSounds:StaticSound[] = [];
-  async initResources() {
-    // const footsteps = [
+  footstepsSounds: StaticSound[] = [];
 
-    //   this.Sounds.sfx.player.footsteps.stepstone_3,
-    //   this.Sounds.sfx.player.footsteps.stepstone_4,
-    //   this.Sounds.sfx.player.footsteps.stepstone_5,
-    // ]
-
-    // footsteps.forEach(f => {
-    //   this.Sounds
-    // })
-
-  }
   async loadSoundsTree<T extends typeof RESOURCES.audio>(
     RESOURCES: T
-    // createSound: (path: string) => Promise<any>
-  ):Promise<AudioMap>  {
+  ): Promise<AudioMap> {
     const result: any = {};
 
     for (const key in RESOURCES) {
       const value = RESOURCES[key];
 
-      if (typeof value === 'string') {
+      if (typeof value === "string") {
         // Конечный путь — грузим sound
-        const source = await this.resourceStore.getFile(value)
+        const source = await this.resourceStore.getFile(value);
         if (!source) {
-          throw new Error('Source file for '+value+' wasnt retrieved from resource storage!!!')
+          throw new Error(
+            "Source file for " +
+              value +
+              " wasnt retrieved from resource storage!!!"
+          );
         }
         const blobUrl = URL.createObjectURL(source);
 
-
-        result[key] = await CreateSoundAsync(
-          value,
-          blobUrl
-        );
+        result[key] = await CreateSoundAsync(value, blobUrl);
         // this.Sounds[key].sound = sound;
-      // }
+        // }
       } else {
         // Рекурсивно обходим вложенность
         result[key] = await this.loadSoundsTree(value as any);
@@ -74,60 +64,57 @@ export class SoundController {
   async asyncInit() {
     const audioEngine = await CreateAudioEngineAsync();
 
-   this._SoundsAudios =  await this.loadSoundsTree(RESOURCES.audio)
-    console.log('this._SoundsAudios: ', this._SoundsAudios);
-    // (
-    //   Object.entries(SoundsMap) as [keyof typeof SoundsMap, SoundType][]
-    // ).forEach(async ([key, value]) => {
-    //   const sound = await CreateSoundAsync(
-    //     this.Sounds[key].id,
-    //     this.Sounds[key].link
-    //   );
-    //   this.Sounds[key].sound = sound;
-    // });
-
+    this._SoundsAudios = await this.loadSoundsTree(RESOURCES.audio);
+    console.log("this._SoundsAudios: ", this._SoundsAudios);
     // Wait until audio engine is ready to play sounds.
     await audioEngine.unlockAsync();
-    this._SoundsAudios.sfx.player.footsteps.stepstone_3.setVolume(.3)
-    this._SoundsAudios.sfx.player.footsteps.stepstone_4.setVolume(.3)
-    this._SoundsAudios.sfx.player.footsteps.stepstone_5.setVolume(.3)
-    // this.Sounds.step1.sound?.setVolume(.3)
-    // this.Sounds.step2.sound?.setVolume(.3)
-    // this.Sounds.step3.sound?.setVolume(.3)
+    this.SoundsAudios.sfx.player.footsteps.stepstone_3.setVolume(0.3);
+    this.SoundsAudios.sfx.player.footsteps.stepstone_4.setVolume(0.3);
+    this.SoundsAudios.sfx.player.footsteps.stepstone_5.setVolume(0.3);
+
     this.footstepsSounds = [
-      this._SoundsAudios.sfx.player.footsteps.stepstone_3,
-      this._SoundsAudios.sfx.player.footsteps.stepstone_4,
-      this._SoundsAudios.sfx.player.footsteps.stepstone_5
+      this.SoundsAudios.sfx.player.footsteps.stepstone_3,
+      this.SoundsAudios.sfx.player.footsteps.stepstone_4,
+      this.SoundsAudios.sfx.player.footsteps.stepstone_5,
     ];
+    this.initialized = true;
     this.soundEngine = audioEngine;
   }
 
   playTheme() {
     // console.log('this.Sounds.theme: ', this.Sounds.theme);
-    // this.Sounds.theme.sound?.setVolume(0.1)
-    // this.Sounds.theme.sound?.play()
+    this.SoundsAudios.music.top_dungeon.setVolume(0.1);
+    this.SoundsAudios.music.top_dungeon.play();
   }
   get engine() {
     return this.soundEngine;
   }
-  get sounds() {
-    return this.Sounds;
-  }
+  // get sounds() {
+  //   return this.Sounds;
+  // }
   fallCount = 0;
   playFall() {
-    // if (!this.Sounds.wind.sound) return;
-    // if (this.Sounds.wind.sound?.state !== SoundState.Started)
-    //   this.Sounds.wind.sound?.play();
-    // this.Sounds.wind.sound.playbackRate = this.fallCount;
-    // this.fallCount += 0.001;
+    if (!this.initialized) return;
+    if (
+      this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].state !==
+      SoundState.Started
+    )
+      this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].play();
+    this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].playbackRate =
+      this.fallCount;
+    this.fallCount += 0.001;
   }
   stopFall() {
-    // if (!this.Sounds.wind.sound) return;
+    if (!this._SoundsAudios) return;
 
-    // this.fallCount = 0;
-    // this.Sounds.wind.sound.playbackRate = this.fallCount;
-    // if (this.Sounds.wind.sound?.state === SoundState.Started)
-    //   this.Sounds.wind.sound?.stop();
+    this.fallCount = 0;
+    this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].playbackRate =
+      this.fallCount;
+    if (
+      this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].state ===
+      SoundState.Started
+    )
+      this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].stop();
   }
   playFootsteps(sprint?: boolean) {
     const anyStarted = this.footstepsSounds.some(
