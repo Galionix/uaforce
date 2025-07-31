@@ -24,7 +24,7 @@ export class GuiController {
   }
   isTouchDevice() {
     const res =  ('ontouchstart' in window || navigator.maxTouchPoints > 0);
-    alert(res)
+    // alert(res)
     return res
   }
   prepareMenus() {
@@ -32,7 +32,9 @@ export class GuiController {
     MainMenu.isVisible = false;
     // const isTouchDevice = () => "ontouchstart" in window;
     const burger = this.getGuiControlOrFail<TextBlock>("burger");
-    burger.onPointerClickObservable.addOnce(() => {
+    const textBlock = this.getGuiControlOrFail<TextBlock>("Textblock");
+
+    textBlock.onPointerClickObservable.addOnce(() => {
       this.toggleMainMenu()
     })
     burger.isVisible = this.isTouchDevice();
