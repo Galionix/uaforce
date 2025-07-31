@@ -15,14 +15,17 @@ export class GuiController {
       true,
       this.sceneController.scene
     );
-    let loadedGUI = await advancedTexture.parseFromSnippetAsync("4O9F56#5");
+    // let loadedGUI = await advancedTexture.parseFromSnippetAsync("4O9F56#5");
+    let loadedGUI = await advancedTexture.parseFromURLAsync('guiTexture (3).json')
 
     this.gui = loadedGUI;
 
     this.prepareMenus()
   }
   isTouchDevice() {
-    return ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    const res =  ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    alert(res)
+    return res
   }
   prepareMenus() {
     const MainMenu = this.getGuiControlOrFail<TextBlock>("MainMenu");
