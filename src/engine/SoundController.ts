@@ -1,39 +1,103 @@
 import {
-    AudioEngineV2, CreateAudioEngineAsync, CreateSoundAsync, SoundState
+    AudioEngineV2, CreateAudioEngineAsync, CreateSoundAsync, SoundState, StaticSound
 } from '@babylonjs/core';
-import { SoundsMap, SoundType } from '@ex/constants/soundsEnum';
+import { RESOURCES } from '@ex/constants/resources';
 
+import { ResourceStore } from './stores/ResourceStore';
+
+type ReplaceLeaves<T, LeafType> = {
+  [K in keyof T]: T[K] extends string
+    ? LeafType
+    : ReplaceLeaves<T[K], LeafType>
+};
+type AudioMap = ReplaceLeaves<typeof RESOURCES.audio, StaticSound>
 export class SoundController {
   soundEngine?: AudioEngineV2;
+  resourceStore: ResourceStore
+  constructor() {
+    this.resourceStore = new ResourceStore()
+  }
+  Sounds = RESOURCES.audio
+  _SoundsAudios: AudioMap | null = null
+  get SoundsAudios(): AudioMap {
+    if (!this._SoundsAudios) {
+      throw new Error("Sound map not initialized!")
+    }
+    return this.SoundsAudios
+  }
+  footstepsSounds:StaticSound[] = [];
+  async initResources() {
+    // const footsteps = [
 
-  Sounds = SoundsMap;
-  footstepsSounds = [
-    // this.Sounds.step1.sound,
-    this.Sounds.step2.sound,
-    // this.Sounds.step3.sound,
-  ];
+    //   this.Sounds.sfx.player.footsteps.stepstone_3,
+    //   this.Sounds.sfx.player.footsteps.stepstone_4,
+    //   this.Sounds.sfx.player.footsteps.stepstone_5,
+    // ]
+
+    // footsteps.forEach(f => {
+    //   this.Sounds
+    // })
+
+  }
+  async loadSoundsTree<T extends typeof RESOURCES.audio>(
+    RESOURCES: T
+    // createSound: (path: string) => Promise<any>
+  ):Promise<AudioMap>  {
+    const result: any = {};
+
+    for (const key in RESOURCES) {
+      const value = RESOURCES[key];
+
+      if (typeof value === 'string') {
+        // Конечный путь — грузим sound
+        const source = await this.resourceStore.getFile(value)
+        if (!source) {
+          throw new Error('Source file for '+value+' wasnt retrieved from resource storage!!!')
+        }
+        const blobUrl = URL.createObjectURL(source);
+
+
+        result[key] = await CreateSoundAsync(
+          value,
+          blobUrl
+        );
+        // this.Sounds[key].sound = sound;
+      // }
+      } else {
+        // Рекурсивно обходим вложенность
+        result[key] = await this.loadSoundsTree(value as any);
+      }
+    }
+
+    return result;
+  }
   async asyncInit() {
     const audioEngine = await CreateAudioEngineAsync();
 
-    (
-      Object.entries(SoundsMap) as [keyof typeof SoundsMap, SoundType][]
-    ).forEach(async ([key, value]) => {
-      const sound = await CreateSoundAsync(
-        this.Sounds[key].id,
-        this.Sounds[key].link
-      );
-      this.Sounds[key].sound = sound;
-    });
+   this._SoundsAudios =  await this.loadSoundsTree(RESOURCES.audio)
+    console.log('this._SoundsAudios: ', this._SoundsAudios);
+    // (
+    //   Object.entries(SoundsMap) as [keyof typeof SoundsMap, SoundType][]
+    // ).forEach(async ([key, value]) => {
+    //   const sound = await CreateSoundAsync(
+    //     this.Sounds[key].id,
+    //     this.Sounds[key].link
+    //   );
+    //   this.Sounds[key].sound = sound;
+    // });
 
     // Wait until audio engine is ready to play sounds.
     await audioEngine.unlockAsync();
-    this.Sounds.step1.sound?.setVolume(.3)
-    this.Sounds.step2.sound?.setVolume(.3)
-    this.Sounds.step3.sound?.setVolume(.3)
+    this._SoundsAudios.sfx.player.footsteps.stepstone_3.setVolume(.3)
+    this._SoundsAudios.sfx.player.footsteps.stepstone_4.setVolume(.3)
+    this._SoundsAudios.sfx.player.footsteps.stepstone_5.setVolume(.3)
+    // this.Sounds.step1.sound?.setVolume(.3)
+    // this.Sounds.step2.sound?.setVolume(.3)
+    // this.Sounds.step3.sound?.setVolume(.3)
     this.footstepsSounds = [
-      this.Sounds.step1.sound,
-      this.Sounds.step2.sound,
-      this.Sounds.step3.sound,
+      this._SoundsAudios.sfx.player.footsteps.stepstone_3,
+      this._SoundsAudios.sfx.player.footsteps.stepstone_4,
+      this._SoundsAudios.sfx.player.footsteps.stepstone_5
     ];
     this.soundEngine = audioEngine;
   }
@@ -51,19 +115,19 @@ export class SoundController {
   }
   fallCount = 0;
   playFall() {
-    if (!this.Sounds.wind.sound) return;
-    if (this.Sounds.wind.sound?.state !== SoundState.Started)
-      this.Sounds.wind.sound?.play();
-    this.Sounds.wind.sound.playbackRate = this.fallCount;
-    this.fallCount += 0.001;
+    // if (!this.Sounds.wind.sound) return;
+    // if (this.Sounds.wind.sound?.state !== SoundState.Started)
+    //   this.Sounds.wind.sound?.play();
+    // this.Sounds.wind.sound.playbackRate = this.fallCount;
+    // this.fallCount += 0.001;
   }
   stopFall() {
-    if (!this.Sounds.wind.sound) return;
+    // if (!this.Sounds.wind.sound) return;
 
-    this.fallCount = 0;
-    this.Sounds.wind.sound.playbackRate = this.fallCount;
-    if (this.Sounds.wind.sound?.state === SoundState.Started)
-      this.Sounds.wind.sound?.stop();
+    // this.fallCount = 0;
+    // this.Sounds.wind.sound.playbackRate = this.fallCount;
+    // if (this.Sounds.wind.sound?.state === SoundState.Started)
+    //   this.Sounds.wind.sound?.stop();
   }
   playFootsteps(sprint?: boolean) {
     const anyStarted = this.footstepsSounds.some(
