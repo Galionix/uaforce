@@ -9,7 +9,7 @@ import { loadAllResources } from '@ex/engine/stores/loadAllResources';
 import { ProgressBar } from '@ex/ReactComponents/ProgressBar/ProgressBar';
 
 // import { ResourceLoaderController } from './ResourceLoaderController';
-const manualStart = false;
+const manualStart = process.env.NODE_ENV === 'production';
 const debug = true;
 
 const initializeBabylon = async (
