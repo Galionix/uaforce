@@ -230,7 +230,7 @@ export class MapController {
           mesh.position.z = extensionDir.y * -200;
         }
       }
-      console.log("mesh.id: ", mesh.id);
+      // console.log("mesh.id: ", mesh.id);
     });
 
     console.log("groundMesh: ", groundMesh);
@@ -249,10 +249,10 @@ export class MapController {
     );
   }
   processTransformNodes(tnodes: TransformNode[]) {
-    console.log("tnodes: ", tnodes);
+    // console.log("tnodes: ", tnodes);
     tnodes.forEach((tnode) => {
       if (tnode.id.includes("PLAYER_SPAWN")) {
-        console.log("tnode: ", tnode);
+        // console.log("tnode: ", tnode);
         this._sceneController.setPlayerPos(
           tnode.position.clone(),
           tnode.metadata.gltf.extras
@@ -260,8 +260,8 @@ export class MapController {
       }
 
       if (tnode.id === "Light") {
-        console.log("tnode.id: ", tnode.id);
-        console.log("this._scene.lights: ", this._scene.lights);
+        // console.log("tnode.id: ", tnode.id);
+        // console.log("this._scene.lights: ", this._scene.lights);
         const mainLight = this._scene.lights.find(
           (light) => light.id === "Light"
         );
@@ -297,9 +297,9 @@ export class MapController {
         "groundTexture"
       ) as TextureAssetTask;
 
-      console.log("tasks: ", tasks);
+      // console.log("tasks: ", tasks);
       //   const task = tasks[0] as MeshAssetTask;
-      console.log("meshTask: ", meshTask);
+      // console.log("meshTask: ", meshTask);
 
       const oldPosXY = this.extractXY(oldPosition);
       console.log("oldPosition: ", oldPosition);
@@ -362,8 +362,8 @@ export class MapController {
         "groundTexture"
       ) as TextureAssetTask;
 
-      console.log("tasks: ", tasks);
-      console.log("meshTask: ", meshTask);
+      // console.log("tasks: ", tasks);
+      // console.log("meshTask: ", meshTask);
 
       this.processMeshes(
         position,

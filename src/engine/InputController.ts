@@ -1,5 +1,6 @@
 import {
-    ActionEvent, ActionManager, ExecuteCodeAction, MeshBuilder, PickingInfo, Ray, RayHelper, Vector3
+    ActionEvent, ActionManager, ExecuteCodeAction, KeyboardEventTypes, MeshBuilder, PickingInfo,
+    Ray, RayHelper, Vector3
 } from '@babylonjs/core';
 
 import { SceneController } from './SceneController';
@@ -26,13 +27,13 @@ export const createInputController = (sc: SceneController) => {
   rayHelper.show(sc.scene);
   var inputMap: Record<ActionEvent["sourceEvent"]["key"], ActionEvent | false> =
     {};
-    var hitInfo:Array<PickingInfo>
+  var hitInfo: Array<PickingInfo>;
 
   sc.scene.registerBeforeRender(function () {
     // box.rotation.y += .01;
     if (!sc.mapController?.meshDict.ground.mesh) return;
     hitInfo = ray.intersectsMeshes(sc.mapController?.meshDict.ground.allMeshes);
-    sc.mapController.setGroundHitInfo(hitInfo)
+    sc.mapController.setGroundHitInfo(hitInfo);
 
     if (hitInfo.length && hitInfo[0].pickedPoint) {
       sphere.setEnabled(true);
@@ -52,6 +53,21 @@ export const createInputController = (sc: SceneController) => {
     })
   );
 
+  sc.scene.onKeyboardObservable.add((kbInfo) => {
+    console.log("kbInfo: ", kbInfo);
+    switch (kbInfo.type) {
+      case KeyboardEventTypes.KEYDOWN:
+        if (kbInfo.event.code === "Escape") {
+          sc.guiController?.toggleMainMenu()
+          // console.log("Space was pressed once!");
+        }
+        break;
+        // case BABYLON.KeyboardEventTypes.KEYUP:
+        //   // Можно отлавливать отпускание
+        break;
+    }
+  });
+
   sc.scene.actionManager.registerAction(
     new ExecuteCodeAction(ActionManager.OnKeyUpTrigger, function (evt) {
       inputMap[evt.sourceEvent.code] =
@@ -65,10 +81,9 @@ export const createInputController = (sc: SceneController) => {
     if (onGround) {
       velocity.y = Math.max(0, velocity.y);
       isJumping = false;
-      sc.soundController.stopFall()
-
+      sc.soundController.stopFall();
     } else {
-      sc.soundController.playFall()
+      sc.soundController.playFall();
     }
     if (inputMap["Space"] && onGround) {
       // console.log(hitInfo)
@@ -100,7 +115,7 @@ export const createInputController = (sc: SceneController) => {
       speedMult = 4;
     }
     if (onGround && inputMap["KeyW"]) {
-      sc.soundController.playFootsteps(!!inputMap.ShiftLeft)
+      sc.soundController.playFootsteps(!!inputMap.ShiftLeft);
       // sc.physEngine.getTimeStep()
       // console.log('sc.physEngine.getTimeStep(): ', sc.physEngine.getTimeStep());
       // if (sc.soundController.Sounds.step1.sound?.state !== SoundState.Started) {
@@ -134,5 +149,8 @@ export const createInputController = (sc: SceneController) => {
       sc.playerController.mesh.rotate(Vector3.Up(), heroRotationSpeed);
       keydown = true;
     }
+    // if ('Escape' in inputMap&&inputMap['Escape'] ) {
+    //   sc.guiController?.toggleMainMenu()
+    // }
   });
 };
