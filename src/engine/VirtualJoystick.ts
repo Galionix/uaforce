@@ -29,8 +29,8 @@ export class FreeCameraTouchVirtualJoystickInput extends BaseCameraPointersInput
   // @ts-ignore
 
   joystickContainer: Container;
+  activePointers = new Map<number, "joystick" | "swipe">();
   // @ts-ignore
-
   joystickOuterCirce;
   // @ts-ignore
 
@@ -150,14 +150,17 @@ export class FreeCameraTouchVirtualJoystickInput extends BaseCameraPointersInput
   }
 
   onTouch(point: Nullable<PointerTouch>, offsetX: number, offsetY: number) {
-    if (point?.pointerId === this.joystickPointerId) {
-      // point refer to global inner window canvas, we need to convert it to local render canvas
+    if (!point) return;
+
+    const mode = this.activePointers.get(point.pointerId);
+
+    if (mode === "joystick") {
       this.onTouchJoystick(
         new Vector2(point.x, point.y).subtractInPlace(
           this.joystickButtonDownPosOffset
         )
       );
-    } else {
+    } else if (mode === "swipe") {
       this.onTouchSwipe(new Vector2(offsetX, offsetY));
     }
   }
@@ -191,29 +194,33 @@ export class FreeCameraTouchVirtualJoystickInput extends BaseCameraPointersInput
     //   ((directionAdjust * touchOffset.x) / this.screenSize.x) *
     //   this.SWIPE_SENSIBILITY;
     // this.camera.cameraRotation.x +=
-      //   (touchOffset.y / this.screenSize.x) * this.SWIPE_SENSIBILITY;
-      const directionAdjust = 1; // обычно 1, можно расширить если сцена зеркалится
+    //   (touchOffset.y / this.screenSize.x) * this.SWIPE_SENSIBILITY;
+    const directionAdjust = 1; // обычно 1, можно расширить если сцена зеркалится
 
-      const deltaAlpha =
-        ((directionAdjust * touchOffset.x) / this.screenSize.x) *
-        this.SWIPE_SENSIBILITY;
+    const deltaAlpha =
+      ((directionAdjust * touchOffset.x) / this.screenSize.x) *
+      this.SWIPE_SENSIBILITY;
 
-      const deltaBeta =
-        (touchOffset.y / this.screenSize.x) *
-        this.SWIPE_SENSIBILITY;
+    const deltaBeta =
+      (touchOffset.y / this.screenSize.x) * this.SWIPE_SENSIBILITY;
 
-      if ("alpha" in this.camera && "beta" in this.camera) {
-        this.camera.alpha += deltaAlpha;
-        this.camera.beta += deltaBeta;
-      }
+    if ("alpha" in this.camera && "beta" in this.camera) {
+      this.camera.alpha += deltaAlpha;
+      this.camera.beta += deltaBeta;
+    }
   }
 
   onButtonDown(evt: IPointerEvent) {
     if (
       evt.offsetX <
       this.screenSize.x * this.JOYSTICK_TOUCH_AREA_HORIZONTAL_SCREEN_SHARE
-    )
+    ) {
+      this.activePointers.set(evt.pointerId, "joystick");
       this.onButtonDownJoystick(evt);
+    } else {
+      this.activePointers.set(evt.pointerId, "swipe");
+      // можешь сохранить начальную точку, если нужно
+    }
   }
 
   onButtonDownJoystick(evt: IPointerEvent) {
@@ -232,7 +239,13 @@ export class FreeCameraTouchVirtualJoystickInput extends BaseCameraPointersInput
   }
 
   onButtonUp(evt: IPointerEvent) {
-    if (evt.pointerId === this.joystickPointerId) this.onButtonUpJoystick();
+    const mode = this.activePointers.get(evt.pointerId);
+
+    if (mode === "joystick") {
+      this.onButtonUpJoystick();
+    }
+
+    this.activePointers.delete(evt.pointerId);
   }
 
   onButtonUpJoystick() {
