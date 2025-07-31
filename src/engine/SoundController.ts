@@ -68,9 +68,9 @@ export class SoundController {
     console.log("this._SoundsAudios: ", this._SoundsAudios);
     // Wait until audio engine is ready to play sounds.
     await audioEngine.unlockAsync();
-    this.SoundsAudios.sfx.player.footsteps.stepstone_3.setVolume(0.3);
-    this.SoundsAudios.sfx.player.footsteps.stepstone_4.setVolume(0.3);
-    this.SoundsAudios.sfx.player.footsteps.stepstone_5.setVolume(0.3);
+    this.SoundsAudios.sfx.player.footsteps.stepstone_3.setVolume(0.1);
+    this.SoundsAudios.sfx.player.footsteps.stepstone_4.setVolume(0.1);
+    this.SoundsAudios.sfx.player.footsteps.stepstone_5.setVolume(0.1);
 
     this.footstepsSounds = [
       this.SoundsAudios.sfx.player.footsteps.stepstone_3,
