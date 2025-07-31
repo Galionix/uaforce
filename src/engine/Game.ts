@@ -4,6 +4,7 @@ import { CameraController } from './CameraController';
 import { MapController } from './MapController';
 import { SceneController } from './SceneController';
 import { SoundController } from './SoundController';
+import { FreeCameraTouchVirtualJoystickInput } from './VirtualJoystick';
 
 export class Game {
   private _canvas;
@@ -14,6 +15,11 @@ export class Game {
   private _scene: Scene;
   soundController: SoundController;
   private _mapController: MapController;
+  isTouchDevice() {
+    const res = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    // alert(res)
+    return res;
+  }
   // public resourceLoaderController: ResourceLoaderController
   constructor(
     canvas: HTMLCanvasElement,
@@ -40,6 +46,16 @@ export class Game {
     );
     this._scene = this._sceneController.scene;
     this._camera = new CameraController(this._canvas, this._scene);
+
+    if (this.isTouchDevice()) {
+
+
+      this._camera.camera.inputs.clear()
+      this._camera.camera.inputs.add(new FreeCameraTouchVirtualJoystickInput())
+      this._camera.camera.attachControl(canvas, true);
+    }
+
+
     this._sceneController.testScene(this._camera.camera);
     this._mapController = new MapController({
       scene: this._scene,
