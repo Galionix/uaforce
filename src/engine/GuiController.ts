@@ -34,7 +34,7 @@ export class GuiController {
     const burger = this.getGuiControlOrFail<TextBlock>("burger");
     const textBlock = this.getGuiControlOrFail<TextBlock>("Textblock");
 
-    textBlock.onPointerClickObservable.addOnce(() => {
+    textBlock.onPointerClickObservable.add(() => {
       this.toggleMainMenu()
     })
     burger.isVisible = this.isTouchDevice();
