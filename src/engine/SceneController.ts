@@ -27,7 +27,8 @@ export class SceneController {
   get playerController() {
     return this._playerController;
   }
-  constructor(engine: Engine, hk: HavokPlugin, soundController: SoundController) {
+  canvas: HTMLCanvasElement
+  constructor(engine: Engine, hk: HavokPlugin, soundController: SoundController, canvas: HTMLCanvasElement) {
     this._scene = new Scene(engine);
     this.soundController = soundController
     this._scene.collisionsEnabled = true;
@@ -35,7 +36,7 @@ export class SceneController {
     this._engine = engine;
     this.physEngine = hk;
     this.guiController = new GuiController(this)
-
+    this.canvas = canvas
     // todo: this comes after physics
     this._playerController = new PlayerController(this._scene, hk, this.soundController);
     // this.createInput();

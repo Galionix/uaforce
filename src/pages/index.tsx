@@ -50,7 +50,7 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div>
       {showButton ? (
         <div id="global-loading">
           <button
@@ -78,6 +78,6 @@ export default function Home() {
         ref={canvasRef}
         style={{ width: "100%", height: "100vh" }}
       ></canvas>
-    </>
+    </div>
   );
 }

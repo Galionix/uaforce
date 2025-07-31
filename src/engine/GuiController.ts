@@ -6,6 +6,7 @@ export class GuiController {
   sceneController: SceneController;
   private gui?: AdvancedDynamicTexture;
 
+  isFullscreen = false
   constructor(sceneController: SceneController) {
     this.sceneController = sceneController;
   }
@@ -15,8 +16,8 @@ export class GuiController {
       true,
       this.sceneController.scene
     );
-    // let loadedGUI = await advancedTexture.parseFromSnippetAsync("4O9F56#5");
-    let loadedGUI = await advancedTexture.parseFromURLAsync('guiTexture (4).json')
+    let loadedGUI = await advancedTexture.parseFromSnippetAsync("4O9F56#6");
+    // let loadedGUI = await advancedTexture.parseFromURLAsync('guiTexture (4).json')
 
     this.gui = loadedGUI;
 
@@ -27,6 +28,7 @@ export class GuiController {
     // alert(res)
     return res
   }
+
   prepareMenus() {
     const MainMenu = this.getGuiControlOrFail<TextBlock>("MainMenu");
     MainMenu.isVisible = false;
@@ -44,6 +46,21 @@ export class GuiController {
       const MainMenu = this.getGuiControlOrFail<TextBlock>("MainMenu");
       MainMenu.isVisible = false;
     })
+
+    const fulscreen = this.getGuiControlOrFail('Fullscreen');
+
+    fulscreen.onPointerClickObservable.add(() => {
+      if (!this.isFullscreen) {
+        // this.sceneController.
+        this.sceneController.canvas.parentElement?.requestFullscreen();
+            // canvasParent.requestFullscreen();
+            this.isFullscreen = true;
+        }
+        else {
+            document.exitFullscreen();
+            this.isFullscreen = false;
+        }
+    })
   }
   toggleMainMenu() {
     const MainMenu = this.getGuiControlOrFail<TextBlock>("MainMenu");
@@ -52,7 +69,7 @@ export class GuiController {
   getGuiControlOrFail<T extends Control>(controlName: string): T {
     if (!this.gui) throw new Error("no GUI");
     const tb = this.gui.getControlByName(controlName);
-    if (!tb) throw new Error("no Textblock in GUI");
+    if (!tb) throw new Error("no "+controlName+" in GUI");
     return tb as T;
   }
   setCurrentLocation(location: string) {

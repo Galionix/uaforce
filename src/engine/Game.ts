@@ -35,7 +35,8 @@ export class Game {
     this._sceneController = new SceneController(
       this._engine,
       hk,
-      this.soundController
+      this.soundController,
+      canvas
     );
     this._scene = this._sceneController.scene;
     this._camera = new CameraController(this._canvas, this._scene);
