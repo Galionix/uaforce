@@ -6,7 +6,7 @@ export class GuiController {
   sceneController: SceneController;
   private gui?: AdvancedDynamicTexture;
 
-  isFullscreen = false
+  isFullscreen = false;
   constructor(sceneController: SceneController) {
     this.sceneController = sceneController;
   }
@@ -21,12 +21,12 @@ export class GuiController {
 
     this.gui = loadedGUI;
 
-    this.prepareMenus()
+    this.prepareMenus();
   }
   isTouchDevice() {
-    const res =  ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    const res = "ontouchstart" in window || navigator.maxTouchPoints > 0;
     // alert(res)
-    return res
+    return res;
   }
 
   prepareMenus() {
@@ -37,30 +37,36 @@ export class GuiController {
     const textBlock = this.getGuiControlOrFail<TextBlock>("Textblock");
 
     textBlock.onPointerClickObservable.add(() => {
-      this.toggleMainMenu()
-    })
+      this.toggleMainMenu();
+    });
     burger.isVisible = this.isTouchDevice();
-    console.log('MainMenu: ', MainMenu);
+    console.log("MainMenu: ", MainMenu);
     const continue_game = this.getGuiControlOrFail<TextBlock>("continue_game");
     continue_game.onPointerClickObservable.add(() => {
       const MainMenu = this.getGuiControlOrFail<TextBlock>("MainMenu");
       MainMenu.isVisible = false;
-    })
+    });
 
-    const fulscreen = this.getGuiControlOrFail('Fullscreen');
+    const fulscreen = this.getGuiControlOrFail("Fullscreen");
 
     fulscreen.onPointerClickObservable.add(() => {
       if (!this.isFullscreen) {
-        // this.sceneController.
         this.sceneController.canvas.parentElement?.requestFullscreen();
-            // canvasParent.requestFullscreen();
-            this.isFullscreen = true;
-        }
-        else {
-            document.exitFullscreen();
-            this.isFullscreen = false;
-        }
-    })
+        this.isFullscreen = true;
+      } else {
+        document.exitFullscreen();
+        this.isFullscreen = false;
+      }
+      // adt is your AdvancedDynamicTexture, engine is your Babylon.js engine
+      window.addEventListener("resize", () => {
+        if (!this.gui) return;
+
+        this.gui.scaleTo(
+          this.sceneController._engine.getRenderWidth(),
+          this.sceneController._engine.getRenderHeight()
+        );
+      });
+    });
   }
   toggleMainMenu() {
     const MainMenu = this.getGuiControlOrFail<TextBlock>("MainMenu");
@@ -69,7 +75,7 @@ export class GuiController {
   getGuiControlOrFail<T extends Control>(controlName: string): T {
     if (!this.gui) throw new Error("no GUI");
     const tb = this.gui.getControlByName(controlName);
-    if (!tb) throw new Error("no "+controlName+" in GUI");
+    if (!tb) throw new Error("no " + controlName + " in GUI");
     return tb as T;
   }
   setCurrentLocation(location: string) {

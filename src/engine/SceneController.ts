@@ -10,7 +10,7 @@ import { SoundController } from './SoundController';
 
 export class SceneController {
   private _scene: Scene;
-  private _engine: Engine;
+  _engine: Engine;
   private _playerController: PlayerController;
   private _mapController?: MapController;
    guiController?: GuiController;

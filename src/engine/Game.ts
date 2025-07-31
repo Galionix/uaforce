@@ -47,6 +47,11 @@ export class Game {
     });
     this._sceneController.setMapController(this._mapController);
     this._sceneController.createInput();
+    const cnvs = document.getElementById('canvas') as HTMLElement
+    const ro = new ResizeObserver((entries) => {
+      this._engine.resize()
+    })
+    ro.observe(cnvs)
     this._engine.runRenderLoop(() => {
       this._scene.render();
     });
