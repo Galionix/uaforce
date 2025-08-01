@@ -14,6 +14,8 @@ type AudioMap = ReplaceLeaves<typeof RESOURCES.audio, StaticSound>;
 export class SoundController {
   initialized = false;
   soundEngine?: AudioEngineV2;
+  musicVolume = 1;
+  sfxVolume = 1;
   resourceStore: ResourceStore;
   constructor() {
     this.resourceStore = new ResourceStore();
@@ -61,6 +63,42 @@ export class SoundController {
 
     return result;
   }
+
+  setSFXVolume(value?: number) {
+    if (value !== undefined) {
+      this.sfxVolume = value;
+    }
+    this.SoundsAudios.sfx.player.footsteps.stepstone_3.setVolume(
+      0.1 * this.sfxVolume
+    );
+    this.SoundsAudios.sfx.player.footsteps.stepstone_4.setVolume(
+      0.1 * this.sfxVolume
+    );
+    this.SoundsAudios.sfx.player.footsteps.stepstone_5.setVolume(
+      0.1 * this.sfxVolume
+    );
+    this.SoundsAudios.sfx.ui.click.setVolume(
+      0.1 * this.sfxVolume
+    );
+    this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].setVolume(
+      0.5 * this.sfxVolume
+    );
+  }
+  // player(){
+  //   return {
+  //     guiClick : () =>{
+  //       this.SoundsAudios.sfx.ui.click.play()
+  //     }
+  //   }
+  // }
+  setMusicVolume(value?: number) {
+    if (value !== undefined) {
+      this.musicVolume = value;
+    }
+    this.SoundsAudios.music["Medieval Music – Cobblestone Village"].setVolume(
+      0.1 * this.musicVolume
+    );
+  }
   async asyncInit() {
     const audioEngine = await CreateAudioEngineAsync();
 
@@ -68,9 +106,6 @@ export class SoundController {
     console.log("this._SoundsAudios: ", this._SoundsAudios);
     // Wait until audio engine is ready to play sounds.
     await audioEngine.unlockAsync();
-    this.SoundsAudios.sfx.player.footsteps.stepstone_3.setVolume(0.1);
-    this.SoundsAudios.sfx.player.footsteps.stepstone_4.setVolume(0.1);
-    this.SoundsAudios.sfx.player.footsteps.stepstone_5.setVolume(0.1);
 
     this.footstepsSounds = [
       this.SoundsAudios.sfx.player.footsteps.stepstone_3,
@@ -79,12 +114,13 @@ export class SoundController {
     ];
     this.initialized = true;
     this.soundEngine = audioEngine;
+    this.setSFXVolume();
+    this.setMusicVolume()
   }
 
   playTheme() {
     // console.log('this.Sounds.theme: ', this.Sounds.theme);
-    this.SoundsAudios.music['Medieval Music – Cobblestone Village'].setVolume(0.1);
-    this.SoundsAudios.music['Medieval Music – Cobblestone Village'].play();
+    this.SoundsAudios.music["Medieval Music – Cobblestone Village"].play();
   }
   get engine() {
     return this.soundEngine;

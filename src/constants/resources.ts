@@ -15,6 +15,9 @@ export const RESOURCES = {
           "stepstone_4": "audio/sfx/player/footsteps/stepstone_4.wav",
           "stepstone_5": "audio/sfx/player/footsteps/stepstone_5.wav"
         }
+      },
+      "ui": {
+        "click": "audio/sfx/ui/click.mp3"
       }
     }
   }
@@ -25,5 +28,6 @@ export const RESOURCE_PATHS = [
   "audio/sfx/player/behaviour/fallSound(wind2).mp3",
   "audio/sfx/player/footsteps/stepstone_3.wav",
   "audio/sfx/player/footsteps/stepstone_4.wav",
-  "audio/sfx/player/footsteps/stepstone_5.wav"
+  "audio/sfx/player/footsteps/stepstone_5.wav",
+  "audio/sfx/ui/click.mp3"
 ];

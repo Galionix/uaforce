@@ -58,7 +58,9 @@ export const createInputController = (sc: SceneController) => {
     switch (kbInfo.type) {
       case KeyboardEventTypes.KEYDOWN:
         if (kbInfo.event.code === "Escape") {
-          sc.guiController?.toggleMainMenu()
+          sc.soundController.SoundsAudios.sfx.ui.click.play();
+
+          sc.guiController?.toggleMainMenu();
           // console.log("Space was pressed once!");
         }
         break;
