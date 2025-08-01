@@ -68,15 +68,16 @@ export class SoundController {
     if (value !== undefined) {
       this.sfxVolume = value;
     }
-    this.SoundsAudios.sfx.player.footsteps.stepstone_3.setVolume(
-      0.1 * this.sfxVolume
-    );
-    this.SoundsAudios.sfx.player.footsteps.stepstone_4.setVolume(
-      0.1 * this.sfxVolume
-    );
-    this.SoundsAudios.sfx.player.footsteps.stepstone_5.setVolume(
-      0.1 * this.sfxVolume
-    );
+    this.footstepsSounds.forEach(sound=>sound.setVolume(0.3 * this.sfxVolume))
+    // this.SoundsAudios.sfx.player.footsteps.stepstone_3.setVolume(
+    //   0.1 * this.sfxVolume
+    // );
+    // this.SoundsAudios.sfx.player.footsteps.stepstone_4.setVolume(
+    //   0.1 * this.sfxVolume
+    // );
+    // this.SoundsAudios.sfx.player.footsteps.stepstone_5.setVolume(
+    //   0.1 * this.sfxVolume
+    // );
     this.SoundsAudios.sfx.ui.click.setVolume(
       0.1 * this.sfxVolume
     );
@@ -108,9 +109,10 @@ export class SoundController {
     await audioEngine.unlockAsync();
 
     this.footstepsSounds = [
-      this.SoundsAudios.sfx.player.footsteps.stepstone_3,
-      this.SoundsAudios.sfx.player.footsteps.stepstone_4,
-      this.SoundsAudios.sfx.player.footsteps.stepstone_5,
+      this.SoundsAudios.sfx.player.footsteps['gassy-footstep1'],
+      this.SoundsAudios.sfx.player.footsteps['grassy-footstep2'],
+      this.SoundsAudios.sfx.player.footsteps['grassy-footstep3'],
+      this.SoundsAudios.sfx.player.footsteps['grassy-footstep4'],
     ];
     this.initialized = true;
     this.soundEngine = audioEngine;

@@ -11,9 +11,10 @@ export const RESOURCES = {
           "fallSound(wind2)": "audio/sfx/player/behaviour/fallSound(wind2).mp3"
         },
         "footsteps": {
-          "stepstone_3": "audio/sfx/player/footsteps/stepstone_3.wav",
-          "stepstone_4": "audio/sfx/player/footsteps/stepstone_4.wav",
-          "stepstone_5": "audio/sfx/player/footsteps/stepstone_5.wav"
+          "gassy-footstep1": "audio/sfx/player/footsteps/gassy-footstep1.wav",
+          "grassy-footstep2": "audio/sfx/player/footsteps/grassy-footstep2.wav",
+          "grassy-footstep3": "audio/sfx/player/footsteps/grassy-footstep3.wav",
+          "grassy-footstep4": "audio/sfx/player/footsteps/grassy-footstep4.wav"
         }
       },
       "ui": {
@@ -26,8 +27,9 @@ export const RESOURCE_PATHS = [
   "audio/music/Medieval Music – Cobblestone Village.mp3",
   "audio/music/top_dungeon.mp3",
   "audio/sfx/player/behaviour/fallSound(wind2).mp3",
-  "audio/sfx/player/footsteps/stepstone_3.wav",
-  "audio/sfx/player/footsteps/stepstone_4.wav",
-  "audio/sfx/player/footsteps/stepstone_5.wav",
+  "audio/sfx/player/footsteps/gassy-footstep1.wav",
+  "audio/sfx/player/footsteps/grassy-footstep2.wav",
+  "audio/sfx/player/footsteps/grassy-footstep3.wav",
+  "audio/sfx/player/footsteps/grassy-footstep4.wav",
   "audio/sfx/ui/click.mp3"
 ];
