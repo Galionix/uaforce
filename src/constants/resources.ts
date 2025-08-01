@@ -2,6 +2,7 @@
 export const RESOURCES = {
   "audio": {
     "music": {
+      "Medieval Music – Cobblestone Village": "audio/music/Medieval Music – Cobblestone Village.mp3",
       "top_dungeon": "audio/music/top_dungeon.mp3"
     },
     "sfx": {
@@ -19,6 +20,7 @@ export const RESOURCES = {
   }
 };
 export const RESOURCE_PATHS = [
+  "audio/music/Medieval Music – Cobblestone Village.mp3",
   "audio/music/top_dungeon.mp3",
   "audio/sfx/player/behaviour/fallSound(wind2).mp3",
   "audio/sfx/player/footsteps/stepstone_3.wav",

@@ -83,8 +83,8 @@ export class SoundController {
 
   playTheme() {
     // console.log('this.Sounds.theme: ', this.Sounds.theme);
-    this.SoundsAudios.music.top_dungeon.setVolume(0.1);
-    // this.SoundsAudios.music.top_dungeon.play();
+    this.SoundsAudios.music['Medieval Music – Cobblestone Village'].setVolume(0.1);
+    this.SoundsAudios.music['Medieval Music – Cobblestone Village'].play();
   }
   get engine() {
     return this.soundEngine;
