@@ -1,9 +1,9 @@
-import { Scene } from "@babylonjs/core/scene";
-
 // Go big or go...
-import "@babylonjs/core/Legacy/legacy";
-import "@babylonjs/core/Debug/debugLayer";
-import "@babylonjs/inspector";
+import '@babylonjs/core/Legacy/legacy';
+import '@babylonjs/core/Debug/debugLayer';
+import '@babylonjs/inspector';
+
+import { Scene } from '@babylonjs/core/scene';
 
 /**
  * Toggles on/off the inspector in the scene.
@@ -17,7 +17,7 @@ export function toggleDebugMode(scene: Scene): void {
     }
     else {
         scene.debugLayer.show({
-            embedMode: true
+            // embedMode: true
         });
     }
 }

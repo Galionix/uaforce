@@ -3,7 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
-
+  api: {
+    responseLimit: false,
+  },
   webpack(config, { isServer }) {
 
     if (!isServer) {

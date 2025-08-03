@@ -1,7 +1,6 @@
 import {
     AbstractAssetTask, AbstractMesh, Mesh, MeshAssetTask, MeshBuilder, PhysicsAggregate,
-    PhysicsShapeType, PickingInfo, Scene, StandardMaterial, Texture, TextureAssetTask,
-    TransformNode, Vector3
+    PhysicsShapeType, PickingInfo, Scene, Texture, TextureAssetTask, TransformNode, Vector3
 } from '@babylonjs/core';
 import { initialChunkPos, mapData } from '@ex/constants/chunksData';
 import { findBy } from '@ex/utils/findBy';
@@ -21,7 +20,7 @@ const mapBounds = {
 const LOAD_THRESHOLD = 70.0;
 
 export class MapController {
-  chunksData = mapData;
+  // chunksData = mapData;
   currentChunk = initialChunkPos;
   globalLoading = true;
   loaded = false;
@@ -226,8 +225,8 @@ export class MapController {
         } else {
           groundMesh = mesh;
           console.log("extensionDir: ", extensionDir);
-          mesh.position.x = extensionDir.x * 200;
-          mesh.position.z = extensionDir.y * -200;
+          mesh.position.x = extensionDir.x * 100;
+          mesh.position.z = extensionDir.y * -100;
         }
       }
       // console.log("mesh.id: ", mesh.id);
@@ -236,9 +235,10 @@ export class MapController {
     console.log("groundMesh: ", groundMesh);
     if (!groundMesh) return;
     //   add ground material
-    const roofMat = new StandardMaterial("roofMat", this._scene);
-    roofMat.diffuseTexture = texture;
-    (groundMesh as Mesh).material = roofMat;
+    // const roofMat = new StandardMaterial("roofMat", this._scene);
+    // roofMat.diffuseTexture = texture;
+    // (groundMesh as Mesh).material = roofMat;
+    this._sceneController.game._camera.setGroundMesh(groundMesh);
     (groundMesh as Mesh).checkCollisions = true;
     // (groundMesh as Mesh).phy
     const groundAggregate = new PhysicsAggregate(
@@ -255,7 +255,7 @@ export class MapController {
         // console.log("tnode: ", tnode);
         this._sceneController.setPlayerPos(
           tnode.position.clone(),
-          tnode.metadata.gltf.extras
+          tnode.metadata.gltf?.extras
         );
       }
 

@@ -9,7 +9,7 @@ import { FreeCameraTouchVirtualJoystickInput } from './VirtualJoystick';
 export class Game {
   private _canvas;
   private _sceneController: SceneController;
-  private _camera: CameraController;
+   _camera: CameraController;
   private _engine;
   private _debug: boolean;
   private _scene: Scene;
@@ -42,7 +42,8 @@ export class Game {
       this._engine,
       hk,
       this.soundController,
-      canvas
+      canvas,
+      this
     );
     this._scene = this._sceneController.scene;
     this._camera = new CameraController(this._canvas, this._scene);
