@@ -1,6 +1,7 @@
 import { Engine, HavokPlugin, KeyboardInfo, Observable, Scene } from '@babylonjs/core';
 
 import { CameraController } from './CameraController';
+import { DialogController } from './DialogController';
 import { MapController } from './MapController';
 import { SceneController } from './SceneController';
 import { SoundController } from './SoundController';
@@ -8,13 +9,14 @@ import { FreeCameraTouchVirtualJoystickInput } from './VirtualJoystick';
 
 export class Game {
   private _canvas;
-  private _sceneController: SceneController;
+  _sceneController: SceneController;
    _camera: CameraController;
   private _engine;
   private _debug: boolean;
   private _scene: Scene;
   soundController: SoundController;
   private _mapController: MapController;
+  dialogController: DialogController
   isTouchDevice() {
     const res = "ontouchstart" in window || navigator.maxTouchPoints > 0;
     // alert(res)
@@ -45,6 +47,7 @@ export class Game {
       canvas,
       this
     );
+    this.dialogController = new DialogController(this)
     this._scene = this._sceneController.scene;
     this._camera = new CameraController(this._canvas, this._scene);
 
@@ -73,6 +76,10 @@ export class Game {
   }
 
   async asyncInit() {
+
+    // const storyRes = await fetch('/public/npc1.json')
+    await this.dialogController.loadDialog('npc1_hello', () =>fetch('npc1.json').then(res => res.json()))
+    this.dialogController.bindEventToDialog('pressT', "npc1_hello", "npc1_hello")
 
     await this._sceneController.asyncInit();
     await this.soundController.asyncInit();
