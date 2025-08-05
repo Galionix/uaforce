@@ -122,7 +122,7 @@ export class SoundController {
 
   playTheme() {
     // console.log('this.Sounds.theme: ', this.Sounds.theme);
-    this.SoundsAudios.music["Medieval Music – Cobblestone Village"].play();
+    // this.SoundsAudios.music["Medieval Music – Cobblestone Village"].play();
   }
   get engine() {
     return this.soundEngine;

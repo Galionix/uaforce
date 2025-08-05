@@ -3,6 +3,7 @@ import {
     Ray, RayHelper, Vector3
 } from '@babylonjs/core';
 
+import { GlobalEventBus } from './event-bus';
 import { SceneController } from './SceneController';
 
 const gravity = new Vector3(0, -0.2, 0);
@@ -54,13 +55,22 @@ export const createInputController = (sc: SceneController) => {
   );
 
   sc.scene.onKeyboardObservable.add((kbInfo) => {
-    console.log("kbInfo: ", kbInfo);
     switch (kbInfo.type) {
       case KeyboardEventTypes.KEYDOWN:
         if (kbInfo.event.code === "Escape") {
           sc.soundController.SoundsAudios.sfx.ui.click.play();
 
           sc.guiController?.toggleMainMenu();
+          // console.log("Space was pressed once!");
+        }
+        if (kbInfo.event.code === "KeyT") {
+          GlobalEventBus.emit('dialog:trigger', {
+            eventId: 'pressT',
+            // args: { reputation: 2 }
+          });
+          // sc.soundController.SoundsAudios.sfx.ui.click.play();
+
+          // sc.guiController?.toggleMainMenu();
           // console.log("Space was pressed once!");
         }
         break;
