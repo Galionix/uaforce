@@ -1,5 +1,6 @@
 import { AbstractAssetTask, AssetsManager, FilesInput, Scene } from '@babylonjs/core';
 
+import { MapController } from './MapController';
 import { ChunkStore } from './stores/ChunkStore';
 
 export class ChunksLoaderController {
@@ -8,9 +9,11 @@ export class ChunksLoaderController {
   private onSuccess: (tasks: AbstractAssetTask[]) => void;
   private scene: Scene;
   private loadedChunks: string[] = [];
+  private mapController: MapController;
 
-  constructor(onSuccess: (tasks: AbstractAssetTask[]) => void, scene: Scene) {
+  constructor(onSuccess: (tasks: AbstractAssetTask[]) => void, scene: Scene, mapController:MapController) {
     this.chunkStore = new ChunkStore();
+    this.mapController = mapController;
     this.onSuccess = onSuccess;
 
     this.scene = scene;
@@ -25,10 +28,27 @@ export class ChunksLoaderController {
         Authorization: `Bearer ${`userToken`}`,
       },
     });
+    const reader = response.body?.getReader();
+    if (!reader) {
+      throw new Error("Failed to get response reader");
+    }
+    // Track progress if needed
+    // await this.trackProgress(response, reader);
+    // need to find a way to track loading progress
+    const contentLength = response.headers.get('Content-Length');
+    if (contentLength) {
+      console.log(`Total content length: ${contentLength} bytes`);
+    }
 
     if (!response.ok) throw new Error("Chunk load failed");
 
-    const blob = await response.blob();
+    const blob = await this.trackProgressAndGetBlob(chunkId, response, reader);
+
+
+
+    // Track loading progress
+    // const reader = response.body?.getReader();
+    // await this.trackProgress(response, reader);
 
     return blob;
   }
@@ -120,5 +140,59 @@ export class ChunksLoaderController {
     assetsManager.onFinish = this.onSuccess;
 
     assetsManager.load();
+  }
+  private async trackProgressAndGetBlob(
+    chunkId: string,
+    response: Response,
+    reader: ReadableStreamDefaultReader<Uint8Array>
+  ): Promise<Blob> {
+    let receivedBytes = 0;
+    const contentLength = response.headers.get('Content-Length');
+    const chunks: Uint8Array[] = [];
+
+    if (contentLength) {
+      console.log(`Total content length: ${contentLength} bytes`);
+    } else {
+      console.log('Content-Length header not available');
+    }
+
+    // Читаем поток по частям и сохраняем данные
+    while (true) {
+      const { done, value } = await reader.read();
+
+      if (done) {
+        break;
+      }
+
+      chunks.push(value); // Сохраняем каждый чанк
+      receivedBytes += value.length;
+
+      // Показываем прогресс
+      if (contentLength) {
+        const percentage = (receivedBytes / parseInt(contentLength)) * 100;
+        this.mapController.setLoadInfo({
+          current: receivedBytes,
+          total: parseInt(contentLength),
+          message: `Loading chunk ${chunkId} ${receivedBytes} bytes`,
+        });
+        console.log(`Download progress: ${percentage.toFixed(2)}%`);
+      } else {
+        console.log(`Received ${receivedBytes} bytes`);
+      }
+    }
+
+    // Создаем blob из всех собранных чанков
+    const uint8Array = new Uint8Array(receivedBytes);
+    let offset = 0;
+
+    for (const chunk of chunks) {
+      uint8Array.set(chunk, offset);
+      offset += chunk.length;
+    }
+
+    // Определяем MIME тип на основе формата
+    // const mimeType = format === 'glb' ? 'model/gltf-binary' : 'image/png';
+
+    return new Blob([uint8Array], { type: 'model/gltf-binary' });
   }
 }

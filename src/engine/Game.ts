@@ -27,7 +27,8 @@ export class Game {
     canvas: HTMLCanvasElement,
     hk: HavokPlugin,
     // particleTextureURL: string,
-    debug = false
+    debug = false,
+    setLoadInfo: React.Dispatch<React.SetStateAction<{ current: number; total: number; message: string; }>>
   ) {
     this._debug = debug;
     this._canvas = canvas;
@@ -62,6 +63,7 @@ export class Game {
     this._mapController = new MapController({
       scene: this._scene,
       sceneController: this._sceneController,
+      setLoadInfo
     });
     this._sceneController.setMapController(this._mapController);
     this._sceneController.createInput();

@@ -29,13 +29,17 @@ export class MapController {
   loadedChunks: string[] = [];
   groundHitInfo?: PickingInfo;
   meshDict;
+  setLoadInfo: React.Dispatch<React.SetStateAction<{ current: number; total: number; message: string; }>>;
   constructor({
     scene,
     sceneController,
+    setLoadInfo
   }: {
     scene: Scene;
     sceneController: SceneController;
+    setLoadInfo: React.Dispatch<React.SetStateAction<{ current: number; total: number; message: string; }>>;
   }) {
+    this.setLoadInfo = setLoadInfo;
     const defaultMesh = MeshBuilder.CreateBox("ground", {
       size: 2,
     }) as AbstractMesh;
@@ -338,7 +342,7 @@ export class MapController {
       // this.processMeshes,
       onSuccess,
       // this.processTransformNodes,
-      this._sceneController.scene
+      this._sceneController.scene, this
     );
     const load = async () => {
       await loader.loadChunk(position);
@@ -379,7 +383,8 @@ export class MapController {
       // this.processMeshes,
       onSuccess,
       // this.processTransformNodes,
-      this._sceneController.scene
+      this._sceneController.scene,
+      this
     );
     const load = async () => {
       await loader.loadChunk(position);

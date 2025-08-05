@@ -32,7 +32,7 @@ export default async function handler(
       Key: `chunks/${chunkId}`,
     });
 
-    const { Body, ContentType } = await s3.send(command);
+    const { Body, ContentType, ContentLength } = await s3.send(command);
 
     if (!Body || !(Body instanceof Readable)) {
       throw new Error('Invalid response body');
@@ -43,6 +43,9 @@ export default async function handler(
       format === 'png' ? 'image/png' : 'model/gltf-binary';
 
     res.setHeader('Content-Type', ContentType || fallbackContentType);
+    const contentLength = ContentLength || 0; // Use ContentLength from the response
+    console.log('contentLength: ', contentLength);
+    res.setHeader('Content-Length', contentLength.toString());
 
     // Потоковая передача
     Body.pipe(res);

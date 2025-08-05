@@ -15,7 +15,8 @@ const manualStart = process.env.NODE_ENV === 'production';
 const debug = true;
 
 const initializeBabylon = async (
-  canvasRef: RefObject<HTMLCanvasElement | null>
+  canvasRef: RefObject<HTMLCanvasElement | null>,
+  setLoadInfo: React.Dispatch<React.SetStateAction<{ current: number; total: number; message: string; }>>
 ) => {
   if (!canvasRef.current) return;
   const havokInstance = await HavokPhysics();
@@ -27,7 +28,8 @@ const initializeBabylon = async (
     canvasRef.current,
     hk,
     /* this is to load or not debug layer, need to fix to do it auto mode. for dev - include, for production - disable*/
-    true
+    true,
+    setLoadInfo
   );
   await game.asyncInit();
   if (debug) await game.toggleDebugLayer();
@@ -46,7 +48,7 @@ export default function Home() {
   useEffect(() => {
     if (manualStart) return;
     loadAllResources(setLoadInfo, () => setShowButton(false)).then(() =>
-      initializeBabylon(canvasRef)
+      initializeBabylon(canvasRef, setLoadInfo)
     );
   }, []);
 
@@ -58,7 +60,7 @@ export default function Home() {
             onClick={async () => {
               await loadAllResources(setLoadInfo, () =>
                 setShowButton(false)
-              ).then(() => initializeBabylon(canvasRef));
+              ).then(() => initializeBabylon(canvasRef, setLoadInfo));
             }}
           >
             Start
