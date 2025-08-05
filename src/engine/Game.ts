@@ -80,8 +80,8 @@ export class Game {
   async asyncInit() {
 
     // const storyRes = await fetch('/public/npc1.json')
-    await this.dialogController.loadDialog('npc1_hello', () =>fetch('npc1.json').then(res => res.json()))
-    this.dialogController.bindEventToDialog('pressT', "npc1_hello", "npc1_hello")
+    await this.dialogController.loadDialog('npc2_shop', () =>fetch('npc1.json').then(res => res.json()))
+    this.dialogController.bindEventToDialog('pressT', "npc2_shop", "npc2_shop")
 
     await this._sceneController.asyncInit();
     await this.soundController.asyncInit();

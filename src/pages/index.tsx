@@ -10,8 +10,8 @@ import { Button } from '@ex/ReactComponents/Button/Button';
 import { ProgressBar } from '@ex/ReactComponents/ProgressBar/ProgressBar';
 
 // import { ResourceLoaderController } from './ResourceLoaderController';
-const manualStart = process.env.NODE_ENV === 'production';
-// const manualStart = true;
+// const manualStart = process.env.NODE_ENV === 'production';
+const manualStart = true;
 const debug = true;
 
 const initializeBabylon = async (

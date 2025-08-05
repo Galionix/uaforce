@@ -6,6 +6,8 @@ export type ChunkPortalsDefinition = {
   yEnd: number;
   chunkName?: string;
 };
+
+// export type BasicCutsceneInfo
 export type ChunksData = Record<
   string,
   {
@@ -55,6 +57,7 @@ export type ChunksData = Record<
       };
     };
     portals: ChunkPortalsDefinition[];
+    // cutscenes:[]
   }
 >;
 
