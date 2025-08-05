@@ -6,6 +6,7 @@ import { registerBuiltInLoaders } from '@babylonjs/loaders/dynamic';
 import { RESOURCE_PATHS } from '@ex/constants/resources';
 import { Game } from '@ex/engine/Game';
 import { loadAllResources } from '@ex/engine/stores/loadAllResources';
+import { Button } from '@ex/ReactComponents/Button/Button';
 import { ProgressBar } from '@ex/ReactComponents/ProgressBar/ProgressBar';
 
 // import { ResourceLoaderController } from './ResourceLoaderController';
@@ -71,6 +72,15 @@ export default function Home() {
             message={loadInfo.message}
             total={loadInfo.total}
           />
+          <Button text='Clear cache and reload' onClick={() => {
+            // clear indexeddb cache
+            indexedDB.deleteDatabase('ChunksDB');
+            indexedDB.deleteDatabase('ResourcesDB');
+            // indexedDB.deleteDatabase('ex-dialogs');
+            // indexedDB.deleteDatabase('ex-maps');
+            window.location.reload()
+          }}
+            />
         </div>
       )}
       <canvas

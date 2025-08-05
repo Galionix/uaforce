@@ -35,7 +35,9 @@ export class DialogController {
         // if(this.activeDialogs )
       this.guiController.openDialogGUI();
       const dialogResponse = this.triggerEvent(eventId, args);
+      console.log('dialogResponse: ', dialogResponse);
       if(!dialogResponse) return
+
     //   console.log('dialogResponse.text: ', dialogResponse.text);
       // console.log(this.triggerEvent(eventId, args))
       this.guiController.appendToDialogGui(
@@ -181,6 +183,7 @@ export class DialogController {
 
   // Сбросить диалог
   endDialog(meshId: string) {
-    this.activeDialogs.delete(meshId);
+    // this.activeDialogs.delete(meshId);
+    this.activeDialogId = ''
   }
 }

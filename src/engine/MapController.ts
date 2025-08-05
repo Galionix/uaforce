@@ -1,6 +1,6 @@
 import {
     AbstractAssetTask, AbstractMesh, Mesh, MeshAssetTask, MeshBuilder, PhysicsAggregate,
-    PhysicsShapeType, PickingInfo, Scene, Texture, TextureAssetTask, TransformNode, Vector3
+    PhysicsShapeType, PickingInfo, Scene, TransformNode, Vector3
 } from '@babylonjs/core';
 import { initialChunkPos, mapData } from '@ex/constants/chunksData';
 import { findBy } from '@ex/utils/findBy';
@@ -207,7 +207,7 @@ export class MapController {
   processMeshes(
     chunkXY: string,
     meshes: AbstractMesh[],
-    texture: Texture,
+    // texture: Texture,
     extensionDir?: {
       x: number;
       y: number;
@@ -291,11 +291,11 @@ export class MapController {
     const onSuccess = (tasks: AbstractAssetTask[]) => {
       const meshTask = findBy(tasks, "name", "meshTask") as MeshAssetTask;
 
-      const groundTextureTask = findBy(
-        tasks,
-        "name",
-        "groundTexture"
-      ) as TextureAssetTask;
+      // const groundTextureTask = findBy(
+      //   tasks,
+      //   "name",
+      //   "groundTexture"
+      // ) as TextureAssetTask;
 
       // console.log("tasks: ", tasks);
       //   const task = tasks[0] as MeshAssetTask;
@@ -325,7 +325,7 @@ export class MapController {
       this.processMeshes(
         position,
         meshTask.loadedMeshes,
-        groundTextureTask.texture,
+        // groundTextureTask.texture,
         extensionDir
       );
       // this.processTransformNodes(meshTask.loadedTransformNodes);
@@ -356,11 +356,11 @@ export class MapController {
       this.loadedChunks.push(position);
       const meshTask = findBy(tasks, "name", "meshTask") as MeshAssetTask;
 
-      const groundTextureTask = findBy(
-        tasks,
-        "name",
-        "groundTexture"
-      ) as TextureAssetTask;
+      // const groundTextureTask = findBy(
+      //   tasks,
+      //   "name",
+      //   "groundTexture"
+      // ) as TextureAssetTask;
 
       // console.log("tasks: ", tasks);
       // console.log("meshTask: ", meshTask);
@@ -368,7 +368,7 @@ export class MapController {
       this.processMeshes(
         position,
         meshTask.loadedMeshes,
-        groundTextureTask.texture
+        // groundTextureTask.texture
       );
       this.processTransformNodes(meshTask.loadedTransformNodes);
 

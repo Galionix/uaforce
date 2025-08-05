@@ -184,9 +184,11 @@ export class GuiController {
       text: string;
     }[]
   ) {
+
+    // TODO: this logic is messy. needs refactoring
     if (!choices.length) {
+      this.sceneController.game.dialogController.endDialog(id);
       this.closeDialogGUI();
-      // TODO: prevent user to open same dialog twice
       // this.activeDialogId
       const choseFarewell =
         this.sceneController.game.dialogController.getStoryVariables(
@@ -194,7 +196,7 @@ export class GuiController {
           "chose_farewell"
         );
       // const choseFarewell = story.variablesState.get("chose_farewell");
-      console.log("Прощался ли игрок:", choseFarewell); // true / false
+      // console.log("Прощался ли игрок:", choseFarewell); // true / false
     }
     const StackPanel = this.getDialogGuiControlOrFail<StackPanel>("StackPanel");
 

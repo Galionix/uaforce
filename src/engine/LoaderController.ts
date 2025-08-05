@@ -54,6 +54,9 @@ export class ChunksLoaderController {
         (m) => m.chunkName === position && m.ext === format
       )?.fileName;
       if (!fileName) {
+        console.log('format: ', format);
+        console.log('position: ', position);
+        console.log('metadata: ', metadata);
         throw new Error(
           "Disaster! we dont have metadata to properly fetch chunk by its filename. we need filename here and not just chunkName (coords). we dont find needed chunk in metadata!"
         );
@@ -105,14 +108,14 @@ export class ChunksLoaderController {
     );
 
     // 2) Загружаем PNG
-    const textureBlob = await this.getChunkBlob(position, "png");
-    FilesInput.FilesToLoad[`${position}-ground-texture.png`] =
-      textureBlob as File;
-    const textureURL = URL.createObjectURL(textureBlob);
-    const textureTask = assetsManager.addTextureTask(
-      "groundTexture",
-      textureURL
-    );
+    // const textureBlob = await this.getChunkBlob(position, "png");
+    // FilesInput.FilesToLoad[`${position}-ground-texture.png`] =
+    //   textureBlob as File;
+    // const textureURL = URL.createObjectURL(textureBlob);
+    // const textureTask = assetsManager.addTextureTask(
+    //   "groundTexture",
+    //   textureURL
+    // );
 
     assetsManager.onFinish = this.onSuccess;
 
