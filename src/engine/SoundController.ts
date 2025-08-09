@@ -132,15 +132,15 @@ export class SoundController {
   // }
   fallCount = 0;
   playFall() {
-    if (!this.initialized) return;
-    if (
-      this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].state !==
-      SoundState.Started
-    )
-      this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].play();
-    this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].playbackRate =
-      this.fallCount;
-    this.fallCount += 0.001;
+    // if (!this.initialized) return;
+    // if (
+    //   this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].state !==
+    //   SoundState.Started
+    // )
+    //   this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].play();
+    // this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].playbackRate =
+    //   this.fallCount;
+    // this.fallCount += 0.001;
   }
   stopFall() {
     if (!this._SoundsAudios) return;

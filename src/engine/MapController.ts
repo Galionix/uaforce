@@ -1,5 +1,5 @@
 import {
-    AbstractAssetTask, AbstractMesh, Mesh, MeshAssetTask, MeshBuilder, PhysicsAggregate,
+    AbstractAssetTask, AbstractMesh, AnimationGroup, EventState, Mesh, MeshAssetTask, MeshBuilder, PhysicsAggregate,
     PhysicsShapeType, PickingInfo, Scene, TransformNode, Vector3
 } from '@babylonjs/core';
 import { initialChunkPos, mapData } from '@ex/constants/chunksData';
@@ -7,6 +7,7 @@ import { findBy } from '@ex/utils/findBy';
 
 import { ChunksLoaderController } from './LoaderController';
 import { SceneController } from './SceneController';
+import { GlobalEventBus } from './event-bus';
 
 // import { callAndEnsure, findByIdIncludes } from "@ex/utils/getById";
 
@@ -255,12 +256,22 @@ export class MapController {
   processTransformNodes(tnodes: TransformNode[]) {
     // console.log("tnodes: ", tnodes);
     tnodes.forEach((tnode) => {
+      console.log('tnode.id: ', tnode.id);
       if (tnode.id.includes("PLAYER_SPAWN")) {
         // console.log("tnode: ", tnode);
         this._sceneController.setPlayerPos(
           tnode.position.clone(),
           tnode.metadata.gltf?.extras
         );
+      }
+      // try to initialize a camera
+      if (tnode.id === "SceneCamera") {
+        console.log('tnode: ', tnode);
+
+        // this._sceneController.game._camera.setGroundMesh(this.meshDict.ground.mesh);
+        // this._sceneController.game._camera.camera.setTarget(tnode.position);
+        // this._scene.activeCamera = this._scene.getCameraById('SceneCamera');
+        // this._sceneController.scene.activeCamera = this._scene.getCameraById('SceneCamera');
       }
 
       if (tnode.id === "Light") {
@@ -352,6 +363,85 @@ export class MapController {
     // assetsManager.onFinish = onSuccess;
     // assetsManager.load();
   };
+  playCutsceneHandler = (animGroup: AnimationGroup) => ({
+    sceneName,
+    args = {}
+  }: {
+    sceneName: string;
+    args?: Record<string, any>;
+  }) => {
+    // this method is called through bus. we need to bind to it all necessary data and process playing cutscene
+    // if this correct animation
+    if (animGroup.name === sceneName) {
+      console.log("playing cutscene: ", sceneName, "with args: ", args);
+      // animGroup.start(true, 1.0, animGroup.from, animGroup.to);
+      // set current camera to scene camera "SceneCamera"
+      // this._sceneController.game._camera.setSceneCamera(sceneName);
+      let sceneCamera = this._scene.getCameraById('Camera');
+      // continue searching for the camera
+      if (!sceneCamera) {
+        sceneCamera = this._scene.getCameraByName('Camera');
+      }
+      console.log('sceneCamera: ', sceneCamera);
+
+      // need to find camera by id, coz we have multiple cameras in scene
+      if (sceneCamera) {
+        this._scene.activeCamera = sceneCamera;
+        this._sceneController.scene.activeCamera = sceneCamera;
+        animGroup.start(false, 1.0, animGroup.from, animGroup.to);
+        animGroup.onAnimationGroupEndObservable.add((eventData: AnimationGroup, eventState: EventState) => {
+          console.log("AnimationGroup ended: ", eventData.name, "eventState: ", eventState);
+          // stop cutscene
+          GlobalEventBus.emit('cutscene:stop', {
+            sceneName: eventData.name,
+          });
+        });
+      } else {
+        console.error("Scene camera not found for cutscene: ", sceneName);
+      }
+
+      console.log('sceneCamera: ', sceneCamera);
+      // this._scene.activeCamera = sceneCamera;
+      // this._sceneController.scene.activeCamera = this._scene.getCameraByName("SceneCamera");
+
+      // animGroup.onAnimationGroupPlayObservable.add((eventData: AnimationGroup, eventState: EventState) => {
+      //   console.log("AnimationGroup started: ", eventData.name, "eventState: ", eventState);
+      // });
+    } else {
+      console.warn(
+        "cutscene animation group name does not match the requested scene name!"
+      );
+    }
+  }
+  stopCutsceneHandler = (animGroup: AnimationGroup) => ({
+    sceneName,
+    args = {}
+  }: {
+    sceneName: string;
+    args?: Record<string, any>;
+  }) => {
+    if( animGroup.name !== sceneName) {
+      console.warn("cutscene animation group name does not match the requested scene name for stop!");
+      return;
+    }
+    // this method is called through bus. we need to bind to it all necessary data and
+    // process playing cutscene
+    // if (animGroup.isStarted) {
+      console.log("stopping cutscene: ", animGroup.name);
+      animGroup.stop();
+      animGroup.reset()
+      // this._sceneController.game._camera.setGroundMesh(this.meshDict.ground.mesh);
+      // this._sceneController.game._camera.camera.setTarget(this.meshDict.ground.mesh.position);
+      this._scene.activeCamera = this._scene.getCameraById('camera');
+      this._sceneController.scene.activeCamera = this._scene.getCameraById('camera');
+    // } else {
+      // console.warn(
+      //   "cutscene animation group is not started, cannot stop it: ",
+      //   animGroup.name
+      // );
+    // }
+  }
+
   private loadChunk = (position: string /* xNyN*/) => {
     // console.log("loadChunk position: ", position);
     const onSuccess = (tasks: AbstractAssetTask[]) => {
@@ -359,7 +449,23 @@ export class MapController {
 
       this.loadedChunks.push(position);
       const meshTask = findBy(tasks, "name", "meshTask") as MeshAssetTask;
+      console.log('meshTask: ', meshTask);
+      meshTask.loadedAnimationGroups.forEach((animGroup) => {
+        console.log('animGroup: ', animGroup);
+        animGroup.stop(true)
+        GlobalEventBus.on('cutscene:trigger', this.playCutsceneHandler(animGroup));
+        GlobalEventBus.on('cutscene:stop', this.stopCutsceneHandler(animGroup));
+        // animGroup.isAdditive = false;
+        // animGroup._shouldStart = true;
+        // animGroup.playOrder = 3
+        // console.log('animGroup: ', animGroup);
+        // animGroup.dispose()
+        // console.log('animGroup.isStarted: ', animGroup.isStarted);
+        // animGroup.onAnimationGroupPlayObservable.add((eventData: AnimationGroup, eventState: EventState) => {
+        //   console.log("AnimationGroup started: ", eventData.name, "eventState: ", eventState);
+        // });
 
+      });
       // const groundTextureTask = findBy(
       //   tasks,
       //   "name",

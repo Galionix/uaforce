@@ -28,7 +28,6 @@ export class PlayerController {
         return this._aggregate || new PhysicsAggregate(this.playerMesh, PhysicsShapeType.CAPSULE, { mass: 1, restitution: 0.75 }, this.scene);
     }
     setInitialPosition(position: Vector3, props: any) {
-        // this.playerMesh.position = position
 
         this.propsFromBlender = props
         const playerAggregate = new PhysicsAggregate(this.playerMesh, PhysicsShapeType.CAPSULE, {

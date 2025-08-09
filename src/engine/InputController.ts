@@ -1,10 +1,17 @@
 import {
-    ActionEvent, ActionManager, ExecuteCodeAction, KeyboardEventTypes, MeshBuilder, PickingInfo,
-    Ray, RayHelper, Vector3
-} from '@babylonjs/core';
+  ActionEvent,
+  ActionManager,
+  ExecuteCodeAction,
+  KeyboardEventTypes,
+  MeshBuilder,
+  PickingInfo,
+  Ray,
+  RayHelper,
+  Vector3,
+} from "@babylonjs/core";
 
-import { GlobalEventBus } from './event-bus';
-import { SceneController } from './SceneController';
+import { GlobalEventBus } from "./event-bus";
+import { SceneController } from "./SceneController";
 
 const gravity = new Vector3(0, -0.2, 0);
 
@@ -64,9 +71,26 @@ export const createInputController = (sc: SceneController) => {
           // console.log("Space was pressed once!");
         }
         if (kbInfo.event.code === "KeyT") {
-          GlobalEventBus.emit('dialog:trigger', {
-            eventId: 'pressT',
-            // args: { reputation: 2 }
+          GlobalEventBus.emit("dialog:trigger", {
+            eventId: "pressT",
+          });
+          // sc.soundController.SoundsAudios.sfx.ui.click.play();
+
+          // sc.guiController?.toggleMainMenu();
+          // console.log("Space was pressed once!");
+        }
+        if (kbInfo.event.code === "KeyC") {
+          GlobalEventBus.emit("cutscene:trigger", {
+            sceneName: "Intro scene 1",
+          });
+          // sc.soundController.SoundsAudios.sfx.ui.click.play();
+
+          // sc.guiController?.toggleMainMenu();
+          // console.log("Space was pressed once!");
+        }
+        if (kbInfo.event.code === "KeyX") {
+          GlobalEventBus.emit("cutscene:stop", {
+            sceneName: "Intro scene 1",
           });
           // sc.soundController.SoundsAudios.sfx.ui.click.play();
 
