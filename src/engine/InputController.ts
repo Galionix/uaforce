@@ -16,6 +16,7 @@ import { SceneController } from "./SceneController";
 const gravity = new Vector3(0, -0.2, 0);
 
 export const createInputController = (sc: SceneController) => {
+  console.log("createInputController");
   const velocity = new Vector3();
   let isJumping = false;
   var localMeshDirection = new Vector3(0, -1, 0);
@@ -41,7 +42,7 @@ export const createInputController = (sc: SceneController) => {
     // box.rotation.y += .01;
     if (!sc.mapController?.meshDict.ground.mesh) return;
     hitInfo = ray.intersectsMeshes(sc.mapController?.meshDict.ground.allMeshes);
-    sc.mapController.setGroundHitInfo(hitInfo);
+    // sc.mapController.setGroundHitInfo(hitInfo);
 
     if (hitInfo.length && hitInfo[0].pickedPoint) {
       sphere.setEnabled(true);
@@ -65,7 +66,7 @@ export const createInputController = (sc: SceneController) => {
     switch (kbInfo.type) {
       case KeyboardEventTypes.KEYDOWN:
         if (kbInfo.event.code === "Escape") {
-          sc.soundController.SoundsAudios.sfx.ui.click.play();
+          // sc.soundController.SoundsAudios.sfx.ui.click.play();
 
           sc.guiController?.toggleMainMenu();
           // console.log("Space was pressed once!");
@@ -117,9 +118,9 @@ export const createInputController = (sc: SceneController) => {
     if (onGround) {
       velocity.y = Math.max(0, velocity.y);
       isJumping = false;
-      sc.soundController.stopFall();
+      // sc.soundController.stopFall();
     } else {
-      sc.soundController.playFall();
+      // sc.soundController.playFall();
     }
     if (inputMap["Space"] && onGround) {
       // console.log(hitInfo)
@@ -140,18 +141,19 @@ export const createInputController = (sc: SceneController) => {
     let speedMult = 2;
     const heroSpeedBackwards = 1;
     const heroRotationSpeed = 0.1;
-    if (
-      !sc.mapController?.meshDict.ground.mesh ||
-      !sc.playerController.groundColliderMesh
-    )
-      return;
+    // if (
+    //   !sc.mapController?.meshDict.ground.mesh ||
+    //   !sc.playerController.groundColliderMesh
+    // )
+    //   return;
 
     // @ts-ignore
     if (inputMap.ShiftLeft) {
       speedMult = 4;
     }
     if (onGround && inputMap["KeyW"]) {
-      sc.soundController.playFootsteps(!!inputMap.ShiftLeft);
+      console.log("KeyW pressed");
+      // sc.soundController.playFootsteps(!!inputMap.ShiftLeft);
       // sc.physEngine.getTimeStep()
       // console.log('sc.physEngine.getTimeStep(): ', sc.physEngine.getTimeStep());
       // if (sc.soundController.Sounds.step1.sound?.state !== SoundState.Started) {
@@ -178,11 +180,22 @@ export const createInputController = (sc: SceneController) => {
     } else {
     }
     if (inputMap["KeyA"]) {
-      sc.playerController.mesh.rotate(Vector3.Up(), -heroRotationSpeed);
+      // sc.playerController.mesh.rotate(Vector3.Up(), -heroRotationSpeed);
+      // keydown = true;
+                  const vec = sc.playerController.mesh.right
+        .scale(heroSpeed * speedMult)
+        .add(gravity);
+      sc.playerController.aggregate.body.setLinearVelocity(vec);
+      // sc.playerController.mesh.rotate(Vector3.Up(), heroRotationSpeed);
       keydown = true;
+
     }
     if (inputMap["KeyD"]) {
-      sc.playerController.mesh.rotate(Vector3.Up(), heroRotationSpeed);
+                  const vec = sc.playerController.mesh.right
+        .scale(heroSpeed * speedMult)
+        .add(gravity);
+      sc.playerController.aggregate.body.setLinearVelocity(vec);
+      // sc.playerController.mesh.rotate(Vector3.Up(), heroRotationSpeed);
       keydown = true;
     }
     // if ('Escape' in inputMap&&inputMap['Escape'] ) {

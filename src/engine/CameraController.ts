@@ -20,18 +20,10 @@ export class CameraController {
     constructor(canvas: HTMLCanvasElement, scene: Scene) {
         this._scene = scene;
 
-        this._camera = new ArcRotateCamera('camera', 1, 0, 10, new Vector3(0, 1, -5), scene);
+        this._camera = new ArcRotateCamera('camera', Math.PI /2, Math.PI /2, 10, new Vector3(0, 1, -5), scene);
         this._camera.maxZ =100
-        this._camera.lowerRadiusLimit = 3
+        this._camera.lowerRadiusLimit = 20
         this._camera.upperRadiusLimit = 20
-        // This targets the camera to scene origin
-        // this._camera.setTarget(Vector3.Zero());
-
-        // This attaches the camera to the canvas
-        this._camera.attachControl(canvas, true);
-
-
-        // this._camera
     }
     get camera() {
         return this._camera;

@@ -27,7 +27,8 @@ export default async function handler(
   console.log('dirPath: ', dirPath);
   // todo: get file path without filename to retrieve manifest path
   const key = "manifest.json";
-const Key = p.join(dirPath,key).replaceAll('\\', '/')
+  const prefixedS3Path = `uaforce/${dirPath}`;
+const Key = p.join(prefixedS3Path, key).replaceAll('\\', '/')
 console.log('Key: ', Key);
   try {
     const command = new GetObjectCommand({

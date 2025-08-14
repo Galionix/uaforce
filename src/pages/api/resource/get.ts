@@ -20,9 +20,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (typeof s3Path !== "string") {
     return res.status(400).json({ error: "Invalid path" });
   }
-  console.log('s3Path: ', s3Path);
 
-  const ext = p.extname(s3Path).slice(1); // .mp3 -> mp3
+  const prefixedS3Path = `uaforce/${s3Path}`;
+  console.log('s3Path: ', prefixedS3Path);
+
+  const ext = p.extname(prefixedS3Path).slice(1); // .mp3 -> mp3
   console.log('ext: ', ext);
 
   const EXTENSION_CONTENT_TYPE: Record<string, string> = {
@@ -39,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const command = new GetObjectCommand({
       Bucket: bucketName,
-      Key: s3Path,
+      Key: prefixedS3Path,
     });
 
     const { Body, ContentType } = await s3.send(command);

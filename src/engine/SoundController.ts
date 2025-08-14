@@ -78,12 +78,12 @@ export class SoundController {
     // this.SoundsAudios.sfx.player.footsteps.stepstone_5.setVolume(
     //   0.1 * this.sfxVolume
     // );
-    this.SoundsAudios.sfx.ui.click.setVolume(
-      0.1 * this.sfxVolume
-    );
-    this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].setVolume(
-      0.5 * this.sfxVolume
-    );
+    // this.SoundsAudios.sfx.ui.click.setVolume(
+    //   0.1 * this.sfxVolume
+    // );
+    // this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].setVolume(
+    //   0.5 * this.sfxVolume
+    // );
   }
   // player(){
   //   return {
@@ -96,9 +96,9 @@ export class SoundController {
     if (value !== undefined) {
       this.musicVolume = value;
     }
-    this.SoundsAudios.music["Medieval Music – Cobblestone Village"].setVolume(
-      0.1 * this.musicVolume
-    );
+    // this.SoundsAudios.music["Medieval Music – Cobblestone Village"].setVolume(
+    //   0.1 * this.musicVolume
+    // );
   }
   async asyncInit() {
     const audioEngine = await CreateAudioEngineAsync();
@@ -109,10 +109,10 @@ export class SoundController {
     await audioEngine.unlockAsync();
 
     this.footstepsSounds = [
-      this.SoundsAudios.sfx.player.footsteps['gassy-footstep1'],
-      this.SoundsAudios.sfx.player.footsteps['grassy-footstep2'],
-      this.SoundsAudios.sfx.player.footsteps['grassy-footstep3'],
-      this.SoundsAudios.sfx.player.footsteps['grassy-footstep4'],
+      // this.SoundsAudios.sfx.player.footsteps['gassy-footstep1'],
+      // this.SoundsAudios.sfx.player.footsteps['grassy-footstep2'],
+      // this.SoundsAudios.sfx.player.footsteps['grassy-footstep3'],
+      // this.SoundsAudios.sfx.player.footsteps['grassy-footstep4'],
     ];
     this.initialized = true;
     this.soundEngine = audioEngine;
@@ -146,13 +146,13 @@ export class SoundController {
     if (!this._SoundsAudios) return;
 
     this.fallCount = 0;
-    this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].playbackRate =
-      this.fallCount;
-    if (
-      this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].state ===
-      SoundState.Started
-    )
-      this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].stop();
+    // this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].playbackRate =
+    //   this.fallCount;
+    // if (
+    //   this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].state ===
+    //   SoundState.Started
+    // )
+    //   this.SoundsAudios.sfx.player.behaviour["fallSound(wind2)"].stop();
   }
   playFootsteps(sprint?: boolean) {
     const anyStarted = this.footstepsSounds.some(

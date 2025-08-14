@@ -48,7 +48,7 @@ export class GuiController {
 
     control.onPointerClickObservable.add(() => {
       // Автоматический клик-звук
-      this.sceneController.soundController.SoundsAudios.sfx.ui.click.play();
+      // this.sceneController.soundController.SoundsAudios.sfx.ui.click.play();
 
       // Твой кастомный код
       callback();
@@ -248,7 +248,7 @@ export class GuiController {
         });
         console.log("buttons: ", buttons);
         // Автоматический клик-звук
-        this.sceneController.soundController.SoundsAudios.sfx.ui.click.play();
+        // this.sceneController.soundController.SoundsAudios.sfx.ui.click.play();
         // this.sceneController.game.dialogController.continueDialog(id, choice.index)
         GlobalEventBus.emit("dialog:continue", {
           eventId: id,
