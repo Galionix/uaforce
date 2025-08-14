@@ -2,7 +2,7 @@ import { Engine, HavokPlugin, KeyboardInfo, Observable, Scene } from '@babylonjs
 
 import { CameraController } from './CameraController';
 import { DialogController } from './DialogController';
-import { MapController } from './MapController';
+import { MapController } from './levelLoader/MapController';
 import { SceneController } from './SceneController';
 import { SoundController } from './SoundController';
 import { FreeCameraTouchVirtualJoystickInput } from './VirtualJoystick';

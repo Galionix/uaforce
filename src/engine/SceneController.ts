@@ -5,7 +5,7 @@ import {
 import { Game } from './Game';
 import { GuiController } from './GuiController';
 import { createInputController } from './InputController';
-import { MapController } from './MapController';
+import { MapController } from './levelLoader/MapController';
 import { PlayerController } from './PlayerController';
 import { SoundController } from './SoundController';
 

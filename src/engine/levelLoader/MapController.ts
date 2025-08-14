@@ -6,11 +6,11 @@ import {
 import { findBy } from '@ex/utils/findBy';
 
 // import { ChunksLoaderController } from './LoaderController';
-import { SceneController } from './SceneController';
-import { GlobalEventBus } from './event-bus';
-import { ResourceLoaderController } from './ResourceLoaderController';
+import { SceneController } from '../SceneController';
+import { GlobalEventBus } from '../event-bus';
+import { ResourceLoaderController } from '../ResourceLoaderController';
 import { initialLevelName } from '@ex/constants/levels';
-import { MeshProcessor, MeshDictionary } from './processors/MeshProcessor';
+import { MeshProcessor, MeshDictionary } from './MeshProcessor';
 
 // import { callAndEnsure, findByIdIncludes } from "@ex/utils/getById";
 
