@@ -16,6 +16,7 @@
     "@babylonjs/inspector": "^8.16.2",
     "babylon-mmd": "^0.68.0",
     "inkjs": "^2.3.2",
+    "loglevel": "^1.9.2",
     "next": "15.4.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/loglevel": "^1.5.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

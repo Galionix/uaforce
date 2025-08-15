@@ -6,6 +6,8 @@ import { SceneController } from './SceneController';
 import { SoundController } from './SoundController';
 import { FreeCameraTouchVirtualJoystickInput } from './VirtualJoystick';
 import { MapController } from './levelLoader/MapController';
+import { configureLogging } from '../utils/loggerConfig';
+import Logger, { LogCategory, LogLevel } from '@ex/utils/logger';
 
 export class Game {
   private _canvas;
@@ -30,6 +32,11 @@ export class Game {
     debug = false,
     setLoadInfo: React.Dispatch<React.SetStateAction<{ current: number; total: number; message: string; }>>
   ) {
+    // Initialize logging configuration
+    configureLogging();
+    Logger.setLevel(LogCategory.PLAYER_MOVEMENT, LogLevel.DEBUG);
+    Logger.setLevel(LogCategory.CAMERA, LogLevel.DEBUG);
+
     this._debug = debug;
     this._canvas = canvas;
     // this.resourceLoaderController = new ResourceLoaderController()

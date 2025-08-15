@@ -1,5 +1,6 @@
 import { Vector3, Ray, PickingInfo, RayHelper } from "@babylonjs/core";
 import { SceneController } from "./SceneController";
+import Logger from "../utils/logger";
 
 interface MovementInput {
   moveLeft: boolean;
@@ -32,7 +33,7 @@ export class PlayerMovementController {
   // Previous state tracking for camera effects
   private wasJumpingLastFrame = false;
   private wasOnWallLastFrame = false;
-  
+
   // Track maximum fall velocity for better impact calculation
   private maxFallVelocity = 0;
   private isCurrentlyFalling = false;
@@ -60,9 +61,9 @@ export class PlayerMovementController {
       this.isCurrentlyFalling = true;
       this.maxFallVelocity = 0;
       this.wasPlayerJumping = this.isJumping; // Remember if this was a jump
-      console.log(`[${Date.now()}] Player left the ground - starting fall tracking (was jumping: ${this.wasPlayerJumping})`);
+      Logger.playerMovement.debug(`Player left the ground - starting fall tracking (was jumping: ${this.wasPlayerJumping})`);
     }
-    
+
     // Track maximum fall velocity while in air
     if (!onGround && this.isCurrentlyFalling && currentVelocity.y < 0) {
       const currentFallSpeed = Math.abs(currentVelocity.y);
@@ -73,7 +74,7 @@ export class PlayerMovementController {
 
     // Debug: Log ground state changes
     if (this.wasOnGroundLastFrame !== onGround) {
-      console.log(`[${Date.now()}] Ground state changed: ${this.wasOnGroundLastFrame ? 'was on ground' : 'was in air'} -> ${onGround ? 'now on ground' : 'now in air'}`);
+      Logger.playerMovement.debug(`Ground state changed: ${this.wasOnGroundLastFrame ? 'was on ground' : 'was in air'} -> ${onGround ? 'now on ground' : 'now in air'}`);
     }
 
     // Track if we've ever been on ground
@@ -103,7 +104,7 @@ export class PlayerMovementController {
         // Normal ground jump
         verticalVelocity = this.jumpSpeed;
         this.isJumping = true;
-        console.log(`[${Date.now()}] Player started jumping from ground`);
+        Logger.playerMovement.debug(`Player started jumping from ground`);
         // Trigger camera jump impulse
         this.sc.cameraController.jumpImpulse();
       } else if (onWall && !onGround) {
@@ -115,7 +116,7 @@ export class PlayerMovementController {
           horizontalVelocity = -this.wallJumpDirection * this.heroSpeed * speedMult;
           this.isJumping = true;
           this.lastWallJumpTime = currentTime;
-          console.log(`[${Date.now()}] Player started wall jumping`);
+          Logger.playerMovement.debug(`Player started wall jumping`);
           // Trigger camera wall jump shake
           this.sc.cameraController.wallJumpShake(this.wallJumpDirection);
         }
@@ -126,44 +127,44 @@ export class PlayerMovementController {
     if (onGround && !this.wasOnGroundLastFrame && currentVelocity.y <= 0) {
       // Use maximum fall velocity instead of current velocity for better impact calculation
       const landingSpeed = Math.max(Math.abs(currentVelocity.y), this.maxFallVelocity);
-      
+
       // Reduce impact for intentional jumps vs pure falls
       let impactStrength;
       if (this.wasPlayerJumping) {
         // Gentler impact for jumps - divide by 6 and cap at 1.0
         impactStrength = Math.min(landingSpeed / 6, 1.0);
       } else {
-        // Full impact for pure falls - divide by 4 and cap at 2.0  
+        // Full impact for pure falls - divide by 4 and cap at 2.0
         impactStrength = Math.min(landingSpeed / 4, 2.0);
       }
-      
+
       // Debug: Log detailed velocity info to understand the scaling
-      console.log(`[${Date.now()}] === LANDING DEBUG ===`);
-      console.log(`[${Date.now()}] Was jumping: ${this.wasPlayerJumping}`);
-      console.log(`[${Date.now()}] Raw Y velocity: ${currentVelocity.y.toFixed(3)}`);
-      console.log(`[${Date.now()}] Max fall velocity: ${this.maxFallVelocity.toFixed(3)}`);
-      console.log(`[${Date.now()}] Landing speed (max): ${landingSpeed.toFixed(3)}`);
+      Logger.playerMovement.debug(`=== LANDING DEBUG ===`);
+      Logger.playerMovement.debug(`Was jumping: ${this.wasPlayerJumping}`);
+      Logger.playerMovement.debug(`Raw Y velocity: ${currentVelocity.y.toFixed(3)}`);
+      Logger.playerMovement.debug(`Max fall velocity: ${this.maxFallVelocity.toFixed(3)}`);
+      Logger.playerMovement.debug(`Landing speed (max): ${landingSpeed.toFixed(3)}`);
       if (this.wasPlayerJumping) {
-        console.log(`[${Date.now()}] Impact calculation (JUMP): ${landingSpeed.toFixed(3)} / 6 = ${(landingSpeed / 6).toFixed(3)}`);
-        console.log(`[${Date.now()}] Final impact strength: ${impactStrength.toFixed(3)} (max 1.0)`);
+        Logger.playerMovement.debug(`Impact calculation (JUMP): ${landingSpeed.toFixed(3)} / 6 = ${(landingSpeed / 6).toFixed(3)}`);
+        Logger.playerMovement.debug(`Final impact strength: ${impactStrength.toFixed(3)} (max 1.0)`);
       } else {
-        console.log(`[${Date.now()}] Impact calculation (FALL): ${landingSpeed.toFixed(3)} / 4 = ${(landingSpeed / 4).toFixed(3)}`);
-        console.log(`[${Date.now()}] Final impact strength: ${impactStrength.toFixed(3)} (max 2.0)`);
+        Logger.playerMovement.debug(`Impact calculation (FALL): ${landingSpeed.toFixed(3)} / 4 = ${(landingSpeed / 4).toFixed(3)}`);
+        Logger.playerMovement.debug(`Final impact strength: ${impactStrength.toFixed(3)} (max 2.0)`);
       }
-      console.log(`[${Date.now()}] Will trigger camera: ${impactStrength > 0.05 ? 'YES' : 'NO'}`);
+      Logger.playerMovement.debug(`Will trigger camera: ${impactStrength > 0.05 ? 'YES' : 'NO'}`);
 
       // Always trigger camera impact for any landing (no special cases)
       if (impactStrength > 0.05) { // Only trigger if there's meaningful impact
-        console.log(`[${Date.now()}] Player landed! Max fall speed: ${landingSpeed.toFixed(2)}, Impact strength: ${impactStrength.toFixed(2)} (${this.wasPlayerJumping ? 'JUMP' : 'FALL'})`);
+        Logger.playerMovement.debug(`Player landed! Max fall speed: ${landingSpeed.toFixed(2)}, Impact strength: ${impactStrength.toFixed(2)} (${this.wasPlayerJumping ? 'JUMP' : 'FALL'})`);
 
         // Check if camera controller exists before calling
         try {
           this.sc.cameraController.landingImpact(impactStrength);
         } catch (error) {
-          console.error("Error calling camera landing impact:", error);
+          Logger.playerMovement.error("Error calling camera landing impact:", error);
         }
       }
-      
+
       // Reset fall tracking after landing
       this.isCurrentlyFalling = false;
       this.maxFallVelocity = 0;
@@ -174,7 +175,7 @@ export class PlayerMovementController {
     if (onGround && currentVelocity.y <= 0) {
       // Debug: Log when jumping state resets
       if (this.isJumping) {
-        console.log(`[${Date.now()}] Player stopped jumping (landed on ground)`);
+        Logger.playerMovement.debug(`Player stopped jumping (landed on ground)`);
       }
       this.isJumping = false;
     }
