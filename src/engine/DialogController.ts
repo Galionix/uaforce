@@ -27,7 +27,7 @@ export class DialogController {
 
   public activeDialogId: string = ''
   constructor(game: Game) {
-    if (!game._sceneController.guiController)
+    if (!game._sceneController?.guiController)
       throw new Error("Error creation DialogController");
     this.guiController = game._sceneController.guiController;
 
