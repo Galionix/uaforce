@@ -34,8 +34,6 @@ export class Game {
   ) {
     // Initialize logging configuration
     configureLogging();
-    Logger.setLevel(LogCategory.PLAYER_MOVEMENT, LogLevel.DEBUG);
-    Logger.setLevel(LogCategory.CAMERA, LogLevel.DEBUG);
 
     this._debug = debug;
     this._canvas = canvas;

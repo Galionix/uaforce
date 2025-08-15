@@ -1,5 +1,4 @@
 import Logger, { LogCategory, LogLevel } from './logger';
-
 // Development log configuration
 // Change these values to enable/disable different logging categories during development
 export const LOG_CONFIG = {
