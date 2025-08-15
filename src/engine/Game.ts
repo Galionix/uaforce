@@ -61,6 +61,10 @@ export class Game {
     this.dialogController = new DialogController(this)
     this._scene = this._sceneController.scene;
     this._camera = new CameraController(this._canvas, this._scene);
+    this._sceneController.setCameraController(this._camera);
+
+    // Set player mesh for camera following
+    this._camera.setPlayerMesh(this._sceneController.playerController.mesh);
 
     if (this.isTouchDevice()) {
       this._camera.camera.inputs.clear()

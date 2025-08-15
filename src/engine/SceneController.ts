@@ -1,5 +1,5 @@
 import {
-    ArcRotateCamera, DirectionalLight, Engine, HavokPlugin, Scene, Vector3,
+    FreeCamera, DirectionalLight, Engine, HavokPlugin, Scene, Vector3,
     WebGPUEngine
 } from '@babylonjs/core';
 
@@ -9,17 +9,29 @@ import { createInputController } from './InputController';
 import { MapController } from './levelLoader/MapController';
 import { PlayerController } from './PlayerController';
 import { SoundController } from './SoundController';
+import { CameraController } from './CameraController';
 
 export class SceneController {
   private _scene: Scene;
   _engine: WebGPUEngine;
   private _playerController: PlayerController;
   private _mapController?: MapController;
+  private _cameraController?: CameraController;
    guiController?: GuiController;
   physEngine;
   soundController: SoundController
 
   // raycastInfo
+  setCameraController(cameraController: CameraController) {
+    this._cameraController = cameraController;
+  }
+  get cameraController() {
+    if(!this._cameraController) {
+      console.error("CameraController is not set in SceneController");
+      throw new Error("CameraController is not set in SceneController");
+    }
+    return this._cameraController;
+  }
   setMapController(mapController: MapController) {
     this._mapController = mapController;
   }
@@ -69,8 +81,10 @@ export class SceneController {
     // return new HemisphericLight("light", new Vector3(1, 1, 0), scene);
     return light
   }
-  public testScene(camera: ArcRotateCamera): void {
-    camera.setTarget(this._playerController.mesh);
+  public testScene(camera: FreeCamera): void {
+    // Camera will now follow player automatically via CameraController
+    // Initial target setup can be done here if needed
+    camera.setTarget(this._playerController.mesh.position);
   }
   public createGroundScene() {}
 }

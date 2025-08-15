@@ -1,5 +1,5 @@
 import {
-    ArcRotateCamera, BaseCameraPointersInput, EngineStore, IPointerEvent, Matrix, Nullable,
+     BaseCameraPointersInput, EngineStore, FreeCamera, IPointerEvent, Matrix, Nullable,
     PointerTouch, Vector2, Vector3
 } from '@babylonjs/core';
 import { AdvancedDynamicTexture, Container, Control, Ellipse } from '@babylonjs/gui';
@@ -14,7 +14,7 @@ export class FreeCameraTouchVirtualJoystickInput extends BaseCameraPointersInput
   JOYSTICK_INNER_CIRCLE_THICKNESS_RATIO = 0.04;
   JOYSTICK_PUCK_THICKNESS_RATIO = 0.01;
 
-  constructor(camera: ArcRotateCamera) {
+  constructor(camera: FreeCamera) {
     super();
     this.camera = camera;
   }
@@ -204,10 +204,10 @@ export class FreeCameraTouchVirtualJoystickInput extends BaseCameraPointersInput
     const deltaBeta =
       (touchOffset.y / this.screenSize.x) * this.SWIPE_SENSIBILITY;
 
-    if ("alpha" in this.camera && "beta" in this.camera) {
-      this.camera.alpha += deltaAlpha;
-      this.camera.beta += deltaBeta;
-    }
+    // if ("alpha" in this.camera && "beta" in this.camera) {
+    //   this.camera.alpha += deltaAlpha;
+    //   this.camera.beta += deltaBeta;
+    // }
   }
 
   onButtonDown(evt: IPointerEvent) {
