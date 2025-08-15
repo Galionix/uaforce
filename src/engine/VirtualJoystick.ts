@@ -49,7 +49,7 @@ export class FreeCameraTouchVirtualJoystickInput extends BaseCameraPointersInput
   getSimpleName = () => "joystick";
 
   attachControl(noPreventDefault: boolean) {
-    super.attachControl(noPreventDefault);
+    // super.attachControl(noPreventDefault);
     this.screenSize = FreeCameraTouchVirtualJoystickInput.getScreenSize();
     this.ui = AdvancedDynamicTexture.CreateFullscreenUI("UI");
     this.prepareImages();
