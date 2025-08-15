@@ -27,6 +27,33 @@ export class PlayerController {
         if(!this._aggregate) console.error("this shouldnt happen but actual aggregate undefined")
         return this._aggregate || new PhysicsAggregate(this.playerMesh, PhysicsShapeType.CAPSULE, { mass: 1, restitution: 0.75 }, this.scene);
     }
+
+    private setup2DConstraints() {
+        if (!this._aggregate) return;
+
+        // Set linear damping on Z-axis to prevent unwanted Z movement
+        // Note: This is a manual approach since Havok doesn't have direct axis constraints
+        this.scene.onBeforeRenderObservable.add(() => {
+            if (this._aggregate) {
+                const velocity = this._aggregate.body.getLinearVelocity();
+                // Force Z velocity to always be 0
+                if (velocity.z !== 0) {
+                    this._aggregate.body.setLinearVelocity(new Vector3(velocity.x, velocity.y, 0));
+                }
+
+                // Force Z position to stay at 0 (or whatever your 2D plane is)
+                const position = this.playerMesh.position;
+                if (position.z !== 0) {
+                    this.playerMesh.position.z = 0;
+                }
+
+                // Force rotation to always be zero (prevent any clockwise/counterclockwise drift)
+                if (!this.playerMesh.rotation.equals(Vector3.Zero())) {
+                    this.playerMesh.rotation = Vector3.Zero();
+                }
+            }
+        });
+    }
     setInitialPosition(position: Vector3, props: any) {
 
         this.propsFromBlender = props
@@ -39,11 +66,17 @@ export class PlayerController {
         this._aggregate.body.disablePreStep = false;
         this.aggregate.body.setMassProperties({
             mass: 10,
-            inertia: new Vector3(0,0,0),
+            inertia: new Vector3(1000, 1000, 1000), // High inertia to resist rotation
             centerOfMass: new Vector3(0, -1, 0),
         })
         this._aggregate.body.setMotionType(PhysicsMotionType.DYNAMIC);
         this.hk.setAngularDamping( this._aggregate.body,Number.MAX_SAFE_INTEGER);
+
+        // Lock physics to 2D - prevent movement on Z-axis and rotation on X/Y axes
+        this.setup2DConstraints();
+
+        // Explicitly set initial rotation to zero
+        this.playerMesh.rotation = Vector3.Zero();
         console.log('playerAggregate: ', playerAggregate);
         console.log('this.propsFromBlender: ', this.propsFromBlender);
         // this._aggregate.body.applyImpulse(new Vector3(0, 0, 20), this.playerMesh.getAbsolutePosition());

@@ -12,6 +12,7 @@ import {
 
 import { GlobalEventBus } from "./event-bus";
 import { SceneController } from "./SceneController";
+import { PlayerMovementController } from "./PlayerMovementController";
 
 const gravity = new Vector3(0, -0.2, 0);
 
@@ -38,11 +39,18 @@ export const createInputController = (sc: SceneController) => {
     {};
   var hitInfo: Array<PickingInfo>;
 
+  // Create the movement controller
+  const movementController = new PlayerMovementController(sc);
+
   sc.scene.registerBeforeRender(function () {
-    // box.rotation.y += .01;
-    if (!sc.mapController?.meshDict.ground.mesh) return;
-    hitInfo = ray.intersectsMeshes(sc.mapController?.meshDict.ground.allMeshes);
-    // sc.mapController.setGroundHitInfo(hitInfo);
+    // Get all meshes that have collideable = true in their gltf.extras
+    const collideableMeshes = sc.scene.meshes.filter(mesh => {
+      return mesh.metadata?.gltf?.extras?.collideable === true;
+    });
+
+    if (collideableMeshes.length === 0) return;
+
+    hitInfo = ray.intersectsMeshes(collideableMeshes);
 
     if (hitInfo.length && hitInfo[0].pickedPoint) {
       sphere.setEnabled(true);
@@ -52,6 +60,7 @@ export const createInputController = (sc: SceneController) => {
       sphere.setEnabled(false);
       onGround = false;
     }
+    console.log('onGround: ', onGround);
   });
 
   sc.scene.actionManager = new ActionManager(sc.scene);
@@ -111,78 +120,21 @@ export const createInputController = (sc: SceneController) => {
         evt.sourceEvent.type == "keydown" ? evt : false;
     })
   );
-  sc.scene.registerBeforeRender(() => {
-    const delta = sc.scene.getEngine().getDeltaTime();
-
-    velocity.y -= delta / 300;
-    if (onGround) {
-      velocity.y = Math.max(0, velocity.y);
-      isJumping = false;
-      // sc.soundController.stopFall();
-    } else {
-      // sc.soundController.playFall();
-    }
-    if (inputMap["Space"] && onGround) {
-      // console.log(hitInfo)
-      isJumping = true;
-
-      velocity.y = 100;
-      sc.playerController.aggregate.body.applyImpulse(
-        velocity,
-
-        sc.playerController.mesh.getAbsolutePosition()
-      );
-    }
-  });
-
   let keydown = false;
+
   sc.scene.onBeforeRenderObservable.add(() => {
-    const heroSpeed = 3;
-    let speedMult = 2;
-    const heroSpeedBackwards = 1;
-    const heroRotationSpeed = 0.1;
+    // Gather input state
+    const movementInput = {
+      moveLeft: !!inputMap["KeyA"],
+      moveRight: !!inputMap["KeyD"],
+      jump: !!inputMap["Space"],
+      sprint: !!inputMap.ShiftLeft
+    };
 
-    if (inputMap.ShiftLeft) {
-      speedMult = 4;
-    }
-    if (onGround && inputMap["KeyW"]) {
-      console.log("KeyW pressed");
-      const vec = sc.playerController.mesh.forward
-        .scale(heroSpeed * speedMult)
-        .add(gravity);
-      // this makes it jump!
-      if (isJumping) vec.addInPlace(new Vector3(0, 10, 0));
-      sc.playerController.aggregate.body.setLinearVelocity(vec);
-      keydown = true;
-    } else if (onGround && inputMap["KeyS"]) {
-      const vec = sc.playerController.mesh.forward
-        .scale(-heroSpeedBackwards)
-        .add(gravity);
-      sc.playerController.aggregate.body.setLinearVelocity(vec);
-      keydown = true;
-    } else {
-    }
-    if (inputMap["KeyA"]) {
-      // sc.playerController.mesh.rotate(Vector3.Up(), -heroRotationSpeed);
-      // keydown = true;
-                  const vec = sc.playerController.mesh.right
-        .scale(heroSpeed * speedMult)
-        .add(gravity);
-      sc.playerController.aggregate.body.setLinearVelocity(vec);
-      // sc.playerController.mesh.rotate(Vector3.Up(), heroRotationSpeed);
-      keydown = true;
+    // Update movement using the movement controller
+    movementController.update(movementInput, onGround);
 
-    }
-    if (inputMap["KeyD"]) {
-                  const vec = sc.playerController.mesh.right
-        .scale(heroSpeed * speedMult)
-        .add(gravity);
-      sc.playerController.aggregate.body.setLinearVelocity(vec);
-      // sc.playerController.mesh.rotate(Vector3.Up(), heroRotationSpeed);
-      keydown = true;
-    }
-    // if ('Escape' in inputMap&&inputMap['Escape'] ) {
-    //   sc.guiController?.toggleMainMenu()
-    // }
+    // Update keydown state for other systems that might need it
+    keydown = movementInput.moveLeft || movementInput.moveRight;
   });
 };
