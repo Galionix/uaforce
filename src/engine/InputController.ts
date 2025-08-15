@@ -141,29 +141,12 @@ export const createInputController = (sc: SceneController) => {
     let speedMult = 2;
     const heroSpeedBackwards = 1;
     const heroRotationSpeed = 0.1;
-    // if (
-    //   !sc.mapController?.meshDict.ground.mesh ||
-    //   !sc.playerController.groundColliderMesh
-    // )
-    //   return;
 
-    // @ts-ignore
     if (inputMap.ShiftLeft) {
       speedMult = 4;
     }
     if (onGround && inputMap["KeyW"]) {
       console.log("KeyW pressed");
-      // sc.soundController.playFootsteps(!!inputMap.ShiftLeft);
-      // sc.physEngine.getTimeStep()
-      // console.log('sc.physEngine.getTimeStep(): ', sc.physEngine.getTimeStep());
-      // if (sc.soundController.Sounds.step1.sound?.state !== SoundState.Started) {
-      //   sc.soundController.Sounds.step1.sound?.play();
-      // }
-
-      // if (sc.soundController.Sounds.step1.sound?.state === SoundState.Stopped) {
-      //   sc.soundController.Sounds.step1.sound?.play();
-      // }
-
       const vec = sc.playerController.mesh.forward
         .scale(heroSpeed * speedMult)
         .add(gravity);

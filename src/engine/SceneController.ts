@@ -1,5 +1,6 @@
 import {
-    ArcRotateCamera, DirectionalLight, Engine, HavokPlugin, Scene, Vector3
+    ArcRotateCamera, DirectionalLight, Engine, HavokPlugin, Scene, Vector3,
+    WebGPUEngine
 } from '@babylonjs/core';
 
 import { Game } from './Game';
@@ -11,7 +12,7 @@ import { SoundController } from './SoundController';
 
 export class SceneController {
   private _scene: Scene;
-  _engine: Engine;
+  _engine: WebGPUEngine;
   private _playerController: PlayerController;
   private _mapController?: MapController;
    guiController?: GuiController;
@@ -30,7 +31,7 @@ export class SceneController {
   }
   canvas: HTMLCanvasElement
   game:Game
-  constructor(engine: Engine, hk: HavokPlugin, soundController: SoundController, canvas: HTMLCanvasElement, gameController: Game) {
+  constructor(engine: WebGPUEngine, hk: HavokPlugin, soundController: SoundController, canvas: HTMLCanvasElement, gameController: Game) {
     this._scene = new Scene(engine);
     this.soundController = soundController
     this._scene.collisionsEnabled = true;

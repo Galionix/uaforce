@@ -1,22 +1,22 @@
-import { Engine, HavokPlugin, KeyboardInfo, Observable, Scene } from '@babylonjs/core';
+import { Engine, HavokPlugin, KeyboardInfo, Observable, Scene, WebGPUEngine } from '@babylonjs/core';
 
 import { CameraController } from './CameraController';
 import { DialogController } from './DialogController';
-import { MapController } from './levelLoader/MapController';
 import { SceneController } from './SceneController';
 import { SoundController } from './SoundController';
 import { FreeCameraTouchVirtualJoystickInput } from './VirtualJoystick';
+import { MapController } from './levelLoader/MapController';
 
 export class Game {
   private _canvas;
-  _sceneController: SceneController;
-   _camera: CameraController;
+  _sceneController?: SceneController;
+   _camera?: CameraController;
   private _engine;
   private _debug: boolean;
-  private _scene: Scene;
-  soundController: SoundController;
-  private _mapController: MapController;
-  dialogController: DialogController
+  private _scene?: Scene;
+  soundController?: SoundController;
+  private _mapController?: MapController;
+  dialogController?: DialogController
   isTouchDevice() {
     const res = "ontouchstart" in window || navigator.maxTouchPoints > 0;
     // alert(res)
@@ -35,10 +35,20 @@ export class Game {
     // this.resourceLoaderController = new ResourceLoaderController()
 
     // Create our engine to hold on the canvas
-    this._engine = new Engine(canvas, true, {
-      preserveDrawingBuffer: false,
-      alpha: false,
+    // this._engine = new Engine(canvas, true, {
+    //   preserveDrawingBuffer: false,
+    //   alpha: false,
+    // });
+    this._engine = new WebGPUEngine(canvas, {
+      adaptToDeviceRatio: true,
+      enableAllFeatures: true,
+      audioEngine: true,
+      antialias: true,
+
+      // preserveDrawingBuffer: false,
+      // alpha: false,
     });
+    this._engine.initAsync().then(() => {
     this.soundController = new SoundController();
     this._engine.preventCacheWipeBetweenFrames = true;
     this._sceneController = new SceneController(
@@ -73,12 +83,24 @@ export class Game {
     })
     ro.observe(cnvs)
     this._engine.runRenderLoop(() => {
+      if (!this._scene) return;
       this._scene.render();
+    });
+    this.asyncInit();
     });
   }
 
   async asyncInit() {
+    if (!this._sceneController) {
+      throw new Error("SceneController is not initialized");
+    }
 
+    if (!this.dialogController) {
+      throw new Error("DialogController is not initialized");
+    }
+    if(!this.soundController) {
+      throw new Error("SoundController is not initialized");
+    }
     // const storyRes = await fetch('/public/npc1.json')
     await this.dialogController.loadDialog('npc2_shop', () =>fetch('npc1.json').then(res => res.json()))
     this.dialogController.bindEventToDialog('pressT', "npc2_shop", "npc2_shop")
@@ -88,6 +110,7 @@ export class Game {
     this.soundController.playTheme();
   }
   public async toggleDebugLayer(): Promise<void> {
+    if(!this._scene) return;
     // Rely on code splitting to prevent all of babylon
     // + loaders, serializers... to be downloaded if not necessary
     const debugModule = await import(
@@ -104,6 +127,9 @@ export class Game {
   }
 
   public get onKeyboardObservable(): Observable<KeyboardInfo> {
+    if (!this._scene) {
+      throw new Error("Scene is not initialized");
+    }
     return this._scene.onKeyboardObservable;
   }
 }

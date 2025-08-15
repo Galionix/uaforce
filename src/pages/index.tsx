@@ -31,7 +31,7 @@ const initializeBabylon = async (
     true,
     setLoadInfo
   );
-  await game.asyncInit();
+  // await game.asyncInit();
   if (debug) await game.toggleDebugLayer();
 };
 export default function Home() {
