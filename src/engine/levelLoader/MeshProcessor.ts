@@ -39,7 +39,7 @@ export class MeshProcessor {
 
     meshes.forEach((mesh) => {
       console.log('mesh.metadata.gltf?.extras: ', mesh.metadata?.gltf?.extras?.collideable === true);
-      
+
       // Handle collision detection for meshes with collideable metadata
       if (mesh.metadata?.gltf?.extras?.collideable === true) {
         mesh.checkCollisions = true;
@@ -55,7 +55,7 @@ export class MeshProcessor {
       mesh.id = `${chunkXY}_${mesh.id}`;
       if (mesh.id.includes(this.meshDict.ground.id_includes)) {
         this.meshDict.ground.allMeshes.push(mesh);
-        
+
         if (!extensionDir) {
           this.meshDict.ground.mesh = mesh;
           groundMesh = mesh;
@@ -69,7 +69,7 @@ export class MeshProcessor {
     });
 
     console.log("groundMesh: ", groundMesh);
-    
+
     if (groundMesh) {
       this.setupGroundMesh(groundMesh);
     }
@@ -79,11 +79,11 @@ export class MeshProcessor {
 
   private setupGroundMesh(groundMesh: AbstractMesh): void {
     // Set up camera ground mesh reference
-    this._sceneController.game._camera.setGroundMesh(groundMesh as Mesh);
-    
+    this._sceneController.game._camera?.setGroundMesh(groundMesh as Mesh);
+
     // Enable collisions for ground mesh
     (groundMesh as Mesh).checkCollisions = true;
-    
+
     // Create physics aggregate for ground
     const groundAggregate = new PhysicsAggregate(
       groundMesh,
@@ -96,7 +96,7 @@ export class MeshProcessor {
   processTransformNodes(tnodes: TransformNode[]): void {
     tnodes.forEach((tnode) => {
       console.log('tnode.id: ', tnode.id);
-      
+
       // Handle player spawn points
       if (tnode.id.includes("PLAYER_SPAWN")) {
         this._sceneController.setPlayerPos(
@@ -104,13 +104,13 @@ export class MeshProcessor {
           tnode.metadata.gltf?.extras
         );
       }
-      
+
       // Handle scene camera setup
       if (tnode.id === "SceneCamera") {
         console.log('tnode: ', tnode);
         // Camera setup logic can be added here if needed
       }
-      
+
       // Handle lighting setup
       if (tnode.id === "Light") {
         const mainLight = this._scene.lights.find(

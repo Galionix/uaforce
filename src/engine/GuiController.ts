@@ -187,6 +187,9 @@ export class GuiController {
 
     // TODO: this logic is messy. needs refactoring
     if (!choices.length) {
+      if(!this.sceneController.game.dialogController) {
+        throw new Error("DialogController is not initialized");
+      }
       this.sceneController.game.dialogController.endDialog(id);
       this.closeDialogGUI();
       // this.activeDialogId
