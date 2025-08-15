@@ -56,9 +56,15 @@ export class PlayerMovementController {
       horizontalVelocity = this.handleGroundMovement(input, speedMult);
       // Update the last ground velocity for when we jump
       this.lastGroundHorizontalVelocity = horizontalVelocity;
+
+      // Snap turn player to face movement direction
+      this.updatePlayerDirection(input);
     } else {
       // In air - limited control with momentum preservation
       horizontalVelocity = this.handleAirMovement(input, horizontalVelocity, speedMult);
+
+      // Also update direction in air (for wall jumps and air control)
+      this.updatePlayerDirection(input);
     }
 
     // Handle jumping - can jump while moving, standing still, or on walls
@@ -129,6 +135,17 @@ export class PlayerMovementController {
     }
   }
 
+  private updatePlayerDirection(input: MovementInput): void {
+    // Only change direction when there's horizontal input
+    if (input.moveLeft) {
+      // Test: try rotating to face left
+      this.sc.playerController.mesh.rotation.y = Math.PI;
+    } else if (input.moveRight) {
+      // Test: try no rotation for right
+      this.sc.playerController.mesh.rotation.y = 0;
+    }
+  }
+
   private checkWallCollision(input: MovementInput): boolean {
     // Reset wall jump direction
     this.wallJumpDirection = 0;
@@ -148,28 +165,30 @@ export class PlayerMovementController {
       this.wallJumpDirection = 1; // Right wall
     } else {
       // No horizontal movement, no wall detection - hide ray
-      if (this.wallRayHelper) {
-        this.wallRayHelper.hide();
-      }
+    //   if (this.wallRayHelper) {
+    //     this.wallRayHelper.hide();
+    //   }
       return false;
     }
 
     // Create ray
-    const ray = new Ray(rayOrigin, rayDirection);
+    const wallRay = new Ray(rayOrigin, rayDirection);
 
     // Create or update visual ray helper
     if (!this.wallRayHelper) {
-      this.wallRayHelper = new RayHelper(ray);
-      this.wallRayHelper.show(this.sc.scene);
+      this.wallRayHelper = new RayHelper(wallRay);
+    //   this.wallRayHelper.show(this.sc.scene);
+    //     this.wallRayHelper.attachToMesh(
+    //     this.sc.playerController.mesh,
+    //     rayDirection,
+    //     new Vector3(0, 0.5, 0), // Offset from player center
+    //     0.1
+    //   );
     } else {
-      // Update existing ray
-      this.wallRayHelper.attachToMesh(
-        this.sc.playerController.mesh,
-        rayDirection,
-        new Vector3(0, 0.5, 0), // Offset from player center
-        this.wallDetectionDistance
-      );
-      this.wallRayHelper.show(this.sc.scene);
+      // Dispose old ray helper and create new one with updated direction
+    //   this.wallRayHelper.dispose();
+    //   this.wallRayHelper = new RayHelper(wallRay);
+    //   this.wallRayHelper.show(this.sc.scene);
     }
 
     // Get all collideable meshes
@@ -180,7 +199,7 @@ export class PlayerMovementController {
     if (collideableMeshes.length === 0) return false;
 
     // Check for wall collision
-    const hitInfo = ray.intersectsMeshes(collideableMeshes);
+    const hitInfo = wallRay.intersectsMeshes(collideableMeshes);
 
     if (hitInfo.length > 0 && hitInfo[0].pickedPoint) {
       const distance = Vector3.Distance(rayOrigin, hitInfo[0].pickedPoint);

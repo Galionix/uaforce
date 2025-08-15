@@ -47,9 +47,12 @@ export class PlayerController {
                     this.playerMesh.position.z = 0;
                 }
 
-                // Force rotation to always be zero (prevent any clockwise/counterclockwise drift)
-                if (!this.playerMesh.rotation.equals(Vector3.Zero())) {
-                    this.playerMesh.rotation = Vector3.Zero();
+                // Force rotation to stay controlled (prevent physics drift but allow intentional Y rotation)
+                // Only reset X and Z rotation, allow Y rotation for direction facing
+                if (this.playerMesh.rotation.x !== 0 || this.playerMesh.rotation.z !== 0) {
+                    this.playerMesh.rotation.x = 0;
+                    this.playerMesh.rotation.z = 0;
+                    // Keep Y rotation as is for direction facing
                 }
             }
         });
@@ -75,63 +78,11 @@ export class PlayerController {
         // Lock physics to 2D - prevent movement on Z-axis and rotation on X/Y axes
         this.setup2DConstraints();
 
-        // Explicitly set initial rotation to zero
-        this.playerMesh.rotation = Vector3.Zero();
-        console.log('playerAggregate: ', playerAggregate);
-        console.log('this.propsFromBlender: ', this.propsFromBlender);
-        // this._aggregate.body.applyImpulse(new Vector3(0, 0, 20), this.playerMesh.getAbsolutePosition());
-        // this.scene.onKeyboardObservable.add((kbInfo) => {
-        //     switch (kbInfo.type) {
-        //         case KeyboardEventTypes.KEYDOWN:
-        //             switch (kbInfo.event.key) {
-        //                 case "a":
-        //                 case "A":
-        //                     this.playerMesh.position.x -= 0.1;
-        //                 break
-        //                 case "d":
-        //                 case "D":
-        //                     this.playerMesh.position.x += 0.1;
-        //                 break
-        //                 case "w":
-        //                 case "W":
-        //                     this.playerMesh.position.y += 0.1;
-        //                 break
-        //                 case "s":
-        //                 case "S":
-        //                     this.playerMesh.position.y -= 0.1;
-        //                 break
-        //             }
-        //         break;
-        //     }
-        // });
+        // Set initial facing direction - start with no rotation to debug
+        this.playerMesh.rotation = new Vector3(0, 0, 0); // No rotation initially
+
     }
-    // bindBodyShape = function (mesh, shape, mass, centerOfMass, scene) {
-    //     mesh.material = new StandardMaterial("material");
-    //     mesh.material.diffuseColor = new Color3(0, 0, 1);
-    //     mesh.material.alpha = 0.8;
 
-    //     const body = new PhysicsBody(
-    //         mesh,
-    //         PhysicsMotionType.DYNAMIC,
-    //         false,
-    //         scene
-    //     );
-
-    //     const centerOfMassIndicator = MeshBuilder.CreateSphere(
-    //         "centerOfMassIndicator",
-    //         { diameter: 0.2 }
-    //     );
-    //     centerOfMassIndicator.position = centerOfMass;
-    //     centerOfMassIndicator.parent = mesh;
-    //     centerOfMassIndicator.material = new StandardMaterial(
-    //         "centerOfMassMaterial"
-    //     );
-    //     // centerOfMassIndicator.material = new Color3(1, 0, 0);
-
-    //     shape.material = { friction: 0.2, restitution: 0.3 };
-    //     body.shape = shape;
-    //     body.setMassProperties({ centerOfMass, mass });
-    // };
     drawPlayerModel() {
         const player = MeshBuilder.CreateCapsule("box");
         const groundCollider = MeshBuilder.CreateBox("ground detect")
@@ -139,8 +90,8 @@ export class PlayerController {
             width: 0.5,
             size: 0.2,
         })
-        nose.position = new Vector3(0, 0.5, 1)
-        nose.rotation = new Vector3(0, Math.PI / 2, 0)
+        // Position nose clearly to one side for testing
+        nose.position = new Vector3(-1, 0.5, 0) // Flip to the opposite side
         nose.parent = player
         groundCollider.position.y = -0.5;
         groundCollider.parent = player
@@ -149,6 +100,10 @@ export class PlayerController {
         this._groundColliderMesh = groundCollider
         player.position.y = 10
         player.showBoundingBox = true;
+
+        // Start with no rotation to see which side the nose is on
+        player.rotation.y = 0; // No rotation initially to debug
+
         return player
     }
 
