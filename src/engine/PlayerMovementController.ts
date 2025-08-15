@@ -27,11 +27,16 @@ export class PlayerMovementController {
 
   // Wall jump cooldown to prevent spamming
   private lastWallJumpTime = 0;
-  private wallJumpCooldown = 200; // 200ms cooldown between wall jumps
+  private wallJumpCooldown = 500; // 500ms cooldown between wall jumps
 
   // Previous state tracking for camera effects
   private wasJumpingLastFrame = false;
   private wasOnWallLastFrame = false;
+  
+  // Track maximum fall velocity for better impact calculation
+  private maxFallVelocity = 0;
+  private isCurrentlyFalling = false;
+  private wasPlayerJumping = false; // Track if this fall started from a jump
 
   constructor(private sc: SceneController) {}
 
@@ -51,7 +56,19 @@ export class PlayerMovementController {
     if (this.wasOnGroundLastFrame && !onGround) {
       // Just left the ground - save current horizontal velocity
       this.lastGroundHorizontalVelocity = horizontalVelocity;
-      console.log(`[${Date.now()}] Player left the ground`);
+      // Start tracking fall velocity
+      this.isCurrentlyFalling = true;
+      this.maxFallVelocity = 0;
+      this.wasPlayerJumping = this.isJumping; // Remember if this was a jump
+      console.log(`[${Date.now()}] Player left the ground - starting fall tracking (was jumping: ${this.wasPlayerJumping})`);
+    }
+    
+    // Track maximum fall velocity while in air
+    if (!onGround && this.isCurrentlyFalling && currentVelocity.y < 0) {
+      const currentFallSpeed = Math.abs(currentVelocity.y);
+      if (currentFallSpeed > this.maxFallVelocity) {
+        this.maxFallVelocity = currentFallSpeed;
+      }
     }
 
     // Debug: Log ground state changes
@@ -107,14 +124,38 @@ export class PlayerMovementController {
 
     // Check if we just landed (any landing from air to ground)
     if (onGround && !this.wasOnGroundLastFrame && currentVelocity.y <= 0) {
-      // Calculate landing impact based on fall velocity - simple and universal
-      const landingSpeed = Math.abs(currentVelocity.y);
-      const impactStrength = Math.min(landingSpeed / 6, 1.2); // Gentler scaling: divide by 6, max 1.2
+      // Use maximum fall velocity instead of current velocity for better impact calculation
+      const landingSpeed = Math.max(Math.abs(currentVelocity.y), this.maxFallVelocity);
       
+      // Reduce impact for intentional jumps vs pure falls
+      let impactStrength;
+      if (this.wasPlayerJumping) {
+        // Gentler impact for jumps - divide by 6 and cap at 1.0
+        impactStrength = Math.min(landingSpeed / 6, 1.0);
+      } else {
+        // Full impact for pure falls - divide by 4 and cap at 2.0  
+        impactStrength = Math.min(landingSpeed / 4, 2.0);
+      }
+      
+      // Debug: Log detailed velocity info to understand the scaling
+      console.log(`[${Date.now()}] === LANDING DEBUG ===`);
+      console.log(`[${Date.now()}] Was jumping: ${this.wasPlayerJumping}`);
+      console.log(`[${Date.now()}] Raw Y velocity: ${currentVelocity.y.toFixed(3)}`);
+      console.log(`[${Date.now()}] Max fall velocity: ${this.maxFallVelocity.toFixed(3)}`);
+      console.log(`[${Date.now()}] Landing speed (max): ${landingSpeed.toFixed(3)}`);
+      if (this.wasPlayerJumping) {
+        console.log(`[${Date.now()}] Impact calculation (JUMP): ${landingSpeed.toFixed(3)} / 6 = ${(landingSpeed / 6).toFixed(3)}`);
+        console.log(`[${Date.now()}] Final impact strength: ${impactStrength.toFixed(3)} (max 1.0)`);
+      } else {
+        console.log(`[${Date.now()}] Impact calculation (FALL): ${landingSpeed.toFixed(3)} / 4 = ${(landingSpeed / 4).toFixed(3)}`);
+        console.log(`[${Date.now()}] Final impact strength: ${impactStrength.toFixed(3)} (max 2.0)`);
+      }
+      console.log(`[${Date.now()}] Will trigger camera: ${impactStrength > 0.05 ? 'YES' : 'NO'}`);
+
       // Always trigger camera impact for any landing (no special cases)
       if (impactStrength > 0.05) { // Only trigger if there's meaningful impact
-        console.log(`[${Date.now()}] Player landed! Fall speed: ${landingSpeed.toFixed(2)}, Impact strength: ${impactStrength.toFixed(2)}`);
-        
+        console.log(`[${Date.now()}] Player landed! Max fall speed: ${landingSpeed.toFixed(2)}, Impact strength: ${impactStrength.toFixed(2)} (${this.wasPlayerJumping ? 'JUMP' : 'FALL'})`);
+
         // Check if camera controller exists before calling
         try {
           this.sc.cameraController.landingImpact(impactStrength);
@@ -122,6 +163,11 @@ export class PlayerMovementController {
           console.error("Error calling camera landing impact:", error);
         }
       }
+      
+      // Reset fall tracking after landing
+      this.isCurrentlyFalling = false;
+      this.maxFallVelocity = 0;
+      this.wasPlayerJumping = false;
     }
 
     // Reset jumping flag when landing on ground (not walls)
