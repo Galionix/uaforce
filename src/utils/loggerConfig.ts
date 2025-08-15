@@ -15,7 +15,7 @@ export const LOG_CONFIG = {
   RESOURCE: LogLevel.INFO,
 
   // General application
-  GENERAL: LogLevel.WARN,
+  GENERAL: LogLevel.INFO,  // Changed from WARN to INFO to see death system messages
 };
 
 // Apply configuration

@@ -9,6 +9,20 @@ interface MovementInput {
   sprint: boolean;
 }
 
+interface MovementOutput {
+  velocity: Vector3;
+  facingLeft: boolean | null; // null means no change in facing direction
+  shouldTriggerJumpImpulse: boolean;
+  shouldTriggerJumpSound: boolean;
+  shouldTriggerWallJumpShake: { direction: number } | null;
+  shouldTriggerLandingImpact: { strength: number } | null;
+  shouldTriggerLandingSound: boolean;
+  shouldStartFootsteps: boolean;
+  shouldStopFootsteps: boolean;
+  isMovingOnGround: boolean;
+  isSprinting: boolean;
+}
+
 export class PlayerMovementController {
   private heroSpeed = 3;
   private jumpSpeed = 6;
@@ -41,11 +55,26 @@ export class PlayerMovementController {
 
   constructor(private sc: SceneController) {}
 
-  public update(input: MovementInput, onGround: boolean): void {
+  public update(input: MovementInput, onGround: boolean): MovementOutput {
     // Get current velocity to preserve Y component (for gravity/jumping)
-    const currentVelocity = this.sc.playerController.aggregate.body.getLinearVelocity();
+    const currentVelocity = this.sc.playerController.getVelocity();
     let horizontalVelocity = currentVelocity.x;
     let verticalVelocity = currentVelocity.y;
+
+    // Initialize movement output
+    const movementOutput: MovementOutput = {
+      velocity: Vector3.Zero(),
+      facingLeft: null,
+      shouldTriggerJumpImpulse: false,
+      shouldTriggerJumpSound: false,
+      shouldTriggerWallJumpShake: null,
+      shouldTriggerLandingImpact: null,
+      shouldTriggerLandingSound: false,
+      shouldStartFootsteps: false,
+      shouldStopFootsteps: false,
+      isMovingOnGround: false,
+      isSprinting: false
+    };
 
     // Determine speed multiplier
     const speedMult = input.sprint ? this.sprintMultiplier : this.normalMultiplier;
@@ -88,14 +117,14 @@ export class PlayerMovementController {
       // Update the last ground velocity for when we jump
       this.lastGroundHorizontalVelocity = horizontalVelocity;
 
-      // Snap turn player to face movement direction
-      this.updatePlayerDirection(input);
+      // Set facing direction based on movement
+      movementOutput.facingLeft = this.getFacingDirection(input);
     } else {
       // In air - limited control with momentum preservation
       horizontalVelocity = this.handleAirMovement(input, horizontalVelocity, speedMult);
 
       // Also update direction in air (for wall jumps and air control)
-      this.updatePlayerDirection(input);
+      movementOutput.facingLeft = this.getFacingDirection(input);
     }
 
     // Handle jumping - can jump while moving, standing still, or on walls
@@ -105,8 +134,9 @@ export class PlayerMovementController {
         verticalVelocity = this.jumpSpeed;
         this.isJumping = true;
         Logger.playerMovement.debug(`Player started jumping from ground`);
-        // Trigger camera jump impulse
-        this.sc.cameraController.jumpImpulse();
+        // Trigger camera jump impulse and sound
+        movementOutput.shouldTriggerJumpImpulse = true;
+        movementOutput.shouldTriggerJumpSound = true;
       } else if (onWall && !onGround) {
         // Wall jump - check cooldown to prevent spamming (allow even if already jumping for wall jump chains)
         const currentTime = Date.now();
@@ -117,8 +147,9 @@ export class PlayerMovementController {
           this.isJumping = true;
           this.lastWallJumpTime = currentTime;
           Logger.playerMovement.debug(`Player started wall jumping`);
-          // Trigger camera wall jump shake
-          this.sc.cameraController.wallJumpShake(this.wallJumpDirection);
+          // Trigger camera wall jump shake and sound
+          movementOutput.shouldTriggerWallJumpShake = { direction: this.wallJumpDirection };
+          movementOutput.shouldTriggerJumpSound = true;
         }
       }
     }
@@ -157,12 +188,9 @@ export class PlayerMovementController {
       if (impactStrength > 0.05) { // Only trigger if there's meaningful impact
         Logger.playerMovement.debug(`Player landed! Max fall speed: ${landingSpeed.toFixed(2)}, Impact strength: ${impactStrength.toFixed(2)} (${this.wasPlayerJumping ? 'JUMP' : 'FALL'})`);
 
-        // Check if camera controller exists before calling
-        try {
-          this.sc.cameraController.landingImpact(impactStrength);
-        } catch (error) {
-          Logger.playerMovement.error("Error calling camera landing impact:", error);
-        }
+        // Set landing impact and sound triggers
+        movementOutput.shouldTriggerLandingImpact = { strength: impactStrength };
+        movementOutput.shouldTriggerLandingSound = true;
       }
 
       // Reset fall tracking after landing
@@ -180,22 +208,32 @@ export class PlayerMovementController {
       this.isJumping = false;
     }
 
-    // Set velocity with both horizontal and vertical movement
-    const newVelocity = new Vector3(horizontalVelocity, verticalVelocity, 0);
-    this.sc.playerController.aggregate.body.setLinearVelocity(newVelocity);
+    // Set final velocity
+    movementOutput.velocity = new Vector3(horizontalVelocity, verticalVelocity, 0);
 
-    // Lock physics to 2D - prevent movement/rotation on unwanted axes
-    this.sc.playerController.aggregate.body.setAngularVelocity(Vector3.Zero());
+    // Handle footstep logic
+    const isMovingHorizontally = (input.moveLeft || input.moveRight);
+    const isMovingOnGround = onGround && isMovingHorizontally && Math.abs(horizontalVelocity) > 0.1;
+    
+    movementOutput.isMovingOnGround = isMovingOnGround;
+    movementOutput.isSprinting = input.sprint;
 
-    // Get current position and lock Z-axis to 0 (or whatever Z value you want)
-    const currentPosition = this.sc.playerController.mesh.position;
-    if (currentPosition.z !== 0) {
-      this.sc.playerController.mesh.position.z = 0;
+    // Determine if we should start or stop footsteps
+    if (isMovingOnGround) {
+      movementOutput.shouldStartFootsteps = true;
+      movementOutput.shouldStopFootsteps = false;
+    } else {
+      movementOutput.shouldStartFootsteps = false;
+      movementOutput.shouldStopFootsteps = true;
     }
 
     // Update state tracking AFTER all logic
     this.wasOnGroundLastFrame = onGround;
-  }  private handleGroundMovement(input: MovementInput, speedMult: number): number {
+
+    return movementOutput;
+  }
+
+  private handleGroundMovement(input: MovementInput, speedMult: number): number {
     if (input.moveLeft) {
       // Move left (positive X direction)
       return this.heroSpeed * speedMult;
@@ -231,14 +269,14 @@ export class PlayerMovementController {
     }
   }
 
-  private updatePlayerDirection(input: MovementInput): void {
+  private getFacingDirection(input: MovementInput): boolean | null {
     // Only change direction when there's horizontal input
     if (input.moveLeft) {
-      // Test: try rotating to face left
-      this.sc.playerController.mesh.rotation.y = Math.PI;
+      return true; // Facing left
     } else if (input.moveRight) {
-      // Test: try no rotation for right
-      this.sc.playerController.mesh.rotation.y = 0;
+      return false; // Facing right
+    } else {
+      return null; // No change in direction
     }
   }
 
@@ -246,7 +284,7 @@ export class PlayerMovementController {
     // Reset wall jump direction
     this.wallJumpDirection = 0;
 
-    const playerPosition = this.sc.playerController.mesh.position;
+    const playerPosition = this.sc.playerController.getPosition();
     const rayOrigin = playerPosition.clone();
     rayOrigin.y += 0.5; // Cast ray from middle of player, not feet
 

@@ -7,6 +7,7 @@ import {
   TransformNode,
 } from '@babylonjs/core';
 import { SceneController } from '../SceneController';
+import Logger from '../../utils/logger';
 
 export interface MeshDictionary {
   ground: {
@@ -38,10 +39,10 @@ export class MeshProcessor {
     let groundMesh: AbstractMesh | null = null;
 
     meshes.forEach((mesh) => {
-      console.log('mesh.metadata.gltf?.extras: ', mesh.metadata?.gltf?.extras?.collideable === true);
+      Logger.levelLoader.debug('mesh.metadata.gltf?.extras: ', mesh.metadata?.gltf?.extras?.collideable === true);
 
-      // Handle collision detection for meshes with collideable metadata
-      if (mesh.metadata?.gltf?.extras?.collideable === true) {
+      // Handle collision detection for meshes with collideable metadata or death planes
+      if (mesh.metadata?.gltf?.extras?.collideable === true || mesh.name === 'death plane') {
         mesh.checkCollisions = true;
         const groundAggregate = new PhysicsAggregate(
           mesh,
@@ -49,26 +50,26 @@ export class MeshProcessor {
           { mass: 0, friction: 0 },
           this._scene
         );
+
+        // Log death plane setup specifically
+        if (mesh.name === 'death plane') {
+          Logger.levelLoader.info(`Death plane physics aggregate created for mesh: ${mesh.name}`);
+          Logger.levelLoader.info(`Death plane position: ${mesh.position.toString()}`);
+
+          // Ensure death plane has proper metadata for detection
+          if (!mesh.metadata) mesh.metadata = {};
+          if (!mesh.metadata.gltf) mesh.metadata.gltf = {};
+          if (!mesh.metadata.gltf.extras) mesh.metadata.gltf.extras = {};
+          mesh.metadata.gltf.extras.deathPlane = true;
+        }
       }
 
       // Handle ground meshes
-      mesh.id = `${chunkXY}_${mesh.id}`;
-      if (mesh.id.includes(this.meshDict.ground.id_includes)) {
         this.meshDict.ground.allMeshes.push(mesh);
 
-        if (!extensionDir) {
-          this.meshDict.ground.mesh = mesh;
-          groundMesh = mesh;
-        } else {
-          groundMesh = mesh;
-          console.log("extensionDir: ", extensionDir);
-          mesh.position.x = extensionDir.x * 100;
-          mesh.position.z = extensionDir.y * -100;
-        }
-      }
     });
 
-    console.log("groundMesh: ", groundMesh);
+    Logger.levelLoader.debug("groundMesh: ", groundMesh);
 
     if (groundMesh) {
       this.setupGroundMesh(groundMesh);
@@ -95,10 +96,11 @@ export class MeshProcessor {
 
   processTransformNodes(tnodes: TransformNode[]): void {
     tnodes.forEach((tnode) => {
-      console.log('tnode.id: ', tnode.id);
+      Logger.levelLoader.debug('tnode.id: ', tnode.id);
 
       // Handle player spawn points
       if (tnode.id.includes("PLAYER_SPAWN")) {
+        Logger.levelLoader.info(`Setting up player spawn at: ${tnode.position.toString()}`);
         this._sceneController.setPlayerPos(
           tnode.position.clone(),
           tnode.metadata.gltf?.extras
@@ -107,7 +109,7 @@ export class MeshProcessor {
 
       // Handle scene camera setup
       if (tnode.id === "SceneCamera") {
-        console.log('tnode: ', tnode);
+        Logger.levelLoader.debug('tnode: ', tnode);
         // Camera setup logic can be added here if needed
       }
 
@@ -118,6 +120,7 @@ export class MeshProcessor {
         );
         if (mainLight) {
           mainLight.intensity = 2;
+          Logger.levelLoader.debug('Main light intensity set to 2');
         }
       }
     });

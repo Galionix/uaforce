@@ -12,7 +12,6 @@ import { ProgressBar } from '@ex/ReactComponents/ProgressBar/ProgressBar';
 // import { ResourceLoaderController } from './ResourceLoaderController';
 const manualStart = process.env.NODE_ENV === 'production';
 // const manualStart = true;
-const debug = true;
 
 const initializeBabylon = async (
   canvasRef: RefObject<HTMLCanvasElement | null>,
@@ -32,7 +31,7 @@ const initializeBabylon = async (
     setLoadInfo
   );
   // await game.asyncInit();
-  if (debug) await game.toggleDebugLayer();
+
 };
 export default function Home() {
   const [loadInfo, setLoadInfo] = useState({

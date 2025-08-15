@@ -47,10 +47,10 @@ export class GuiController {
     const control = this.getGuiControlOrFail(controlName);
 
     control.onPointerClickObservable.add(() => {
-      // Автоматический клик-звук
-      // this.sceneController.soundController.SoundsAudios.sfx.ui.click.play();
+      // Play UI click sound
+      this.sceneController.soundController.playUIClick();
 
-      // Твой кастомный код
+      // Your custom code
       callback();
     });
   }
@@ -64,6 +64,7 @@ export class GuiController {
     SettingsView.isVisible = false;
 
     textBlock.onPointerClickObservable.add(() => {
+      this.sceneController.soundController.playUIClick();
       this.toggleMainMenu();
     });
     burger.isVisible = this.isTouchDevice();
@@ -242,6 +243,8 @@ export class GuiController {
       // this.bindClickHandler()
       buttonChoice.onPointerClickObservable.addOnce(() => {
         if (!buttonChoice.metadata.enabled) return;
+        // Play UI click sound
+        this.sceneController.soundController.playUIClick();
         // buttons
         buttons.forEach((btn) => {
           if (btn !== buttonChoice) {
@@ -250,8 +253,7 @@ export class GuiController {
           btn.metadata.enabled = false;
         });
         console.log("buttons: ", buttons);
-        // Автоматический клик-звук
-        // this.sceneController.soundController.SoundsAudios.sfx.ui.click.play();
+        // UI click sound now handled above
         // this.sceneController.game.dialogController.continueDialog(id, choice.index)
         GlobalEventBus.emit("dialog:continue", {
           eventId: id,

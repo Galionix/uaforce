@@ -9,6 +9,7 @@ import { MapController } from './levelLoader/MapController';
 import { configureLogging } from '../utils/loggerConfig';
 import Logger, { LogCategory, LogLevel } from '@ex/utils/logger';
 
+const debug = true;
 export class Game {
   private _canvas;
   _sceneController?: SceneController;
@@ -19,6 +20,7 @@ export class Game {
   soundController?: SoundController;
   private _mapController?: MapController;
   dialogController?: DialogController
+
   isTouchDevice() {
     const res = "ontouchstart" in window || navigator.maxTouchPoints > 0;
     // alert(res)
@@ -53,7 +55,7 @@ export class Game {
       // preserveDrawingBuffer: false,
       // alpha: false,
     });
-    this._engine.initAsync().then(() => {
+    this._engine.initAsync().then(async () => {
     this.soundController = new SoundController();
     this._engine.preventCacheWipeBetweenFrames = true;
     this._sceneController = new SceneController(
@@ -95,7 +97,10 @@ export class Game {
       if (!this._scene) return;
       this._scene.render();
     });
+if (debug) await this.toggleDebugLayer();
     this.asyncInit();
+
+
     });
   }
 
