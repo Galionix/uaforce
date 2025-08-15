@@ -60,7 +60,6 @@ export const createInputController = (sc: SceneController) => {
       sphere.setEnabled(false);
       onGround = false;
     }
-    console.log('onGround: ', onGround);
   });
 
   sc.scene.actionManager = new ActionManager(sc.scene);

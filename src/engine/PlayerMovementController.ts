@@ -25,6 +25,10 @@ export class PlayerMovementController {
   private wallJumpDirection = 0; // -1 for left wall, 1 for right wall, 0 for no wall
   private wallRayHelper?: RayHelper; // Visual ray for wall detection
 
+  // Wall jump cooldown to prevent spamming
+  private lastWallJumpTime = 0;
+  private wallJumpCooldown = 200; // 200ms cooldown between wall jumps
+
   // Previous state tracking for camera effects
   private wasJumpingLastFrame = false;
   private wasOnWallLastFrame = false;
@@ -47,12 +51,12 @@ export class PlayerMovementController {
     if (this.wasOnGroundLastFrame && !onGround) {
       // Just left the ground - save current horizontal velocity
       this.lastGroundHorizontalVelocity = horizontalVelocity;
-      console.log("Player left the ground");
+      console.log(`[${Date.now()}] Player left the ground`);
     }
 
     // Debug: Log ground state changes
     if (this.wasOnGroundLastFrame !== onGround) {
-      console.log(`Ground state changed: ${this.wasOnGroundLastFrame ? 'was on ground' : 'was in air'} -> ${onGround ? 'now on ground' : 'now in air'}`);
+      console.log(`[${Date.now()}] Ground state changed: ${this.wasOnGroundLastFrame ? 'was on ground' : 'was in air'} -> ${onGround ? 'now on ground' : 'now in air'}`);
     }
 
     // Track if we've ever been on ground
@@ -82,30 +86,35 @@ export class PlayerMovementController {
         // Normal ground jump
         verticalVelocity = this.jumpSpeed;
         this.isJumping = true;
-        console.log("Player started jumping from ground");
+        console.log(`[${Date.now()}] Player started jumping from ground`);
         // Trigger camera jump impulse
         this.sc.cameraController.jumpImpulse();
-      } else if (onWall && !onGround && !this.isJumping) {
-        // Wall jump
-        verticalVelocity = this.wallJumpSpeed;
-        // Push player away from wall
-        horizontalVelocity = -this.wallJumpDirection * this.heroSpeed * speedMult;
-        this.isJumping = true;
-        console.log("Player started wall jumping");
-        // Trigger camera wall jump shake
-        this.sc.cameraController.wallJumpShake(this.wallJumpDirection);
+      } else if (onWall && !onGround) {
+        // Wall jump - check cooldown to prevent spamming (allow even if already jumping for wall jump chains)
+        const currentTime = Date.now();
+        if (currentTime - this.lastWallJumpTime > this.wallJumpCooldown) {
+          verticalVelocity = this.wallJumpSpeed;
+          // Push player away from wall
+          horizontalVelocity = -this.wallJumpDirection * this.heroSpeed * speedMult;
+          this.isJumping = true;
+          this.lastWallJumpTime = currentTime;
+          console.log(`[${Date.now()}] Player started wall jumping`);
+          // Trigger camera wall jump shake
+          this.sc.cameraController.wallJumpShake(this.wallJumpDirection);
+        }
       }
     }
 
-    // Reset jumping flag when landing or touching wall
-    if ((onGround || onWall) && currentVelocity.y <= 0) {
-      // Check if we just landed (was jumping and now on ground)
-      if (this.isJumping && onGround && !this.wasOnGroundLastFrame) {
-        // Calculate landing impact based on fall velocity
-        const landingSpeed = Math.abs(currentVelocity.y);
-        const impactStrength = Math.min(landingSpeed / 4, 3.0); // More reasonable scaling
-        console.log(`Player landed! Fall speed: ${landingSpeed.toFixed(2)}, Impact strength: ${impactStrength.toFixed(2)}`);
-
+    // Check if we just landed (any landing from air to ground)
+    if (onGround && !this.wasOnGroundLastFrame && currentVelocity.y <= 0) {
+      // Calculate landing impact based on fall velocity - simple and universal
+      const landingSpeed = Math.abs(currentVelocity.y);
+      const impactStrength = Math.min(landingSpeed / 6, 1.2); // Gentler scaling: divide by 6, max 1.2
+      
+      // Always trigger camera impact for any landing (no special cases)
+      if (impactStrength > 0.05) { // Only trigger if there's meaningful impact
+        console.log(`[${Date.now()}] Player landed! Fall speed: ${landingSpeed.toFixed(2)}, Impact strength: ${impactStrength.toFixed(2)}`);
+        
         // Check if camera controller exists before calling
         try {
           this.sc.cameraController.landingImpact(impactStrength);
@@ -113,10 +122,13 @@ export class PlayerMovementController {
           console.error("Error calling camera landing impact:", error);
         }
       }
+    }
 
+    // Reset jumping flag when landing on ground (not walls)
+    if (onGround && currentVelocity.y <= 0) {
       // Debug: Log when jumping state resets
       if (this.isJumping) {
-        console.log("Player stopped jumping (landed or hit wall)");
+        console.log(`[${Date.now()}] Player stopped jumping (landed on ground)`);
       }
       this.isJumping = false;
     }
@@ -134,7 +146,7 @@ export class PlayerMovementController {
       this.sc.playerController.mesh.position.z = 0;
     }
 
-    // Update ground state tracking AFTER all landing detection logic
+    // Update state tracking AFTER all logic
     this.wasOnGroundLastFrame = onGround;
   }  private handleGroundMovement(input: MovementInput, speedMult: number): number {
     if (input.moveLeft) {
@@ -201,10 +213,7 @@ export class PlayerMovementController {
       rayDirection = new Vector3(-1, 0, 0); // Right direction (negative X)
       this.wallJumpDirection = 1; // Right wall
     } else {
-      // No horizontal movement, no wall detection - hide ray
-    //   if (this.wallRayHelper) {
-    //     this.wallRayHelper.hide();
-    //   }
+      // No horizontal movement, no wall detection
       return false;
     }
 

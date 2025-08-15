@@ -13,9 +13,9 @@ const CAMERA_CONFIG = {
     MIN_IMPULSE_THRESHOLD: 0.001, // Minimum impulse before reset to zero
 
     // Landing impact settings
-    LANDING_IMPACT_DOWN: -1.5,    // Downward impulse strength
+    LANDING_IMPACT_DOWN: -5.5,    // Downward impulse strength
     LANDING_IMPACT_UP: 0.5,       // Upward bounce strength
-    LANDING_BOUNCE_DELAY: 100,    // Delay before bounce (ms)
+    LANDING_BOUNCE_DELAY: 15,     // Delay before bounce (ms) - reduced from 100ms
     LANDING_BOUNCE_MULTIPLIER: 0.3, // Bounce strength relative to impact
 
     // Other impulse effects
@@ -144,14 +144,15 @@ export class CameraController {
 
     // === PREDEFINED IMPULSE EFFECTS ===
 
-    public landingImpact(strength: number = 1.0): void {
-        console.log(`Camera landing impact triggered with strength: ${strength.toFixed(2)}`);
+    public landingImpact(strength: number = 100.0): void {
+        console.log(`[${Date.now()}] Camera landing impact triggered with strength: ${strength.toFixed(2)}`);
 
         // Strong downward motion for landing impact
-        this.applyImpulse(new Vector3(0, CAMERA_CONFIG.LANDING_IMPACT_DOWN, 0), strength);
+        this.applyImpulse(new Vector3(0, CAMERA_CONFIG.LANDING_IMPACT_DOWN * strength, 0), strength);
 
         // Delayed upward bounce
         setTimeout(() => {
+            console.log(`[${Date.now()}] Camera landing bounce triggered`);
             this.applyImpulse(
                 new Vector3(0, CAMERA_CONFIG.LANDING_IMPACT_UP, 0),
                 strength * CAMERA_CONFIG.LANDING_BOUNCE_MULTIPLIER
@@ -160,6 +161,7 @@ export class CameraController {
     }
 
     public wallJumpShake(direction: number, strength: number = 1.0): void {
+        console.log(`[${Date.now()}] Camera wall jump shake triggered with direction: ${direction}, strength: ${strength.toFixed(2)}`);
         // Horizontal shake when wall jumping (direction: -1 for left wall, 1 for right wall)
         this.applyImpulse(
             new Vector3(direction * CAMERA_CONFIG.WALL_JUMP_HORIZONTAL, CAMERA_CONFIG.WALL_JUMP_VERTICAL, 0),
@@ -168,6 +170,7 @@ export class CameraController {
     }
 
     public jumpImpulse(strength: number = 0.8): void {
+        console.log(`[${Date.now()}] Camera jump impulse triggered with strength: ${strength.toFixed(2)}`);
         // Slight upward motion when jumping
         this.applyImpulse(new Vector3(0, CAMERA_CONFIG.JUMP_IMPULSE, 0), strength);
     }
