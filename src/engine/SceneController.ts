@@ -10,6 +10,7 @@ import { MapController } from './levelLoader/MapController';
 import { PlayerController } from './PlayerController';
 import { SoundController } from './SoundController';
 import { CameraController } from './CameraController';
+import { ProjectileGameIntegration } from './projectiles';
 
 export class SceneController {
   private _scene: Scene;
@@ -19,7 +20,8 @@ export class SceneController {
   private _cameraController?: CameraController;
    guiController?: GuiController;
   physEngine;
-  soundController: SoundController
+  soundController: SoundController;
+  projectileSystem?: ProjectileGameIntegration;
 
   // raycastInfo
   setCameraController(cameraController: CameraController) {
@@ -65,6 +67,10 @@ export class SceneController {
     await this.guiController?.loadGui()
     this.createLight(this._scene)
 
+    // Initialize projectile system from game controller
+    if (this.game.projectileSystem) {
+      this.projectileSystem = this.game.projectileSystem;
+    }
   }
   setPlayerPos(pos: Vector3, props: any) {
     this._playerController.setInitialPosition(pos, props);

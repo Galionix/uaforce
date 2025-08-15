@@ -101,6 +101,87 @@ export const createInputController = (sc: SceneController) => {
           sc.soundController.playFootsteps();
           console.log("Debug: Footstep sequence played");
         }
+        if (kbInfo.event.code === "Space") {
+          // Shooting with SPACE key
+          if (sc.projectileSystem && sc.playerController.mesh) {
+            // Calculate shoot direction based on player facing direction
+            const playerPos = sc.playerController.mesh.position;
+            const facingLeft = sc.playerController.getFacingDirection();
+            
+            // Calculate target position - shoot horizontally in the direction player is facing
+            // facingLeft = true means positive X direction, facingLeft = false means negative X direction
+            const shootDistance = 10; // How far to aim
+            const targetPosition = playerPos.clone().add(
+              new Vector3(facingLeft ? shootDistance : -shootDistance, 0, 0)
+            );
+            
+            console.log("SPACE pressed! Attempting to shoot bullet...");
+            console.log("Player position:", playerPos);
+            console.log("Facing left:", facingLeft);
+            console.log("Target position:", targetPosition);
+            
+            // Fire using playerShoot method
+            sc.projectileSystem.playerShoot(sc.playerController.mesh, targetPosition, 'bullet');
+            
+            console.log("Player shot bullet towards:", targetPosition);
+          } else {
+            console.log("Cannot shoot - missing projectileSystem or playerController.mesh");
+          }
+        }
+        if (kbInfo.event.code === "Digit1") {
+          // Test rocket projectile
+          if (sc.projectileSystem && sc.playerController.mesh) {
+            const playerPos = sc.playerController.mesh.position;
+            const facingLeft = sc.playerController.getFacingDirection();
+            const shootDistance = 15;
+            const targetPosition = playerPos.clone().add(
+              new Vector3(facingLeft ? shootDistance : -shootDistance, 0, 0)
+            );
+            
+            sc.projectileSystem.playerShoot(sc.playerController.mesh, targetPosition, 'rocket');
+            console.log("Player shot rocket towards:", targetPosition);
+          }
+        }
+        if (kbInfo.event.code === "Digit2") {
+          // Test grenade throw
+          if (sc.projectileSystem && sc.playerController.mesh) {
+            const playerPos = sc.playerController.mesh.position;
+            const facingLeft = sc.playerController.getFacingDirection();
+            const throwDistance = 8;
+            const targetPosition = playerPos.clone().add(
+              new Vector3(facingLeft ? throwDistance : -throwDistance, -2, 0) // Aim slightly down for arc
+            );
+            
+            sc.projectileSystem.throwGrenade(playerPos, targetPosition);
+            console.log("Player threw grenade towards:", targetPosition);
+          }
+        }
+        if (kbInfo.event.code === "Digit3") {
+          // Test fireball spell
+          if (sc.projectileSystem && sc.playerController.mesh) {
+            const playerPos = sc.playerController.mesh.position;
+            const facingLeft = sc.playerController.getFacingDirection();
+            const shootDistance = 12;
+            const targetPosition = playerPos.clone().add(
+              new Vector3(facingLeft ? shootDistance : -shootDistance, 0, 0)
+            );
+            
+            sc.projectileSystem.castSpell(sc.playerController.mesh, 'fireball', targetPosition);
+            console.log("Player cast fireball towards:", targetPosition);
+          }
+        }
+        if (kbInfo.event.code === "Digit4") {
+          // Test timed bomb throw
+          if (sc.projectileSystem && sc.playerController.mesh) {
+            const playerPos = sc.playerController.mesh.position;
+            const facingLeft = sc.playerController.getFacingDirection();
+            const throwDistance = 5; // Shorter throw for timed bomb
+            const direction = new Vector3(facingLeft ? 1 : -1, 0.3, 0).normalize(); // Slight upward angle
+            
+            sc.projectileSystem.throwTimedBomb(playerPos, direction);
+            console.log("Player threw timed bomb in direction:", direction);
+          }
+        }
         break;
         // case BABYLON.KeyboardEventTypes.KEYUP:
         //   // Можно отлавливать отпускание
@@ -121,11 +202,11 @@ export const createInputController = (sc: SceneController) => {
     const groundState = sc.playerController.getGroundDetectionState();
     const onGround = groundState.isOnGround;
 
-    // Gather input state
+    // Gather input state (W = jump, SPACE = shoot)
     const movementInput = {
       moveLeft: !!inputMap["KeyA"],
       moveRight: !!inputMap["KeyD"],
-      jump: !!inputMap["Space"],
+      jump: !!inputMap["KeyW"], // Changed from Space to W
       sprint: !!inputMap.ShiftLeft
     };
 

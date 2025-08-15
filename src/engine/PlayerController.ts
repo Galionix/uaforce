@@ -276,6 +276,14 @@ export class PlayerController {
     }
 
     /**
+     * Get the player's current facing direction
+     */
+    public getFacingDirection(): boolean {
+        // Player faces left when rotation.y is PI (180 degrees)
+        return Math.abs(this.playerMesh.rotation.y - Math.PI) < 0.1;
+    }
+
+    /**
      * Get the player's current position
      */
     public getPosition(): Vector3 {
