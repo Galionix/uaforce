@@ -56,25 +56,6 @@ export class PlayerController {
         return this._aggregate?.body;
     }
 
-    private setup2DConstraints() {
-        if (!this._aggregate) return;
-
-        // Set up automatic 2D constraint enforcement
-        this.scene.onBeforeRenderObservable.add(() => {
-            if (this._aggregate) {
-                this.enforce2DConstraints();
-
-                // Force rotation to stay controlled (prevent physics drift but allow intentional Y rotation)
-                // Only reset X and Z rotation, allow Y rotation for direction facing
-                if (this.playerMesh.rotation.x !== 0 || this.playerMesh.rotation.z !== 0) {
-                    this.playerMesh.rotation.x = 0;
-                    this.playerMesh.rotation.z = 0;
-                    // Keep Y rotation as is for direction facing
-                }
-            }
-        });
-    }
-
     private setupUnifiedRayDetection() {
         if (!this._aggregate) return;
 
@@ -188,8 +169,15 @@ export class PlayerController {
         this._aggregate.body.setMotionType(PhysicsMotionType.DYNAMIC);
         this.hk.setAngularDamping( this._aggregate.body,Number.MAX_SAFE_INTEGER);
 
-        // Lock physics to 2D - prevent movement on Z-axis and rotation on X/Y axes
-        this.setup2DConstraints();
+        // Note: 2D physics constraints are now handled globally by Physics2DConstraintSystem
+        // Manually register the player's physics body with the constraint system
+        // This is done after a short delay to ensure the aggregate is fully set up
+        setTimeout(() => {
+            const sceneController = this.scene.metadata?.sceneController;
+            if (sceneController && sceneController.physics2DConstraintSystem && this._aggregate) {
+                sceneController.physics2DConstraintSystem.registerPhysicsBody(this._aggregate.body, 'Player');
+            }
+        }, 100);
 
         // Set up unified ray detection for ground and death plane
         this.setupUnifiedRayDetection();
@@ -298,24 +286,6 @@ export class PlayerController {
         const constrainedPosition = new Vector3(position.x, position.y, 0);
         this.playerMesh.position = constrainedPosition;
         Logger.physics.debug(`Player position set to: ${constrainedPosition.toString()}`);
-    }
-
-    /**
-     * Force 2D constraints (called by update loop)
-     */
-    public enforce2DConstraints(): void {
-        // Force Z position to stay at 0
-        if (this.playerMesh.position.z !== 0) {
-            this.playerMesh.position.z = 0;
-        }
-
-        // Force velocity Z component to stay at 0
-        if (this._aggregate) {
-            const velocity = this._aggregate.body.getLinearVelocity();
-            if (velocity.z !== 0) {
-                this._aggregate.body.setLinearVelocity(new Vector3(velocity.x, velocity.y, 0));
-            }
-        }
     }
 
     /**

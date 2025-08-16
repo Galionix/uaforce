@@ -46,7 +46,7 @@ export class SoundController {
    */
   private createSoundSequences(sequences: { left: StaticSound; right: StaticSound }[][]): { left: StaticSound; right: StaticSound }[][] {
     if (!this._SoundsAudios) return [];
-    return sequences.filter(sequence => 
+    return sequences.filter(sequence =>
       sequence.every(pair => pair.left && pair.right)
     );
   }
@@ -68,7 +68,7 @@ export class SoundController {
 
     // Play left or right based on current step
     const soundToPlay = this.currentStepInSequence === 0 ? soundPair.left : soundPair.right;
-    
+
     if (soundToPlay) {
       this.isFootstepPlaying = true;
       soundToPlay.setVolume(volume * this.sfxVolume);
@@ -78,10 +78,10 @@ export class SoundController {
       // Wait for sound to finish before allowing next step
       soundToPlay.onEndedObservable.addOnce(() => {
         this.isFootstepPlaying = false;
-        
+
         // Advance to next step in sequence
         this.currentStepInSequence = (this.currentStepInSequence + 1) % 2;
-        
+
         // If we completed a left-right pair, potentially switch to new sequence
         if (this.currentStepInSequence === 0) {
           // 30% chance to switch to a new random sequence
@@ -186,10 +186,10 @@ export class SoundController {
     if (value !== undefined) {
       this.sfxVolume = value;
     }
-    
+
     // Update legacy footsteps volume
     this.footstepsSounds.forEach(sound=>sound.setVolume(0.3 * this.sfxVolume))
-    
+
     // Note: Sequence footsteps volume is handled dynamically in playNextFootstepInSequence
     // this.SoundsAudios.sfx.player.footsteps.stepstone_3.setVolume(
     //   0.1 * this.sfxVolume
@@ -242,32 +242,32 @@ export class SoundController {
     this.footstepSequences = [
       // Sand footsteps sequence
       [
-        { 
-          left: this._SoundsAudios.player.footsteps["Fantozzi-SandL1"], 
-          right: this._SoundsAudios.player.footsteps["Fantozzi-SandR1"] 
+        {
+          left: this._SoundsAudios.player.footsteps["Fantozzi-SandL1"],
+          right: this._SoundsAudios.player.footsteps["Fantozzi-SandR1"]
         },
-        { 
-          left: this._SoundsAudios.player.footsteps["Fantozzi-SandL2"], 
-          right: this._SoundsAudios.player.footsteps["Fantozzi-SandR2"] 
+        {
+          left: this._SoundsAudios.player.footsteps["Fantozzi-SandL2"],
+          right: this._SoundsAudios.player.footsteps["Fantozzi-SandR2"]
         },
-        { 
-          left: this._SoundsAudios.player.footsteps["Fantozzi-SandL3"], 
-          right: this._SoundsAudios.player.footsteps["Fantozzi-SandR3"] 
+        {
+          left: this._SoundsAudios.player.footsteps["Fantozzi-SandL3"],
+          right: this._SoundsAudios.player.footsteps["Fantozzi-SandR3"]
         }
       ],
       // Stone footsteps sequence
       [
-        { 
-          left: this._SoundsAudios.player.footsteps["Fantozzi-StoneL1"], 
-          right: this._SoundsAudios.player.footsteps["Fantozzi-StoneR1"] 
+        {
+          left: this._SoundsAudios.player.footsteps["Fantozzi-StoneL1"],
+          right: this._SoundsAudios.player.footsteps["Fantozzi-StoneR1"]
         },
-        { 
-          left: this._SoundsAudios.player.footsteps["Fantozzi-StoneL2"], 
-          right: this._SoundsAudios.player.footsteps["Fantozzi-StoneR2"] 
+        {
+          left: this._SoundsAudios.player.footsteps["Fantozzi-StoneL2"],
+          right: this._SoundsAudios.player.footsteps["Fantozzi-StoneR2"]
         },
-        { 
-          left: this._SoundsAudios.player.footsteps["Fantozzi-StoneL3"], 
-          right: this._SoundsAudios.player.footsteps["Fantozzi-StoneR3"] 
+        {
+          left: this._SoundsAudios.player.footsteps["Fantozzi-StoneL3"],
+          right: this._SoundsAudios.player.footsteps["Fantozzi-StoneR3"]
         }
       ]
     ];
@@ -424,7 +424,7 @@ export class SoundController {
 
     // Adjust volume based on impact strength (0.4 minimum, 1.0 maximum)
     const baseVolume = 0.8;
-    const volume = impactStrength 
+    const volume = impactStrength
       ? Math.max(0.4, Math.min(1.0, baseVolume * (impactStrength / 2.0)))
       : baseVolume;
 

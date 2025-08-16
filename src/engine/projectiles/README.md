@@ -41,28 +41,28 @@ export class Game {
 ```typescript
 // Player shoots a bullet
 this.projectileSystem.playerShoot(
-    playerMesh, 
-    targetPosition, 
+    playerMesh,
+    targetPosition,
     'bullet'
 );
 
 // Enemy shoots at player
 this.projectileSystem.enemyShoot(
-    enemyMesh, 
-    playerMesh, 
+    enemyMesh,
+    playerMesh,
     'bullet'
 );
 
 // Throw a grenade
 this.projectileSystem.throwGrenade(
-    fromPosition, 
+    fromPosition,
     targetPosition
 );
 
 // Cast a fireball spell
 this.projectileSystem.castSpell(
-    casterMesh, 
-    'fireball', 
+    casterMesh,
+    'fireball',
     targetPosition
 );
 ```
@@ -166,10 +166,10 @@ export class LaserProjectile extends BaseProjectile {
             trailEffect: true,
             piercing: true
         };
-        
+
         super(scene, laserConfig);
     }
-    
+
     protected updateCustomBehavior(deltaTime: number): void {
         // Custom laser behavior
         if (!this.config.hasPhysics) {
@@ -185,7 +185,7 @@ export class LaserProjectile extends BaseProjectile {
 
 ```typescript
 // In your game initialization
-this.projectileSystem.registerProjectileType('laser', 
+this.projectileSystem.registerProjectileType('laser',
     (scene, config) => new LaserProjectile(scene, config));
 
 // Use it
@@ -205,10 +205,10 @@ private handlePlayerHit(target: AbstractMesh, hitPoint: Vector3, weaponType: str
     // Apply damage
     const damage = this.getWeaponDamage(weaponType);
     this.gameManager.damageSystem.applyDamage(target, damage);
-    
+
     // Create hit effects
     this.effectsManager.createHitEffect(hitPoint, weaponType);
-    
+
     // Play sound
     this.soundManager.playHitSound(weaponType);
 }
@@ -230,10 +230,10 @@ onHit: (target, hitPoint) => {
 private createExplosion(position: Vector3, intensity: number): void {
     // Particle effects
     this.particleManager.createExplosion(position, intensity);
-    
+
     // Screen shake
     this.cameraController.addScreenShake(intensity * 0.5);
-    
+
     // Sound
     this.soundController.playExplosion(intensity);
 }
@@ -315,7 +315,7 @@ The system includes examples of status effects:
 // In your hit handler
 private applyCustomEffect(target: AbstractMesh): void {
     if (!target.metadata) target.metadata = {};
-    
+
     target.metadata.poisonEffect = {
         duration: 10000,
         damagePerSecond: 2,

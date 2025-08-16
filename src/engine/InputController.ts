@@ -107,22 +107,22 @@ export const createInputController = (sc: SceneController) => {
             // Calculate shoot direction based on player facing direction
             const playerPos = sc.playerController.mesh.position;
             const facingLeft = sc.playerController.getFacingDirection();
-            
+
             // Calculate target position - shoot horizontally in the direction player is facing
             // facingLeft = true means positive X direction, facingLeft = false means negative X direction
             const shootDistance = 10; // How far to aim
             const targetPosition = playerPos.clone().add(
               new Vector3(facingLeft ? shootDistance : -shootDistance, 0, 0)
             );
-            
+
             console.log("SPACE pressed! Attempting to shoot bullet...");
             console.log("Player position:", playerPos);
             console.log("Facing left:", facingLeft);
             console.log("Target position:", targetPosition);
-            
+
             // Fire using playerShoot method
             sc.projectileSystem.playerShoot(sc.playerController.mesh, targetPosition, 'bullet');
-            
+
             console.log("Player shot bullet towards:", targetPosition);
           } else {
             console.log("Cannot shoot - missing projectileSystem or playerController.mesh");
@@ -137,7 +137,7 @@ export const createInputController = (sc: SceneController) => {
             const targetPosition = playerPos.clone().add(
               new Vector3(facingLeft ? shootDistance : -shootDistance, 0, 0)
             );
-            
+
             sc.projectileSystem.playerShoot(sc.playerController.mesh, targetPosition, 'rocket');
             console.log("Player shot rocket towards:", targetPosition);
           }
@@ -151,7 +151,7 @@ export const createInputController = (sc: SceneController) => {
             const targetPosition = playerPos.clone().add(
               new Vector3(facingLeft ? throwDistance : -throwDistance, -2, 0) // Aim slightly down for arc
             );
-            
+
             sc.projectileSystem.throwGrenade(playerPos, targetPosition);
             console.log("Player threw grenade towards:", targetPosition);
           }
@@ -165,7 +165,7 @@ export const createInputController = (sc: SceneController) => {
             const targetPosition = playerPos.clone().add(
               new Vector3(facingLeft ? shootDistance : -shootDistance, 0, 0)
             );
-            
+
             sc.projectileSystem.castSpell(sc.playerController.mesh, 'fireball', targetPosition);
             console.log("Player cast fireball towards:", targetPosition);
           }
@@ -177,7 +177,7 @@ export const createInputController = (sc: SceneController) => {
             const facingLeft = sc.playerController.getFacingDirection();
             const throwDistance = 5; // Shorter throw for timed bomb
             const direction = new Vector3(facingLeft ? 1 : -1, 0.3, 0).normalize(); // Slight upward angle
-            
+
             sc.projectileSystem.throwTimedBomb(playerPos, direction);
             console.log("Player threw timed bomb in direction:", direction);
           }

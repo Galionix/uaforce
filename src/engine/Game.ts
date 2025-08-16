@@ -90,10 +90,10 @@ export class Game {
     });
     this._sceneController.setMapController(this._mapController);
     this._sceneController.createInput();
-    
+
     // Initialize projectile system
     this.projectileSystem = new ProjectileGameIntegration(this._scene);
-    
+
     // Enable debug mode for development
     if (debug) {
       this.projectileSystem.enableDebugMode();
@@ -105,12 +105,12 @@ export class Game {
     ro.observe(cnvs)
     this._engine.runRenderLoop(() => {
       if (!this._scene) return;
-      
+
       // Update projectile system
       if (this.projectileSystem) {
         this.projectileSystem.update();
       }
-      
+
       this._scene.render();
     });
 if (debug) await this.toggleDebugLayer();

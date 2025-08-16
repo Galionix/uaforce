@@ -214,7 +214,7 @@ export class PlayerMovementController {
     // Handle footstep logic
     const isMovingHorizontally = (input.moveLeft || input.moveRight);
     const isMovingOnGround = onGround && isMovingHorizontally && Math.abs(horizontalVelocity) > 0.1;
-    
+
     movementOutput.isMovingOnGround = isMovingOnGround;
     movementOutput.isSprinting = input.sprint;
 

@@ -13,10 +13,10 @@ export class Game {
 
     async init() {
         // ... your existing init code
-        
+
         // Initialize projectile system after scene is created
         // this.projectileSystem = new ProjectileGameIntegration(this.scene);
-        
+
         // Enable debug mode for development
         // if (process.env.NODE_ENV === 'development') {
         //     this.projectileSystem.enableDebugMode();
@@ -26,10 +26,10 @@ export class Game {
     // Add to your main game loop
     private gameLoop() {
         // ... your existing game loop code
-        
+
         // Update projectile system
         // this.projectileSystem.update();
-        
+
         // ... rest of your game loop
     }
 
@@ -38,21 +38,21 @@ export class Game {
         // if (this.playerController && this.playerController.mesh) {
         //     // Basic bullet
         //     this.projectileSystem.playerShoot(
-        //         this.playerController.mesh, 
-        //         targetPosition, 
+        //         this.playerController.mesh,
+        //         targetPosition,
         //         'bullet'
         //     );
 
         //     // Or fire a rocket
         //     // this.projectileSystem.playerShoot(
-        //     //     this.playerController.mesh, 
-        //     //     targetPosition, 
+        //     //     this.playerController.mesh,
+        //     //     targetPosition,
         //     //     'rocket'
         //     // );
 
         //     // Or throw a grenade
         //     // this.projectileSystem.throwGrenade(
-        //     //     this.playerController.mesh.position, 
+        //     //     this.playerController.mesh.position,
         //     //     targetPosition
         //     // );
         // }
@@ -62,8 +62,8 @@ export class Game {
     private handleEnemyShoot(enemyMesh: AbstractMesh) {
         // if (this.playerController && this.playerController.mesh) {
         //     this.projectileSystem.enemyShoot(
-        //         enemyMesh, 
-        //         this.playerController.mesh, 
+        //         enemyMesh,
+        //         this.playerController.mesh,
         //         'bullet'
         //     );
         // }
@@ -73,8 +73,8 @@ export class Game {
     private handleSpellCast(spellType: 'fireball' | 'ice_shard' | 'plasma', targetPosition: Vector3) {
         // if (this.playerController && this.playerController.mesh) {
         //     this.projectileSystem.castSpell(
-        //         this.playerController.mesh, 
-        //         spellType, 
+        //         this.playerController.mesh,
+        //         spellType,
         //         targetPosition
         //     );
         // }
@@ -84,7 +84,7 @@ export class Game {
     private handleShotgunFire(direction: Vector3) {
         // if (this.playerController && this.playerController.mesh) {
         //     this.projectileSystem.fireShotgun(
-        //         this.playerController.mesh, 
+        //         this.playerController.mesh,
         //         direction
         //     );
         // }
@@ -93,7 +93,7 @@ export class Game {
     // Clean up
     dispose() {
         // ... your existing cleanup code
-        
+
         // if (this.projectileSystem) {
         //     this.projectileSystem.dispose();
         // }

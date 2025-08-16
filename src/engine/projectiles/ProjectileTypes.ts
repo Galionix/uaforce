@@ -20,10 +20,10 @@ export class BulletProjectile extends BaseProjectile {
             particleEffect: false,
             damage: 25
         };
-        
+
         super(scene, bulletConfig);
     }
-    
+
     protected updateCustomBehavior(deltaTime: number): void {
         // Bullets don't need special behavior
     }
@@ -50,15 +50,15 @@ export class RocketProjectile extends BaseProjectile {
             splashRadius: 3,
             splashDamage: 30
         };
-        
+
         super(scene, rocketConfig);
     }
-    
+
     protected updateCustomBehavior(deltaTime: number): void {
         // Add rocket trail particles and sound effects
         this.updateRocketTrail();
     }
-    
+
     private updateRocketTrail(): void {
         // Enhanced particle system for rocket trail
         if (this.particleSystem) {
@@ -66,17 +66,17 @@ export class RocketProjectile extends BaseProjectile {
             this.particleSystem.emitRate = 200;
         }
     }
-    
+
     protected onCollision(collidedMesh: AbstractMesh): void {
         // Create explosion effect before calling parent
         this.createExplosion();
         super.onCollision(collidedMesh);
     }
-    
+
     private createExplosion(): void {
         // Here you would integrate with your sound system
         // this.soundController?.playExplosion();
-        
+
         // Create explosion visual effect
         // Could spawn debris particles or screen shake
     }
@@ -87,7 +87,7 @@ export class RocketProjectile extends BaseProjectile {
  */
 export class GrenadeProjectile extends BaseProjectile {
     private fuseTime: number;
-    
+
     constructor(scene: Scene, config: ProjectileConfig) {
         const grenadeConfig: ProjectileConfig = {
             ...config,
@@ -106,23 +106,23 @@ export class GrenadeProjectile extends BaseProjectile {
             splashDamage: 75,
             bounciness: 0.3
         };
-        
+
         super(scene, grenadeConfig);
         this.fuseTime = grenadeConfig.lifetime;
     }
-    
+
     protected updateCustomBehavior(deltaTime: number): void {
         // Flash more frequently as fuse time decreases
         const remainingTime = this.fuseTime - (Date.now() - this.startTime);
         const flashInterval = Math.max(100, remainingTime / 10);
-        
+
         if (Math.floor(Date.now() / flashInterval) % 2 === 0) {
             this.makeFlash(true);
         } else {
             this.makeFlash(false);
         }
     }
-    
+
     private makeFlash(active: boolean): void {
         if (this.mesh.material) {
             const material = this.mesh.material as any;
@@ -131,13 +131,13 @@ export class GrenadeProjectile extends BaseProjectile {
             }
         }
     }
-    
+
     protected expire(): void {
         // Explode when fuse runs out
         this.createGrenadeExplosion();
         super.expire();
     }
-    
+
     private createGrenadeExplosion(): void {
         // Create large explosion effect
         // Integrate with sound and visual effects
@@ -164,27 +164,27 @@ export class PlasmaProjectile extends BaseProjectile {
             damage: 40,
             piercing: true
         };
-        
+
         super(scene, plasmaConfig);
     }
-    
+
     protected updateCustomBehavior(deltaTime: number): void {
         // Plasma effect - pulsing glow and crackling particles
         this.updatePlasmaEffects();
-        
+
         // Since it has no physics, we need to manually move it
         if (!this.config.hasPhysics) {
             this.moveWithoutPhysics(deltaTime);
         }
     }
-    
+
     private updatePlasmaEffects(): void {
         // Enhance glow and particle effects
         if (this.particleSystem) {
             this.particleSystem.emitRate = 150;
         }
     }
-    
+
     private moveWithoutPhysics(deltaTime: number): void {
         const movement = this.velocity.scale(deltaTime);
         this.mesh.position.addInPlace(movement);
@@ -212,15 +212,15 @@ export class ArrowProjectile extends BaseProjectile {
             piercing: false,
             bounciness: 0.1
         };
-        
+
         super(scene, arrowConfig);
     }
-    
+
     protected updateCustomBehavior(deltaTime: number): void {
         // Rotate arrow to face movement direction
         this.alignWithVelocity();
     }
-    
+
     private alignWithVelocity(): void {
         if (this.physicsAggregate) {
             const velocity = this.physicsAggregate.body.getLinearVelocity();
@@ -252,22 +252,22 @@ export class FireballProjectile extends BaseProjectile {
             splashRadius: 2,
             splashDamage: 20
         };
-        
+
         super(scene, fireballConfig);
     }
-    
+
     protected updateCustomBehavior(deltaTime: number): void {
         // Fireball-specific effects
         this.updateFireEffects();
     }
-    
+
     private updateFireEffects(): void {
         // Enhance fire particle system
         if (this.particleSystem) {
             // Make particles look more like fire
             this.particleSystem.emitRate = 300;
         }
-        
+
         // Random flickering effect
         if (Math.random() < 0.1 && this.mesh.material) {
             const material = this.mesh.material as any;
@@ -298,22 +298,22 @@ export class IceShardProjectile extends BaseProjectile {
             particleEffect: true,
             damage: 30
         };
-        
+
         super(scene, iceConfig);
     }
-    
+
     protected updateCustomBehavior(deltaTime: number): void {
         // Ice crystal spinning effect
         this.mesh.rotation.y += deltaTime * 2;
         this.mesh.rotation.x += deltaTime * 1;
     }
-    
+
     protected onCollision(collidedMesh: AbstractMesh): void {
         // Apply slowing effect to target
         this.applySlowEffect(collidedMesh);
         super.onCollision(collidedMesh);
     }
-    
+
     private applySlowEffect(target: AbstractMesh): void {
         // Add slow effect metadata that other systems can read
         if (!target.metadata) target.metadata = {};
@@ -331,7 +331,7 @@ export class IceShardProjectile extends BaseProjectile {
 export class TimedBombProjectile extends BaseProjectile {
     private explosionTime: number;
     private hasExploded: boolean = false;
-    
+
     constructor(scene: Scene, config: ProjectileConfig) {
         const bombConfig: ProjectileConfig = {
             ...config,
@@ -350,22 +350,22 @@ export class TimedBombProjectile extends BaseProjectile {
             splashDamage: 80, // High explosion damage
             bounciness: 0.2 // Bounces a bit when it hits surfaces
         };
-        
+
         super(scene, bombConfig);
         this.explosionTime = Date.now() + 2000; // Explode in exactly 2 seconds
     }
-    
+
     protected updateCustomBehavior(deltaTime: number): void {
         const currentTime = Date.now();
         const timeLeft = this.explosionTime - currentTime;
-        
+
         // Don't process if already exploded
         if (this.hasExploded) return;
-        
+
         // Flash faster as explosion approaches
         const flashInterval = Math.max(50, timeLeft / 20); // Flash faster as time runs out
         const shouldFlash = Math.floor(currentTime / flashInterval) % 2 === 0;
-        
+
         // Make the bomb flash red/orange
         if (this.mesh.material) {
             const material = this.mesh.material as any;
@@ -380,19 +380,19 @@ export class TimedBombProjectile extends BaseProjectile {
                 }
             }
         }
-        
+
         // Explode when time is up
         if (timeLeft <= 0 && !this.hasExploded) {
             this.explode();
         }
     }
-    
+
     protected onCollision(collidedMesh: AbstractMesh): void {
         // Don't explode on collision - wait for timer
         // Just bounce off surfaces
         console.log("Timed bomb bounced off:", collidedMesh.name);
     }
-    
+
     protected expire(): void {
         // Override expire to trigger explosion instead of just disappearing
         if (!this.hasExploded) {
@@ -400,43 +400,43 @@ export class TimedBombProjectile extends BaseProjectile {
         }
         super.expire();
     }
-    
+
     private explode(): void {
         if (this.hasExploded) return;
-        
+
         this.hasExploded = true;
         console.log("TIMED BOMB EXPLODED at position:", this.mesh.position);
-        
+
         // Create explosion effect
         this.createExplosionEffect();
-        
+
         // Handle splash damage
         if (this.config.splashRadius && this.config.onSplash) {
             const affectedMeshes = this.config.onSplash(this.mesh.position, this.config.splashRadius);
-            
+
             // Apply splash damage
             affectedMeshes.forEach(mesh => {
                 const distance = Vector3.Distance(this.mesh.position, mesh.position);
                 const damageRatio = Math.max(0, 1 - (distance / this.config.splashRadius!));
                 const actualDamage = (this.config.splashDamage || 0) * damageRatio;
-                
+
                 console.log(`Explosion damaged ${mesh.name}: ${actualDamage} damage (distance: ${distance.toFixed(2)})`);
-                
+
                 // Apply damage metadata
                 if (!mesh.metadata) mesh.metadata = {};
                 mesh.metadata.explosionDamage = actualDamage;
                 mesh.metadata.explosionTime = Date.now();
             });
         }
-        
+
         // Destroy the projectile
         this.destroy();
     }
-    
+
     private createExplosionEffect(): void {
         // Here you could add visual explosion effects
         console.log("Creating explosion visual effects...");
-        
+
         // Could integrate with particle system:
         // - Create explosion particle burst
         // - Add screen shake

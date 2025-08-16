@@ -11,6 +11,7 @@ import { PlayerController } from './PlayerController';
 import { SoundController } from './SoundController';
 import { CameraController } from './CameraController';
 import { ProjectileGameIntegration } from './projectiles';
+import { Physics2DConstraintSystem } from './Physics2DConstraintSystem';
 
 export class SceneController {
   private _scene: Scene;
@@ -22,6 +23,7 @@ export class SceneController {
   physEngine;
   soundController: SoundController;
   projectileSystem?: ProjectileGameIntegration;
+  private physics2DSystem?: Physics2DConstraintSystem;
 
   // raycastInfo
   setCameraController(cameraController: CameraController) {
@@ -43,6 +45,7 @@ export class SceneController {
   get playerController() {
     return this._playerController;
   }
+
   canvas: HTMLCanvasElement
   game:Game
   constructor(engine: WebGPUEngine, hk: HavokPlugin, soundController: SoundController, canvas: HTMLCanvasElement, gameController: Game) {
@@ -52,6 +55,15 @@ export class SceneController {
     this._scene.enablePhysics(new Vector3(0, -9.8, 0), hk);
     this._engine = engine;
     this.physEngine = hk;
+
+    // Store reference to this controller in scene metadata for access by other components
+    this._scene.metadata = { sceneController: this };
+
+    // Initialize the 2D physics constraint system IMMEDIATELY after enabling physics
+    this.physics2DSystem = new Physics2DConstraintSystem(this._scene, hk);
+    // Enable debug logging to monitor 2D constraint enforcement
+    this.physics2DSystem.enableDebugMode();
+
     this.guiController = new GuiController(this)
     this.canvas = canvas
     this.game = gameController
@@ -61,6 +73,13 @@ export class SceneController {
   }
   get scene() {
     return this._scene;
+  }
+
+  /**
+   * Get the 2D physics constraint system for manual body registration
+   */
+  get physics2DConstraintSystem() {
+    return this.physics2DSystem;
   }
 
   async asyncInit()  {
