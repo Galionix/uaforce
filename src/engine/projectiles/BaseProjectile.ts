@@ -469,6 +469,7 @@ export abstract class BaseProjectile {
             console.log(`🎯 RAY COLLISION DETECTED!`);
             console.log(`  - Projectile: ${this.config.id}`);
             console.log(`  - Hit mesh: ${hitMesh.name}`);
+            console.log('hitMesh.metadata: ', hitMesh.metadata);
             console.log(`  - Hit point: ${hitPoint?.toString()}`);
             console.log(`  - Distance: ${distance?.toFixed(3)}`);
             console.log(`  - Ray origin: ${this.collisionRay.origin.toString()}`);

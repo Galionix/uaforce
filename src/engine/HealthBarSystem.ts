@@ -148,7 +148,7 @@ class SimpleHealthBar {
   }
 
   private updateHealthDisplay(): void {
-    const healthPercentage = this.currentHealth / this.maxHealth;
+    const healthPercentage = this.mesh.metadata.currentHealth / this.mesh.metadata.health;
 
     // Scale the health bar based on health percentage
     this.healthBar.scaling.x = healthPercentage;

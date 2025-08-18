@@ -160,6 +160,18 @@ export class Projectile {
     console.log(`💥 Projectile explosion at: ${position.toString()}`);
     if (hitMesh) {
       console.log(`🎯 Hit mesh: "${hitMesh.name}"`);
+      if(hitMesh.metadata && hitMesh.metadata.currentHealth !== undefined) {
+        // Reduce health if metadata exists
+            hitMesh.metadata.currentHealth -= 10;
+            if (hitMesh.metadata.currentHealth <= 0) {
+              console.log(`💀 "${hitMesh.name}" destroyed!`);
+              hitMesh.dispose(); // Remove mesh if health is zero
+            } else {
+              console.log(`❤️ "${hitMesh.name}" current health: ${hitMesh.metadata.currentHealth}`);
+            }
+      }
+            console.log('hitMesh.metadata: ', hitMesh.metadata);
+
     }
 
     // Create explosion using our clean utility

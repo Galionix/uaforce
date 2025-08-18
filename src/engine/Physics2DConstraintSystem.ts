@@ -191,6 +191,10 @@ export class Physics2DConstraintSystem {
   private enforceAllConstraints(): void {
     for (const body of this.constrainedBodies) {
       try {
+        if(body.isDisposed) {
+          this.constrainedBodies.delete(body);
+          return; // Skip enforcement for disposed bodies
+        }
         this.enforceBodyConstraints(body);
       } catch (error) {
         Logger.physics.error('Error enforcing 2D constraints on body:', error);
