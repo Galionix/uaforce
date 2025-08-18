@@ -22,6 +22,8 @@ export class MeshProcessor {
   private _scene: Scene;
   private _sceneController: SceneController;
   private meshDict: MeshDictionary;
+  private shadowCasterQueue: Mesh[] = [];
+  private shadowGeneratorReady = false;
 
   constructor(scene: Scene, sceneController: SceneController, meshDict: MeshDictionary) {
     this._scene = scene;
@@ -44,6 +46,7 @@ export class MeshProcessor {
       // This prevents the constraint system from fighting with non-zero Z positions
       mesh.position.z = 0;
 
+      // this._sceneController.addShadowCaster(mesh as Mesh);
       Logger.levelLoader.debug('mesh.metadata.gltf?.extras: ', mesh.metadata?.gltf?.extras?.collideable === true);
 
       // Handle collision detection for meshes with collideable metadata or death planes
@@ -59,6 +62,7 @@ export class MeshProcessor {
           },
           this._sceneController.scene
         );
+        mesh.receiveShadows = true; // Enable shadows for ground mesh
 
         Logger.levelLoader.info(`Collideable mesh physics created for: ${mesh.name} (mass: 0, friction: 0.1)`);
 
@@ -86,6 +90,7 @@ export class MeshProcessor {
       if (this.isPhysicsBox(mesh)) {
         Logger.levelLoader.info(`🎁 Found physics box: ${mesh.name}`);
         this.setupPhysicsBox(mesh);
+        // this._sceneController.addShadowCaster(mesh as Mesh);
       } else {
         // Log all mesh names to help debug which meshes are available
         Logger.levelLoader.debug(`📦 Non-box mesh found: ${mesh.name}`);
@@ -199,11 +204,20 @@ export class MeshProcessor {
         this._sceneController.scene
       );
       mesh.checkCollisions = true;
+      mesh.receiveShadows = true; // Enable shadows on box mesh
 
       // CRITICAL: Register with 2D constraint system to prevent Z-axis movement
       const sceneController = this._sceneController;
       if (sceneController.physics2DConstraintSystem && boxAggregate.body) {
         sceneController.physics2DConstraintSystem.registerPhysicsBody(boxAggregate.body, mesh.name);
+      }
+
+      // Add mesh as shadow caster if shadow generator is initialized, else queue it
+      if (this.shadowGeneratorReady && typeof this._sceneController.addShadowCaster === "function") {
+        this._sceneController.addShadowCaster(mesh as Mesh);
+      } else {
+        this.shadowCasterQueue.push(mesh as Mesh);
+        Logger.levelLoader.warn(`Shadow generator not initialized yet, queued ${mesh.name} as shadow caster`);
       }
 
       if (boxAggregate.body) {
@@ -277,5 +291,19 @@ export class MeshProcessor {
         }
       }
     });
+  }
+
+  /**
+   * Call this when the shadow generator is initialized.
+   * Pass the sceneController so we can flush the queue.
+   */
+  flushShadowCasterQueue() {
+    if (!this.shadowGeneratorReady && typeof this._sceneController.addShadowCaster === "function") {
+      this.shadowGeneratorReady = true;
+      this.shadowCasterQueue.forEach(mesh => {
+        this._sceneController.addShadowCaster(mesh);
+      });
+      this.shadowCasterQueue = [];
+    }
   }
 }

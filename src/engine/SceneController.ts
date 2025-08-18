@@ -1,7 +1,9 @@
 import {
     FreeCamera, DirectionalLight, Engine, HavokPlugin, Scene, Vector3,
     WebGPUEngine, PhysicsHelper, MeshBuilder, StandardMaterial, Color3,
-    PhysicsAggregate, PhysicsShapeType, HemisphericLight
+    PhysicsAggregate, PhysicsShapeType, HemisphericLight,
+    ShadowGenerator, // <-- add import
+    Mesh
 } from '@babylonjs/core';
 
 import { Game } from './Game';
@@ -127,10 +129,12 @@ export class SceneController {
     createInputController(this);
   }
 
+  private _shadowGenerator?: ShadowGenerator;
+
   private createLight(scene: Scene) {
     // Add ambient hemispheric light for overall scene illumination
     const hemisphericLight = new HemisphericLight("hemisphericLight", new Vector3(0, 1, 0), scene);
-    hemisphericLight.intensity = 0.6; // Moderate ambient lighting
+    hemisphericLight.intensity = 0.2; // Moderate ambient lighting
     hemisphericLight.diffuse = new Color3(1, 1, 1); // White light
     hemisphericLight.groundColor = new Color3(0.3, 0.3, 0.4); // Slightly blue ground reflection
 
@@ -140,9 +144,37 @@ export class SceneController {
     directionalLight.intensity = 0.4; // Reduced intensity to prevent harsh shadows
     directionalLight.diffuse = new Color3(1.0, 0.95, 0.8); // Warm white light
 
-    console.log('🌞 Improved scene lighting created: Hemispheric + Soft Directional');
-    return { hemisphericLight, directionalLight };
+    // Add shadow generator for the directional light
+    const shadowGenerator = new ShadowGenerator(1024, directionalLight);
+    shadowGenerator.useBlurExponentialShadowMap = true;
+    shadowGenerator.blurKernel = 32;
+
+    this._shadowGenerator = shadowGenerator; // Store for later use
+
+    console.log('🌞 Improved scene lighting created: Hemispheric + Soft Directional + ShadowGenerator');
+    return { hemisphericLight, directionalLight, shadowGenerator };
   }
+
+  /**
+   * Register a mesh as a shadow caster.
+   */
+  addShadowCaster(mesh: Mesh) {
+      if(!this._shadowGenerator){
+        throw new Error("Shadow generator not initialized");
+      }
+    if (this._shadowGenerator) {
+
+      this._shadowGenerator.addShadowCaster(mesh);
+    }
+  }
+
+  /**
+   * Example usage after mesh creation:
+   * const box = MeshBuilder.CreateBox("box", {}, this._scene);
+   * this.addShadowCaster(box);
+   * box.receiveShadows = true; // If you want this mesh to receive shadows
+   */
+
   public testScene(camera: FreeCamera): void {
     // Camera will now follow player automatically via CameraController
     // Initial target setup can be done here if needed

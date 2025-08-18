@@ -99,7 +99,8 @@ export class Game {
       this._scene.render();
     });
 if (debug) await this.toggleDebugLayer();
-    this.asyncInit();
+    await this.asyncInit();
+    this._mapController.meshProcessor.flushShadowCasterQueue()
 
 
     });
