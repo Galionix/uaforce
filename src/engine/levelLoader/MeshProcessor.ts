@@ -191,6 +191,11 @@ export class MeshProcessor {
       // CRITICAL: Mark this as a GLB box for coordinate system handling
       isGLBBox: true,
       sourceType: 'GLB_LEVEL_FILE',
+      gltf: {
+        extras: {
+          collideable: true,
+        },
+      },
       // Set current health equal to max health initially
       currentHealth: boxProperties.health
     };
