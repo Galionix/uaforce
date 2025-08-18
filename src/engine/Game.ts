@@ -8,7 +8,6 @@ import { FreeCameraTouchVirtualJoystickInput } from './VirtualJoystick';
 import { MapController } from './levelLoader/MapController';
 import { configureLogging } from '../utils/loggerConfig';
 import Logger, { LogCategory, LogLevel } from '@ex/utils/logger';
-import { ProjectileGameIntegration } from './projectiles';
 
 const debug = true;
 export class Game {
@@ -21,7 +20,6 @@ export class Game {
   soundController?: SoundController;
   private _mapController?: MapController;
   dialogController?: DialogController;
-  projectileSystem?: ProjectileGameIntegration;
 
   isTouchDevice() {
     const res = "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -90,14 +88,6 @@ export class Game {
     });
     this._sceneController.setMapController(this._mapController);
     this._sceneController.createInput();
-
-    // Initialize projectile system
-    this.projectileSystem = new ProjectileGameIntegration(this._scene);
-
-    // Enable debug mode for development
-    if (debug) {
-      this.projectileSystem.enableDebugMode();
-    }
     const cnvs = document.getElementById('canvas') as HTMLElement
     const ro = new ResizeObserver((entries) => {
       this._engine.resize()
@@ -105,11 +95,6 @@ export class Game {
     ro.observe(cnvs)
     this._engine.runRenderLoop(() => {
       if (!this._scene) return;
-
-      // Update projectile system
-      if (this.projectileSystem) {
-        this.projectileSystem.update();
-      }
 
       this._scene.render();
     });

@@ -1,6 +1,13 @@
 
 export const RESOURCES = {
   "audios": {
+    "guns": {
+      "cg1": "audios/guns/cg1.wav",
+      "pistol": "audios/guns/pistol.wav",
+      "reload": "audios/guns/reload.wav",
+      "rifle": "audios/guns/rifle.wav",
+      "shotgun": "audios/guns/shotgun.wav"
+    },
     "player": {
       "deathh": "audios/player/deathh.wav",
       "die1": "audios/player/die1.wav",
@@ -57,6 +64,11 @@ export const RESOURCES = {
   }
 };
 export const RESOURCE_PATHS = [
+  "audios/guns/cg1.wav",
+  "audios/guns/pistol.wav",
+  "audios/guns/reload.wav",
+  "audios/guns/rifle.wav",
+  "audios/guns/shotgun.wav",
   "audios/player/deathh.wav",
   "audios/player/die1.wav",
   "audios/player/die2.wav",

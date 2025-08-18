@@ -136,13 +136,20 @@ export class Physics2DConstraintSystem {
     if (!body) return;
 
     try {
-      // Lock Z-axis rotation by setting zero inertia on Z axis
+      // Lock Z-axis rotation and heavily dampen Y-axis rotation for boxes
       const currentMassProps = body.getMassProperties();
+
+      // For boxes/cubes, we want to minimize spinning while allowing some Y rotation
+      const isBox = bodyName.toLowerCase().includes('box') ||
+                   bodyName.toLowerCase().includes('crate') ||
+                   bodyName.toLowerCase().includes('barrel') ||
+                   bodyName.toLowerCase().includes('container');
+
       body.setMassProperties({
         mass: currentMassProps.mass,
         inertia: new Vector3(
-          currentMassProps.inertia?.x || 1,
-          currentMassProps.inertia?.y || 1,
+          0.01, // Very low X-axis inertia to prevent tilting/pitching
+          isBox ? 0.1 : (currentMassProps.inertia?.y || 1), // Reduce Y-axis inertia for boxes to prevent spinning
           0 // Zero Z-axis inertia = no rotation around Z
         ),
         centerOfMass: currentMassProps.centerOfMass ?
@@ -150,16 +157,17 @@ export class Physics2DConstraintSystem {
           undefined
       });
 
-      // Store initial Z position for constraint enforcement
-      if (body.transformNode) {
-        const initialZ = body.transformNode.position.z;
-        (body as any)._constraint2D_initialZ = initialZ;
+      // CRITICAL: Always set Z constraint to 0 for true 2D gameplay
+      // This prevents issues with meshes loaded at non-zero Z positions
+      (body as any)._constraint2D_initialZ = 0;
+      (body as any)._constraint2D_isBox = isBox; // Store box type for rotation damping
 
-        // Ensure Z position is set to the constraint value
-        body.transformNode.position.z = initialZ;
+      // Immediately move body to Z=0 if it's not already there
+      if (body.transformNode) {
+        body.transformNode.position.z = 0;
       }
 
-      Logger.physics.debug(`Applied 2D constraints to ${bodyName} (Z locked at ${(body as any)._constraint2D_initialZ || 0})`);
+      Logger.physics.debug(`Applied 2D constraints to ${bodyName} (Z locked at 0, box rotation damping: ${isBox})`);
     } catch (error) {
       Logger.physics.error(`Failed to apply 2D constraints to ${bodyName}:`, error);
     }
@@ -198,33 +206,57 @@ export class Physics2DConstraintSystem {
   private enforceBodyConstraints(body: PhysicsBody): void {
     if (!body.transformNode) return;
 
-    const initialZ = (body as any)._constraint2D_initialZ || 0;
+    // Always enforce Z=0 for true 2D gameplay
+    const targetZ = 0;
     const currentPosition = body.transformNode.position;
 
     // Check if Z position has drifted
-    if (Math.abs(currentPosition.z - initialZ) > this.CONSTRAINT_TOLERANCE) {
-      // Reset Z position
-      body.transformNode.position.z = initialZ;
+    if (Math.abs(currentPosition.z - targetZ) > this.CONSTRAINT_TOLERANCE) {
+      // Reset Z position to 0
+      body.transformNode.position.z = targetZ;
 
       // Reset Z velocity
       const velocity = body.getLinearVelocity();
       if (velocity && velocity.z !== 0) {
         body.setLinearVelocity(new Vector3(velocity.x, velocity.y, 0));
       }
+    }
 
-      // Reset Z angular velocity
-      const angularVel = body.getAngularVelocity();
-      if (angularVel && angularVel.z !== 0) {
-        body.setAngularVelocity(new Vector3(angularVel.x, angularVel.y, 0));
+    // Handle angular velocity constraints
+    const angularVel = body.getAngularVelocity();
+    if (angularVel) {
+      const isBox = (body as any)._constraint2D_isBox || false;
+
+      // Always reset Z angular velocity (no Z-axis rotation allowed)
+      // Also reset X angular velocity (no tilting/pitching allowed in 2D)
+      let newAngularVel = new Vector3(0, angularVel.y, 0); // Only Y-axis rotation allowed
+
+      // For boxes, heavily dampen Y-axis spinning to prevent excessive rotation from explosions
+      if (isBox && Math.abs(angularVel.y) > 2) { // If spinning faster than 2 rad/s
+        newAngularVel.y = angularVel.y * 0.3; // Reduce to 30% of current speed
+      }
+
+      // Apply the constrained angular velocity if it changed
+      if (!angularVel.equals(newAngularVel)) {
+        body.setAngularVelocity(newAngularVel);
       }
     }
 
-    // Ensure rotation stays 2D (only Y-axis rotation allowed for facing direction)
+    // Ensure rotation stays 2D (only Y-axis rotation allowed, but limited for boxes)
     if (body.transformNode.rotation) {
       const rotation = body.transformNode.rotation;
+
+      // Force X and Z rotations to always be 0 for true 2D gameplay
       if (rotation.x !== 0 || rotation.z !== 0) {
         body.transformNode.rotation.x = 0;
         body.transformNode.rotation.z = 0;
+      }
+
+      // For boxes, also limit extreme Y rotations to prevent disorienting spinning
+      const isBox = (body as any)._constraint2D_isBox || false;
+      if (isBox && Math.abs(rotation.y) > Math.PI * 4) { // If rotated more than 4 full turns
+        // Normalize to equivalent angle within reasonable range
+        body.transformNode.rotation.y = rotation.y % (Math.PI * 2);
       }
     }
   }

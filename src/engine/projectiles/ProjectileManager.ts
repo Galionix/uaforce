@@ -1,5 +1,16 @@
 import { Scene, Vector3, AbstractMesh, Ray, RayHelper } from '@babylonjs/core';
 import { BaseProjectile, ProjectileConfig } from './BaseProjectile';
+import {
+    BulletProjectile,
+    RocketProjectile,
+    GrenadeProjectile,
+    PlasmaProjectile,
+    ArrowProjectile,
+    FireballProjectile,
+    IceShardProjectile,
+    TimedBombProjectile,
+    InstantBombProjectile
+} from './ProjectileTypes';
 
 interface ProjectileFactory {
     [key: string]: (scene: Scene, config: ProjectileConfig) => BaseProjectile;
@@ -30,10 +41,20 @@ export class ProjectileManager {
      * Setup default projectile factories for common types
      */
     private setupDefaultFactories(): void {
-        // We'll add specific projectile types later
-        this.registerProjectileType('basic', (scene, config) => new BasicProjectile(scene, config));
-        this.registerProjectileType('explosive', (scene, config) => new ExplosiveProjectile(scene, config));
-        this.registerProjectileType('homing', (scene, config) => new HomingProjectile(scene, config));
+        // Register all available projectile types
+        this.registerProjectileType('bullet', (scene, config) => new BulletProjectile(scene, config));
+        this.registerProjectileType('rocket', (scene, config) => new RocketProjectile(scene, config));
+        this.registerProjectileType('grenade', (scene, config) => new GrenadeProjectile(scene, config));
+        this.registerProjectileType('plasma', (scene, config) => new PlasmaProjectile(scene, config));
+        this.registerProjectileType('arrow', (scene, config) => new ArrowProjectile(scene, config));
+        this.registerProjectileType('fireball', (scene, config) => new FireballProjectile(scene, config));
+        this.registerProjectileType('iceshard', (scene, config) => new IceShardProjectile(scene, config));
+        this.registerProjectileType('timedbomb', (scene, config) => new TimedBombProjectile(scene, config));
+        this.registerProjectileType('instantbomb', (scene, config) => new InstantBombProjectile(scene, config));
+
+        // Aliases for convenience
+        this.registerProjectileType('bomb', (scene, config) => new TimedBombProjectile(scene, config));
+        this.registerProjectileType('explosion', (scene, config) => new InstantBombProjectile(scene, config));
     }
 
     /**
@@ -340,59 +361,6 @@ export class ProjectileManager {
                 helper.dispose();
             });
             this.debugRayHelpers.clear();
-        }
-    }
-}
-
-// Specific projectile implementations
-
-class BasicProjectile extends BaseProjectile {
-    protected updateCustomBehavior(deltaTime: number): void {
-        // Basic projectile doesn't need custom behavior
-    }
-}
-
-class ExplosiveProjectile extends BaseProjectile {
-    protected updateCustomBehavior(deltaTime: number): void {
-        // Could add pulsing or other visual effects before explosion
-        if (this.config.glowEffect && this.glowMaterial) {
-            // Make it pulse faster as it gets older
-            const age = Date.now() - this.startTime;
-            const ageRatio = age / this.config.lifetime;
-
-            // Increase pulsing frequency
-            const pulseSpeed = 1 + ageRatio * 3;
-            // Update animation speed here if needed
-        }
-    }
-
-    protected onCollision(collidedMesh: AbstractMesh): void {
-        // Create explosion effect
-        if (this.config.splashRadius && this.config.splashRadius > 0) {
-            this.createExplosionEffect();
-        }
-
-        // Call parent collision handler
-        super.onCollision(collidedMesh);
-    }
-
-    private createExplosionEffect(): void {
-        // Create explosion particle effect
-        // Could also spawn additional debris projectiles
-        // This is where you'd integrate with your particle system
-    }
-}
-
-class HomingProjectile extends BaseProjectile {
-    protected updateCustomBehavior(deltaTime: number): void {
-        // Homing behavior is already handled in the base class
-        // Could add additional visual effects for homing projectiles
-
-        if (this.config.homing && this.config.homing.target) {
-            // Add trail effect intensity based on homing strength
-            if (this.config.trailEffect) {
-                // Intensify trail when homing is active
-            }
         }
     }
 }

@@ -1,5 +1,82 @@
-import { Vector3, Color3, AbstractMesh, Scene } from '@babylonjs/core';
+import { Vector3, Color3, AbstractMesh, Scene, PhysicsRadialImpulseFalloff } from '@babylonjs/core';
 import { BaseProjectile, ProjectileConfig } from './BaseProjectile';
+
+/**
+ * Standardized explosion utility for all projectiles
+ * Uses the proven PhysicsHelper approach from ExplosionTestScene
+ *
+ * EXPLOSION CONFIGURATION TABLE:
+ * ┌─────────────────────┬────────┬───────┬─────────────────────────┐
+ * │ Projectile Type     │ Radius │ Force │ Description             │
+ * ├─────────────────────┼────────┼───────┼─────────────────────────┤
+ * │ BulletProjectile    │   -    │   -   │ No explosion            │
+ * │ RocketProjectile    │   4m   │  25N  │ Moderate missile blast  │
+ * │ GrenadeProjectile   │   6m   │  40N  │ Large fragmentation     │
+ * │ FireballProjectile  │   3m   │  20N  │ Small fire splash       │
+ * │ TimedBombProjectile │   7m   │  60N  │ Massive timed explosion │
+ * │ InstantBombProjectile│  5m   │  50N  │ Instant contact blast   │
+ * └─────────────────────┴────────┴───────┴─────────────────────────┘
+ *
+ * Force values are tuned for satisfying object scattering without being overpowered.
+ * All projectiles use Linear falloff for consistent behavior.
+ */
+export class ProjectileExplosionHelper {
+    /**
+     * Create a physics explosion at the specified location
+     * @param scene - The Babylon.js scene
+     * @param center - World position of explosion center
+     * @param radius - Explosion radius (how far the effect reaches)
+     * @param force - Explosion force (how strong the impulse is)
+     * @param falloff - How force decreases with distance (default: Linear)
+     */
+    static createExplosion(
+        scene: Scene,
+        center: Vector3,
+        radius: number,
+        force: number,
+        falloff: PhysicsRadialImpulseFalloff = PhysicsRadialImpulseFalloff.Linear
+    ): void {
+        console.log(`💥 Creating explosion at ${center.toString()} (radius=${radius}, force=${force})`);
+
+        // Get PhysicsHelper from scene metadata (set up in SceneController)
+        const sceneController = scene.metadata?.sceneController;
+        const physicsHelper = sceneController?.physicsHelper;
+
+        if (!physicsHelper) {
+            console.error(`❌ No PhysicsHelper found! Explosion at ${center.toString()} failed`);
+            return;
+        }
+
+        try {
+            // Use the proven PhysicsHelper API from ExplosionTestScene
+            const explosionEvent = physicsHelper.applyRadialExplosionImpulse(
+                center,
+                radius,
+                force,
+                falloff
+            );
+
+            if (explosionEvent) {
+                console.log(`✅ Explosion successful!`);
+                console.log(`  - Center: ${center.toString()}`);
+                console.log(`  - Radius: ${radius}m`);
+                console.log(`  - Force: ${force}N`);
+                console.log(`  - Falloff: ${PhysicsRadialImpulseFalloff[falloff]}`);
+
+                // Clean up the explosion event after a short delay
+                setTimeout(() => {
+                    explosionEvent.dispose();
+                    console.log(`🧹 Explosion event cleaned up`);
+                }, 100);
+            } else {
+                console.log("⚠️ PhysicsHelper returned null explosion event");
+            }
+
+        } catch (error) {
+            console.error(`❌ Explosion failed:`, error);
+        }
+    }
+}
 
 /**
  * Fast bullet projectile - minimal effects, high speed
@@ -74,6 +151,14 @@ export class RocketProjectile extends BaseProjectile {
     }
 
     private createExplosion(): void {
+        // Create physics explosion with rocket-appropriate values
+        ProjectileExplosionHelper.createExplosion(
+            this.scene,
+            this.mesh.position.clone(),
+            4, // Rocket explosion radius (smaller than instant bomb)
+            25 // Rocket explosion force (moderate)
+        );
+
         // Here you would integrate with your sound system
         // this.soundController?.playExplosion();
 
@@ -139,7 +224,14 @@ export class GrenadeProjectile extends BaseProjectile {
     }
 
     private createGrenadeExplosion(): void {
-        // Create large explosion effect
+        // Create large explosion effect - grenades are powerful!
+        ProjectileExplosionHelper.createExplosion(
+            this.scene,
+            this.mesh.position.clone(),
+            6, // Grenade explosion radius (larger than rocket)
+            40 // Grenade explosion force (strong)
+        );
+
         // Integrate with sound and visual effects
     }
 }
@@ -276,6 +368,22 @@ export class FireballProjectile extends BaseProjectile {
                 material.emissiveColor = this.config.color!.scale(flicker);
             }
         }
+    }
+
+    protected onCollision(collidedMesh: AbstractMesh): void {
+        // Create fire explosion on impact
+        this.createFireExplosion();
+        super.onCollision(collidedMesh);
+    }
+
+    private createFireExplosion(): void {
+        // Create moderate fire explosion
+        ProjectileExplosionHelper.createExplosion(
+            this.scene,
+            this.mesh.position.clone(),
+            3, // Small explosion radius (fire splash)
+            20 // Moderate explosion force
+        );
     }
 }
 
@@ -434,6 +542,14 @@ export class TimedBombProjectile extends BaseProjectile {
     }
 
     private createExplosionEffect(): void {
+        // Create massive explosion - timed bombs are very powerful!
+        ProjectileExplosionHelper.createExplosion(
+            this.scene,
+            this.mesh.position.clone(),
+            7, // Large explosion radius (biggest of all projectiles)
+            60 // Very strong explosion force
+        );
+
         // Here you could add visual explosion effects
         console.log("Creating explosion visual effects...");
 
@@ -442,5 +558,168 @@ export class TimedBombProjectile extends BaseProjectile {
         // - Add screen shake
         // - Play explosion sound
         // - Create shockwave effect
+    }
+}
+
+/**
+ * Instant Bomb Projectile - Explodes immediately on collision with physics objects
+ * Creates a physics shockwave that scatters nearby objects
+ */
+export class InstantBombProjectile extends BaseProjectile {
+    private hasExploded = false;
+    private shockwaveRadius = 5; // Radius of physics shockwave
+    private shockwaveForce = 50; // Force applied to scattered objects
+
+    constructor(scene: Scene, config: ProjectileConfig) {
+        const bombConfig: ProjectileConfig = {
+            ...config,
+            size: 0.4,
+            speed: 15,
+            lifetime: 5000,
+            color: Color3.Yellow(),
+            meshType: 'sphere',
+            hasPhysics: true,
+            gravityFactor: 0.5,
+            glowEffect: true,
+            trailEffect: false,
+            particleEffect: true,
+            damage: 100,
+            splashRadius: 3,
+            splashDamage: 75
+        };
+
+        super(scene, bombConfig);
+
+        // Make ray longer for instant bombs to detect collisions earlier
+        this.rayLength = 2.0; // Longer ray for early detection
+
+        console.log("🚀 InstantBombProjectile created:");
+        console.log(`  - Position: ${bombConfig.position?.toString()}`);
+        console.log(`  - Direction: ${bombConfig.direction?.toString()}`);
+        console.log(`  - Speed: ${bombConfig.speed}`);
+        console.log(`  - Shockwave radius: ${this.shockwaveRadius}`);
+        console.log(`  - Shockwave force: ${this.shockwaveForce}`);
+        console.log(`  - Ray length: ${this.rayLength}`);
+        console.log("  - Will explode on collision with physics objects");
+    }
+
+    protected onCollision(collidedMesh: AbstractMesh): void {
+        console.log(`🎯 InstantBombProjectile collided with: ${collidedMesh.name}`);
+        console.log(`Mesh position: ${collidedMesh.position.toString()}`);
+        console.log(`Mesh has physicsAggregate: ${!!(collidedMesh as any).physicsAggregate}`);
+        console.log(`Mesh has aggregate: ${!!(collidedMesh as any).aggregate}`);
+
+        // Only explode if the collided mesh has a physics aggregate
+        if ((collidedMesh as any).physicsAggregate || (collidedMesh as any).aggregate) {
+            console.log(`✅ Physics object detected - EXPLODING!`);
+            this.explodeInstantly();
+        } else {
+            console.log(`❌ No physics detected on ${collidedMesh.name} - no explosion, just destroying projectile`);
+            // Still destroy the projectile even if no explosion
+            this.destroy();
+        }
+    }
+
+    protected updateCustomBehavior(deltaTime: number): void {
+        // Debug: Log position every second to see if projectile is moving
+        const now = Date.now();
+        if (!this.lastPositionLog || now - this.lastPositionLog > 1000) {
+            console.log(`📍 InstantBomb position: ${this.mesh.position.toString()}`);
+            if (this.physicsAggregate) {
+                const velocity = this.physicsAggregate.body.getLinearVelocity();
+                console.log(`🏃 InstantBomb velocity: ${velocity.toString()}`);
+            }
+            if (this.collisionRay) {
+                console.log(`🔫 InstantBomb ray: origin=${this.collisionRay.origin.toString()}, direction=${this.collisionRay.direction.toString()}`);
+            }
+            this.lastPositionLog = now;
+        }
+    }
+
+    private lastPositionLog: number = 0;
+
+    private explodeInstantly(): void {
+        if (this.hasExploded) {
+            console.log("💣 InstantBombProjectile already exploded, ignoring");
+            return;
+        }
+
+        this.hasExploded = true;
+        const explosionPosition = this.mesh.position.clone();
+
+        console.log("💥💥💥 INSTANT BOMB EXPLODED! 💥💥💥");
+        console.log(`Explosion position: ${explosionPosition.toString()}`);
+        console.log(`Shockwave radius: ${this.shockwaveRadius}`);
+        console.log(`Shockwave force: ${this.shockwaveForce}`);
+
+        // Create visual explosion effect
+        this.createExplosionEffect();
+
+        // Create physics shockwave to scatter objects
+        ProjectileExplosionHelper.createExplosion(
+            this.scene,
+            explosionPosition,
+            this.shockwaveRadius,
+            this.shockwaveForce
+        );
+
+        // Handle splash damage if callback is available
+        if (this.config.splashRadius && this.config.onSplash) {
+            console.log("💀 Applying splash damage...");
+            const affectedMeshes = this.config.onSplash(explosionPosition, this.config.splashRadius);
+            this.applySplashDamage(affectedMeshes, explosionPosition);
+        } else {
+            console.log("⚠️ No splash damage callback available");
+        }
+
+        // Destroy the projectile
+        console.log("🗑️ Destroying instant bomb projectile");
+        this.destroy();
+    }
+
+    private applySplashDamage(affectedMeshes: AbstractMesh[], explosionCenter: Vector3): void {
+        affectedMeshes.forEach(mesh => {
+            const distance = Vector3.Distance(explosionCenter, mesh.position);
+            const damageRatio = Math.max(0, 1 - (distance / this.config.splashRadius!));
+            const actualDamage = (this.config.splashDamage || 0) * damageRatio;
+
+            console.log(`Explosion damaged ${mesh.name}: ${actualDamage} damage (distance: ${distance.toFixed(2)})`);
+
+            // Apply damage metadata
+            if (!mesh.metadata) mesh.metadata = {};
+            mesh.metadata.explosionDamage = actualDamage;
+            mesh.metadata.explosionTime = Date.now();
+        });
+    }
+
+    private createExplosionEffect(): void {
+        console.log("Creating instant explosion visual effects...");
+
+        // Here you could add:
+        // - Particle explosion burst
+        // - Screen shake effect
+        // - Explosion sound
+        // - Flash effect
+        // - Shockwave ring animation
+
+        // For now, just log the explosion
+        console.log("💥 INSTANT EXPLOSION! 💥");
+    }
+
+    // Getters for configuration
+    public setShockwaveRadius(radius: number): void {
+        this.shockwaveRadius = radius;
+    }
+
+    public setShockwaveForce(force: number): void {
+        this.shockwaveForce = force;
+    }
+
+    public getShockwaveRadius(): number {
+        return this.shockwaveRadius;
+    }
+
+    public getShockwaveForce(): number {
+        return this.shockwaveForce;
     }
 }

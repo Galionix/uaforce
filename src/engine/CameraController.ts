@@ -1,4 +1,4 @@
-import { FreeCamera, Mesh, Ray, Scene, Vector3 } from '@babylonjs/core';
+import { FreeCamera, Mesh, Ray, Scene, Vector3, SpotLight, Color3 } from '@babylonjs/core';
 import Logger from '../utils/logger';
 
 // Camera configuration constants
@@ -25,12 +25,18 @@ const CAMERA_CONFIG = {
     WALL_JUMP_VERTICAL: 0.1,      // Vertical shake for wall jumps
     SCREEN_SHAKE_MULTIPLIER: 0.3, // Screen shake intensity multiplier
     SCREEN_SHAKE_FPS: 16,         // Screen shake update interval (ms)
+
+    // Spotlight settings
+    SPOTLIGHT_INTENSITY: 0.3,     // Reduced spotlight brightness to work with ambient lighting
+    SPOTLIGHT_ANGLE: Math.PI / 4, // Narrower spotlight cone angle (45 degrees)
+    SPOTLIGHT_EXPONENT: 0.9,      // Softer spotlight falloff
 };
 
 export class CameraController {
     private _scene: Scene;
     private _camera: FreeCamera;
     private groundMesh?: Mesh;
+    private _cameraSpotlight?: SpotLight;
 
     // Camera impulse system
     private currentOffset: Vector3 = Vector3.Zero();
@@ -53,6 +59,9 @@ export class CameraController {
         // Start with a default position, will be updated when player mesh is set
         this._camera = new FreeCamera('camera', new Vector3(0, 0, 0), scene);
 
+        // Create camera spotlight
+        this.createCameraSpotlight();
+
         // Register camera impulse update loop
         this._scene.registerBeforeRender(() => {
             this.updateCameraImpulse();
@@ -61,6 +70,28 @@ export class CameraController {
 
     get camera() {
         return this._camera;
+    }
+
+    /**
+     * Create a spotlight that follows the camera and illuminates the player
+     */
+    private createCameraSpotlight(): void {
+        // Create spotlight at camera position
+        this._cameraSpotlight = new SpotLight(
+            'cameraSpotlight',
+            Vector3.Zero(), // Position (will be updated in updateCameraImpulse)
+            Vector3.Zero(), // Direction (will be updated in updateCameraImpulse)
+            CAMERA_CONFIG.SPOTLIGHT_ANGLE,
+            CAMERA_CONFIG.SPOTLIGHT_EXPONENT,
+            this._scene
+        );
+
+        // Set spotlight properties - softer to complement ambient lighting
+        this._cameraSpotlight.intensity = CAMERA_CONFIG.SPOTLIGHT_INTENSITY;
+        this._cameraSpotlight.diffuse = new Color3(1.0, 0.9, 0.7); // Slightly warmer light
+        this._cameraSpotlight.specular = new Color3(0.8, 0.8, 0.8); // Softer specular highlights
+        this._cameraSpotlight.shadowEnabled = true;
+        Logger.camera.debug('Camera spotlight created with softer settings');
     }
 
     public setGroundMesh(ground: Mesh): void {
@@ -110,8 +141,25 @@ export class CameraController {
             this.config.followLerpSpeed * deltaTime
         );
 
+        // Update spotlight to follow camera and point at player
+        this.updateSpotlight();
+
         // Apply impulse physics
         this.updateImpulsePhysics(deltaTime);
+    }
+
+    /**
+     * Update spotlight position and direction to follow camera and illuminate player
+     */
+    private updateSpotlight(): void {
+        if (!this._cameraSpotlight || !this.playerMesh) return;
+
+        // Position spotlight at camera position
+        this._cameraSpotlight.position = this._camera.position.clone();
+
+        // Calculate direction from camera to player
+        const directionToPlayer = this.playerMesh.position.subtract(this._camera.position).normalize();
+        this._cameraSpotlight.direction = directionToPlayer;
     }
 
     private updateImpulsePhysics(deltaTime: number): void {
@@ -220,6 +268,26 @@ export class CameraController {
 
     public setCameraLerpSpeed(speed: number): void {
         this.config.followLerpSpeed = speed;
+    }
+
+    /**
+     * Control spotlight intensity (0 = off, 1 = normal, 2+ = bright)
+     */
+    public setSpotlightIntensity(intensity: number): void {
+        if (this._cameraSpotlight) {
+            this._cameraSpotlight.intensity = intensity;
+            Logger.camera.debug(`Camera spotlight intensity set to: ${intensity}`);
+        }
+    }
+
+    /**
+     * Toggle spotlight on/off
+     */
+    public toggleSpotlight(enabled: boolean = true): void {
+        if (this._cameraSpotlight) {
+            this._cameraSpotlight.setEnabled(enabled);
+            Logger.camera.debug(`Camera spotlight ${enabled ? 'enabled' : 'disabled'}`);
+        }
     }
 
     // Legacy method for compatibility - now updates follow offset

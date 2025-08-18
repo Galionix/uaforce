@@ -9,7 +9,7 @@ export const LOG_CONFIG = {
   INPUT: LogLevel.WARN,
 
   // Content and systems
-  LEVEL_LOADER: LogLevel.INFO,
+  LEVEL_LOADER: LogLevel.DEBUG,        // Changed to DEBUG to see box configuration logs
   DIALOG: LogLevel.INFO,
   SOUND: LogLevel.INFO,
   RESOURCE: LogLevel.INFO,

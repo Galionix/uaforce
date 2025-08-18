@@ -26,7 +26,7 @@ interface MovementOutput {
 export class PlayerMovementController {
   private heroSpeed = 3;
   private jumpSpeed = 6;
-  private wallJumpSpeed = 10; // Slightly higher for wall jumps
+  private wallJumpSpeed = 20; // Slightly higher for wall jumps
   private airControlForce = 0.5; // Half force for air control
   private sprintMultiplier = 4;
   private normalMultiplier = 2;

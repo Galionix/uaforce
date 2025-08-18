@@ -15,7 +15,10 @@ import {
     IAnimationKey,
     EasingFunction,
     QuadraticEase,
-    PhysicsBody
+    PhysicsBody,
+    Ray,
+    RayHelper,
+    PickingInfo
 } from '@babylonjs/core';
 
 export interface ProjectileConfig {
@@ -68,8 +71,14 @@ export abstract class BaseProjectile {
     protected config: ProjectileConfig;
     protected scene: Scene;
     protected startTime: number;
+    protected lastPosition: Vector3;
     protected isActive: boolean = true;
     protected velocity: Vector3;
+
+    // Ray-based collision detection
+    protected collisionRay?: Ray;
+    protected rayHelper?: RayHelper;
+    protected rayLength: number = 1.0; // Length of ray ahead of projectile
 
     // Effect systems
     protected particleSystem?: ParticleSystem;
@@ -80,9 +89,11 @@ export abstract class BaseProjectile {
         this.config = { ...this.getDefaultConfig(), ...config };
         this.startTime = Date.now();
         this.velocity = config.direction.normalize().scale(config.speed);
+        this.lastPosition = config.position.clone(); // Initialize tracking position
 
         this.createMesh();
         this.setupPhysics();
+        this.setupRayCollisionDetection();
         this.setupEffects();
         this.setupAnimations();
     }
@@ -183,22 +194,61 @@ export abstract class BaseProjectile {
             this.scene
         );
 
+        console.log(`🏗️ Created physics aggregate for projectile ${this.config.id}:`);
+        console.log(`  - Mass: ${this.config.mass || 0.1}`);
+        console.log(`  - Restitution: ${this.config.bounciness || 0}`);
+        console.log(`  - Shape: SPHERE`);
+        console.log(`  - Physics body:`, this.physicsAggregate.body);
+
         // Set initial velocity
         this.physicsAggregate.body.setLinearVelocity(this.velocity);
+        console.log(`🚀 Set projectile velocity to: ${this.velocity.toString()}`);
 
         // Adjust gravity if needed
         if (this.config.gravityFactor !== undefined && this.config.gravityFactor !== 1) {
             this.physicsAggregate.body.setGravityFactor(this.config.gravityFactor);
+            console.log(`🌍 Set gravity factor to: ${this.config.gravityFactor}`);
         }
 
         // Setup collision detection
+        console.log(`🔧 Setting up collision detection for projectile ${this.config.id}`);
         this.physicsAggregate.body.getCollisionObservable().add((collisionEvent) => {
+            console.log(`🚨 COLLISION DETECTED for projectile ${this.config.id}!`);
+            console.log(`Collision event:`, collisionEvent);
+            console.log(`Collided against:`, collisionEvent.collidedAgainst);
+            console.log(`Transform node:`, collisionEvent.collidedAgainst?.transformNode);
+
             // Get the mesh from the physics body
             const collidedMesh = collisionEvent.collidedAgainst.transformNode as AbstractMesh;
             if (collidedMesh) {
+                console.log(`✅ Found collided mesh: ${collidedMesh.name}`);
                 this.onCollision(collidedMesh);
+            } else {
+                console.log(`❌ No transform node found in collision event`);
             }
         });
+
+        // FALLBACK: Manual intersection checking since Havok collision observable might not work
+        console.log(`🔧 Setting up fallback intersection detection for projectile ${this.config.id}`);
+        this.lastPosition = this.mesh.position.clone();
+    }
+
+    protected setupRayCollisionDetection(): void {
+        console.log(`🔫 Setting up ray-based collision detection for projectile ${this.config.id}`);
+
+        // Create collision ray - points in the direction of movement
+        const rayDirection = this.velocity.normalize();
+        this.collisionRay = new Ray(this.mesh.position, rayDirection, this.rayLength);
+
+        // Create visible ray helper for debugging
+        this.rayHelper = new RayHelper(this.collisionRay);
+        this.rayHelper.show(this.scene, Color3.Red()); // Red ray for visibility
+
+        console.log(`📡 Created collision ray:`);
+        console.log(`  - Origin: ${this.collisionRay.origin.toString()}`);
+        console.log(`  - Direction: ${this.collisionRay.direction.toString()}`);
+        console.log(`  - Length: ${this.rayLength}`);
+        console.log(`  - Ray helper visible: true`);
     }
 
     protected setupEffects(): void {
@@ -338,6 +388,9 @@ export abstract class BaseProjectile {
             return;
         }
 
+        // Update ray collision detection
+        this.updateRayCollisionDetection();
+
         // Handle homing behavior
         if (this.config.homing && this.config.homing.target && this.physicsAggregate) {
             this.updateHoming(deltaTime);
@@ -345,6 +398,91 @@ export abstract class BaseProjectile {
 
         // Update custom behavior
         this.updateCustomBehavior(deltaTime);
+
+        // Update last position for collision detection
+        this.lastPosition = this.mesh.position.clone();
+    }
+
+    protected updateRayCollisionDetection(): void {
+        if (!this.collisionRay || !this.rayHelper) return;
+
+        // Update ray origin to current projectile position
+        this.collisionRay.origin = this.mesh.position.clone();
+
+        // Update ray direction based on current velocity
+        if (this.physicsAggregate) {
+            const currentVelocity = this.physicsAggregate.body.getLinearVelocity();
+            if (currentVelocity.length() > 0.1) {
+                this.collisionRay.direction = currentVelocity.normalize();
+            }
+        } else {
+            this.collisionRay.direction = this.velocity.normalize();
+        }
+
+        // Update visible ray
+        this.rayHelper.hide();
+        this.rayHelper = new RayHelper(this.collisionRay);
+        this.rayHelper.show(this.scene, Color3.Red());
+
+        // Perform ray collision check
+        this.performRayCollisionCheck();
+    }
+
+    protected performRayCollisionCheck(): void {
+        if (!this.collisionRay) return;
+
+        // Cast ray against all meshes in the scene
+        const pickingInfo = this.scene.pickWithRay(this.collisionRay, (mesh) => {
+            // Filter out the projectile itself and other projectiles
+            if (mesh === this.mesh) return false;
+            if (mesh.name.startsWith('projectile_')) return false;
+            if (mesh.name.includes('__root__')) return false;
+            if (mesh.name.toLowerCase().includes('ground')) return false; // Skip ground for now
+
+            // Include any mesh that looks like a target (boxes, spheres, etc.)
+            // OR has physics properties (checking multiple possible property names)
+            const hasPhysics = (mesh as any).physicsAggregate ||
+                              (mesh as any).aggregate ||
+                              (mesh as any).physicsImpostor ||
+                              (mesh as any).physicsBody;
+
+            const isTargetMesh = mesh.name.toLowerCase().includes('box') ||
+                               mesh.name.toLowerCase().includes('sphere') ||
+                               mesh.name.toLowerCase().includes('cylinder') ||
+                               mesh.name.toLowerCase().includes('light_') ||
+                               mesh.name.toLowerCase().includes('cube');
+
+            const shouldTarget = hasPhysics || isTargetMesh;
+
+            if (shouldTarget) {
+                console.log(`🎯 Ray targeting mesh: ${mesh.name} (hasPhysics: ${hasPhysics}, isTargetMesh: ${isTargetMesh})`);
+            }
+
+            return shouldTarget;
+        });
+
+        if (pickingInfo && pickingInfo.hit && pickingInfo.pickedMesh) {
+            const hitMesh = pickingInfo.pickedMesh;
+            const hitPoint = pickingInfo.pickedPoint;
+            const distance = pickingInfo.distance;
+
+            console.log(`🎯 RAY COLLISION DETECTED!`);
+            console.log(`  - Projectile: ${this.config.id}`);
+            console.log(`  - Hit mesh: ${hitMesh.name}`);
+            console.log(`  - Hit point: ${hitPoint?.toString()}`);
+            console.log(`  - Distance: ${distance?.toFixed(3)}`);
+            console.log(`  - Ray origin: ${this.collisionRay.origin.toString()}`);
+            console.log(`  - Ray direction: ${this.collisionRay.direction.toString()}`);
+
+            // Trigger collision
+            this.onCollision(hitMesh as AbstractMesh);
+        }
+    }
+
+    private checkManualCollisions(): void {
+        // This method is now replaced by ray-based detection
+        // Keeping it as fallback but disabling by default
+        return;
     }
 
     protected updateHoming(deltaTime: number): void {
@@ -383,6 +521,12 @@ export abstract class BaseProjectile {
         if (this.particleSystem) {
             this.particleSystem.stop();
             this.particleSystem.dispose();
+        }
+
+        // Clean up ray helper
+        if (this.rayHelper) {
+            this.rayHelper.hide();
+            this.rayHelper.dispose();
         }
 
         // Clean up physics

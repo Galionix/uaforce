@@ -35,6 +35,11 @@ export const createInputController = (sc: SceneController) => {
           sc.guiController?.toggleMainMenu();
           // console.log("Space was pressed once!");
         }
+        if (kbInfo.event.code === "KeyE") {
+          // POC: Toggle explosion mode for testing
+          console.log("POC: E key pressed - toggling explosion mode");
+          // The actual toggling is handled in SceneController
+        }
         if (kbInfo.event.code === "KeyT") {
           GlobalEventBus.emit("dialog:trigger", {
             eventId: "pressT",
@@ -54,13 +59,9 @@ export const createInputController = (sc: SceneController) => {
           // console.log("Space was pressed once!");
         }
         if (kbInfo.event.code === "KeyX") {
-          GlobalEventBus.emit("cutscene:stop", {
-            sceneName: "Intro scene 1",
-          });
-          // sc.soundController.SoundsAudios.sfx.ui.click.play();
-
-          // sc.guiController?.toggleMainMenu();
-          // console.log("Space was pressed once!");
+          // POC: Create simple test box for explosion testing (overriding cutscene stop)
+          console.log("POC: X key pressed - creating simple test box");
+          // Note: This temporarily overrides the cutscene stop functionality
         }
         if (kbInfo.event.code === "KeyK") {
           // Debug: Trigger death for testing
@@ -96,91 +97,56 @@ export const createInputController = (sc: SceneController) => {
           sc.soundController.playLanding();
           console.log("Debug: Landing sound played");
         }
+        if (kbInfo.event.code === "F1") {
+          // Alternative fire key - useful for some keyboard layouts
+          try {
+            const projectile = sc.projectileController.fireProjectile();
+            if (projectile) {
+              console.log("🚀 Projectile fired successfully (F1)");
+            } else {
+              console.log("⚠️ Could not fire projectile (max limit reached)");
+            }
+          } catch (error) {
+            console.error("Error firing projectile:", error);
+          }
+        }
         if (kbInfo.event.code === "KeyS") {
           // Debug: Test footstep sequence for testing
           sc.soundController.playFootsteps();
           console.log("Debug: Footstep sequence played");
         }
         if (kbInfo.event.code === "Space") {
-          // Shooting with SPACE key
-          if (sc.projectileSystem && sc.playerController.mesh) {
-            // Calculate shoot direction based on player facing direction
-            const playerPos = sc.playerController.mesh.position;
-            const facingLeft = sc.playerController.getFacingDirection();
-
-            // Calculate target position - shoot horizontally in the direction player is facing
-            // facingLeft = true means positive X direction, facingLeft = false means negative X direction
-            const shootDistance = 10; // How far to aim
-            const targetPosition = playerPos.clone().add(
-              new Vector3(facingLeft ? shootDistance : -shootDistance, 0, 0)
-            );
-
-            console.log("SPACE pressed! Attempting to shoot bullet...");
-            console.log("Player position:", playerPos);
-            console.log("Facing left:", facingLeft);
-            console.log("Target position:", targetPosition);
-
-            // Fire using playerShoot method
-            sc.projectileSystem.playerShoot(sc.playerController.mesh, targetPosition, 'bullet');
-
-            console.log("Player shot bullet towards:", targetPosition);
-          } else {
-            console.log("Cannot shoot - missing projectileSystem or playerController.mesh");
+          // Fire projectile
+          try {
+            const projectile = sc.projectileController.fireProjectile();
+            if (projectile) {
+              console.log("🚀 Projectile fired successfully");
+            } else {
+              console.log("⚠️ Could not fire projectile (max limit reached)");
+            }
+          } catch (error) {
+            console.error("Error firing projectile:", error);
           }
         }
         if (kbInfo.event.code === "Digit1") {
-          // Test rocket projectile
-          if (sc.projectileSystem && sc.playerController.mesh) {
-            const playerPos = sc.playerController.mesh.position;
-            const facingLeft = sc.playerController.getFacingDirection();
-            const shootDistance = 15;
-            const targetPosition = playerPos.clone().add(
-              new Vector3(facingLeft ? shootDistance : -shootDistance, 0, 0)
-            );
-
-            sc.projectileSystem.playerShoot(sc.playerController.mesh, targetPosition, 'rocket');
-            console.log("Player shot rocket towards:", targetPosition);
-          }
+          // Digit1 key is now available for other uses
+          console.log("Digit1 pressed - available for new functionality");
         }
         if (kbInfo.event.code === "Digit2") {
-          // Test grenade throw
-          if (sc.projectileSystem && sc.playerController.mesh) {
-            const playerPos = sc.playerController.mesh.position;
-            const facingLeft = sc.playerController.getFacingDirection();
-            const throwDistance = 8;
-            const targetPosition = playerPos.clone().add(
-              new Vector3(facingLeft ? throwDistance : -throwDistance, -2, 0) // Aim slightly down for arc
-            );
-
-            sc.projectileSystem.throwGrenade(playerPos, targetPosition);
-            console.log("Player threw grenade towards:", targetPosition);
-          }
+          // Digit2 key is now available for other uses
+          console.log("Digit2 pressed - available for new functionality");
         }
         if (kbInfo.event.code === "Digit3") {
-          // Test fireball spell
-          if (sc.projectileSystem && sc.playerController.mesh) {
-            const playerPos = sc.playerController.mesh.position;
-            const facingLeft = sc.playerController.getFacingDirection();
-            const shootDistance = 12;
-            const targetPosition = playerPos.clone().add(
-              new Vector3(facingLeft ? shootDistance : -shootDistance, 0, 0)
-            );
-
-            sc.projectileSystem.castSpell(sc.playerController.mesh, 'fireball', targetPosition);
-            console.log("Player cast fireball towards:", targetPosition);
-          }
+          // Digit3 key is now available for other uses
+          console.log("Digit3 pressed - available for new functionality");
         }
         if (kbInfo.event.code === "Digit4") {
-          // Test timed bomb throw
-          if (sc.projectileSystem && sc.playerController.mesh) {
-            const playerPos = sc.playerController.mesh.position;
-            const facingLeft = sc.playerController.getFacingDirection();
-            const throwDistance = 5; // Shorter throw for timed bomb
-            const direction = new Vector3(facingLeft ? 1 : -1, 0.3, 0).normalize(); // Slight upward angle
-
-            sc.projectileSystem.throwTimedBomb(playerPos, direction);
-            console.log("Player threw timed bomb in direction:", direction);
-          }
+          // Digit4 key is now available for other uses
+          console.log("Digit4 pressed - available for new functionality");
+        }
+        if (kbInfo.event.code === "Digit5") {
+          // Digit5 key is now available for other uses
+          console.log("Digit5 pressed - available for new functionality");
         }
         break;
         // case BABYLON.KeyboardEventTypes.KEYUP:
@@ -196,18 +162,21 @@ export const createInputController = (sc: SceneController) => {
     })
   );
   let keydown = false;
+  let lastFireTime = 0;
+  const fireRate = 300; // Minimum time between shots in milliseconds
 
   sc.scene.onBeforeRenderObservable.add(() => {
     // Get ground detection state from the unified ray system
     const groundState = sc.playerController.getGroundDetectionState();
     const onGround = groundState.isOnGround;
 
-    // Gather input state (W = jump, SPACE = shoot)
+    // Gather input state (W = jump, SPACE = shoot, F1 = shoot)
     const movementInput = {
       moveLeft: !!inputMap["KeyA"],
       moveRight: !!inputMap["KeyD"],
       jump: !!inputMap["KeyW"], // Changed from Space to W
-      sprint: !!inputMap.ShiftLeft
+      sprint: !!inputMap.ShiftLeft,
+      shoot: !!inputMap["Space"] || !!inputMap["F1"] // Add shooting input
     };
 
     // Update movement using the movement controller and get the movement output
@@ -253,6 +222,22 @@ export const createInputController = (sc: SceneController) => {
       sc.soundController.startFootstepLoop(movementOutput.isSprinting);
     } else if (movementOutput.shouldStopFootsteps) {
       sc.soundController.stopFootstepLoop();
+    }
+
+    // Handle shooting input with rate limiting
+    if (movementInput.shoot) {
+      const currentTime = performance.now();
+      if (currentTime - lastFireTime >= fireRate) {
+        try {
+          const projectile = sc.projectileController.fireProjectile();
+          if (projectile) {
+            lastFireTime = currentTime;
+            console.log("🚀 Projectile fired (continuous)");
+          }
+        } catch (error) {
+          console.error("Error firing projectile in render loop:", error);
+        }
+      }
     }
 
     // Update keydown state for other systems that might need it
