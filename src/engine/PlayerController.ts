@@ -5,6 +5,7 @@ import {
 
 import { SoundController } from './SoundController';
 import Logger from '../utils/logger';
+import { SceneController } from './SceneController';
 
 export class PlayerController {
     // position: Vector3;
@@ -14,6 +15,7 @@ export class PlayerController {
     _aggregate?: PhysicsAggregate;
     hk: HavokPlugin
     soundController: SoundController
+    weaponCooldown: number // ms
 
     _groundColliderMesh?: Mesh
     footRaycast = new PhysicsRaycastResult();
@@ -37,11 +39,42 @@ export class PlayerController {
     private _initialSpawnPosition: Vector3 = Vector3.Zero();
     private _initialSpawnProps: any = null;
     private _isDead: boolean = false;
-    constructor(scene: Scene, hk: HavokPlugin, soundController: SoundController) {
+    sceneController: SceneController;
+    constructor(scene: Scene, hk: HavokPlugin, soundController: SoundController, sceneController: SceneController) {
         this.playerMesh = this.drawPlayerModel()
         this.soundController = soundController
         this.scene = scene
         this.hk = hk
+        this.weaponCooldown = 0 // Initialize cooldown to 0
+        this.sceneController = sceneController;
+    }
+    get canShoot(){
+        return this.weaponCooldown < 1
+    }
+    set weaponCD(cd: number){
+        this.weaponCooldown = cd
+    }
+
+
+    startCooldown(){
+        // here we need to asynchronously update our cooldown, each 10 ms
+        const updateCooldown = () => {
+            if (this.weaponCooldown > 0) {
+                this.weaponCooldown -= 10;
+                setTimeout(updateCooldown, 10);
+            }
+        };
+        setTimeout(updateCooldown, 10);
+    }
+
+    shoot() {
+        if (this.canShoot) {
+
+            this.sceneController.projectileController.fireProjectile()
+            this.weaponCD = 1000; // Set cooldown to 300ms after shooting
+            // this.soundController.playGunshot();
+            this.startCooldown();
+        }
     }
 
     get aggregate() {

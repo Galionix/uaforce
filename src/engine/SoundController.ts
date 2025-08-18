@@ -464,7 +464,7 @@ export class SoundController {
       // audio.guns.cg1
     ]);
 
-    this.playRandomSound(shotSounds, 0.6);
+    this.playRandomSound(shotSounds, 0.3);
   }
 
   /**

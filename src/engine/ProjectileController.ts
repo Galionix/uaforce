@@ -8,7 +8,7 @@ export class ProjectileController {
   private sceneController: SceneController;
   private playerController: PlayerController;
   private activeProjectiles: Set<Projectile> = new Set();
-  private maxProjectiles: number = 10; // Limit to prevent spam
+  private maxProjectiles: number = 100; // Limit to prevent spam
 
   constructor(scene: Scene, sceneController: SceneController, playerController: PlayerController) {
     this.scene = scene;
@@ -22,7 +22,7 @@ export class ProjectileController {
   public fireProjectile(config?: ProjectileConfig): Projectile | null {
     // Prevent spam - limit active projectiles
     if (this.activeProjectiles.size >= this.maxProjectiles) {
-      this.sceneController.soundController.playReload();
+      // this.sceneController.soundController.playReload();
       console.warn('⚠️ Maximum projectiles reached, cannot fire more');
       return null;
     }

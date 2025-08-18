@@ -116,17 +116,18 @@ export const createInputController = (sc: SceneController) => {
           console.log("Debug: Footstep sequence played");
         }
         if (kbInfo.event.code === "Space") {
+          sc.playerController.shoot()
           // Fire projectile
-          try {
-            const projectile = sc.projectileController.fireProjectile();
-            if (projectile) {
-              console.log("🚀 Projectile fired successfully");
-            } else {
-              console.log("⚠️ Could not fire projectile (max limit reached)");
-            }
-          } catch (error) {
-            console.error("Error firing projectile:", error);
-          }
+          // try {
+          //   // const projectile = sc.projectileController.fireProjectile();
+          //   if (projectile) {
+          //     console.log("🚀 Projectile fired successfully");
+          //   } else {
+          //     console.log("⚠️ Could not fire projectile (max limit reached)");
+          //   }
+          // } catch (error) {
+          //   console.error("Error firing projectile:", error);
+          // }
         }
         if (kbInfo.event.code === "Digit1") {
           // Digit1 key is now available for other uses

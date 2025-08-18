@@ -92,7 +92,7 @@ export class SceneController {
     this.canvas = canvas
     this.game = gameController
     // todo: this comes after physics
-    this._playerController = new PlayerController(this._scene, hk, this.soundController);
+    this._playerController = new PlayerController(this._scene, hk, this.soundController, this);
     // this.createInput();
   }
   get scene() {
