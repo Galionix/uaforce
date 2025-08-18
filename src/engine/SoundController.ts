@@ -188,7 +188,7 @@ export class SoundController {
     }
 
     // Update legacy footsteps volume
-    this.footstepsSounds.forEach(sound=>sound.setVolume(0.3 * this.sfxVolume))
+    // this.footstepsSounds.forEach(sound=>sound.setVolume(0.3 * this.sfxVolume))
 
     // Note: Sequence footsteps volume is handled dynamically in playNextFootstepInSequence
     // this.SoundsAudios.sfx.player.footsteps.stepstone_3.setVolume(
@@ -447,6 +447,24 @@ export class SoundController {
     ]);
 
     this.playRandomSound(painSounds, 0.6);
+  }
+  playReload(){
+    const reloadSounds = this.createSoundGroup(audio => [
+      audio.guns.reload
+    ]);
+
+    this.playRandomSound(reloadSounds, 0.6);
+  }
+
+  playShot(){
+    const shotSounds = this.createSoundGroup(audio => [
+      audio.guns.pistol,
+      // audio.guns.rifle,
+      // audio.guns.shotgun,
+      // audio.guns.cg1
+    ]);
+
+    this.playRandomSound(shotSounds, 0.6);
   }
 
   /**

@@ -22,6 +22,7 @@ export class ProjectileController {
   public fireProjectile(config?: ProjectileConfig): Projectile | null {
     // Prevent spam - limit active projectiles
     if (this.activeProjectiles.size >= this.maxProjectiles) {
+      this.sceneController.soundController.playReload();
       console.warn('⚠️ Maximum projectiles reached, cannot fire more');
       return null;
     }
@@ -58,7 +59,7 @@ export class ProjectileController {
       direction,
       config
     );
-
+    this.sceneController.soundController.playShot()
     // Track active projectile
     this.activeProjectiles.add(projectile);
 
