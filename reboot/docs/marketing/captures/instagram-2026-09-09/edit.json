@@ -1,0 +1,30 @@
+{
+  "source": "docs/marketing/captures/trailer-v2/UA-Force-trailer-Kore-uk.mp4",
+  "cuts": [
+    [
+      6,
+      18
+    ],
+    [
+      18,
+      36
+    ],
+    [
+      50,
+      59.2
+    ],
+    [
+      80,
+      89
+    ]
+  ],
+  "seconds": 48.2,
+  "resolution": [
+    1080,
+    1920
+  ],
+  "fps": 30,
+  "audio": "Approved Google Kore narration + original game mix; no new voice generation",
+  "subtitles": "Ukrainian phrase captions burned into vertical frame",
+  "file": "UA-Force-Instagram-Reel-uk.mp4"
+}
