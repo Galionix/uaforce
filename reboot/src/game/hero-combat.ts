@@ -1,8 +1,9 @@
+import {frighten} from './infantry.ts';
 import {enemyActive} from './enemies.ts';
 import {summonFollowers} from './followers.ts';
 import type {World, Effect} from './world.ts';
 import type {HeroId} from './content.ts';
-export const SPECIAL_LIFE:Record<HeroId,number>={shevchenko:.7,lesya:4,franko:4,bandera:4.8,mamai:1.4,bayraktar:3,ghost:3,zelensky:6,bilozerska:30,'it-army':8,skovoroda:1.8};
+export const SPECIAL_LIFE:Record<HeroId,number>={shevchenko:3,lesya:4,franko:4,bandera:4.8,mamai:1.4,bayraktar:3,ghost:3,zelensky:6,bilozerska:30,'it-army':8,skovoroda:1.8};
 export const ULTIMATE_LIFE:Record<HeroId,number>={shevchenko:1.6,lesya:6,franko:1,bandera:2.7,mamai:2.4,bayraktar:3,ghost:3.5,zelensky:5,bilozerska:1.1,'it-army':5,skovoroda:5};
 export function hackTarget(w:World){return w.boxes.filter(b=>b.kind==='radio'&&b.hp>0&&Math.hypot(b.x-w.player.x,b.y-w.player.y)<14&&!w.followers.some(f=>f.hp>0&&f.source===b.id)).sort((a,b)=>Math.abs(a.x-w.player.x)-Math.abs(b.x-w.player.x))[0];}
 export function canSpecial(w:World){return w.heroId==='it-army'?w.followers.filter(f=>f.hp>0&&f.kind==='turret').length<1&&!!hackTarget(w):w.heroId==='zelensky'?w.followers.filter(f=>f.hp>0&&f.kind==='infantry').length<2:true;}
@@ -26,8 +27,10 @@ export function attack(w:World,melee=false){
  }else w.projectile(p.x+p.facing*.45,p.y+1.03,p.facing,0,true);
  if(id==='skovoroda'){reflect(w,p.x+p.facing,p.y+1,2.8);w.effects.push({playerId:w.actor.id,kind:'weapon',hero:id,x:p.x,y:p.y,dir:p.facing,life:.22,age:0,hit:new Set()});}
  if(id==='zelensky'&&p.fireCount%3===0){
-  for(const e of w.enemies)if(enemyActive(e)&&(e.x-p.x)*p.facing>=0&&(e.x-p.x)*p.facing<6&&Math.abs(e.y-p.y)<3){e.rooted=1.25;e.windup=0;}
-  w.effects.push({playerId:w.actor.id,kind:'weapon',hero:id,x:p.x,y:p.y,dir:p.facing,life:.35,age:0,hit:new Set()});w.emit('voiceWave',p.x,p.y+1);
+  const wave:Effect={playerId:w.actor.id,kind:'weapon',hero:id,x:p.x,y:p.y,dir:p.facing,life:1.25,age:0,hit:new Set()};
+  w.effects.push(wave);
+  for(const e of w.enemies)if(enemyActive(e)&&(e.x-p.x)*p.facing>=0&&(e.x-p.x)*p.facing<6&&Math.abs(e.y-p.y)<3)frighten(w,e,wave);
+  w.emit('voiceWave',p.x,p.y+1);
  }
 }
 /** Each effect owns its hit set and timing, so held keys cannot retrigger a one-shot impact. */

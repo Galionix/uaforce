@@ -38,6 +38,15 @@ test('recorded combat routes all heroes, exact phases, lifetimes, pause and dist
     const gated=starts.length;sound.event({type:'enemyDeath',deathRole:role,x:0,y:0});assert.equal(starts.length,gated,'mass casualties do not stack every voice');
    }
   }
+  let previousPanic=-1;
+  for(let i=0;i<8;i++){
+   context.currentTime+=2;const before=starts.length;sound.event({type:'enemyPanic',x:0,y:0});
+   assert.equal(starts.length,before+1);const offset=starts.at(-1)!.args[1];
+   assert.ok([0,1,2,3].some(v=>SFX_ASSETS[`enemy-panic-${v}` as SfxId].offset===offset));
+   assert.notEqual(offset,previousPanic);previousPanic=offset;
+   sound.event({type:'enemyPanic',x:1,y:0});assert.equal(starts.length,before+1,'frightened squad cannot stack a scream per enemy');
+  }
+  context.currentTime+=2;const farPanic=starts.length;sound.event({type:'enemyPanic',x:100,y:0},0);assert.equal(starts.length,farPanic);
   context.currentTime++;
   const landings=starts.length;sound.event({type:'goreLand',x:0,y:0});sound.event({type:'goreLand',x:1,y:0});
   assert.equal(starts.length,landings+1,'one quiet landing in a dense fragment shower');

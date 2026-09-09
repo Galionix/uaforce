@@ -11038,13 +11038,121 @@
           "at": 1.4
         }
       ]
+    },
+    {
+      "id": "enemy-panic-0",
+      "file": "public/assets/audio/sfx/enemy-panic-0.wav",
+      "seconds": 1.15,
+      "loop": false,
+      "peak": 0.74291189435159,
+      "rms": 0.14000000000000004,
+      "sha256": "e9a14bc3e1b737db3a85d2781c4f05985dc1292f8053d11fee83dbbacbdeb6ac",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "enemy-panic-0.wav",
+          "sourceSha256": "cdd27295785a706c687bc1778eb1a2f032c54d87cc56d72e010726764f2a1055",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 910220,
+          "prompt": "TrackType: SFX, One man screaming in cartoon panic, a high pitched wavering yelp, frightened and ridiculous. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+          "cfg": 3,
+          "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience",
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 1.2,
+          "rate": 1,
+          "cut": 1.15,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "enemy-panic-1",
+      "file": "public/assets/audio/sfx/enemy-panic-1.wav",
+      "seconds": 1.15,
+      "loop": false,
+      "peak": 0.6695442293453355,
+      "rms": 0.14,
+      "sha256": "17519c1439b3f0d3a8983cba5fa4122a9676e737248bd1cd452395fef5184c7d",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "enemy-panic-1.wav",
+          "sourceSha256": "cfca978ebe3daf61ec6ee7d6140a5be9e01227275acb6d42b44c5341f7fb992b",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 910221,
+          "prompt": "TrackType: SFX, One man screaming in cartoon panic, a low hoarse startled yell that cracks into a squeal. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+          "cfg": 3,
+          "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience",
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 3.0,
+          "rate": 1,
+          "cut": 1.15,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "enemy-panic-2",
+      "file": "public/assets/audio/sfx/enemy-panic-2.wav",
+      "seconds": 1.15,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.1395270482205289,
+      "sha256": "d787f0dcefd2d081b9f21902eab639eca74db0d60c8c7f936e004bc0214f891a",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "enemy-panic-2.wav",
+          "sourceSha256": "16d05d389abb3d4734ce2eeacd4f2b9858d6721c7d843bdbe6444f3b23ac0c72",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 910222,
+          "prompt": "TrackType: SFX, One man screaming in cartoon panic, a nasal falsetto scream, exaggerated slapstick panic. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+          "cfg": 3,
+          "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience",
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 0.0,
+          "rate": 1,
+          "cut": 1.15,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "enemy-panic-3",
+      "file": "public/assets/audio/sfx/enemy-panic-3.wav",
+      "seconds": 1.15,
+      "loop": false,
+      "peak": 0.574363596071333,
+      "rms": 0.14,
+      "sha256": "9eb2d7eab59478c19426bdb030ef7191a3962edb2b3d248dafd2872f1815c182",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "enemy-panic-3.wav",
+          "sourceSha256": "b5559b5def92d089800dbda30cf3ab2a5acb929e4e7f0c3be9fe24adff94bd3f",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 910223,
+          "prompt": "TrackType: SFX, One man screaming in cartoon panic, a breathless rising and falling terrified howl. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+          "cfg": 3,
+          "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience",
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 0.3,
+          "rate": 1,
+          "cut": 1.15,
+          "gain": 1,
+          "at": 0
+        }
+      ]
     }
   ],
   "missing": [],
   "bank": {
     "file": "public/assets/audio/sfx/combat-bank.wav",
-    "sha256": "e56bb2630691392311e4ceed7beb6fb5a4b04ed03dc05ccb7e669b7982c9a9a4",
-    "seconds": 201.52575
+    "sha256": "8378b6d92a3dc21f5fc050bed60777b0a41dc19d583bad8fa397d9aec62b11da",
+    "seconds": 206.28575
   },
   "review": {
     "status": "local-playtest-candidate",

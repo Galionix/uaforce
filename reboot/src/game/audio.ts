@@ -19,7 +19,7 @@ export class Sound {
   private loops=new Map<string,{source:AudioBufferSourceNode;amp:GainNode;key:SfxId}>();
   private sampleSerial=0;private sampleLast=new Map<string,number>();
   private foleySerial=0;private foleyLast=new Map<string,number>();private lastCombat=-100;
-  private lastDeath=-100;
+  private lastDeath=-100;private lastPanic=-100;
   private deathVariants=new Map<string,number>();private lastGore=-100;private variationState=0x51f15e;
   private lastVoice=-100;private wasPlaying=false;
   async enable(){
@@ -51,7 +51,7 @@ export class Sound {
     void this.deliver(stage?{...stage,key:'preview:'+id,voices:[id],priority:3}:{key:'preview:'+id,voices:[id],riff:'hero',priority:3});
   }
   stopAll(){this.score?.stop();this.lifecycle++;this.director?.stop();this.stopEffects();}
-  private stopEffects(){this.foleyLast.clear();this.lastCombat=-100;this.lastDeath=-100;this.lastGore=-100;this.sampleLast.clear();for(const {source,amp} of this.loops.values()){try{source.stop();}catch{}source.disconnect();amp.disconnect();}this.loops.clear();for(const s of this.voices.keys())try{s.stop();}catch{}this.voices.clear();}
+  private stopEffects(){this.foleyLast.clear();this.lastCombat=-100;this.lastDeath=-100;this.lastPanic=-100;this.lastGore=-100;this.sampleLast.clear();for(const {source,amp} of this.loops.values()){try{source.stop();}catch{}source.disconnect();amp.disconnect();}this.loops.clear();for(const s of this.voices.keys())try{s.stop();}catch{}this.voices.clear();}
   private stopKind(kind:string){for(const [s,k]of this.voices)if(k===kind){try{s.stop();}catch{}this.voices.delete(s);}}
   private play(kind:string,volume:number,duration:number,offset=0,scope=kind){
     const clip=SFX_ASSETS[kind as SfxId],ctx=this.context,buffer=this.buffers.get(clip?'combatBank':kind);
@@ -72,11 +72,11 @@ export class Sound {
     this.sampleLast.set(key,now);this.play(key,volume,clip.seconds,0,scope);
   }
   /** Cosmetic randomness never advances the authoritative world's RNG. */
-  private deathVariant(group:string){
+  private deathVariant(group:string,count=3){
     const previous=this.deathVariants.get(group);
     let state=this.variationState;state^=state<<13;state^=state>>>17;state^=state<<5;this.variationState=state;
     const random=(state>>>0)/4294967296;
-    const next=previous===undefined?Math.floor(random*3):(previous+1+Math.floor(random*2))%3;
+    const next=previous===undefined?Math.floor(random*count):(previous+1+Math.floor(random*(count-1)))%count;
     this.deathVariants.set(group,next);return `${group}-${next}`;
   }
   /** Snapshot-owned loops cannot outlive their effect, follower, hero or pause. */
@@ -139,6 +139,10 @@ export class Sound {
     if(e.sfx){sample(e.sfx,e.sfx.includes('hit')?.3:.4,e.sfx.includes('hit')||['roots','ricochet'].includes(e.sfx)?.09:0);return;}
     const foleyKind=({footstep:'step',climbContact:'climb',jump:'jump',land:'land',abilityReady:'ready',wallJump:'jump',wallVault:'land'} as Partial<Record<Event['type'],FoleyKind>>)[e.type];
     if(foleyKind&&e.hero){this.foley(e.hero,foleyKind);return;}
+    if(e.type==='enemyPanic'){
+      const now=this.context?.currentTime??0;if(now-this.lastPanic<.7||this.announcing)return;this.lastPanic=now;
+      sample(this.deathVariant('enemy-panic',4),.33);return;
+    }
     if(e.type==='enemyDeath'){
       const now=this.context?.currentTime??0;if(now-this.lastDeath<.16||this.announcing)return;this.lastDeath=now;
       sample(this.deathVariant('death-'+(e.deathRole??'rifle')),.3);

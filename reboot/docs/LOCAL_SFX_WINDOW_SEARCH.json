@@ -130,5 +130,29 @@
     "sourceId": "source-engine-tag-0",
     "seconds": 2.5,
     "description": "The sound of a diesel engine running."
+  },
+  {
+    "id": "enemy-panic-0",
+    "sourceId": "enemy-panic-0",
+    "seconds": 1.15,
+    "description": "The sound of a man screaming in fear."
+  },
+  {
+    "id": "enemy-panic-1",
+    "sourceId": "enemy-panic-1",
+    "seconds": 1.15,
+    "description": "The sound of a man screaming in fear."
+  },
+  {
+    "id": "enemy-panic-2",
+    "sourceId": "enemy-panic-2",
+    "seconds": 1.15,
+    "description": "The sound of a man screaming in fear."
+  },
+  {
+    "id": "enemy-panic-3",
+    "sourceId": "enemy-panic-3",
+    "seconds": 1.15,
+    "description": "The sound of a man screaming in fear."
   }
 ]

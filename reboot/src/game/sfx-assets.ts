@@ -1556,6 +1556,22 @@ export const SFX_ASSETS = {
   "death-boss-putin": {
     "offset": 198.98575,
     "seconds": 2.5
+  },
+  "enemy-panic-0": {
+    "offset": 201.52575,
+    "seconds": 1.15
+  },
+  "enemy-panic-1": {
+    "offset": 202.71575,
+    "seconds": 1.15
+  },
+  "enemy-panic-2": {
+    "offset": 203.90575,
+    "seconds": 1.15
+  },
+  "enemy-panic-3": {
+    "offset": 205.09575,
+    "seconds": 1.15
   }
 } as const;
 export type SfxId=keyof typeof SFX_ASSETS;

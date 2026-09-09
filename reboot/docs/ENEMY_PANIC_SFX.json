@@ -1,0 +1,49 @@
+{
+  "model": "Stable Audio 3 Small SFX",
+  "jobs": [
+    {
+      "id": "enemy-panic-0",
+      "seconds": 1.15,
+      "loop": false,
+      "prompt": "TrackType: SFX, One man screaming in cartoon panic, a high pitched wavering yelp, frightened and ridiculous. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+      "seed": 910220,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "cfg": 3,
+      "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience"
+    },
+    {
+      "id": "enemy-panic-1",
+      "seconds": 1.15,
+      "loop": false,
+      "prompt": "TrackType: SFX, One man screaming in cartoon panic, a low hoarse startled yell that cracks into a squeal. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+      "seed": 910221,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "cfg": 3,
+      "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience"
+    },
+    {
+      "id": "enemy-panic-2",
+      "seconds": 1.15,
+      "loop": false,
+      "prompt": "TrackType: SFX, One man screaming in cartoon panic, a nasal falsetto scream, exaggerated slapstick panic. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+      "seed": 910222,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "cfg": 3,
+      "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience"
+    },
+    {
+      "id": "enemy-panic-3",
+      "seconds": 1.15,
+      "loop": false,
+      "prompt": "TrackType: SFX, One man screaming in cartoon panic, a breathless rising and falling terrified howl. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+      "seed": 910223,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "cfg": 3,
+      "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience"
+    }
+  ]
+}

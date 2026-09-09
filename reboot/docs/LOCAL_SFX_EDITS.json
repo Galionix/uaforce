@@ -1724,5 +1724,49 @@
         "at": 0
       }
     ]
+  },
+  "enemy-panic-0": {
+    "sourceId": "enemy-panic-0",
+    "masterSha256": "cdd27295785a706c687bc1778eb1a2f032c54d87cc56d72e010726764f2a1055",
+    "start": 1.2,
+    "seconds": 1.15,
+    "reason": "Actual PCM scream window; human audition pending.",
+    "screen": {
+      "start": 1.2,
+      "similarity": 0.7092016935348511
+    }
+  },
+  "enemy-panic-1": {
+    "sourceId": "enemy-panic-1",
+    "masterSha256": "cfca978ebe3daf61ec6ee7d6140a5be9e01227275acb6d42b44c5341f7fb992b",
+    "start": 3.0,
+    "seconds": 1.15,
+    "reason": "Actual PCM scream window; human audition pending.",
+    "screen": {
+      "start": 3.0,
+      "similarity": 0.7436012625694275
+    }
+  },
+  "enemy-panic-2": {
+    "sourceId": "enemy-panic-2",
+    "masterSha256": "16d05d389abb3d4734ce2eeacd4f2b9858d6721c7d843bdbe6444f3b23ac0c72",
+    "start": 0.0,
+    "seconds": 1.15,
+    "reason": "Actual PCM scream window; human audition pending.",
+    "screen": {
+      "start": 0.0,
+      "similarity": 0.7334532737731934
+    }
+  },
+  "enemy-panic-3": {
+    "sourceId": "enemy-panic-3",
+    "masterSha256": "b5559b5def92d089800dbda30cf3ab2a5acb929e4e7f0c3be9fe24adff94bd3f",
+    "start": 0.3,
+    "seconds": 1.15,
+    "reason": "Actual PCM scream window; human audition pending.",
+    "screen": {
+      "start": 0.3,
+      "similarity": 0.7185266017913818
+    }
   }
 }

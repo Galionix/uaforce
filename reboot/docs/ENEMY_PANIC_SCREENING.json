@@ -1,0 +1,130 @@
+{
+  "enemy-panic-0": {
+    "sha256": "e9a14bc3e1b737db3a85d2781c4f05985dc1292f8053d11fee83dbbacbdeb6ac",
+    "model": "laion/clap-htsat-unfused",
+    "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+    "expected": "TrackType: SFX, One man screaming in cartoon panic, a high pitched wavering yelp, frightened and ridiculous. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+    "expectedScore": 0.4474101662635803,
+    "top": [
+      {
+        "description": "The sound of a man screaming.",
+        "similarity": 0.6994
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a low hoarse startled yell that cracks into a squeal. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.5012
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a nasal falsetto scream, exaggerated slapstick panic. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.4995
+      },
+      {
+        "description": "The sound of a man grunting in pain.",
+        "similarity": 0.4927
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a high pitched wavering yelp, frightened and ridiculous. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.4474
+      }
+    ],
+    "musicScore": -0.0873,
+    "playback": false,
+    "status": "screened-not-an-artistic-approval"
+  },
+  "enemy-panic-1": {
+    "sha256": "17519c1439b3f0d3a8983cba5fa4122a9676e737248bd1cd452395fef5184c7d",
+    "model": "laion/clap-htsat-unfused",
+    "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+    "expected": "TrackType: SFX, One man screaming in cartoon panic, a low hoarse startled yell that cracks into a squeal. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+    "expectedScore": 0.6211977005004883,
+    "top": [
+      {
+        "description": "The sound of a man screaming.",
+        "similarity": 0.6816
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a low hoarse startled yell that cracks into a squeal. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.6212
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a nasal falsetto scream, exaggerated slapstick panic. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.6062
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a high pitched wavering yelp, frightened and ridiculous. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.5837
+      },
+      {
+        "description": "short startled male yelp, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.573
+      }
+    ],
+    "musicScore": -0.1824,
+    "playback": false,
+    "status": "screened-not-an-artistic-approval"
+  },
+  "enemy-panic-2": {
+    "sha256": "d787f0dcefd2d081b9f21902eab639eca74db0d60c8c7f936e004bc0214f891a",
+    "model": "laion/clap-htsat-unfused",
+    "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+    "expected": "TrackType: SFX, One man screaming in cartoon panic, a nasal falsetto scream, exaggerated slapstick panic. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+    "expectedScore": 0.6102199554443359,
+    "top": [
+      {
+        "description": "The sound of a man screaming.",
+        "similarity": 0.6995
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a low hoarse startled yell that cracks into a squeal. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.6324
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a nasal falsetto scream, exaggerated slapstick panic. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.6102
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a high pitched wavering yelp, frightened and ridiculous. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.598
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a breathless rising and falling terrified howl. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.5425
+      }
+    ],
+    "musicScore": -0.0906,
+    "playback": false,
+    "status": "screened-not-an-artistic-approval"
+  },
+  "enemy-panic-3": {
+    "sha256": "9eb2d7eab59478c19426bdb030ef7191a3962edb2b3d248dafd2872f1815c182",
+    "model": "laion/clap-htsat-unfused",
+    "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+    "expected": "TrackType: SFX, One man screaming in cartoon panic, a breathless rising and falling terrified howl. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+    "expectedScore": 0.4876440167427063,
+    "top": [
+      {
+        "description": "The sound of a man screaming.",
+        "similarity": 0.6717
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a low hoarse startled yell that cracks into a squeal. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.5436
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a high pitched wavering yelp, frightened and ridiculous. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.4967
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a nasal falsetto scream, exaggerated slapstick panic. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.4935
+      },
+      {
+        "description": "TrackType: SFX, One man screaming in cartoon panic, a breathless rising and falling terrified howl. Isolated human nonverbal voice, dry close microphone, no words, no music.",
+        "similarity": 0.4876
+      }
+    ],
+    "musicScore": -0.1225,
+    "playback": false,
+    "status": "screened-not-an-artistic-approval"
+  }
+}

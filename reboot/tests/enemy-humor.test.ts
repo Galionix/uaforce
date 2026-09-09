@@ -27,6 +27,6 @@ test('lethal barrel blasts propagate context to nearby victims; normal deaths re
  t.mock.method(Math,'random',()=>0);
  const w=new World();w.mode='playing';w.enemies=[];w.boxes=[];
  const scout=addInfantry(w,'scout',10);w.damageEnemy(scout,100);assert.ok(ROLE_LINES.scout!.includes(w.events.at(-1)!.text!));
- const guard=addInfantry(w,'shield',12);w.boxes.push({id:w.nextId(),kind:'barrel',x:12,y:0,w:1,h:1,hp:25,maxHp:25});w.damageBox(w.boxes[0],25);
+ const guard=addInfantry(w,'shield',12);w.damageEnemy(guard,50);assert.ok(guard.hp>0);w.boxes.push({id:w.nextId(),kind:'barrel',x:12,y:0,w:1,h:1,hp:25,maxHp:25});w.damageBox(w.boxes[0],25);
  assert.ok(guard.hp<=0);assert.ok(CAUSE_LINES.barrel.includes(w.events.findLast(e=>e.type==='enemyDeath')!.text!));assert.equal(w.kills,2);
 });

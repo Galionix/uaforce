@@ -85,6 +85,8 @@ def catalog():
  for boss,desc in {'iron-warden':'heavy armored vehicle collapsing with deep metal crunch, bolts falling and a final low thud','swarm-master':'propellers breaking, motor sputtering to a halt and multiple compact explosive pops','putin':'huge explosive blast with collapsing machinery, low theatrical nonverbal croak and wet splatter'}.items():
   jobs.append(dict(id='death-boss-'+boss,seconds=2.5,loop=False,prompt=desc+STYLE))
  for i,j in enumerate(jobs):j['seed']=909000+i;j['generateSeconds']=max(6,j['seconds']+.4);j['dtype']='fp32'
+ extra=ROOT/'docs/ENEMY_PANIC_SFX.json'
+ if extra.exists():jobs.extend(json.loads(extra.read_text())['jobs'])
  assert len({j['id'] for j in jobs})==len(jobs)
  return dict(model='Stable Audio 3 Small SFX',runtime='official MLX',style='docs/SFX_STYLE.md',serviceCostUSD=0,jobs=jobs)
 if __name__=='__main__':

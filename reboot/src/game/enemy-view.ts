@@ -63,8 +63,9 @@ export function drawInfantryGear(c:CanvasRenderingContext2D,e:Enemy,x:number,y:n
  }
  r(-5,-17,5,1,'#e5dfd4');r(-5,-16,5,1,'#4476ad');r(-5,-15,5,1,'#af4942');c.restore();
  const top=y-(e.heavy?44:38);
- if(a.alert>0){const rise=Math.min(4,(1.1-a.alert)*14);r(x-4,top-rise,9,13,'#17232c');r(x-1,top+1-rise,3,7,'#ffda64');r(x-1,top+10-rise,3,2,'#ffda64');}
- if(a.reloading>0){r(x-7,top+8,14,2,'#263639');r(x-7,top+8,14*(1-a.reloading/INFANTRY[a.kind].weapon.reloadTime),2,'#d9b46b');}
+ if(!e.heavy&&e.hp<e.maxHp){r(x-9,y+3,18,2,'#352b29');r(x-9,y+3,18*e.hp/e.maxHp,2,'#d87053');}
+ if(a.alert>0&&!e.panic){const rise=Math.min(4,(1.1-a.alert)*14);r(x-4,top-rise,9,13,'#17232c');r(x-1,top+1-rise,3,7,'#ffda64');r(x-1,top+10-rise,3,2,'#ffda64');}
+ if(a.reloading>0&&!e.panic){r(x-7,top+8,14,2,'#263639');r(x-7,top+8,14*(1-a.reloading/INFANTRY[a.kind].weapon.reloadTime),2,'#d9b46b');}
  if(a.fuse>=0){const radius=2.8*16;c.strokeStyle=Math.floor(time*12)%2?'#ffae58':'#e65335';c.lineWidth=1;c.beginPath();c.ellipse(Math.round(x),Math.round(y-8),radius,12,0,0,Math.PI*2);c.stroke();r(x-6,top+5,12*(a.fuse/.75),3,'#ff7648');}
  if(a.kind==='sniper'&&e.windup>0){c.globalAlpha=.5;for(let i=2;i<INFANTRY.sniper.range*16;i+=8)r(x+e.dir*i,y-16,4,1,'#e56142');c.globalAlpha=1;}
 }

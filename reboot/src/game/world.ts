@@ -1,4 +1,4 @@
-import {missionInfantry,stepInfantry,type Infantry,type InfantryKind} from './infantry.ts';
+import {missionInfantry,stepInfantry,frighten,type Infantry,type InfantryKind} from './infantry.ts';
 import {nearbyBarrel,interactBarrel,stepBarrels,dropBarrel} from './barrels.ts';
 import {DeathLines,type DeathCause} from './enemy-death.ts';
 import {MotionFoley} from './hero-foley.ts';
@@ -14,9 +14,9 @@ export type Effect={playerId?:number;kind:'weapon'|'special'|'ultimate';hero:Her
 export type Mode = 'ready' | 'playing' | 'paused' | 'lost' | 'won' | 'cinematic';
 export type Actions = { move: number; jump: boolean; jumpHeld?:boolean; fire: boolean; special: boolean; ultimate?: boolean; interact: boolean; climb?: number };
 export type Box = { id: number; x: number; y: number; w: number; h: number; hp: number; maxHp: number; vx?:number;vy?:number; kind: 'crate' | 'barrel' | 'wall' | 'radio' | 'platform' | 'earth' | 'stone' };
-export type Enemy = { id: number; x: number; y: number; hp: number; maxHp: number; dir: number; cooldown: number; windup: number; anchor: number; heavy: boolean; vehicle?:Vehicle;infantry?:Infantry;boss?:BossActor; rooted?:number; poison?:number; distracted?:number };
+export type Enemy = { id: number; x: number; y: number; hp: number; maxHp: number; dir: number; cooldown: number; windup: number; anchor: number; heavy: boolean; vehicle?:Vehicle;infantry?:Infantry;boss?:BossActor; panic?:{remaining:number;playerId:number;hero:HeroId;kind:Effect['kind'];voiceIn:number}; rooted?:number; poison?:number; distracted?:number };
 export type Bullet = { id: number; x: number; y: number; vx: number; vy: number; life: number; friendly: boolean; damage: number; hero?:HeroId;ordnance?:'shell'|'rocket';blastRadius?:number };
-export type Event = { type: 'goreLand' | 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; deathRole?:InfantryKind;deathCause?:DeathCause;soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
+export type Event = { type: 'enemyPanic' | 'goreLand' | 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; deathRole?:InfantryKind;deathCause?:DeathCause;soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
 export const IDLE: Actions = { move: 0, jump: false, fire: false, special: false, interact: false };
 
 export function createPlayerBody(){return { x: 3, y: 0, vy: 0, hp: 100, facing: 1, grounded: true, invulnerable: 0, cooldown: 0, energy: 100, coyote: 0.12, wallSide:0,wallLock:0,wallVx:0,wallClimbing:false,ladder: -1, ladderLock: 0, detachVx: 0, ladderNeedsRelease:false, cast:0, attack:0, specialCooldown:0, specialRecovery:[] as number[], form:0, cloak:0, fireCount:0, ammo:0, reloading:0, burstShots:0, weaponTrigger:false };}
@@ -208,10 +208,10 @@ export class World {
       if(f.life<=0)return;
       if(f.kind==='special'){
         if(f.hero==='shevchenko'){
-          for(const e of this.enemies)if(e.hp>0&&!f.hit.has(e.id)&&Math.abs(e.x-f.x)<8&&Math.abs(e.y-f.y)<4){f.hit.add(e.id);e.rooted=3;e.windup=0;this.emitSfx('shevchenko-hit',e.x,e.y,f.hero);}
+          for(const e of this.enemies)if(e.hp>0&&!f.hit.has(e.id)&&Math.abs(e.x-f.x)<8&&Math.abs(e.y-f.y)<4){f.hit.add(e.id);frighten(this,e,f);this.emitSfx('shevchenko-hit',e.x,e.y,f.hero);}
         }else if(f.hero==='lesya'){
           f.x+=f.dir*2*dt;
-          for(const e of this.enemies)if(e.hp>0&&Math.abs(e.x-f.x)<9&&Math.abs(e.y-f.y)<5)e.distracted=.15;
+          for(const e of this.enemies)if(e.hp>0&&Math.abs(e.x-f.x)<9&&Math.abs(e.y-f.y)<5){if(!e.vehicle&&!e.boss)frighten(this,e,f);else e.distracted=.15;}
         }else{
           for(const b of this.bullets)if(!b.friendly&&Math.abs(b.x-f.x)<2&&b.y>=f.y&&b.y<f.y+4){b.life=0;this.emitSfx('stone-hit',b.x,b.y,f.hero);}
         }
