@@ -29,4 +29,4 @@ Replaced the implicit defaults with explicit Cloudflare STUN/TURN, including UDP
 
 267/267 automated checks passed. `tools/verify-online.html?relay=1` forced BOTH peers to use relay; actual RTC stats reported `route=relay`. Exchanged 35 snapshots including the 30,427-character packet, movement, shots, damage, common pause and host leave. No console errors or warnings. The public room menu acquired a new code; public single-player started and paused without console errors. All tests silent.
 
-Production deployment `43bd20b1-e12a-4b8c-90f5-95882d72a591`, 101 files / 62.00 MiB. HTML/CSS/game/online/ICE files byte-matched against the release. Real owner/friend retest requested after both refresh and create a new room; result pending.
+Production deployment `43bd20b1-e12a-4b8c-90f5-95882d72a591`, 101 files / 62.00 MiB. HTML/CSS/game/online/ICE files byte-matched against the release. Owner received the refreshed-game and room-invitation instructions and replied «Проверю позже» on 2026-09-09. Real separate-network retest remains pending; this is not a success report.
