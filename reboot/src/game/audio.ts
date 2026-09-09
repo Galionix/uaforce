@@ -10,6 +10,7 @@ export class Sound {
   private readonly output?: (context:AudioContext)=>AudioNode;
   constructor(silent=false,output?:(context:AudioContext)=>AudioNode){this.silent=silent;this.output=output;}
   volume=.35;music=true;bossBattle=false;scoreTheme:ScoreTheme='river';private score:ScorePlayer|null=null;private mood=new MusicMood();effectsVolume=1;musicVolume=.7;voiceVolume=1;
+  private cryBus:GainNode|null=null;private cryUntil=0;private cries=new Set<AudioBufferSourceNode>();private lastCry=-100;
   private effectsBus:GainNode|null=null;private musicBus:GainNode|null=null;private voiceBus:GainNode|null=null;private director:Announcer|null=null;private ducked=false;private lifecycle=0;
   get audioReady(){return this.context?.state==='running';}
   get announcing(){return this.director?.busy??false;}
@@ -19,7 +20,7 @@ export class Sound {
   private loops=new Map<string,{source:AudioBufferSourceNode;amp:GainNode;key:SfxId}>();
   private sampleSerial=0;private sampleLast=new Map<string,number>();
   private foleySerial=0;private foleyLast=new Map<string,number>();private lastCombat=-100;
-  private lastDeath=-100;private lastPanic=-100;
+  private lastPanic=-100;
   private deathVariants=new Map<string,number>();private lastGore=-100;private variationState=0x51f15e;
   private lastVoice=-100;private wasPlaying=false;
   async enable(){
@@ -27,8 +28,8 @@ export class Sound {
     if(!this.context){
       this.context=new AudioContext();this.gain=this.context.createGain();this.gain.gain.value=this.volume;
       const limiter=this.context.createDynamicsCompressor();limiter.threshold.value=-12;limiter.ratio.value=8;this.gain.connect(limiter);limiter.connect(this.output?this.output(this.context):this.context.destination);
-      this.effectsBus=this.context.createGain();this.musicBus=this.context.createGain();this.voiceBus=this.context.createGain();
-      for(const bus of [this.effectsBus,this.musicBus,this.voiceBus])bus.connect(this.gain);
+      this.cryBus=this.context.createGain();this.effectsBus=this.context.createGain();this.musicBus=this.context.createGain();this.voiceBus=this.context.createGain();
+      for(const bus of [this.effectsBus,this.musicBus,this.voiceBus,this.cryBus])bus.connect(this.gain);
       this.score=new ScorePlayer(this.context,this.musicBus);
       this.director=new Announcer(this.context,this.voiceBus,this.musicBus,active=>{this.ducked=active;this.updateMix();});
       void this.director.preload();this.updateMix();
@@ -41,7 +42,14 @@ export class Sound {
   }
   setVolume(v:number){this.volume=v;if(this.gain)this.gain.gain.value=v;}
   setMix(channel:'effects'|'music'|'voice',value:number){const v=Number.isFinite(value)?Math.max(0,Math.min(1,value)):1;if(channel==='effects')this.effectsVolume=v;else if(channel==='music')this.musicVolume=v;else this.voiceVolume=v;this.updateMix();}
-  private updateMix(){this.score?.duck(this.ducked&&this.voiceVolume>0);const t=this.context?.currentTime??0;for(const [bus,value] of [[this.effectsBus,this.effectsVolume*(this.ducked&&this.voiceVolume>0?.3:1)],[this.musicBus,this.musicVolume],[this.voiceBus,this.voiceVolume]] as const)if(bus){bus.gain.cancelScheduledValues(t);bus.gain.setTargetAtTime(value,t,.035);}}
+  private updateMix(){
+    this.score?.duck(this.ducked&&this.voiceVolume>0);
+    const t=this.context?.currentTime??0,cry=this.cryUntil>t,announcer=this.ducked&&this.voiceVolume>0;
+    for(const [bus,base,underCry] of [[this.effectsBus,this.effectsVolume*(announcer?.3:1),.42],[this.musicBus,this.musicVolume,.72],[this.voiceBus,this.voiceVolume,1],[this.cryBus,this.effectsVolume*(announcer?.55:1),1]] as const)if(bus){
+      bus.gain.cancelScheduledValues(t);bus.gain.setTargetAtTime(base*(cry?underCry:1),t,.015);
+      if(cry&&underCry<1)bus.gain.setTargetAtTime(base,this.cryUntil,.12);
+    }
+  }
   private async deliver(cue:Announcement){const token=this.lifecycle;await this.enable();if(token===this.lifecycle)await this.director?.say(cue);}
   announce(event:string,hero='shevchenko',unlocked=false){if(event==='missionStart')this.mood.reset();const cue=announcement(event,hero,unlocked);if(cue)void this.deliver(cue);}
   preview(id:string){
@@ -51,20 +59,22 @@ export class Sound {
     void this.deliver(stage?{...stage,key:'preview:'+id,voices:[id],priority:3}:{key:'preview:'+id,voices:[id],riff:'hero',priority:3});
   }
   stopAll(){this.score?.stop();this.lifecycle++;this.director?.stop();this.stopEffects();}
-  private stopEffects(){this.foleyLast.clear();this.lastCombat=-100;this.lastDeath=-100;this.lastPanic=-100;this.lastGore=-100;this.sampleLast.clear();for(const {source,amp} of this.loops.values()){try{source.stop();}catch{}source.disconnect();amp.disconnect();}this.loops.clear();for(const s of this.voices.keys())try{s.stop();}catch{}this.voices.clear();}
+  private stopEffects(){this.cries.clear();this.cryUntil=0;this.lastCry=-100;this.updateMix();this.foleyLast.clear();this.lastCombat=-100;this.lastPanic=-100;this.lastGore=-100;this.sampleLast.clear();for(const {source,amp} of this.loops.values()){try{source.stop();}catch{}source.disconnect();amp.disconnect();}this.loops.clear();for(const s of this.voices.keys())try{s.stop();}catch{}this.voices.clear();}
   private stopKind(kind:string){for(const [s,k]of this.voices)if(k===kind){try{s.stop();}catch{}this.voices.delete(s);}}
-  private play(kind:string,volume:number,duration:number,offset=0,scope=kind){
+  private play(kind:string,volume:number,duration:number,offset=0,scope=kind,cry=false,rate=1){
     const clip=SFX_ASSETS[kind as SfxId],ctx=this.context,buffer=this.buffers.get(clip?'combatBank':kind);
     if(!ctx||!this.gain||!buffer||ctx.state!=='running')return;
-    const same=[...this.voices].filter(([,k])=>k===kind);
-    if(same.length>=3){try{same[0][0].stop();}catch{}this.voices.delete(same[0][0]);}
-    if(this.voices.size>=28){const old=this.voices.keys().next().value!;try{old.stop();}catch{}this.voices.delete(old);}
+    // A burst of weapon/debris sounds must never steal a vocal source.
+    const pool=[...this.voices].filter(([source])=>this.cries.has(source)===cry);
+    const same=pool.filter(([,k])=>k===scope),victim=same.length>=3?same[0]:pool.length>=(cry?3:25)?pool[0]:undefined;
+    if(victim){try{victim[0].stop();}catch{}this.voices.delete(victim[0]);this.cries.delete(victim[0]);}
     const position=(clip?.offset??0)+offset,length=Math.min(duration,clip?.seconds??buffer.duration-position);
     if(length<=0)return;
     const source=ctx.createBufferSource(),amp=ctx.createGain(),t=ctx.currentTime;
-    source.buffer=buffer;source.connect(amp);amp.connect(this.effectsBus??this.gain);
-    amp.gain.setValueAtTime(volume,t);amp.gain.setValueAtTime(volume,t+Math.max(0,length-.025));amp.gain.linearRampToValueAtTime(0,t+length);
-    this.voices.set(source,scope);source.onended=()=>{this.voices.delete(source);source.disconnect();amp.disconnect();};source.start(t,position,length);
+    source.buffer=buffer;source.playbackRate.value=rate;source.connect(amp);amp.connect((cry?this.cryBus:this.effectsBus)??this.gain);
+    amp.gain.setValueAtTime(volume,t);amp.gain.setValueAtTime(volume,t+Math.max(0,length/rate-.025));amp.gain.linearRampToValueAtTime(0,t+length/rate);
+    if(cry){this.cries.add(source);this.cryUntil=Math.max(this.cryUntil,t+length/rate+.08);this.updateMix();}
+    this.voices.set(source,scope);source.onended=()=>{this.cries.delete(source);this.voices.delete(source);source.disconnect();amp.disconnect();};source.start(t,position,length);
   }
   private sample(key:string,volume=.45,gate=0,scope=key){
     const clip=SFX_ASSETS[key as SfxId];if(!clip)return;
@@ -139,15 +149,19 @@ export class Sound {
     if(e.sfx){sample(e.sfx,e.sfx.includes('hit')?.3:.4,e.sfx.includes('hit')||['roots','ricochet'].includes(e.sfx)?.09:0);return;}
     const foleyKind=({footstep:'step',climbContact:'climb',jump:'jump',land:'land',abilityReady:'ready',wallJump:'jump',wallVault:'land'} as Partial<Record<Event['type'],FoleyKind>>)[e.type];
     if(foleyKind&&e.hero){this.foley(e.hero,foleyKind);return;}
-    if(e.type==='enemyPanic'){
-      const now=this.context?.currentTime??0;if(now-this.lastPanic<.7||this.announcing)return;this.lastPanic=now;
-      sample(this.deathVariant('enemy-panic',4),.33);return;
-    }
-    if(e.type==='enemyDeath'){
-      const now=this.context?.currentTime??0;if(now-this.lastDeath<.16||this.announcing)return;this.lastDeath=now;
-      sample(this.deathVariant('death-'+(e.deathRole??'rifle')),.3);
-      sample(this.deathVariant(e.deathCause==='combat'?'gore-splat':'gore-blood-burst'),.23);
-      if(e.deathRole==='demolition')sample(this.deathVariant('gore-croak'),.16);
+    if(e.type==='enemyPanic'||e.type==='enemyDeath'){
+      const now=this.context?.currentTime??0,panic=e.type==='enemyPanic';
+      if(now-this.lastCry<.4||panic&&now-this.lastPanic<.7)return;
+      this.lastCry=now;if(panic)this.lastPanic=now;
+      // These are the generated human screams, not the old short defeat grunts.
+      // Role-specific pitch keeps heavy voices lower and scouts more shrill.
+      const rate=panic?1:({rifle:1,assault:1.04,gunner:.9,sniper:.96,scout:1.1,shield:.93,demolition:1.07}[e.deathRole??'rifle']);
+      const key=this.deathVariant('enemy-panic',4),clip=SFX_ASSETS[key as SfxId];
+      this.play(key,(panic?.78:.82)*level,clip.seconds,0,'enemy-cry',true,rate);
+      if(!panic){
+        sample(this.deathVariant(e.deathCause==='combat'?'gore-splat':'gore-blood-burst'),.23);
+        if(e.deathRole==='demolition')sample(this.deathVariant('gore-croak'),.16);
+      }
       return;
     }
     if(e.type==='goreLand'){

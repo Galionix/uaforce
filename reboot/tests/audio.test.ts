@@ -16,7 +16,7 @@ test('recorded combat routes all heroes, exact phases, lifetimes, pause and dist
   createDynamicsCompressor(){return{threshold:param(),ratio:param(),connect(target:unknown){outputs.push(target);}};}
   decodeAudioData(){return Promise.resolve({duration:500});}resume(){return Promise.resolve();}close(){}
   createOscillator(){throw new Error('Combat must not fall back to electronic oscillators');}
-  createBufferSource(){const source={buffer:null,loop:false,connect(){},disconnect(){},onended:null,start(...args:number[]){starts.push({source,args});},stop(){stops.push(source);}};return source;}
+  createBufferSource(){const source={buffer:null,playbackRate:{value:1},loop:false,connect(){},disconnect(){},onended:null,start(...args:number[]){starts.push({source,args});},stop(){stops.push(source);}};return source;}
  }
  const previous=Object.getOwnPropertyDescriptor(globalThis,'AudioContext'),originalFetch=globalThis.fetch;
  Object.defineProperty(globalThis,'AudioContext',{value:Context,configurable:true});const urls:string[]=[];
@@ -29,11 +29,11 @@ test('recorded combat routes all heroes, exact phases, lifetimes, pause and dist
   for(const role of ['rifle','assault','gunner','sniper','scout','shield','demolition'] as const){
    let previous=-1;
    for(let i=0;i<4;i++){
-    context.currentTime+=.3;const before=starts.length;
+    context.currentTime+=.5;const before=starts.length;
     sound.event({type:'enemyDeath',deathRole:role,deathCause:'combat',x:0,y:0});
     const voice=starts[before];
-    const variant=[0,1,2].find(v=>voice.args[1]===SFX_ASSETS[`death-${role}-${v}` as SfxId]?.offset);
-    assert.notEqual(variant,undefined,role+' owns its death voice');assert.notEqual(variant,previous,'no immediate death voice repeat');previous=variant!;
+    const variant=[0,1,2,3].find(v=>voice.args[1]===SFX_ASSETS[`enemy-panic-${v}` as SfxId]?.offset);
+    assert.notEqual(variant,undefined,role+' plays a generated scream at death');assert.notEqual(variant,previous,'no immediate death voice repeat');previous=variant!;
     assert.ok(starts.length>=before+2,'voice plus wet impact');
     const gated=starts.length;sound.event({type:'enemyDeath',deathRole:role,x:0,y:0});assert.equal(starts.length,gated,'mass casualties do not stack every voice');
    }
@@ -105,4 +105,42 @@ test('silent QA mode never creates audio, including announcements and previews',
  Object.defineProperty(globalThis,'AudioContext',{configurable:true,value:class{constructor(){throw new Error('QA must never create AudioContext');}}});
  try{const sound=new Sound(true);await sound.enable();sound.announce('missionStart','zelensky');sound.preview('shevchenko');sound.event({type:'heroChanged',hero:'it-army',x:0,y:0});sound.event({type:'supportShot',x:0,y:0});sound.event({type:'planeAlert',x:0,y:0});sound.event({type:'droneEngine',x:0,y:0});sound.event({type:'mountEngine',x:0,y:0});sound.event({type:'mountShot',x:0,y:0});sound.event({type:'mountBroken',x:0,y:0});for(const type of ['footstep','climbContact','jump','land','abilityReady','hurt'] as const)sound.event({type,hero:'shevchenko',x:0,y:0});for(const type of ['enemyAlert','enemyFuse','enemyReload','enemySniperShot','enemyShieldHit'] as const)sound.event({type,x:0,y:0});sound.step(1,true,true);await Promise.resolve();assert.equal(sound.announcing,false);sound.dispose();}
  finally{if(previous)Object.defineProperty(globalThis,'AudioContext',previous);else Reflect.deleteProperty(globalThis,'AudioContext');}
+});
+
+test('a real infantry kill plays a foreground scream that survives a saturated combat mix',async()=>{
+ const starts:any[]=[],stopped:any[]=[];let ctx:any;
+ const param=()=>({value:0,targets:[] as number[][],cancelScheduledValues(){},setTargetAtTime(...v:number[]){this.targets.push(v);},setValueAtTime(v:number){this.value=v;},linearRampToValueAtTime(){}});
+ class Context{
+  state='running';currentTime=10;destination={};constructor(){ctx=this;}
+  createGain(){return{gain:param(),target:null as any,connect(t:any){this.target=t;},disconnect(){}};}
+  createDynamicsCompressor(){return{threshold:param(),ratio:param(),connect(){}};}
+  decodeAudioData(){return Promise.resolve({duration:1000});}resume(){return Promise.resolve();}close(){}
+  createBufferSource(){const source={buffer:null,playbackRate:{value:1},target:null as any,connect(t:any){this.target=t;},disconnect(){},onended:null,start(...args:number[]){starts.push({source,args});},stop(){stopped.push(source);}};return source;}
+ }
+ const previous=Object.getOwnPropertyDescriptor(globalThis,'AudioContext'),fetchBefore=globalThis.fetch;
+ Object.defineProperty(globalThis,'AudioContext',{value:Context,configurable:true});globalThis.fetch=(async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(1)})) as any;
+ try{
+  const sound=new Sound();sound.music=false;await sound.enable();sound.step(.01,false,true);
+  const world=new World();world.mode='playing';const enemy=world.enemies.find(e=>!e.vehicle&&!e.boss)!;
+  world.events=[];world.damageEnemy(enemy,enemy.hp,'combat');
+  const death=world.events.find(e=>e.type==='enemyDeath')!;assert.ok(death,'actual combat publishes the death event');
+  sound.event(death,death.x);const cry=starts[0].source,cryGain=cry.target,cryBus=cryGain.target;
+  assert.ok([0,1,2,3].some(v=>SFX_ASSETS[`enemy-panic-${v}` as SfxId].offset===starts[0].args[1]));
+  assert.ok(cryGain.gain.value>=.8,'death vocal is foreground, not the old .3 grunt');
+  assert.ok(starts[0].args[2]/cry.playbackRate.value>=1,'retain the complete vocal, not a tiny grunt');
+  for(let i=0;i<60;i++){sound.event({type:'shot',hero:'bandera',x:death.x,y:0});sound.event({type:'hostileBlast',x:death.x,y:0});}
+  assert.equal(stopped.includes(cry),false,'shots, debris and explosions cannot steal the scream');
+  const effectsBus=starts.at(-1).source.target.target;
+  assert.notEqual(effectsBus,cryBus,'vocal bypasses combat ducking');
+  assert.ok(effectsBus.gain.targets.some(([v,t])=>v===.42&&t===ctx.currentTime));
+  assert.ok(effectsBus.gain.targets.some(([v,t])=>v===1&&t>ctx.currentTime),'combat level restores after vocal without a timer');
+  sound.setMix('effects',.5);
+  assert.equal(cryBus.gain.targets.at(-1)[0],.5,'cry respects the existing effects volume');
+  assert.ok(effectsBus.gain.targets.some(([v])=>v===.21));
+  sound.setMix('effects',0);assert.equal(cryBus.gain.targets.at(-1)[0],0,'mute also mutes cries');
+  sound.stopAll();assert.ok(stopped.includes(cry),'pause/stop cancels vocal');
+  assert.equal(effectsBus.gain.targets.at(-1)[0],0,'stop keeps user mute, no stale duck');
+  sound.setMix('effects',1);assert.equal(effectsBus.gain.targets.at(-1)[0],1,'full mix restored');
+  sound.dispose();
+ }finally{globalThis.fetch=fetchBefore;if(previous)Object.defineProperty(globalThis,'AudioContext',previous);else Reflect.deleteProperty(globalThis,'AudioContext');}
 });
