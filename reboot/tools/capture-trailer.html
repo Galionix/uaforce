@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="uk"><meta charset="utf-8"><title>UA Force — трейлер Kore</title>
+<style>body{background:#10221e;color:#ffe395;font:18px monospace}canvas{width:min(960px,96vw);image-rendering:pixelated;display:block}#scene{display:none}button{font:inherit;padding:12px}pre{white-space:pre-wrap}</style>
+<button id="record" disabled>Записати новий трейлер</button><p id="status">Готую арт і два мережеві клієнти…</p>
+<canvas id="scene"></canvas><canvas id="output" width="1920" height="1080"></canvas><pre id="proof"></pre>
+<script type="module">
+import {World,IDLE} from '/src/game/world.ts';
+import {View} from '/src/game/view.ts';
+import {HEROES} from '/src/game/content.ts';
+import {Sound} from '/src/game/audio.ts';
+import {OnlineRoom} from '/src/game/online.ts';
+import {connectionConfig} from '/src/game/ice.ts';
+import {SnapshotWriter,applySnapshot} from '/src/game/coop-state.ts';
+
+// Capture tool only: the production game, user progress and saved mixer stay untouched.
+const scene=document.querySelector('#scene'),output=document.querySelector('#output');
+const buffer=document.createElement('canvas');buffer.width=960;buffer.height=540;
+const c=buffer.getContext('2d'),ctx=output.getContext('2d'),view=new View(scene);
+const status=document.querySelector('#status'),proof=document.querySelector('#proof'),button=document.querySelector('#record');
+const END=89,all=HEROES.map(h=>h.id),art={};
+const cuts=[0,6,18,24,36,42,50,68,80,END];
+const segments=[
+ {kind:'art',hero:'shevchenko'},
+ {kind:'game',hero:'shevchenko',mission:0,x:26,y:4,name:'ТАРАС ШЕВЧЕНКО',caption:'ПОЕЗІЯ ПРЯМОЇ ДІЇ'},
+ {kind:'art',hero:'lesya'},
+ {kind:'game',hero:'lesya',mission:3,x:20,y:3,name:'ЛЕСЯ УКРАЇНКА',caption:'ЛІТЕРАТУРА КУСАЄТЬСЯ'},
+ {kind:'art',hero:'putin'},
+ {kind:'game',hero:'ghost',mission:1,x:46,y:3.5,name:'ПРИВИД КИЄВА',caption:'РЕМОНТ УЖЕ НЕ ДОПОМОЖЕ'},
+ {kind:'coop',name:'КООП НА ДВОХ',caption:'КЛИЧ ДРУГА. РОБІТЬ ХАОС.'},
+ {kind:'roadmap'},
+ {kind:'end',hero:'shevchenko'}
+];
+let captureAudio;
+const sound=new Sound(false,audio=>{captureAudio=audio.createMediaStreamDestination();return captureAudio;});
+sound.volume=.8;sound.musicVolume=.62;sound.voiceVolume=.32;
+let w=new World(),host,guest,remote,writer,sequence=0,packets=0,inputs=0,route='pending',networkError='';
+let recording=false,time=0,last=0,segment=-1,recorder,networkClock=0,coopStartX=0,coopMaxX=0;
+const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n));
+const ease=t=>1-Math.pow(1-clamp(t),3);
+function text(value,x,y,size=24,color='#fff4d9',align='left'){
+ c.font=`900 ${size}px "Courier New", monospace`;c.textAlign=align;c.fillStyle='#051719';c.fillText(value,x+3,y+4);c.fillStyle=color;c.fillText(value,x,y);
+}
+function panel(x,y,width,height,color='#071b23e8'){c.fillStyle=color;c.fillRect(Math.round(x),Math.round(y),width,height);}
+function cover(image,t,scale=1){
+ const zoom=1.015+t*.008,s=Math.max(960/image.width,540/image.height)*zoom*scale;
+ c.drawImage(image,Math.round(960-image.width*s+Math.sin(t*.35)*7),Math.round((540-image.height*s)*.36),Math.ceil(image.width*s),Math.ceil(image.height*s));
+}
+function sparks(t,cx=665,cy=275,color='#ffda68',count=85){
+ for(let i=0;i<count;i++){
+  const angle=i*2.399963,age=(t*.52+i*.061)%1,r=30+age*600;
+  c.globalAlpha=(1-age)*.75;c.fillStyle=i%3===0?'#63c8ed':color;
+  c.fillRect(Math.round(cx+Math.cos(angle)*r),Math.round(cy+Math.sin(angle)*r*.7+age*age*100),i%5+2,i%4+2);
+ }c.globalAlpha=1;
+}
+function explosion(t,x,y,color='#ffe06d'){
+ if(t<0||t>1.15)return;
+ c.save();c.translate(x,y);const progress=ease(t),fade=1-clamp((t-.1)/1.05);
+ for(let i=0;i<24;i++){
+  c.save();c.rotate(i*Math.PI/12+t*.15);c.fillStyle=i%2?color:'#f98236';c.globalAlpha=fade*.7;
+  c.fillRect(15+progress*80,-3,progress*(120+(i%4)*40),6+(i%3)*5);c.restore();
+ }
+ c.globalAlpha=fade;c.strokeStyle=color;c.lineWidth=9*(1-clamp(t));
+ c.strokeRect(-progress*160,-progress*160,progress*320,progress*320);c.restore();
+}
+function ribbons(t){
+ const slide=1100*(1-ease(t*1.4));c.save();c.translate(-slide,462);c.transform(1,-.055,.2,1,0,0);
+ panel(-20,0,1020,22,'#177db3');panel(-20,22,1020,18,'#ffd765');c.restore();
+}
+function artShot(id,t,duration){
+ cover(art[id],t);
+ const gradient=c.createLinearGradient(0,0,710,0);gradient.addColorStop(0,'#04141cf2');gradient.addColorStop(.6,'#071b2399');gradient.addColorStop(1,'#071b2300');c.fillStyle=gradient;c.fillRect(0,0,960,540);
+ const green=id==='lesya',evil=id==='putin',accent=evil?'#ff765d':green?'#b9f885':'#ffdf68';
+ sparks(t,evil?700:650,290,accent);explosion(t,655,240,accent);
+ const sx=-620*(1-ease((t-.13)*1.8));c.save();c.translate(Math.round(sx),0);
+ text(evil?'ГОЛОВНИЙ БОС':green?'ХАРАКТЕР Є.':'УКРАЇНСЬКИЙ АРКАДНИЙ ЕКШЕН',52,111,21,accent);
+ if(evil){text('ХУЙЛО',46,249,98,accent);text('ПЛАН БУВ НА ТРИ ДНІ.',52,306,23);text('ВИЙШЛО ЯК ЗАВЖДИ.',52,341,23);}
+ else if(green){text('ЛЕСЯ',46,238,83,accent);text('УКРАЇНКА',46,311,66);text('І ЦЕ ЩЕ НЕ ФІНАЛЬНА ФОРМА.',52,363,19,accent);}
+ else{text('UA FORCE',46,246,88,accent);text('СИЛА МАЄ ХАРАКТЕР.',52,312,27);text('І ПЕРЕКОНЛИВИЙ АРСЕНАЛ.',52,352,21,accent);}
+ c.restore();
+ if(green){for(let i=0;i<6;i++){const x=((t*170+i*193)%1280)-160,y=65+i*46+Math.sin(t*3+i)*20;c.fillStyle='#071922';const wing=Math.sin(t*15+i)*12;c.beginPath();c.moveTo(x-25,y-wing);c.lineTo(x,y+5);c.lineTo(x+23,y-wing);c.lineTo(x+5,y+12);c.lineTo(x-5,y+12);c.closePath();c.fill();}}
+ if(evil){c.fillStyle='#ed443a';for(let i=0;i<8;i++){const y=(i*81+t*24)%540;c.globalAlpha=.035+.02*Math.sin(t*8);c.fillRect(0,y,960,6);}c.globalAlpha=1;}
+ ribbons(t);
+ if(t<.58){for(let y=0;y<540;y+=18){const reveal=ease((t-y*.00024)*2.8);panel(960*reveal,y,960*(1-reveal)+1,19,'#061719');}}
+}
+function roadmap(t){
+ cover(art.bandera,t,.99);panel(0,0,960,540,'#061822de');sparks(t,760,260);
+ text('ЦЕ ЛИШЕ ПОЧАТОК.',50,95,43,'#ffdf68');
+ text('У ПЛАНАХ',52,139,22,'#77d9fc');
+ const items=[['01','РОЗВИТОК МУЛЬТИПЛЕЄРА'],['02','НОВІ РІВНІ'],['03','НОВІ ПЕРСОНАЖІ']];
+ items.forEach(([number,title],i)=>{const a=ease((t-i*.8-.3)*1.6);c.save();c.translate(Math.round((1-a)*-900),0);panel(48,174+i*82,866,65,'#0c3036ee');panel(48,174+i*82,7,65,i===1?'#ffdf68':'#59c5f4');text(number,70,217+i*82,27,'#77d9fc');text(title,135,217+i*82,29);c.restore();});
+ if(t>4){c.globalAlpha=ease(t-4);text('ГРА РОСТИМЕ РАЗОМ ІЗ ВАМИ.',52,491,25,'#ffdf68');c.globalAlpha=1;}
+}
+function endcard(t){
+ cover(art.shevchenko,t);panel(0,0,960,540,'#0618229c');sparks(t,690,260);explosion(t,610,240);ribbons(t);
+ const x=48-600*(1-ease(t*2));text('UA FORCE',x,137,86,'#ffdf68');
+ text('ГРАЙ БЕЗКОШТОВНО',x+4,210,35);panel(x,244,864,79,'#08222ded');
+ text('uaforce.thedimas.com',x+20,296,44,'#7bdeff');
+ text('У БРАУЗЕРІ · НА КОМП’ЮТЕРІ',x+4,370,25);text('КЛАВІАТУРА АБО ГЕЙМПАД',x+4,408,23,'#ffdf68');
+ text('РАННІЙ БЕЗКОШТОВНИЙ ПРОТОТИП',52,514,18,'#b9dcdf');
+}
+function enter(index){
+ segment=index;last=0;const s=segments[index];
+ if(s.kind==='game'){
+  w=new World(s.mission,all,s.hero);w.player.x=s.x;w.player.y=s.y;w.mode='playing';view.reset(w);
+ }else if(s.kind==='coop'){
+  w=new World(0,all,'shevchenko');w.player.x=26;w.player.y=4;
+  const friend=w.addPlayer('lesya');friend.body.x=24;friend.body.y=4;
+  w.mode='playing';writer=new SnapshotWriter(w);remote=new World(0,all,'shevchenko');coopStartX=24;coopMaxX=24;view.reset(w);
+ }
+ if(recording&&s.kind==='art')sound.event({type:'hostileBlast',x:0,y:0},0);
+ if(recording&&s.kind==='game')sound.event({type:'barrelThrow',x:0,y:0},0);
+}
+function action(t,prev,player=0){
+ return {...IDLE,move:t<10.3?1:0,fire:true,jump:Math.floor((prev+player*.17)/1.03)!==Math.floor((t+player*.17)/1.03),jumpHeld:true,
+ special:prev<1.5+player*.5&&t>=1.5+player*.5,ultimate:prev<3.1+player*1.4&&t>=3.1+player*1.4};
+}
+function simulate(dt,t,s){
+ // Capture invulnerability is applied only during simulation, avoiding blinking sprites.
+ for(const a of w.players)a.body.invulnerable=100;
+ if(s.kind==='coop'){
+  if(!host.connected||!guest.connected)throw Error('Co-op connection lost; do not export as a successful demo');
+  const a=action(t,last),b=action(t,last,1);a.move=t<14?1:0;b.move=t<14?1:0;
+  guest.input(b);inputs++;w.stepPlayers(dt,[a,host.remote.take(performance.now()/1000)]);
+  coopMaxX=Math.max(coopMaxX,w.players[1].body.x);
+ }else w.step(dt,action(t,last));
+ for(const a of w.players)a.body.invulnerable=0;
+ if(s.kind==='coop'){
+  networkClock+=dt;if(networkClock>.05){networkClock=0;host.state(writer.snapshot(++sequence,w.events));}
+ }
+ for(const e of w.events){view.event(e);sound.event(e,w.player.x);}w.events=[];
+ sound.syncWorld(w);last=t;
+}
+view.onFrame=dt=>{
+ if(recording)time+=dt;
+ const index=Math.min(segments.length-1,cuts.findIndex((start,i)=>time>=start&&time<cuts[i+1]));
+ if(index>=0&&index!==segment)enter(index);
+ const s=segments[Math.max(0,segment)],t=time-cuts[Math.max(0,segment)],duration=cuts[segment+1]-cuts[segment];
+ c.imageSmoothingEnabled=false;c.clearRect(0,0,960,540);
+ if(s.kind==='game'||s.kind==='coop'){
+  if(recording)simulate(dt,t,s);
+  view.render(w,dt,recording&&t<10?1:0);c.drawImage(scene,0,0,960,540);
+  const slide=-(1-ease(t*3))*620;
+  panel(20+slide,18,s.kind==='coop'?526:550,69);text(s.name,36+slide,49,27,'#ffdf68');
+  text(s.kind==='coop'?'ОНЛАЙН · РАННІЙ ТЕСТ':s.caption,36+slide,75,17,'#a7eaff');
+  if(s.kind==='coop'){
+   panel(20,475,575,45);text('P1 ШЕВЧЕНКО  +  P2 ЛЕСЯ УКРАЇНКА',35,505,21,'#ffdf68');
+   if(t>8&&t<12){panel(592,481,350,35);text('УДВОХ ВЕСЕЛІШЕ.',610,506,23,'#fff4d9');}
+  }else if(t>3.4&&t<5.2){panel(570,470,369,45);text(s.hero==='shevchenko'?'АРГУМЕНТ: БЛИСКАВКА.':s.hero==='lesya'?'БОЙОВА МАВКА.':'РЕМОНТ СКАСОВАНО.',588,501,22,'#ffdf68');}
+ }else if(s.kind==='art')artShot(s.hero,t,duration);
+ else if(s.kind==='roadmap')roadmap(t);
+ else endcard(t);
+ if(recording)sound.step(dt,true,true);
+ // Short angled blue/yellow impact wipe, rather than a static crossfade.
+ const remain=duration-t;if(remain<.32&&segment<segments.length-1){const progress=1-remain/.32;c.save();c.translate(960*(1-progress),0);c.transform(1,0,-.25,1,0,0);panel(0,0,1200,540,'#1684b3');panel(0,360,1200,180,'#ffda61');c.restore();}
+ if(time>END-.45){panel(0,0,960,540,`rgba(3,13,19,${clamp((time-END+.45)/.45)})`);}
+ ctx.imageSmoothingEnabled=false;ctx.drawImage(buffer,0,0,1920,1080);
+ if(recording){status.textContent=`Запис ${time.toFixed(1)} / ${END} с · звук лише у файл · co-op: ${packets} пакетів`;}
+ if(recording&&time>=END){recording=false;recorder.stop();sound.stopAll();}
+};
+const report=()=>({twoRealPeers:true,scriptedInputs:true,sameMachine:true,route,inputs,snapshotsReceived:packets,p2Moved:coopMaxX-coopStartX,guestPlayers:remote?.players.length??0,error:networkError,speakerConnected:false});
+try{
+ await Promise.all(['shevchenko','lesya','putin','bandera'].map(async id=>{const image=new Image();image.src=`/assets/cinematics/${id}.png`;await image.decode();art[id]=image;}));
+ await view.init();enter(0);
+ const config=await connectionConfig();
+ await new Promise((resolve,reject)=>{
+  const deadline=setTimeout(()=>reject(Error('Co-op connection timed out')),50000);
+  const callbacks={status:t=>status.textContent=t,created:()=>{},connected:()=>{},snapshot:()=>{},command:()=>{},ended:t=>{networkError=t;if(!recording)reject(Error(t));}};
+  host=new OnlineRoom('host',OnlineRoom.code(),'shevchenko',{...callbacks,created:code=>{
+   guest=new OnlineRoom('guest',code,'lesya',{...callbacks,connected:()=>{clearTimeout(deadline);resolve();},snapshot:s=>{if(remote){applySnapshot(remote,s);remote.events=[];packets++;}}},config);
+  }},config);
+ });
+ route=await guest.route();status.textContent='Готово: два WebRTC-клієнти з’єднані. Динаміки не підключаються.';button.disabled=false;
+}catch(error){status.textContent=String(error);host?.close();guest?.close();}
+button.onclick=async()=>{
+ button.disabled=true;status.textContent='Готую запис із внутрішнім звуком…';await sound.enable();sound.step(.01,true,true);
+ await new Promise(resolve=>setTimeout(resolve,3500));
+ const stream=output.captureStream(30);for(const track of captureAudio.stream.getAudioTracks())stream.addTrack(track);
+ const mimeType=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus'].find(type=>MediaRecorder.isTypeSupported(type));
+ recorder=new MediaRecorder(stream,{mimeType,videoBitsPerSecond:9000000,audioBitsPerSecond:192000});
+ const chunks=[];recorder.ondataavailable=e=>chunks.push(e.data);
+ recorder.onstop=async()=>{
+  const blob=new Blob(chunks,{type:mimeType});
+  if(networkError||packets<100||coopMaxX-coopStartX<3)throw Error('Co-op evidence failed; do not export');
+  const saved=await fetch('http://127.0.0.1:5190/capture',{method:'POST',headers:{'Content-Type':'video/webm'},body:blob});
+  if(!saved.ok)throw Error('Export failed');
+  stream.getTracks().forEach(track=>track.stop());proof.textContent=JSON.stringify(report(),null,2);
+  status.textContent=`Готово. ${END} секунд, 1920×1080, Kore буде накладена під час монтажу.`;
+  host?.close();guest?.close();
+ };
+ time=0;last=0;segment=-1;recording=true;recorder.start();
+};
+window.addEventListener('pagehide',()=>{host?.close();guest?.close();sound.dispose();view.dispose();});
+</script></html>

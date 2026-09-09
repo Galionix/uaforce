@@ -1,7 +1,9 @@
 """Loopback-only export receiver for the recording fixture. One fixed local output."""
 from http.server import BaseHTTPRequestHandler,HTTPServer
 from pathlib import Path
-TARGET=Path(__file__).resolve().parents[1]/'docs/marketing/captures/narrated/gameplay-source.webm'
+import argparse
+p=argparse.ArgumentParser();p.add_argument('--output',type=Path);args=p.parse_args()
+TARGET=args.output or Path(__file__).resolve().parents[1]/'docs/marketing/captures/narrated/gameplay-source.webm'
 class Receiver(BaseHTTPRequestHandler):
  def do_OPTIONS(self):
   self.send_response(204);self.send_header('Access-Control-Allow-Origin','http://127.0.0.1:5178');self.send_header('Access-Control-Allow-Methods','POST');self.send_header('Access-Control-Allow-Headers','Content-Type');self.end_headers()

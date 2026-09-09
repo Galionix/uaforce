@@ -1,0 +1,4 @@
+# Retain production masters locally; commit the review export and its recipe.
+gameplay-source.webm
+*.wav
+*.sha256

@@ -1,0 +1,74 @@
+{
+  "title": "UA Force — сила має характер",
+  "seconds": 89,
+  "model": "gemini-3.1-flash-tts-preview",
+  "voice": "Kore",
+  "language": "uk",
+  "style": "A bright, confident female Ukrainian game trailer presenter. Native Ukrainian, playful swagger, warm full voice, crisp consonants, expressive short punchlines. Energetic but not shouting, not breathy, not a newsreader. About 175 words per minute. Keep the same voice throughout. Read ONLY the exact transcript once. No extra words, no music or sound effects, dry studio audio. Transcript: ",
+  "clips": [
+    {
+      "start": 0.3,
+      "end": 5.7,
+      "text": "Це Ю Ей Форс. Українська сила має характер.",
+      "mixedSeconds": 4.864416666666667
+    },
+    {
+      "start": 6.3,
+      "end": 17.7,
+      "text": "Шевченко тут переконує булавою. А коли аргументів замало — викликає блискавки. Дуже дохідлива поезія.",
+      "mixedSeconds": 10.473333333333333
+    },
+    {
+      "start": 18.3,
+      "end": 27.2,
+      "text": "Леся Українка. Арбалет, ворони і бойова Мавка. Література кусається.",
+      "mixedSeconds": 8.046
+    },
+    {
+      "start": 27.4,
+      "end": 35.7,
+      "text": "У кожного героя — своя зброя, спецприйом та ульта. Тут є чим здивувати окупантів.",
+      "mixedSeconds": 8.032833333333333
+    },
+    {
+      "start": 36.3,
+      "end": 41.7,
+      "text": "А головний бос? Ну, цього ви точно впізнали.",
+      "mixedSeconds": 4.426916666666667
+    },
+    {
+      "start": 42.3,
+      "end": 49.7,
+      "text": "Привид Києва викликає авіаналіт. Здається, ремонт тут уже не допоможе.",
+      "mixedSeconds": 6.198333333333333
+    },
+    {
+      "start": 50.3,
+      "end": 59.1,
+      "text": "Кооп на двох уже можна спробувати. Створюй кімнату, клич друга — і влаштовуйте хаос разом.",
+      "mixedSeconds": 8.199125
+    },
+    {
+      "start": 59.4,
+      "end": 67.7,
+      "text": "Двоє героїв. Різні здібності. Один спільний план: щоб у ворога планів не лишилося.",
+      "model": "gemini-2.5-flash-preview-tts",
+      "mixedSeconds": 8.178875
+    },
+    {
+      "start": 68.3,
+      "end": 79.7,
+      "text": "Це лише початок. У планах — розвиток мультиплеєра, нові рівні та нові персонажі. Гра ростиме разом із вами.",
+      "model": "gemini-2.5-flash-preview-tts",
+      "mixedSeconds": 8.25
+    },
+    {
+      "start": 80.3,
+      "end": 88.7,
+      "text": "Грай безкоштовно просто в браузері. Бери клавіатуру або геймпад. Ю Ей Форс. Твій вихід!",
+      "model": "gemini-2.5-flash-preview-tts",
+      "mixedSeconds": 7.010875
+    }
+  ],
+  "playbackDuringProduction": false
+}

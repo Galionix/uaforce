@@ -1,0 +1,14 @@
+{
+  "recorded": "2026-09-09",
+  "twoRealPeers": true,
+  "scriptedInputs": true,
+  "sameMachine": true,
+  "route": "direct",
+  "inputs": 1080,
+  "snapshotsReceived": 296,
+  "p2Moved": 102.23083999999982,
+  "guestPlayers": 2,
+  "error": "",
+  "speakerConnected": false,
+  "scope": "Actual OnlineRoom/PeerJS/WebRTC host-authoritative session, staged on one computer. Not a remote human WAN playtest."
+}

@@ -1,0 +1,44 @@
+{
+  "media": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "r_frame_rate": "30/1"
+      },
+      {
+        "codec_name": "aac",
+        "sample_rate": "48000",
+        "channels": 2,
+        "r_frame_rate": "0/0"
+      }
+    ],
+    "format": {
+      "duration": "89.000000",
+      "size": "89727113"
+    }
+  },
+  "loudness": {
+    "input_i": "-16.23",
+    "input_tp": "-3.85",
+    "input_lra": "3.00",
+    "input_thresh": "-26.26",
+    "output_i": "-16.00",
+    "output_tp": "-3.60",
+    "output_lra": "2.80",
+    "output_thresh": "-26.03",
+    "normalization_type": "dynamic",
+    "target_offset": "0.00"
+  },
+  "fullDecode": "passed",
+  "narrationClips": 10,
+  "overlappingNarration": false,
+  "speakerPlayback": false,
+  "typescript": "passed",
+  "audioTests": "2/2 passed",
+  "browserErrors": [],
+  "visualReview": "Contact sheet and full-size poster checked; animated source art, gameplay and both P1/P2 visible."
+}
