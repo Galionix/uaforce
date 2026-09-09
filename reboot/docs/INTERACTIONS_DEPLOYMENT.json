@@ -1,0 +1,551 @@
+{
+  "checkedAt": "2026-09-09T23:36:16.125130+00:00",
+  "url": "https://uaforce.thedimas.com/",
+  "commit": "2632cee",
+  "files": [
+    {
+      "path": "index.html",
+      "matches": true,
+      "sha256": "22c42e3e62a678ecb37bce4baca6c398664f4744825769a5b6807758c1640ae9"
+    },
+    {
+      "path": "404.html",
+      "matches": true,
+      "sha256": "397fa4236af574341ef9ac8f874f8b5e1fd418e07e98996958713391e3314615"
+    },
+    {
+      "path": "assets/online-9Ql5_jnF.js",
+      "matches": true,
+      "sha256": "e81f9497d9dd215c1bced153c93aac23d5443b74dd398532273ad37de4131b32"
+    },
+    {
+      "path": "assets/game-BqJHodQZ.css",
+      "matches": true,
+      "sha256": "40a749a31d203fd584813d99088e28d447e462f4d208fb0976772fab83a797fc"
+    },
+    {
+      "path": "assets/game-8eRzYeZC.js",
+      "matches": true,
+      "sha256": "2a3f946f31fa6776ca8bf4c54c136e58ef4d1d16b2bc47a1311cbf8bb116cc27"
+    },
+    {
+      "path": "assets/ice-_yknjXaV.js",
+      "matches": true,
+      "sha256": "c4608895c45cbcf8f057fffe490b4a018e3329301b352d340af3fb7688c2f0b5"
+    },
+    {
+      "path": "media/it-army-pixel-sheet-3ad168bbc522ab9e.webp",
+      "matches": true,
+      "sha256": "81289061da4ac50d8396dc9158051d7802a17df3a503647c06670200fa2f2304"
+    },
+    {
+      "path": "media/blast-786b0a5549a97cb4.webp",
+      "matches": true,
+      "sha256": "8b7ade4e488764ba579be1f839667582be65d1d22b9e22cfa1aaa9cfd8e00fcf"
+    },
+    {
+      "path": "media/swarm-master-2675e048e513ce20.mp3",
+      "matches": true,
+      "sha256": "165e9404b21ded7c0290f866c5e45691d023f0ace7de53c40787376796d24841"
+    },
+    {
+      "path": "media/putin-2db9ea44a5b42fba.webp",
+      "matches": true,
+      "sha256": "663614329bc1934604bb422a786d1e0f7907b2d39040ea9e3881386dc4990f23"
+    },
+    {
+      "path": "media/ghost-pixel-sheet-0998099a634b3660.webp",
+      "matches": true,
+      "sha256": "72f882e832ef48d05e06d22647a6cf2dff20e9c40da9e7ab75979c6c4550727e"
+    },
+    {
+      "path": "media/skovoroda-6dc627d3cae7ac31.webp",
+      "matches": true,
+      "sha256": "43fcfa07defaa6f4daf00a8cab0283419928e61284b4735bae474b6616eda744"
+    },
+    {
+      "path": "media/skovoroda-pixel-sheet-a2d7241b1f790280.webp",
+      "matches": true,
+      "sha256": "e3e8339c8a3c22cbb0c1a4d0c88abac98e5ac3450eed1ca7d88a28fead139b29"
+    },
+    {
+      "path": "media/zelensky-shout-710b9623b7cc941f.mp3",
+      "matches": true,
+      "sha256": "6d5672ef6925dbc79c7006676054ab7312a797276701f16e6db0755b80e29e62"
+    },
+    {
+      "path": "media/bilozerska-ffac9892dd2fa389.webp",
+      "matches": true,
+      "sha256": "7502299eb5101453f3b2d5bc12461192aea107ba9a72225e8191f225ebce24fe"
+    },
+    {
+      "path": "media/mavka-pixel-sheet-fbdb07b130ab106a.webp",
+      "matches": true,
+      "sha256": "f1ed9658602ed3a8654e6712be7c99ab62656cac769ae3a3c2a207d8cfffa989"
+    },
+    {
+      "path": "media/bandera-bro-97ef455b67eea8fa.mp3",
+      "matches": true,
+      "sha256": "2bf1ee03b4cd2f45308ac860b38511428be25fe60b51b143e4974dc11e16187f"
+    },
+    {
+      "path": "media/island-pixel-background-9f873e3b3dda14e7.webp",
+      "matches": true,
+      "sha256": "5a41df575aac8da0a617c67bb48a7977668f0660b66a5c7606ce0c3f977c7f3e"
+    },
+    {
+      "path": "media/checkpoint-b26e53ae717b3444.mp3",
+      "matches": true,
+      "sha256": "91c35ac8973a87ecb0fcc870a51c82e5e57c644f9893d4320fcde9c9a9e74f88"
+    },
+    {
+      "path": "media/lightning-bbfb9672bdd4245f.webp",
+      "matches": true,
+      "sha256": "37885fb724b9887fbde44d9e3d8751b95bb74ed418320c885ea0b7f70474c2ce"
+    },
+    {
+      "path": "media/ordnance-2d64da297258c5bb.webp",
+      "matches": true,
+      "sha256": "fe3e2974a25f7d0a3ab83f7452bc1322f82652a7c7513bb16f9995ec69b419a6"
+    },
+    {
+      "path": "media/iron-warden-fbb8b40edb401472.webp",
+      "matches": true,
+      "sha256": "a7d0a523d42c4f77f452576d98e60a86e15dffd48e7eb2d33ab157ad666519f0"
+    },
+    {
+      "path": "media/weapons-f673e38c5ac5ec9a.webp",
+      "matches": true,
+      "sha256": "69edad8d1026d4bec37aff9d22671eec72585c01a4a344fe248f12b994e696ca"
+    },
+    {
+      "path": "media/checkpoint-92ec7270afc00b65.mp3",
+      "matches": true,
+      "sha256": "800e29aa7e4f50a3a7cd975939df58da95009c5e88f2aa2735661c14e03efe95"
+    },
+    {
+      "path": "media/shevchenko-1d1d0e07d07dd645.webp",
+      "matches": true,
+      "sha256": "cd429083d4fb749d983366510549d73375ecfc83f332e75a9b76abc26fde8ec1"
+    },
+    {
+      "path": "media/putin-985ff5adf120cf82.mp3",
+      "matches": true,
+      "sha256": "8f8a3f14a851ff6f1ee40e20b979064bc3fd6fd7825c49126e0fd996d3a3a334"
+    },
+    {
+      "path": "media/victory-16162adaf3c28356.mp3",
+      "matches": true,
+      "sha256": "dc2eae6b3d67691b26aa064b8b3dc23d6e01867b6a99538d047ccee150036eb8"
+    },
+    {
+      "path": "media/iron-warden-349036c6446c811a.webp",
+      "matches": true,
+      "sha256": "860cde33e76df9580c88f0c2432625781f2ace0043930da1da59eaa328a78efe"
+    },
+    {
+      "path": "media/franko-coarse-sheet-baec33285a902114.webp",
+      "matches": true,
+      "sha256": "3e7089796933c0449dbc51375c0d0cde820c71e39c981df75ce20deabd20616c"
+    },
+    {
+      "path": "media/boss-iron-8a7b69c361154f39.mp3",
+      "matches": true,
+      "sha256": "228723f07fff46b74795e4d201255cdecc49a1fe251c796586b7c5b677e908f4"
+    },
+    {
+      "path": "media/it-army-61ac32b4eca50577.webp",
+      "matches": true,
+      "sha256": "a1439eb2cb11685ccd760ebf9ffa81e2794ec98eaf63d6a58a4f3b2d00cb4fb4"
+    },
+    {
+      "path": "media/boarded-d37fe3fb425be704.mp3",
+      "matches": true,
+      "sha256": "71721804bce9528423c19036564351fa4602bc806ad52a14df07bb37d4763575"
+    },
+    {
+      "path": "media/bayraktar-24bd9f99539ed1e4.webp",
+      "matches": true,
+      "sha256": "5a94ee275850364ad49c71b9968947d29ac2a7f4257e2a4afca838211a64756d"
+    },
+    {
+      "path": "media/hero-ce96e976033b28a6.mp3",
+      "matches": true,
+      "sha256": "68f9d05019b688f5ed1cc62b38497635c6e4c77d52fe3279534573e686c6c298"
+    },
+    {
+      "path": "media/boss-swarm-2fbfd32316c90177.mp3",
+      "matches": true,
+      "sha256": "ac35af44d0a9bd8c6e71a2f0f2b8d950d771c56ac4019dc61920e1d74a7fa8c3"
+    },
+    {
+      "path": "media/combat-bank-1a495c88fcfd6a65.wav",
+      "matches": true,
+      "sha256": "1a495c88fcfd6a65584ea74bbe3d722952a85a35950810abcefbe77bd2cf826d"
+    },
+    {
+      "path": "media/zelensky-bc1635aa75ba84d1.webp",
+      "matches": true,
+      "sha256": "6e97667faaa8d863c88dac9896362505c2c6953aec5679532fb71165dc9a3c87"
+    },
+    {
+      "path": "media/franko-040ac5b616061243.webp",
+      "matches": true,
+      "sha256": "9b8875571436a809d87be6d683792309559efcede0e37f887e125755b73746c6"
+    },
+    {
+      "path": "media/rail-pixel-background-9d2811154a784a07.webp",
+      "matches": true,
+      "sha256": "380bfa7cfdcf261d251844b5e2810f76a80cf6a9a2b8f4a7c4d4139649528007"
+    },
+    {
+      "path": "media/coast-explore-b98bdb3a2e9ef7a4.mp3",
+      "matches": true,
+      "sha256": "6a634bc05296cd92465758e5c5869417d38267f94bdeca4b7ea59fa0661fffcc"
+    },
+    {
+      "path": "media/franko-832bd248698be14e.mp3",
+      "matches": true,
+      "sha256": "069c1a4d2f862a1fca6170ff24df71d0c03de4d9b95b28fd43672e7acb4a7786"
+    },
+    {
+      "path": "media/mamai-7dce43853e1131d5.webp",
+      "matches": true,
+      "sha256": "54c24e5ae9fcf17b6eac66df979f8e093a3ac513d8d9ffe244e1039cffdff045"
+    },
+    {
+      "path": "media/auras-03f2f4e67aca8b5a.webp",
+      "matches": true,
+      "sha256": "0935877906bb5ebe81de09068c6181831b772bcad93bf660fff8365592a6a47f"
+    },
+    {
+      "path": "media/coast-combat-f340a48758db4c24.mp3",
+      "matches": true,
+      "sha256": "7a5db78b9c5fc5d03969e65205ddc590ab82d149f08f6de507c4f3eb74bc8da8"
+    },
+    {
+      "path": "media/it-army-79b2dcc591ff32e8.mp3",
+      "matches": true,
+      "sha256": "edc73b186fbd45dfeb563f11ccaf0b89f3074f9383e1476fb0cad304b7aa46ca"
+    },
+    {
+      "path": "media/short-42ddb0b74b49c36f.mp3",
+      "matches": true,
+      "sha256": "7cc244210afb148fd6f1184d56981ee1366a75f20eddf157ade3b222b9f1b3d7"
+    },
+    {
+      "path": "media/defeat-0cbc85f92b671e3b.mp3",
+      "matches": true,
+      "sha256": "d809d61086f42e6da0e1ca20af40c693ee7c17c488f9b3d2b7957fac1ad182f6"
+    },
+    {
+      "path": "media/kyiv-pixel-background-146cfa91689b5e7a.webp",
+      "matches": true,
+      "sha256": "b509d278c948dbaa4438a3c8ac265131fd5b11b02cafb61020c0b9589d2d7604"
+    },
+    {
+      "path": "media/boss-putin-46c0a77807e53101.mp3",
+      "matches": true,
+      "sha256": "e534c7dd2e9d14026505dc720c385c113b2bc995e6f004d862d9eddccb98d9d4"
+    },
+    {
+      "path": "media/city-combat-cbb2ac93e15b191a.mp3",
+      "matches": true,
+      "sha256": "48383cbda1d8ef132c85eb6113b5970d2e5c6f973b3282a2efc36b109dca5652"
+    },
+    {
+      "path": "media/mountain-combat-d097f74dea3d0f96.mp3",
+      "matches": true,
+      "sha256": "99f17a55a72f9bdee3e6b71c5b7a6178bd8c34093ca261326aca6e3ec109d77d"
+    },
+    {
+      "path": "media/plane-alert-9cbf8bf0bfe76f07.mp3",
+      "matches": true,
+      "sha256": "21e119321406d2428dbc24094d06c4139d9f4d3f770455a8735906d4765f42b9"
+    },
+    {
+      "path": "media/bayraktar-8badd5ccf36b5dbd.mp3",
+      "matches": true,
+      "sha256": "4dead408b496c75d70e8d37b09d4221fb4b5ebc543dcb945e64d1ad71d71d9dc"
+    },
+    {
+      "path": "media/victory-75599cbc2ffa6fc4.mp3",
+      "matches": true,
+      "sha256": "f837198796f653810f683ac2dfb878c57ad0b59a16952c028c55da5a7189fc8a"
+    },
+    {
+      "path": "media/bayraktar-pixel-sheet-0aa03ab989b1aac6.webp",
+      "matches": true,
+      "sha256": "64243978da937eed1b708c04e4d0196d1bc91822325698232c438a06e16157ae"
+    },
+    {
+      "path": "media/city-explore-f3cf35ed00cf6cca.mp3",
+      "matches": true,
+      "sha256": "32ee02630e45d7257672846f36524f62b94c33d9c61332b439340cd33d20badf"
+    },
+    {
+      "path": "media/summons-2b5e71a7f41e8471.webp",
+      "matches": true,
+      "sha256": "bd1a56c56c22fa8be3f3655c5b110c27a1b6f5f4a1ca88532f06f2a8248fd645"
+    },
+    {
+      "path": "media/nature-a929355cc33a1868.webp",
+      "matches": true,
+      "sha256": "6d795cd54e963cf37dafecdb984a781561e2f304162da9bd16a7fa7a79167858"
+    },
+    {
+      "path": "media/zelensky-7985fdd163c50bf7.mp3",
+      "matches": true,
+      "sha256": "d14b58c764692357064a56f0d6bf71c0afbf137773b42b2b139be3b379e02310"
+    },
+    {
+      "path": "media/ghost-25fce26dbebbf31c.webp",
+      "matches": true,
+      "sha256": "7406e01ee3cf3831ac8ecede623205217956a47e3901c0df2df99bdeb0f1d37d"
+    },
+    {
+      "path": "media/mamai-df9e23a5a763ec2a.mp3",
+      "matches": true,
+      "sha256": "b8862efa136112f5af3ede02f3bd9ee9316ebcca2af0f01f59aaa70dc055d0af"
+    },
+    {
+      "path": "media/mission-start-8fca990feb2a9e20.mp3",
+      "matches": true,
+      "sha256": "b68a03f2627ecc22f7c52e3fc58e671654ce4e98af783e559f24868086aa065a"
+    },
+    {
+      "path": "media/drone-alert-d8b4efb9db4311c6.mp3",
+      "matches": true,
+      "sha256": "3e9dd2e470e0ea98f4f5fed68ce6a051b83863c89632f75603248d2145fabb07"
+    },
+    {
+      "path": "media/mountain-pixel-background-92bd6c2d130b5960.webp",
+      "matches": true,
+      "sha256": "36836428be1e6c611e4095d9176bab3e3a9ff66787b758738a71ec8b8dd0bc75"
+    },
+    {
+      "path": "media/boss-a3cecc6c137101fd.mp3",
+      "matches": true,
+      "sha256": "e77ed9e162e136d756a1d684e51e6fde0497bdae6700df8edba5f06de17644f4"
+    },
+    {
+      "path": "media/bandera-fe7f4bf659141b00.mp3",
+      "matches": true,
+      "sha256": "eddd0639dd49db94b28468bb098641c85f1b0e99b1872a7386663ef98d6015c6"
+    },
+    {
+      "path": "media/river-pixel-background-d74af33973806091.webp",
+      "matches": true,
+      "sha256": "9f4ad7eafe93505559af54b01f764e09c1d906bc63e51edd780a98f2f76fb78e"
+    },
+    {
+      "path": "media/rail-combat-77cc13da6d467ba4.mp3",
+      "matches": true,
+      "sha256": "c5f5f04caf2d7cae77a1d4016278af1a89183d7f97b682f0eb36def06765fef5"
+    },
+    {
+      "path": "media/river-combat-4a1f0d57c903b292.mp3",
+      "matches": true,
+      "sha256": "39db757a9fd6918924cd17d6e9008a95e7b42e94c88db47b5b4ea14a5f1318b1"
+    },
+    {
+      "path": "media/shevchenko-mace-sheet-4ddaa84fb94ffe63.webp",
+      "matches": true,
+      "sha256": "6d901b4709d5da49119ac62215462f05164de31f649b6fba2e6d4b304fc9b7cf"
+    },
+    {
+      "path": "media/mountain-explore-36c7ea8b9c6e93ba.mp3",
+      "matches": true,
+      "sha256": "98ff1e13bade821b9d5ae06948a5ca533e38d0223c0ba1df2898934deb1b10c9"
+    },
+    {
+      "path": "media/lesya-9977cf7eb11c8d3b.webp",
+      "matches": true,
+      "sha256": "f48aa721f939187a0940131b0731fac9f57093e1f3bfd9f74715a21f6c809023"
+    },
+    {
+      "path": "media/putin-af68d216c3e5dbca.webp",
+      "matches": true,
+      "sha256": "60e6b2baaa3d4d0b1d172205902802a15a838f0616f759d531be9a0eba006621"
+    },
+    {
+      "path": "media/jet-6e01129e8c6df4d3.webp",
+      "matches": true,
+      "sha256": "a8dd8da184777eda70f138f075a3abb22f05422f7c570ff4efe41389bf2398bf"
+    },
+    {
+      "path": "media/swarm-master-9dd31eb6c8a064c1.webp",
+      "matches": true,
+      "sha256": "33b65dd5ffa95e4df5874bae2a22177c397f631d0a42cc0dfb1e8fdc23214cac"
+    },
+    {
+      "path": "media/skovoroda-289df38062647892.mp3",
+      "matches": true,
+      "sha256": "26cd81cff5e2a2b698a1edda27ca9d4f1d0d8654d6d32e9325241a3c51b3d5d7"
+    },
+    {
+      "path": "media/bandera-pixel-sheet-a17c041b664b7488.webp",
+      "matches": true,
+      "sha256": "0ce148ca1327b66b99c5806bcaae6928d7629ad8f4c035190111a4f21bf1efc5"
+    },
+    {
+      "path": "media/zelensky-pixel-sheet-2df82532dbe9c0b7.webp",
+      "matches": true,
+      "sha256": "39833ce7c42c19bac43bf53333c0ea08c9a051160977e72b95c3f20c73013e31"
+    },
+    {
+      "path": "media/menu-0c09fd237deaf78a.mp3",
+      "matches": true,
+      "sha256": "13fdac5169ae711e48286825da08739c55159f546f1f3ed7e8767a548b69a053"
+    },
+    {
+      "path": "media/evac-ab50a3195260108f.mp3",
+      "matches": true,
+      "sha256": "bd3869243e4f6bdac2b01cbb18a0eede3ac53b2acd6ed478ff1e15ad5332992a"
+    },
+    {
+      "path": "media/bilozerska-e8e54831f6d8f94b.mp3",
+      "matches": true,
+      "sha256": "b0b2f53cf63072a9c630d33a30f9c414fe803631d7450cc285e5e030e535bcd5"
+    },
+    {
+      "path": "media/marsh-combat-834c966f06d6e124.mp3",
+      "matches": true,
+      "sha256": "278aa5054a94ca55046968102b6901a1d2054806c2935efe5e825c6edc9af66f"
+    },
+    {
+      "path": "media/mamai-pixel-sheet-667ed1a36eb0b9d6.webp",
+      "matches": true,
+      "sha256": "d09752a1b9b66fe227898a585d6ca895423ea725a834e8346f1bb53853895f5a"
+    },
+    {
+      "path": "media/river-explore-d184bb491102b0e2.mp3",
+      "matches": true,
+      "sha256": "a2f3b2132353bc9de16b1f73c3aaee4c1f7ac30a276b826160225beb8948d1cc"
+    },
+    {
+      "path": "media/putin-defeated-41e5bd3290007169.mp3",
+      "matches": true,
+      "sha256": "24978a650fb614d92851d82bf458b48036a0356aa90f2bd307edc521f5c9bdc8"
+    },
+    {
+      "path": "media/lesya-068bc82c318a1db3.mp3",
+      "matches": true,
+      "sha256": "ed45610c8b629a573e979211171cc95b855bb6621d55d24a131752222fb2b501"
+    },
+    {
+      "path": "media/bilozerska-pixel-sheet-c32a2660eb531c32.webp",
+      "matches": true,
+      "sha256": "1d8ad2b485a486333418cc1cb1a1676d2f6efa1df22013faa99117b0056db0a4"
+    },
+    {
+      "path": "media/ghost-23cab8be329e9d20.mp3",
+      "matches": true,
+      "sha256": "33bcfff6f73bf90f32460da5fda3a9f1c71ff74a690723df22ada05ed3599545"
+    },
+    {
+      "path": "media/marsh-explore-184751d3d6d34789.mp3",
+      "matches": true,
+      "sha256": "4e4b7cc26799ac7eeffc494e2183c400e8a0dd440ef1aeb964d839ca05ba494c"
+    },
+    {
+      "path": "media/rail-explore-4cf91c702d8762fd.mp3",
+      "matches": true,
+      "sha256": "68d2c448512c8c303ec57448bfd9d4c2c7562ca38ce8b299dcb234512772be70"
+    },
+    {
+      "path": "media/shevchenko-7b6f4da0c613d016.mp3",
+      "matches": true,
+      "sha256": "7fd0efd0ae2fb261bc9c51b568ccf26dcdf48fdef8a5c5229eb96c7206b27e9e"
+    },
+    {
+      "path": "media/iron-warden-0d8205cd6594f9db.mp3",
+      "matches": true,
+      "sha256": "7cccf7e28216ad025154617bc394c896c6b4c630fbd0a02b244e910d5a9f436a"
+    },
+    {
+      "path": "media/lesya-crossbow-sheet-47ec0e92759466bd.webp",
+      "matches": true,
+      "sha256": "2e489fc365b5e9f7a13b696bd4b707a0b364e09b19d7420498df1984870b9dd6"
+    },
+    {
+      "path": "media/defeat-3dd9f0f8cd92ec6d.mp3",
+      "matches": true,
+      "sha256": "34cc8460208c6f9d8d11b9db365237801ec2cda6848f327325a18ba1425c0744"
+    },
+    {
+      "path": "media/evac-called-d869fee13cdcf06e.mp3",
+      "matches": true,
+      "sha256": "9b71fc3d6925bd422559f18add9cce1f706c2b76e55db5e5223bbe305285677d"
+    },
+    {
+      "path": "media/respawn-6badce764abf2017.mp3",
+      "matches": true,
+      "sha256": "4bafd9ffb24d0b8e11524f44e6a7b29d53dde915fb13b81ab9032a74f132975d"
+    },
+    {
+      "path": "media/marsh-pixel-background-2f110ef894f0b6ff.webp",
+      "matches": true,
+      "sha256": "25ca60aaeff4b99f3e673f8f8d3230c87a6ef720cebc42840305def35c976f05"
+    },
+    {
+      "path": "media/infantry-pixel-sheet-772bd211021a6160.webp",
+      "matches": true,
+      "sha256": "8ed54c7f7eb3b22b0393891fc5a6116873fbe7240d884a522ced4f1f83774583"
+    },
+    {
+      "path": "media/tank-alert-b266cbf16a63909e.mp3",
+      "matches": true,
+      "sha256": "1e48ecd5eb36d32b50059a616e4439da425013157f24fd5259db98f02df69e6e"
+    },
+    {
+      "path": "media/props-449b04827b661307.webp",
+      "matches": true,
+      "sha256": "5e9dcebe1e4797860403c06bacc11eea2dfd5b0b52fe0fb9989a7dd9ec750466"
+    },
+    {
+      "path": "media/bandera-eb1b4feb8018eaf1.webp",
+      "matches": true,
+      "sha256": "4a1c7c98a3abbcc0bee19a92820e36e92324867b36c77cdde5f5392cad12b1ed"
+    },
+    {
+      "path": "media/swarm-master-42602392b841d035.webp",
+      "matches": true,
+      "sha256": "74821fe9f4847247cca7b1a1f2aca7a77617d8e6b866133437baffead88f9127"
+    },
+    {
+      "path": "media/new-hero-b30d1a3625d4707b.mp3",
+      "matches": true,
+      "sha256": "615b48e1cd6d346b55474cee22b4d6f85e8c96da1cf408b814357eac785414c4"
+    }
+  ],
+  "deploymentId": "d467a6c9-eab5-48c8-a701-a90d17aaf491",
+  "previousDeploymentId": "675da7b1-84ba-4d6f-b3ef-39dec790a030",
+  "tests": {
+    "passed": 306,
+    "failed": 0
+  },
+  "browserCheck": {
+    "silent": true,
+    "singlePlayerStart": true,
+    "pause": true,
+    "consoleErrors": [],
+    "barrelHint": true,
+    "tankHint": true,
+    "highFiveAnimation": true
+  },
+  "networkCheck": {
+    "packets": 100,
+    "highFiveEvents": 1,
+    "boost": true,
+    "synced": true,
+    "sameMachineTwoWebRTCClients": true
+  },
+  "sfx": {
+    "newLocallyGenerated": 1,
+    "unchangedClips": 399,
+    "total": 400,
+    "humanAudition": false,
+    "serviceCostUSD": 0
+  }
+}
