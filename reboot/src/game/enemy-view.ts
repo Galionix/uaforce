@@ -1,8 +1,9 @@
+import type {AbilityArt} from './ability-art';
 import {INFANTRY} from './infantry.ts';
 import {enemySize,VEHICLES} from './enemies.ts';
 import type {Enemy} from './world.ts';
 /** Vehicles use the same integer pixel grid as the terrain and existing ability VFX. */
-export function drawVehicle(c:CanvasRenderingContext2D,e:Enemy,x:number,y:number,time:number){
+export function drawVehicle(c:CanvasRenderingContext2D,e:Enemy,x:number,y:number,time:number,art?:AbilityArt){
  const v=e.vehicle!,r=(a:number,b:number,w:number,h:number,color:string)=>{c.fillStyle=color;c.fillRect(Math.round(a),Math.round(b),Math.round(w),Math.round(h));};
  c.save();c.translate(Math.round(x),Math.round(y));c.scale(e.dir,1);
  if(v.kind==='tank'){
@@ -14,12 +15,7 @@ export function drawVehicle(c:CanvasRenderingContext2D,e:Enemy,x:number,y:number
   r(-2,-40,8,3,'#26372e');r(-22,-22,5,3,'#d17b49');r(20,-22,4,3,'#f4b168');
   if(v.phase==='aim'){r(39,-34,3,7,'#fff0a0');r(42,-32,4,3,'#ef8747');}
  }else if(v.kind==='plane'){
-  r(-40,-13,70,9,'#202e2e');r(-32,-15,58,10,'#787d69');r(25,-12,17,4,'#b4b79a');
-  for(let i=0;i<5;i++){r(-10+i*3,-17-i*3,17-i,3,'#485d53');r(-8+i*3,-4+i*3,17-i,3,'#566958');}
-  r(13,-16,11,4,'#c2dacd');r(15,-15,7,2,'#507d88');
-  r(-34,-23,8,12,'#677c69');r(-38,-25,7,3,'#adb39a');r(-38,-7,9,5,'#e58d45');
-  r(-44-(Math.floor(time*12)%3),-6,9,2,'#f4bb65');
-  for(const offset of [-12,7]){r(offset,-1,12,3,'#c5bc9d');r(offset+9,-2,3,5,'#e59a61');}
+  art?.draw(c,'weapons',4,0,-12,88,38);
  }else{
   // Delta wing and rear propeller distinguish this from the friendly quadcopter.
   for(let i=0;i<7;i++)r(-14+i*3,-7-i,3,3+i*2,'#70755c');

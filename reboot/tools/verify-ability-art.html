@@ -1,0 +1,23 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>UA Force — усі ефекти</title>
+<style>body{margin:0;background:#132527;color:#fff1c3;font:16px monospace}header{padding:16px;position:sticky;top:0;background:#132527;z-index:1}button{font:inherit;padding:8px;margin-right:8px}main{display:grid;grid-template-columns:repeat(3,minmax(300px,1fr));gap:12px;padding:12px}figure{margin:0;border:2px solid #42566c}figcaption{padding:8px}canvas{width:100%;image-rendering:pixelated;display:block}output{padding:10px}</style>
+<header><button id="pause">Пауза</button><button id="step">Крок кадру</button><output>Завантаження · без звуку</output></header><main></main>
+<script type="module">
+import {AbilityArt} from '/src/game/ability-art.ts';
+import {drawHeroEffect} from '/src/game/hero-vfx.ts';
+import {HEROES} from '/src/game/content.ts';
+import {SPECIAL_LIFE,ULTIMATE_LIFE} from '/src/game/hero-combat.ts';
+import {actorBounds} from '/src/game/sprite-bounds.ts';
+const art=new AbilityArt();await art.load();
+const kinds=['weapon','special','ultimate'],labels=['Зброя','Спецприйом','Ульта'];
+const images=await Promise.all(HEROES.map(async h=>{const im=new Image();im.src=h.sheet;await im.decode();const cv=document.createElement('canvas');cv.width=im.width;cv.height=im.height;const c=cv.getContext('2d');c.drawImage(im,0,0);return {im,box:actorBounds(c.getImageData(0,0,im.width,im.height).data,im.width,im.height,4,2)[0]};}));
+const entries=[];for(const [i,h] of HEROES.entries())for(const [j,kind] of kinds.entries()){
+const f=document.createElement('figure'),label=document.createElement('figcaption'),cv=document.createElement('canvas');label.textContent=h.name+' · '+labels[j];cv.width=320;cv.height=200;f.append(label,cv);document.querySelector('main').append(f);entries.push({hero:h.id,kind,c:cv.getContext('2d'),sprite:images[i]});}
+let age=0,paused=false,last=0;document.querySelector('#pause').onclick=()=>paused=!paused;document.querySelector('#step').onclick=()=>{paused=true;age+=.1;draw();};
+function draw(){for(const e of entries){const c=e.c;c.imageSmoothingEnabled=false;c.fillStyle='#152638';c.fillRect(0,0,320,200);c.fillStyle='#293b3b';for(let x=0;x<320;x+=16)c.fillRect(x,166,15,34);c.fillStyle='#687344';c.fillRect(0,165,320,3);c.drawImage(e.sprite.im,...e.sprite.box,58,127,25,38);
+const duration=e.kind==='weapon'?.35:e.kind==='special'?SPECIAL_LIFE[e.hero]:ULTIMATE_LIFE[e.hero],t=age%(Math.min(duration,5)+.7);if(t>duration)continue;
+const f={hero:e.hero,kind:e.kind,age:t,life:duration-t,dir:1,x:0,y:0,hit:new Set()};
+if(e.kind==='weapon'&&!['mamai','skovoroda','zelensky'].includes(e.hero)){const slot=e.hero==='shevchenko'?7:e.hero==='lesya'?1:e.hero==='franko'?2:e.hero==='bayraktar'?3:6;art.draw(c,'weapons',slot,95+t*220,147,slot===2?28:22,slot===7?28:12);}
+else{const moving=e.kind==='ultimate'&&['bandera','mamai','ghost','zelensky'].includes(e.hero),yy=e.kind==='ultimate'&&e.hero==='ghost'?54:e.kind==='ultimate'&&e.hero==='zelensky'?96:165;drawHeroEffect(c,f,moving?80+t*42:72,yy,t,art);}
+}document.querySelector('output').textContent=`33 комплекти · ${age.toFixed(1)} с · без звуку`;}
+function tick(now){if(!paused)age+=last?Math.min(.04,(now-last)/1000):0;last=now;draw();requestAnimationFrame(tick);}requestAnimationFrame(tick);
+</script></html>

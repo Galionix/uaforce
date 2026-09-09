@@ -1,0 +1,438 @@
+{
+  "date": "2026-09-09",
+  "scope": "All PNG under public/assets; source review plus actual ability scenes",
+  "assets": [
+    {
+      "file": "public/assets/abilities/auras.png",
+      "width": 1448,
+      "height": 1086,
+      "status": "replaced-this-pass",
+      "note": "Shared coarse import grid, palette and binary alpha.",
+      "sha256": "03f2f4e67aca8b5a71b5df06c2e90ed0387fe7637442cd2915901b4c1fab7c9d"
+    },
+    {
+      "file": "public/assets/abilities/blast.png",
+      "width": 1774,
+      "height": 887,
+      "status": "replaced-this-pass",
+      "note": "Shared coarse import grid, palette and binary alpha.",
+      "sha256": "786b0a5549a97cb478ac0d386fb5fdd09807643635afdbab828c7b1517cc034b"
+    },
+    {
+      "file": "public/assets/abilities/jet.png",
+      "width": 1983,
+      "height": 793,
+      "status": "replaced-this-pass",
+      "note": "Shared coarse import grid, palette and binary alpha.",
+      "sha256": "6e01129e8c6df4d38bc2a1f4e8cccd53b717ac2aac19f676f08a836fe69299d0"
+    },
+    {
+      "file": "public/assets/abilities/lightning.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "replaced-this-pass",
+      "note": "Shared coarse import grid, palette and binary alpha.",
+      "sha256": "bbfb9672bdd4245f50c4b37f47b214fef9175e54aaff2d99a83551d9bfd1cd41"
+    },
+    {
+      "file": "public/assets/abilities/nature.png",
+      "width": 1774,
+      "height": 887,
+      "status": "replaced-this-pass",
+      "note": "Shared coarse import grid, palette and binary alpha.",
+      "sha256": "a929355cc33a186892cc4ce2aaf25984706cfccf1b10bddef4986dedfd4ef899"
+    },
+    {
+      "file": "public/assets/abilities/ordnance.png",
+      "width": 1774,
+      "height": 887,
+      "status": "replaced-this-pass",
+      "note": "Shared coarse import grid, palette and binary alpha.",
+      "sha256": "2d64da297258c5bb8002617b7bb6374b6ec59f21f00ba540c3ad8c3feb384840"
+    },
+    {
+      "file": "public/assets/abilities/props.png",
+      "width": 1254,
+      "height": 1254,
+      "status": "replaced-this-pass",
+      "note": "Shared coarse import grid, palette and binary alpha.",
+      "sha256": "449b04827b661307f3f4e3d61a2f6e7e23c094ee234b5dfb162709f9da8b3551"
+    },
+    {
+      "file": "public/assets/abilities/summons.png",
+      "width": 1269,
+      "height": 1240,
+      "status": "replaced-this-pass",
+      "note": "Shared coarse import grid, palette and binary alpha.",
+      "sha256": "2b5e71a7f41e847166aae9727551093078941d083440c11de6bd96410913ec43"
+    },
+    {
+      "file": "public/assets/abilities/weapons.png",
+      "width": 1774,
+      "height": 887,
+      "status": "replaced-this-pass",
+      "note": "Shared coarse import grid, palette and binary alpha.",
+      "sha256": "f673e38c5ac5ec9afa16e4b54b6d7265449daa8c068e460641fd76b79bcb4c06"
+    },
+    {
+      "file": "public/assets/bandera-pixel-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "a17c041b664b7488a9ec6ee66d6034cca319f301e2d2fa845271c0d636c5bcf4"
+    },
+    {
+      "file": "public/assets/bayraktar-pixel-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "0aa03ab989b1aac6b39768258d5acc98d697bd090a750f83d864d0a2cdac209c"
+    },
+    {
+      "file": "public/assets/bilozerska-pixel-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "c32a2660eb531c321df60599eeca4586f9e4da76f4860684cfc5f300d4592263"
+    },
+    {
+      "file": "public/assets/bosses/iron-warden.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "review-next",
+      "note": "Generated boss sprite, finer detail than actor sheets; no replacement this pass.",
+      "sha256": "fbb8b40edb4014722441c80b3701dcdf48b6a4351d709d5d20ad484bb9f4be66"
+    },
+    {
+      "file": "public/assets/bosses/putin.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "review-next",
+      "note": "Generated boss sprite, finer detail than actor sheets; no replacement this pass.",
+      "sha256": "2db9ea44a5b42fba9269234c44959cd8f7e8203a0d76e30cf5a3ab67162557a3"
+    },
+    {
+      "file": "public/assets/bosses/swarm-master.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "review-next",
+      "note": "Generated boss sprite, finer detail than actor sheets; no replacement this pass.",
+      "sha256": "9dd31eb6c8a064c19cedd2ae638d8b08d2ccbbc4b8ec09b618463e09507d6e79"
+    },
+    {
+      "file": "public/assets/cinematics/bandera.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "eb1b4feb8018eaf1b7e900460d81721119a32318d2d08df4be8e08c3d91bd035"
+    },
+    {
+      "file": "public/assets/cinematics/bayraktar.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "24bd9f99539ed1e4b283f067b557338191e64f2b10c11dc6714b314acdc333f0"
+    },
+    {
+      "file": "public/assets/cinematics/bilozerska.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "ffac9892dd2fa389cda6aa32a86ff7c0bb98f1d3406b90d35d57b9f77b5648b2"
+    },
+    {
+      "file": "public/assets/cinematics/franko.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "040ac5b616061243a3d81084dcff6cf01978efaaf238720412db8ba92dd4e36a"
+    },
+    {
+      "file": "public/assets/cinematics/ghost.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "25fce26dbebbf31c0fbe3ca5891516bab7825aeb8dc932ee3c5e5f9b48fdc034"
+    },
+    {
+      "file": "public/assets/cinematics/iron-warden.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "349036c6446c811a8be0db0360d0ad92381064828fdfa7aa7f7deade980ce819"
+    },
+    {
+      "file": "public/assets/cinematics/it-army.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "61ac32b4eca5057792cc405e96bef27e6f498773cd5f2bd5f0ccd4d6d0c27369"
+    },
+    {
+      "file": "public/assets/cinematics/lesya.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "9977cf7eb11c8d3b1f523311b41d1b8fd08d944430cf353b4fde7a38e973b1af"
+    },
+    {
+      "file": "public/assets/cinematics/mamai.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "7dce43853e1131d5b803bd82595d633130ccff56cc8bace517ff12998c395930"
+    },
+    {
+      "file": "public/assets/cinematics/putin.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "af68d216c3e5dbca105cd58ae80d1e560a20d88b7ffe551fdea58a545959b7e2"
+    },
+    {
+      "file": "public/assets/cinematics/shevchenko.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "1d1d0e07d07dd645370bac4461364f2202ae86bb5b2707be94e7011fe0eb25bb"
+    },
+    {
+      "file": "public/assets/cinematics/skovoroda.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "6dc627d3cae7ac31bdf39c67ef4952b4f15957538ad710df05a76194544054b8"
+    },
+    {
+      "file": "public/assets/cinematics/swarm-master.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "42602392b841d0350545dad1a9a6e599dc630da208bfa080ffd8490503a7eae7"
+    },
+    {
+      "file": "public/assets/cinematics/zelensky.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "needs-pixel-redesign",
+      "note": "Painted cinematic portrait; not replaced in this ability pass.",
+      "sha256": "bc1635aa75ba84d1bfeb384bfcaa3c6e7277e0d75261512466000222e15338dc"
+    },
+    {
+      "file": "public/assets/cossack-front.png",
+      "width": 1024,
+      "height": 1024,
+      "status": "legacy-not-in-release",
+      "note": "Archived exploratory art, do not use as style authority.",
+      "sha256": "9e86c0f6091509fb1440d9edc806afb91c4e42d93fb500f1c2ed2ef30d58dcf9"
+    },
+    {
+      "file": "public/assets/cossack-pixel-sheet.png",
+      "width": 2172,
+      "height": 724,
+      "status": "legacy-not-in-release",
+      "note": "Archived exploratory art, do not use as style authority.",
+      "sha256": "8aff8a1b43fad8f4f3f0c5ea4e22227c857b29b40adc59c4043ec2e7b53e6085"
+    },
+    {
+      "file": "public/assets/cossack-profile.png",
+      "width": 1024,
+      "height": 1536,
+      "status": "legacy-not-in-release",
+      "note": "Archived exploratory art, do not use as style authority.",
+      "sha256": "6ee56695970812ea65d5646e46da1fe2785b53c7bfdf81a01de2387bcab4b2ad"
+    },
+    {
+      "file": "public/assets/cossack-three-quarter.png",
+      "width": 1024,
+      "height": 1536,
+      "status": "legacy-not-in-release",
+      "note": "Archived exploratory art, do not use as style authority.",
+      "sha256": "9055f311c2dac7bd6018c74520e9f788ee971462cb59853c833f9470b2f21962"
+    },
+    {
+      "file": "public/assets/franko-coarse-sheet.png",
+      "width": 1774,
+      "height": 887,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "baec33285a9021143059028958791fe108543b33cd3c48c634500da41ebdc3e1"
+    },
+    {
+      "file": "public/assets/franko-pixel-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "legacy-not-in-release",
+      "note": "Archived exploratory art, do not use as style authority.",
+      "sha256": "72f17d8c7234ec6fc8f98effa0670bf1f04af2548e1245e829bec554f63d1f0b"
+    },
+    {
+      "file": "public/assets/ghost-pixel-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "0998099a634b3660d041ad7cd65d8fb925101746a914c298460fbc725a6fe0ff"
+    },
+    {
+      "file": "public/assets/infantry-pixel-sheet.png",
+      "width": 2172,
+      "height": 724,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "772bd211021a61600edd1c31293e766d20a4bd6f0ee7cf66268a7a07a053e5b9"
+    },
+    {
+      "file": "public/assets/island-pixel-background.png",
+      "width": 1672,
+      "height": 941,
+      "status": "keep-reviewed",
+      "note": "Existing pixel environment, more detailed distant layers.",
+      "sha256": "9f873e3b3dda14e77b8085dfad2caebe84270cb67be479d6d439db0747410c5f"
+    },
+    {
+      "file": "public/assets/it-army-pixel-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "3ad168bbc522ab9e4a7a693fb735e97341731a45dbf95405de6df66167fc513c"
+    },
+    {
+      "file": "public/assets/kharakternyk-pixel-sheet.png",
+      "width": 2172,
+      "height": 724,
+      "status": "legacy-not-in-release",
+      "note": "Archived exploratory art, do not use as style authority.",
+      "sha256": "e6f6020ee1d5eb1656298b235531e526a61ba782959526d8ada3b2c0c4144323"
+    },
+    {
+      "file": "public/assets/kyiv-pixel-background.png",
+      "width": 1672,
+      "height": 941,
+      "status": "keep-reviewed",
+      "note": "Existing pixel environment, more detailed distant layers.",
+      "sha256": "146cfa91689b5e7a6d9fa58a67a1102f62b906ba3fc2d259c510bc36ede62edc"
+    },
+    {
+      "file": "public/assets/lesya-crossbow-sheet.png",
+      "width": 1774,
+      "height": 887,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "47ec0e92759466bdfaa2ceeaae8491dbf6818aaabbfde5b8593a7d50c8dedb63"
+    },
+    {
+      "file": "public/assets/lesya-pixel-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "legacy-not-in-release",
+      "note": "Archived exploratory art, do not use as style authority.",
+      "sha256": "b4ea8585bb6993c0191c7cc392743fa1fd66ade439797d38ab83430449c35e09"
+    },
+    {
+      "file": "public/assets/mamai-pixel-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "667ed1a36eb0b9d6df452b69cfa6e98237b2600f50f80826b3edd206f8fb76f4"
+    },
+    {
+      "file": "public/assets/marsh-pixel-background.png",
+      "width": 1672,
+      "height": 941,
+      "status": "keep-reviewed",
+      "note": "Existing pixel environment, more detailed distant layers.",
+      "sha256": "2f110ef894f0b6ffaebc3dc122d6dc36c2e7a05108022d948cbd7daf95f77f8e"
+    },
+    {
+      "file": "public/assets/mavka-pixel-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "fbdb07b130ab106a3378dbe893a67c0b83943332a636280ae55359903c0ab77a"
+    },
+    {
+      "file": "public/assets/mountain-pixel-background.png",
+      "width": 1672,
+      "height": 941,
+      "status": "keep-reviewed",
+      "note": "Existing pixel environment, more detailed distant layers.",
+      "sha256": "92bd6c2d130b5960689e0d415c102b558fcdbb850e5d09437c0183c91a9505b3"
+    },
+    {
+      "file": "public/assets/rail-pixel-background.png",
+      "width": 1672,
+      "height": 941,
+      "status": "keep-reviewed",
+      "note": "Existing pixel environment, more detailed distant layers.",
+      "sha256": "9d2811154a784a0786046639a0c7c9a71c424aa5da762e7d4ba5411d817faa5c"
+    },
+    {
+      "file": "public/assets/river-pixel-background.png",
+      "width": 1672,
+      "height": 941,
+      "status": "keep-reviewed",
+      "note": "Existing pixel environment, more detailed distant layers.",
+      "sha256": "d74af33973806091b7a78a7b438f0349d18a44670a3057a921dd704165afe4e1"
+    },
+    {
+      "file": "public/assets/scout-pixel-sheet.png",
+      "width": 2172,
+      "height": 724,
+      "status": "legacy-not-in-release",
+      "note": "Archived exploratory art, do not use as style authority.",
+      "sha256": "c44b8f10ae30c202d2640df3087ada01c10e23e85b5edfdf37bffd9fb5bdee35"
+    },
+    {
+      "file": "public/assets/shevchenko-mace-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "4ddaa84fb94ffe633a1f8a41cfde4f5c26c452969443050eb09a911a677f3297"
+    },
+    {
+      "file": "public/assets/shevchenko-pixel-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "legacy-not-in-release",
+      "note": "Archived exploratory art, do not use as style authority.",
+      "sha256": "e339f445cc9d7ed1dba47ef6bb6b8f26059c349438cc51aa206fb8735228164f"
+    },
+    {
+      "file": "public/assets/skovoroda-pixel-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "a2d7241b1f7902809ea55a4934d298e257a20d87c84ca1249101ab016683e34e"
+    },
+    {
+      "file": "public/assets/zelensky-pixel-sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "status": "keep-reviewed",
+      "note": "Existing gameplay actor; retained as scale and silhouette reference.",
+      "sha256": "2df82532dbe9c0b797df1f689ac241be0d6af92d2d96879183c0136c73f5b1be"
+    }
+  ]
+}

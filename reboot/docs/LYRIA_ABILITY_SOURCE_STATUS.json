@@ -1,0 +1,27 @@
+{
+  "date": "2026-09-09",
+  "provider": "Google Gemini Music / Lyria",
+  "sourcePage": "https://gemini.google.com/app/3e9e9a8c3eb56290",
+  "status": "generated-and-exported-not-integrated",
+  "auditoryReview": "not performed; silent checks only",
+  "sources": [
+    {
+      "file": "tools/audio-source/lyria-abilities/volia.mp4",
+      "providerTitle": "thunder_of_the_high_pass",
+      "seconds": 59.767333,
+      "sha256": "14d0b38fcc31c02644a1a364e380d58fe7a532db5ac4e879f909d9486ebf7383"
+    },
+    {
+      "file": "tools/audio-source/lyria-abilities/forest.mp4",
+      "providerTitle": "sunder_and_scroll",
+      "seconds": 54.867333,
+      "sha256": "0fa8acc0b157dd60265547c5fc733191b95b29f7693e4da255d8aa4b7f36d901"
+    },
+    {
+      "file": "tools/audio-source/lyria-abilities/mechanical.mp4",
+      "providerTitle": "where_timber_meets_the_anvil",
+      "seconds": 179.433333,
+      "sha256": "8ce89fd59023f553f1c063c5be5df41ad5042434da5cfa6670e8740cf963bc5f"
+    }
+  ]
+}
