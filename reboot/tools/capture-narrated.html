@@ -1,0 +1,26 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>UA Force — запис із внутрішнім звуком</title><style>body{background:#14221c;color:#ffe395;font:20px monospace}canvas{width:min(960px,96vw);image-rendering:pixelated;display:block}#scene{display:none}button,a{font:inherit;padding:12px;color:inherit}</style><button id="record" disabled>Записати огляд зі звуком</button><p id="status">Завантаження… Динаміки не використовуються.</p><a id="save" hidden>Зберегти відео</a><canvas id="scene"></canvas><canvas id="output" width="1920" height="1080"></canvas><script type="module">
+import {World,IDLE} from '/src/game/world.ts';import {View} from '/src/game/view.ts';import {HEROES} from '/src/game/content.ts';import {Sound} from '/src/game/audio.ts';
+const canvas=document.querySelector('#scene'),output=document.querySelector('#output'),ctx=output.getContext('2d'),view=new View(canvas),status=document.querySelector('#status');
+let audioCapture;const sound=new Sound(false,context=>{audioCapture=context.createMediaStreamDestination();return audioCapture;});sound.volume=.8;sound.musicVolume=.5;sound.voiceVolume=.7;
+const shots=[{hero:'shevchenko',mission:0,x:26,y:4,title:'ТАРАС ШЕВЧЕНКО',sub:'БУЛАВА СЛОВА · ВОЛЯ'},{hero:'lesya',mission:3,x:20,y:3,title:'ЛЕСЯ УКРАЇНКА',sub:'ЗГРАЯ ВОРОН · БОЙОВА МАВКА'},{hero:'bandera',mission:4,x:51,y:3,title:'СТЕПАН БАНДЕРА',sub:'ППШ · БАНДЕРМОБІЛЬ'},{hero:'ghost',mission:1,x:46,y:3.5,title:'ПРИВИД КИЄВА',sub:'БОРТОВИЙ АВТОМАТ · АВІАНАЛІТ'}];
+let w,recording=false,time=0,shotIndex=-1,last=0,recorder;
+function shot(index){const s=shots[index];w=new World(s.mission,HEROES.map(h=>h.id),s.hero);w.player.x=s.x;w.player.y=s.y;w.player.invulnerable=100;w.mode='playing';view.reset(w);shotIndex=index;last=0;}
+shot(0);
+view.onFrame=dt=>{
+ if(recording){time+=dt;const next=Math.min(3,Math.floor(time/8));if(time<32&&next!==shotIndex)shot(next);
+  if(time<32){const t=time-shotIndex*8;w.step(dt,{...IDLE,move:t<6?1:0,fire:true,jump:Math.floor(last/.95)!==Math.floor(t/.95),jumpHeld:true,special:last<1.4&&t>=1.4,ultimate:last<3&&t>=3});last=t;
+   for(const e of w.events){view.event(e);sound.event(e,w.player.x);}w.events=[];sound.syncWorld(w);sound.step(dt,true,true);
+  }else sound.step(dt,false,true);
+ }
+ view.render(w,dt,recording?1:0);ctx.imageSmoothingEnabled=false;ctx.drawImage(canvas,0,0,1920,1080);ctx.save();ctx.scale(3,3);
+ if(time<32){const s=shots[shotIndex];ctx.fillStyle='rgba(6,18,25,.8)';ctx.fillRect(12,12,348,53);ctx.font='bold 20px monospace';ctx.fillStyle='#ffdf65';ctx.fillText(s.title,22,35);ctx.font='12px monospace';ctx.fillStyle='#e0eef4';ctx.fillText(s.sub,22,55);}
+ else{ctx.fillStyle='rgba(6,18,25,.92)';ctx.fillRect(0,0,640,360);ctx.textAlign='center';ctx.font='bold 50px monospace';ctx.fillStyle='#ffdf65';ctx.fillText('UA FORCE',320,118);ctx.font='24px monospace';ctx.fillStyle='#fff';ctx.fillText('ГРАЙ БЕЗКОШТОВНО',320,180);ctx.fillStyle='#77daff';ctx.font='26px monospace';ctx.fillText('uaforce.thedimas.com',320,231);ctx.fillStyle='#c2d2d5';ctx.font='16px monospace';ctx.fillText('КОМП’ЮТЕР · КЛАВІАТУРА / ГЕЙМПАД',320,280);}
+ ctx.restore();if(recording&&time>=37&&recorder.state==='recording'){recording=false;recorder.stop();sound.stopAll();}
+};
+await view.init();view.reset(w);document.querySelector('#record').disabled=false;status.textContent='Готово. Реальна симуляція, постановочне керування. Звук лише у файл.';
+document.querySelector('#record').onclick=async()=>{document.querySelector('#record').disabled=true;status.textContent='Готую внутрішній звук…';await sound.enable();sound.step(.01,true,true);await new Promise(r=>setTimeout(r,3500));
+ const stream=output.captureStream(30);for(const track of audioCapture.stream.getAudioTracks())stream.addTrack(track);const type=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus'].find(t=>MediaRecorder.isTypeSupported(t));
+ recorder=new MediaRecorder(stream,{mimeType:type,videoBitsPerSecond:9000000,audioBitsPerSecond:192000});const chunks=[];recorder.ondataavailable=e=>chunks.push(e.data);recorder.onstop=async()=>{const blob=new Blob(chunks,{type}),a=document.querySelector('#save');a.href=URL.createObjectURL(blob);a.download='uaforce-gameplay-audio-2026-09-09.webm';a.hidden=false;const saved=await fetch('http://127.0.0.1:5190/capture',{method:'POST',headers:{'Content-Type':'video/webm'},body:blob});if(!saved.ok)throw Error('Local export failed');stream.getTracks().forEach(t=>t.stop());w.mode='paused';status.textContent='Готово. 37 секунд, 1920×1080, звук записано, динаміки не підключалися.';document.querySelector('#record').disabled=false;};
+ shot(0);time=0;recording=true;recorder.start();status.textContent='Запис…';};
+window.addEventListener('pagehide',()=>{sound.dispose();view.dispose();});
+</script></html>

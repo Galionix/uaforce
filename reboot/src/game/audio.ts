@@ -7,7 +7,8 @@ import {SFX_ASSETS,type SfxId} from './sfx-assets.ts';
 import type {HeroId} from './content';
 export class Sound {
   private readonly silent:boolean;
-  constructor(silent=false){this.silent=silent;}
+  private readonly output?: (context:AudioContext)=>AudioNode;
+  constructor(silent=false,output?:(context:AudioContext)=>AudioNode){this.silent=silent;this.output=output;}
   volume=.35;music=true;bossBattle=false;scoreTheme:ScoreTheme='river';private score:ScorePlayer|null=null;private mood=new MusicMood();effectsVolume=1;musicVolume=.7;voiceVolume=1;
   private effectsBus:GainNode|null=null;private musicBus:GainNode|null=null;private voiceBus:GainNode|null=null;private director:Announcer|null=null;private ducked=false;private lifecycle=0;
   get audioReady(){return this.context?.state==='running';}
@@ -24,7 +25,7 @@ export class Sound {
     if(this.silent)return;
     if(!this.context){
       this.context=new AudioContext();this.gain=this.context.createGain();this.gain.gain.value=this.volume;
-      const limiter=this.context.createDynamicsCompressor();limiter.threshold.value=-12;limiter.ratio.value=8;this.gain.connect(limiter);limiter.connect(this.context.destination);
+      const limiter=this.context.createDynamicsCompressor();limiter.threshold.value=-12;limiter.ratio.value=8;this.gain.connect(limiter);limiter.connect(this.output?this.output(this.context):this.context.destination);
       this.effectsBus=this.context.createGain();this.musicBus=this.context.createGain();this.voiceBus=this.context.createGain();
       for(const bus of [this.effectsBus,this.musicBus,this.voiceBus])bus.connect(this.gain);
       this.score=new ScorePlayer(this.context,this.musicBus);

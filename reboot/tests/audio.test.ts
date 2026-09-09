@@ -6,12 +6,12 @@ import {HEROES} from '../src/game/content.ts';
 import {SFX_ASSETS,type SfxId} from '../src/game/sfx-assets.ts';
 
 test('recorded combat routes all heroes, exact phases, lifetimes, pause and distance without oscillators',async()=>{
- const starts:{source:any;args:number[]}[]=[],stops:any[]=[];let context:any;
+ const starts:{source:any;args:number[]}[]=[],stops:any[]=[],outputs:unknown[]=[];let context:any;
  const param=()=>({value:0,cancelScheduledValues(){},setTargetAtTime(){},setValueAtTime(){},linearRampToValueAtTime(){},exponentialRampToValueAtTime(){}});
  class Context{
   state='running';currentTime=0;sampleRate=24000;destination={};constructor(){context=this;}
   createGain(){return{gain:param(),connect(){},disconnect(){}};}
-  createDynamicsCompressor(){return{threshold:param(),ratio:param(),connect(){}};}
+  createDynamicsCompressor(){return{threshold:param(),ratio:param(),connect(target:unknown){outputs.push(target);}};}
   decodeAudioData(){return Promise.resolve({duration:500});}resume(){return Promise.resolve();}close(){}
   createOscillator(){throw new Error('Combat must not fall back to electronic oscillators');}
   createBufferSource(){const source={buffer:null,loop:false,connect(){},disconnect(){},onended:null,start(...args:number[]){starts.push({source,args});},stop(){stops.push(source);}};return source;}
@@ -47,6 +47,9 @@ test('recorded combat routes all heroes, exact phases, lifetimes, pause and dist
   sound.event({type:'sfx',sfx:'bandera-reload',soundOwner:123,hero:'zelensky',x:0,y:0});const followerReload=starts.at(-1)!.source;
   sound.event({type:'followerDown',soundOwner:123,hero:'zelensky',x:0,y:0});assert.ok(stops.includes(followerReload),'dead follower cannot finish a reload');
   sound.stopAll();sound.dispose();
+  assert.equal(outputs[0],context.destination,'normal gameplay uses the speaker output');
+  const captureOutput={} as AudioNode;const capture=new Sound(false,()=>captureOutput);await capture.enable();
+  assert.deepEqual(outputs.slice(1),[captureOutput],'recording connects only to capture, never also to speakers');capture.dispose();
  }finally{globalThis.fetch=originalFetch;if(previous)Object.defineProperty(globalThis,'AudioContext',previous);else Reflect.deleteProperty(globalThis,'AudioContext');}
 });
 
