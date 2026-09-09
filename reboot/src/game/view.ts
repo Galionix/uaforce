@@ -1,5 +1,6 @@
 import {AbilityArt} from './ability-art';
 import {reducedPresentation} from './motion-settings';
+import {buildHeroRunFrames,RUN_RIGS,MAVKA_RUN_RIG} from './hero-run.ts';
 import {heroFrame} from './hero-animation.ts';
 import {Gore,wrapDeathLine} from './enemy-death.ts';
 import {assetUrl} from './assets.ts';
@@ -24,7 +25,7 @@ export class View {
   app=true;fps=60;onFrame:(dt:number)=>void=()=>{};onGoreImpact:(x:number,y:number)=>void=()=>{};
   private c:CanvasRenderingContext2D; private request=0;private last=0;private clock=0;
   private needsDraw=true;private cameraX=0;private cameraY=0;private shake=0;private particles:Particle[]=[];
-  private backdrops=MISSIONS.map(()=>new Image());private heroImages=HEROES.map(()=>new Image());private mavka=new Image();private infantry=new Image();private theme="river";private frameBounds:number[][][]=[];
+  private backdrops=MISSIONS.map(()=>new Image());private heroImages=HEROES.map(()=>new Image());private mavka=new Image();private infantry=new Image();private theme="river";private frameBounds:number[][][]=[];private runFrames:HTMLCanvasElement[][]=[];
   private bossArt=new Map<BossId,BossArt>();
   private tiles=new Map<string,HTMLCanvasElement>();private flashes:{x:number;y:number;life:number;type:string}[]=[];
   constructor(private canvas:HTMLCanvasElement){canvas.width=W;canvas.height=H;this.c=canvas.getContext('2d',{alpha:false})!;if(!this.c)throw Error('Canvas 2D недоступний');}
@@ -38,6 +39,8 @@ export class View {
       const cv=document.createElement('canvas');cv.width=im.width;cv.height=im.height;const cx=cv.getContext('2d')!;cx.drawImage(im,0,0);const a=cx.getImageData(0,0,im.width,im.height).data,rows=index===HEROES.length?1:2;
       return actorBounds(a,im.width,im.height,4,rows);
     });
+    this.runFrames=this.heroImages.map((image,i)=>buildHeroRunFrames(image,this.frameBounds[i][0],RUN_RIGS[HEROES[i].id]));
+    this.runFrames.push(buildHeroRunFrames(this.mavka,this.frameBounds[HEROES.length+1][0],MAVKA_RUN_RIG));
     const tick=(now:number)=>{const dt=this.last?Math.min(.1,(now-this.last)/1000):1/60;this.last=now;this.fps=this.fps*.94+.06/Math.max(.001,dt);this.onFrame(dt);this.request=requestAnimationFrame(tick);};this.request=requestAnimationFrame(tick);
   }
   portrait(id:string){
@@ -84,6 +87,11 @@ export class View {
     if(b.hp<b.maxHp&&Number.isFinite(b.maxHp)){this.rect(x,y+hh/2,ww/2,1,'#111c19');this.rect(x+ww/2,y+hh/2,1,4,'#111c19');}
   }
   private sprite(x:number,y:number,dir:number,frame:number,enemy=false,heavy=false,heroIndex=0,mavka=false){
+    if(!enemy&&frame>=8){
+      this.c.save();this.c.translate(Math.round(x*S-this.cameraX),Math.round(266-y*S+this.cameraY));this.c.scale(dir,1);
+      this.c.drawImage(this.runFrames[mavka?HEROES.length:heroIndex][frame-8],-20,-32);this.c.restore();return;
+    }
+    if(frame>=8)frame=[1,0,2,0][Math.floor((frame-8)/2)];
     const slot=enemy?HEROES.length:mavka?HEROES.length+1:heroIndex;const bounds=this.frameBounds[slot][frame];const scale=(heavy?35:27)/this.frameBounds[slot][0][3],h=Math.round(bounds[3]*scale),w=Math.round(bounds[2]*scale);
     this.c.save();this.c.translate(Math.round(x*S-this.cameraX),Math.round(266-y*S+this.cameraY));this.c.scale(enemy?-dir:dir,1);
     this.c.drawImage(enemy?this.infantry:mavka?this.mavka:this.heroImages[heroIndex],...bounds as [number,number,number,number],-Math.round(w*.47),-h,w,h);this.c.restore();
