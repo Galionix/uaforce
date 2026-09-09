@@ -126,7 +126,6 @@ export class View {
       this.rect(x,y,w,height,world.mission.theme==='rail'?'#27282e':world.mission.theme==='mountain'?'#1b2f38':world.mission.theme==='marsh'?'#0b1c27':'#101b18');for(let yy=0;yy<height;yy+=8)for(let xx=0;xx<w;xx+=16){if(hash(xx+yy,l)>.4)this.rect(x+xx+(yy%16?5:0),y+yy,7,2,'#1d2720');}
       for(let xx=10;xx<w;xx+=50){this.rect(x+xx,y,3,height,'#353828');for(let yy=12;yy<height;yy+=48){this.c.strokeStyle='#343727';this.c.lineWidth=2;this.c.beginPath();this.c.moveTo(x+xx,y+yy);this.c.lineTo(x+xx+45,y+yy+32);this.c.stroke();}}
     }
-    for(const [left]of world.mission.forts){const x=left*S-this.cameraX;this.rect(x+18,244+this.cameraY,1,22,'#69736b');for(const [i,color]of ['#dddcd3','#426896','#a7483e'].entries())this.rect(x+19,244+i*3+this.cameraY,12,3,color);}
     for(const l of world.ladders){const x=l.x*S-this.cameraX,y=266-l.top*S+this.cameraY,h=(l.top-l.bottom)*S;this.rect(x-5,y,2,h,'#8f7d4d');this.rect(x+5,y,2,h,'#635b3c');for(let yy=2;yy<h;yy+=6){this.rect(x-5,y+yy,12,2,'#a18d59');this.rect(x-5,y+yy+2,12,1,'#3f3c29');}}
     for(let x=-16;x<W+16;x+=16)for(let y=314+Math.round(this.cameraY);y<H;y+=16)this.c.drawImage(this.tile('earth',Math.abs(Math.floor((x+this.cameraX)/16))%5),x,y);
     for(const b of world.boxes)if(b.hp>0)this.box(b);
