@@ -1,0 +1,1210 @@
+{
+  "shevchenko-weapon-0": {
+    "sha256": "a74ccf090f6ee54bfb32413bd8901c1bbad3bacdec18620103e566580498a15f",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons-repaired.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "shevchenko-weapon-1": {
+    "sha256": "8f4881a4280ecee9c9f7df480db20ff8f59f740940cde78e34581ba3f4719ef5",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons-repaired.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "shevchenko-weapon-2": {
+    "sha256": "d98c854c3b95883b8f3deee72555d60dbbae41717bc35e2075d30c897374996d",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons-repaired.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "lesya-weapon-0": {
+    "sha256": "a1cb0ec819f1d202dfc843b1b201432bee5d07615a5e11e5866e5a12e8809e84",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons-repaired.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "lesya-weapon-1": {
+    "sha256": "b9d87cdb3fa3f42c03aef1d4103cde65889f7bb81b9aaf24dd1e8ca3b7da381f",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons-repaired.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "lesya-weapon-2": {
+    "sha256": "10e9901d65d7e06ad7b22a92890db6560c78efa7dc80a034848d36907f74bd39",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "franko-weapon-0": {
+    "sha256": "40d9b4ce8c196f897e5cb00f51df99f8d451cb7d972b919003620dd16c257b88",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons-repaired.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "franko-weapon-1": {
+    "sha256": "19de9429dd1c731bd0e3bce48e3de737e5e5f1bef5754edd6be983b4ca3a8db1",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons-repaired.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "franko-weapon-2": {
+    "sha256": "df6cb43762d2437293d08a5b9dd29f19d9eb7bf05a2545e33f5b7950e17cded9",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bandera-weapon-0": {
+    "sha256": "87edc8f9ec10ce6590efbf197dea54b9d2e1a441e6943ecbac7dc06bc95632df",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bandera-weapon-1": {
+    "sha256": "591a1508f6da39d8142f67f862d3e1da4dcd3b5055dae294784663b392a5da0f",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bandera-weapon-2": {
+    "sha256": "45b572062dda06f455c992b6308fcdd3484da74fe3dc89b7731f3296daf60dc3",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-weapon-0": {
+    "sha256": "5bb6363ad35c4a09590cd4d7aa53cdef0b8f23ac63e2b96d5db356e6e5f7f355",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-weapon-1": {
+    "sha256": "d8468a21a73d51f4594b4de32f57d8e49ac61bc126ae20cab9e26f61cb82e33e",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-weapon-2": {
+    "sha256": "4a52efa0a952ee1aa0580d2827c59c301a8347ac86ea2a84d015289fa6465a46",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-melee-weapon-0": {
+    "sha256": "016d7f937ddec91094ec91afb23b269ee1a4b957c3df8f833ebb08c35f9888ad",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-melee-weapon-1": {
+    "sha256": "1191d69e1edcf3d8c9d58d252c0e9287d3d5e9c740ee0c477616db9da79a7f17",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-melee-weapon-2": {
+    "sha256": "1ff66b52b28c151177809a25ca965fe541f64705d770caa4052b5fd959d72888",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bayraktar-weapon-0": {
+    "sha256": "2657f40bfd886334bec77f647aa4b8f7a3359eadacc9c86d6b3ab3cb7f04c807",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bayraktar-weapon-1": {
+    "sha256": "c9b5038257fd20ba61ce07e0d5d0728293eec83faa1ee18ec30d1d8684ec1a40",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bayraktar-weapon-2": {
+    "sha256": "71a0d26c3070ad672c379bb0d10ebc7799d4c367daaeedadfc83e582bbaf4dd7",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "ghost-weapon-0": {
+    "sha256": "758b1acfb149365ed3c4ba20f158dc18ab3aae5b048d358db2dfac0d72e7594b",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "ghost-weapon-1": {
+    "sha256": "bacfeb613c6149057a372943c7ae28eb4f8073a3e6128a8c875d5e7ce26509a4",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "ghost-weapon-2": {
+    "sha256": "a7b089bb14d729e96ab86f8d7eb0b48c26a741ea19cdc20db954d2c78ec50299",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "zelensky-weapon-0": {
+    "sha256": "3e2059f301062ac450b2dcbdba5623bdd37da3798ec6db2a5a37d9ad12f4e661",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "zelensky-weapon-1": {
+    "sha256": "f786ec74591e71a41bc227bbe330f8726ab67835c110f136db7c4ed7b0241c3e",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "zelensky-weapon-2": {
+    "sha256": "87ed97dee8aa3104cd163ca6e68cab5eded2e0b95dfe8ee6844281b268365e31",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bilozerska-weapon-0": {
+    "sha256": "f0a50d56b1a7751e20b539c385f375a18d3741172e13f63bf3d61ab26a441174",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bilozerska-weapon-1": {
+    "sha256": "f2436b998b5133f833561843a43fb90711d13504f63e15208f8f1fd945e93107",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bilozerska-weapon-2": {
+    "sha256": "8de64e365c5325d1ea22a4c0ac41a14d69caedf044b95f796e0d32bf6ab95081",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "it-army-weapon-0": {
+    "sha256": "b4e472dbccd5877226551f8e48a158822946abb4eb7bf03a760f9eddcbd2acac",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons-repaired.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "it-army-weapon-1": {
+    "sha256": "03f3bc6bb8e23f22f15f3f070a45ef9bcf55683f82fb3bc0cfd41af7767b5ae9",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons-repaired.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "it-army-weapon-2": {
+    "sha256": "35cee1349d54f84f48463e82c370254ef1bbb1a6533e4e7984b9f0ac00f31d35",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons-repaired.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "skovoroda-weapon-0": {
+    "sha256": "cb568a80862540690dae04797c49c2ce212b89f12aaa937f0de63fac6e7eab1a",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "skovoroda-weapon-1": {
+    "sha256": "de8b6e51ebf32a752ee64208571084ed3399ca833ee971ef2d59302f0fd3cbda",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "skovoroda-weapon-2": {
+    "sha256": "610ce62dcc5fc986ca7993d5dd55465a727e2620bb410c95900f1af77bfe1382",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis, edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-weapons.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "shevchenko-hit": {
+    "sha256": "5b73aad1173996552feb32bf4674a02d1b03a0a7df8dca9467c9c72aaee2c21b",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "lesya-hit": {
+    "sha256": "763e5bac891174075a6fe79d7fd42d4a6438627739667ec4be6827d0964b888b",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "franko-hit": {
+    "sha256": "6183dd87c627118632ad0678675b09c7b50d4d4cd87ed3181cbda78655d7c610",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bandera-hit": {
+    "sha256": "f1852496600c44e9db5f7255d1df59c737ef7f2c835f2f4cd48010b41f940a70",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-hit": {
+    "sha256": "c07ff52d2b74e150bed3cff78b5852284f6f3dfdc4380af127c659d505c0da28",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bayraktar-hit": {
+    "sha256": "e1d4662a60ff5769210a998f1619fbf0f649f5fe7a14575cfc94fd7ccc837547",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "ghost-hit": {
+    "sha256": "b054cbf3b8a983f4a7d3d552172732a7cc4b5146334ea1e7d3454289b713ba64",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "zelensky-hit": {
+    "sha256": "9839156e5ff8798d9c36ec87a9f57a132163d0d5e6c22225b4086bbb0190b4db",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bilozerska-hit": {
+    "sha256": "2ddb6873765a9303f4566f2bcbd36ac3432901ba3b41ea0fb3f57b1138f1a2ab",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "it-army-hit": {
+    "sha256": "9cf199875c5140055a44a5b5121fe95a2520348e4bda59c563e732a378421c13",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "skovoroda-hit": {
+    "sha256": "412508fa64e792f7ab4933f08ba5fd3b98dd4d9eaec8985870c7fa20b28eb476",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "ricochet": {
+    "sha256": "3c078dcd0f4b471357456138daa57c863800e6aa17fad136e7cabf29f906bd60",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "explosion": {
+    "sha256": "fa14cb76ed89073ea2d9d5193442d35330841350931a0aa780a88610995c7050",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "glass-fire": {
+    "sha256": "cdf17622f7383528879b82450265ce15067c57be4f4f89918f9001d3e06d5089",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "roots": {
+    "sha256": "7dcbc04f436253a66f3e3a4f2bddd9b32005229d2638d7c733c05296d8abddcc",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "stone-hit": {
+    "sha256": "93c04b5cee61e3b310d3eec9bf52af34f9120237a3cab16cb4b2f361fd5097a0",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "thunder": {
+    "sha256": "e4739aad5e0b8c02ebb9014a9968e886773cc968afb1cd9aa2cda67db6af2167",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "rail-shot": {
+    "sha256": "f464e94cef74eb2e58d0a40300a2293977627366435a0488dd85935197864774",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bolt": {
+    "sha256": "17b9bb0846190e0a5fa6c731103b52f9c7ef199d792d61685053e7d8936f7791",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mine-arm": {
+    "sha256": "f834d436958b91bdbf2a871eadb9a353b7f14aa9f1a88f034e00887db2681529",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "rocket": {
+    "sha256": "c385cee6fa8bc05929eeeef080abbc84d1255f453acdc415ba8c08fbbea85e7c",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "shevchenko-special": {
+    "sha256": "ac33bf28ba3038e4dc924b921dec6a3f39fa078b97461fff035487264a575d0f",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "lesya-special": {
+    "sha256": "ea62b12be9efd7bcebff37702e9d8a888586b044ce813d981ada1bcb71ce0990",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "lesya-ultimate": {
+    "sha256": "7e0d0b90c7418797755757292c12df4d54281ed501ecad1af819239f16173ee2",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "franko-special": {
+    "sha256": "962cb39fd4b5de620b791b2046ee6ccd69085aca1928d59fd02d9fa70d8b8796",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "franko-ultimate": {
+    "sha256": "f38a5981fdcad1cdf0d21454f58ce8ea2f1c6c5091a08f8bbb8c6f5659cdfbad",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bandera-special": {
+    "sha256": "7677c5f8b83a1a8dc124dec47f2e7d616173a02db278fef7542f29f1cae6af4e",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bandera-ultimate": {
+    "sha256": "40fcec7dd547f61169f439fe559899efc86287c2d98a684ed2d15b1ab1315c33",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-special": {
+    "sha256": "7772f0fc0da2938f6ceed925eca2f85780dcbd45e3208b69455b1dc71604566f",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-ultimate": {
+    "sha256": "6018d6a456f41797aa2dadcc89b83ce4415e8ccb263bc50f98ae7d0cb78c4804",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bayraktar-special": {
+    "sha256": "c093d33791583496b0f778f466514b4acaf3ff3f953ef41162c6d7c4b9cad926",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bayraktar-ultimate": {
+    "sha256": "fe0397e5900c4cee98235b085ba7615778e1f98f61933bf69b0db65a386902fe",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "ghost-special": {
+    "sha256": "01ef533b25a92f8f149308e5119670442d46203fdc821ccc1876b36595e9e02b",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "ghost-ultimate": {
+    "sha256": "14c62b83ddf94eed92f5146dde609b887c61369a1130ebd00d1d052027fc0d0d",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "zelensky-special": {
+    "sha256": "b3dbff0216c57254d233bd0a3c7a8a450e5631540e93646da12b46eb144a270a",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "zelensky-ultimate": {
+    "sha256": "5dfed8e0d566f05210258a73c289313a573b8a5bd2d60fdaced43139f1555547",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bilozerska-special": {
+    "sha256": "db1de6faae69348b69c77227886c3e95d45cea19fe3a9f3438e7381acc9036f5",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bilozerska-ultimate": {
+    "sha256": "60f8adc6e01c14dd98fa50fbd5fabc611cfa23b65f219124c6cfaaacae1ddae3",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "it-army-special": {
+    "sha256": "9ebc39ce3357a8eb1fe36ed275ca2de00595160509f2b2dd568ad3249db95a4a",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "it-army-ultimate": {
+    "sha256": "07574af2dc77c5a9c2c563364ce3a7e7aa7b7672be8d80d5c6747a593cbe15d2",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "skovoroda-special": {
+    "sha256": "4630a00e6ed85a99e0aa7e58e2e9a4e491f5ac7d16d148796f75a69db6fd11a8",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "skovoroda-ultimate": {
+    "sha256": "7e34d69e0cdbc160f6ded249b4440dacfbfdf955cb803c602d7773ed3731c82f",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "shevchenko-ultimate": {
+    "sha256": "bd805828d7ab27b52f969abf80791aa00ff159ec23e67ef88d9fd72c9b1ccb2e",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "lesya-special-loop": {
+    "sha256": "6c2043596daf5a2f9173995bd70b2fc6a715a357414fcd82176fa41bf136bac3",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "lesya-ultimate-loop": {
+    "sha256": "5fe5c88e750df39ac061fbabb46355358882c17b041cf4409a7a28741a63440f",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "franko-special-loop": {
+    "sha256": "d41497087c8d1d455e98c22737645d129a5b615a6b01dfa484d0377a7701a7f8",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bandera-special-loop": {
+    "sha256": "d8049cb39ec72c5af67d589a04fce56c3fe083dcb459e031cf21040cb01c1a6c",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bandera-ultimate-loop": {
+    "sha256": "4d680542e6137dffcb69a17499e664f2e7b69cca0441b09889f607c7a9ff0069",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-special-loop": {
+    "sha256": "4ba9a17576c47ba5522e7b00f28fabff613114a790357e402119c1933594ee0e",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-ultimate-loop": {
+    "sha256": "2d51e7384785db5802da877bd230f7aaa77f9d22f168a89905c23cd48c46dea2",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bayraktar-special-loop": {
+    "sha256": "83d0d1c619f37d852c73a0e47af45d27459a5f5bb6a54da77eabad77cea6ebd8",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bayraktar-ultimate-loop": {
+    "sha256": "e946b43d28833c22f689478d2fd39ae78d9cbc3ccc3717baee016dd052720beb",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "ghost-ultimate-loop": {
+    "sha256": "ff94e936b2d804fc927815a803048e88fcea92d1ca1bc4da9a8dd4fec9e1e37e",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "zelensky-ultimate-loop": {
+    "sha256": "00ee62f5047998d5e2347db3621260df410b69c0e108305c3f3cb3c0afcd2350",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "it-army-ultimate-loop": {
+    "sha256": "dd31835c6817f9341e31a624296ffaefe73a5b7e092345f6ff2308bd48772800",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "skovoroda-special-loop": {
+    "sha256": "027405eb127b3f2fe0812292e56e863667844f94875fec9fe8a214d8e2c840be",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "skovoroda-ultimate-loop": {
+    "sha256": "19993c11379914315fa5c928552bfe74c2ba7304e28abd2464acf08eb2b2c37e",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "shevchenko-special-end": {
+    "sha256": "2fbfb83b330547c87ee56ef0a5ebb92d0c5fb52ce4c28566b6e044826caa1cde",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-powers.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "shevchenko-ultimate-end": {
+    "sha256": "d178b7d8b3d36474765006cee55f3f7ad64b3d3ee7c8b1d19d4966ab102d8cf3",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "lesya-special-end": {
+    "sha256": "df110362b2d940157fc8db9b3148939777ba4659cba680f1e7f36d64bd62bb96",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "lesya-ultimate-end": {
+    "sha256": "7d4169a4a85fcb443cb76289d4d8bd8acc2705f794af7a389c81b54299434b40",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "franko-special-end": {
+    "sha256": "8fb96d5b3d1129149ce65a0c71271370ceaf665dc0c65fe3504e0a7ec36b4176",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "franko-ultimate-end": {
+    "sha256": "41464eb0cbd9b8fe910b7898cf6a2f2bf586185bb213782eb5d69e298c06bee1",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bandera-special-end": {
+    "sha256": "4f71c0a7e778b018628f99025cefe5845eacbdfafd12fdc6a5eae795f7775dd1",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bandera-ultimate-end": {
+    "sha256": "4145d89a8c1c5a486b019b17aa33e1984ef01f6b0675887e7071e0835a809b77",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-special-end": {
+    "sha256": "f27dbf15fc94aca43aa14673f75485350a22100fb8d6649a31146da630950786",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-ultimate-end": {
+    "sha256": "c0b457fe77fd88005e3c684fad50cdeb825df9426d9f58fe79bb20f7ca206034",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bayraktar-special-end": {
+    "sha256": "7a3769e54c3e83e5e1ed284c8a476335ac20de685b258b79771b5fab52723046",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bayraktar-ultimate-end": {
+    "sha256": "5a66e0af1ff71b68b145d5e617b09703875c49fd49e85aa89b24aa5df1eff586",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "ghost-special-end": {
+    "sha256": "84d5a47fc78634358847bcdcfb15f30ccb0ff0c9177d96b52b0c030d33f6f8de",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "ghost-ultimate-end": {
+    "sha256": "71212d30f61554d4c5e53032d463c41fb6b4ca9ee58b07a30676d36362cc772c",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "zelensky-special-end": {
+    "sha256": "c914f1b04eca4a9c630f74c71df8e6849dca62c963436ff4bb8ebd210bfc5eb4",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "zelensky-ultimate-end": {
+    "sha256": "96761ee4bf455dfde42f4899f04bc90c418fb7833f70136c8e26330fd9add929",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bilozerska-special-end": {
+    "sha256": "c9b84faa81d748b8a94b70314c8e2b1aa97dad73553c96aa51598b0a9262e430",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bilozerska-ultimate-end": {
+    "sha256": "a4e215fdfeae7bfb777d656417923a359cbefa2d59124ee9da7b8bab06cf9978",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "it-army-special-end": {
+    "sha256": "1823b93b15c4c8bb2fdceebe9adf6301c6dd5ee3bc41bcb4457ac6d2b7f4ae8a",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "it-army-ultimate-end": {
+    "sha256": "f7240f42a66fd6df3cccc436b12ed95d9d5912993b3dc9399ddfd919d8cb031d",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "skovoroda-special-end": {
+    "sha256": "77940cfe9618bb492c9b8cc9c4615f648419dad11cd483e7021825d5d301896b",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "skovoroda-ultimate-end": {
+    "sha256": "29b4fb3de72e8e72b64863fc5dcd48d6b20e72ecd7b8053d0b2bf03c0575aca4",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "lesya-reload": {
+    "sha256": "d0fcccc39b909bb1a20701b92df1277ba22e3d1449f9cdb2a6687971ef1f971a",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "lesya-reload-end": {
+    "sha256": "30f3e3d4b0cf73223a9e434307614342b732d619e59a61402a45f4169cfe4fb0",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bandera-reload": {
+    "sha256": "0f887acfeedd19b9dd03763a81d7a7ebd159d9d89ffe0527d21c9c0e56d52cd5",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bandera-reload-end": {
+    "sha256": "4fda8b2f33213afc9b78964ba8f4d30a6f864af31d397603f74a659a05547e2f",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-reload": {
+    "sha256": "f961912e08566360297286de10abde188574b4b481d6daa13f7c64bd61511ca0",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "mamai-reload-end": {
+    "sha256": "bfc15d7ed4b6c2981e09fedf7383a8245a07b2a5c42d9ed4376f36266834dd3e",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bayraktar-reload": {
+    "sha256": "8d98409fa37fc269d66c903bfe85edf4a062631b9baddea544dadfc1566050de",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bayraktar-reload-end": {
+    "sha256": "d7cfbd79c81cc445fc4af33ad7b27eca1a158a3e3da2e7f199a86690f6b20dfb",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "ghost-reload": {
+    "sha256": "b556abcba353e1aadcd879b85c814875206d57a7cd94ab716b3ed1a9803d114d",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "ghost-reload-end": {
+    "sha256": "ff661a7569ea8033f793062e95f259f64b0413c45c628a2c12c164836ec34708",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "zelensky-reload": {
+    "sha256": "587d9d4cbc473089b65c9e1f99a64f16a605e8741f668ee437dd23780aed7f3c",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "zelensky-reload-end": {
+    "sha256": "f4a06aabfdc856adc22e3eb6d3dffc236dac32982ac59ddb16befe8f6703c526",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bilozerska-reload": {
+    "sha256": "6a8325c07aed13346b2f649f0ff941bfdfe8f9b793e7ae8e5ffb99e305012a75",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "bilozerska-reload-end": {
+    "sha256": "cdd6cb44ae4fc68389a37a0aebb436a255c8dd63cffa1620cb07218b326444a0",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "it-army-reload": {
+    "sha256": "77170e594b3cee6263e70b767f84a2dc773e9f1eabbe6144eaf2ba43926813b2",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "it-army-reload-end": {
+    "sha256": "4cccc1bebe62fb6962a6a7a3b49d53f2a3d7079b84df3d5fe73ba864daf09170",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "support-infantry": {
+    "sha256": "f963fa761c21e0ec05efc9e45d9a0a259fbd92732af199d9886a757a117d70dc",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "support-turret": {
+    "sha256": "e3f5d55bbfcdb207785b54a2df047f1299f6213f9d9b5bec0460d72b89c8e591",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "turret-step": {
+    "sha256": "282a211fb2051cf4a02f3f755a7731e0b1f27b8ee0013d2a4995f56b5b6e3905",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "follower-hurt": {
+    "sha256": "bc82395b4c18ef9cac41dd8e2b63f275bca32a37584ffbab45b67f00822fff54",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "follower-down": {
+    "sha256": "7f401992bfef5b11504e09192864c757423b2ce99e6da7b694ccd84b43616a10",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "barrel-lift": {
+    "sha256": "7d330e814bf0061597308533319f752d28eeade61b46310759a6d8e1e4d29b7c",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "barrel-throw": {
+    "sha256": "684cd1ffe99ad664cf8429223c59510b320f9faae3c3498c35f0abf15e4d46a3",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "armor-hit": {
+    "sha256": "b42487aa0709034f3dc928735c04569b9acca98d0373ded32edd027b4593fadd",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "tank-land": {
+    "sha256": "d1281cda99029c97dca14e01b56ac2f2542ed42ae38ab174066d76250587fdc5",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "tank-jump": {
+    "sha256": "1b18af5cc4806a0e19bdccc88f826143035c87283bb25f29cae7fce7cbe524b9",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "hatch": {
+    "sha256": "c097cabd3b10e79735df9553b9dc4a929f2d3467ce8190f11afe654ed75a26cb",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "tank-shot": {
+    "sha256": "4dc52e219d3a97340ac8d3ddfeb643e68d87af4159178151fc7ed06bcffc83c9",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "tank-engine": {
+    "sha256": "9ff6b8771edf9997dc417a8937db67c830de16bb599ff4501ab9f204ee587477",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "plane-engine": {
+    "sha256": "181368a9567dd35ebafe97fd7d559d90c28a42fe4c2de162151ad12130f350dc",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "drone-engine": {
+    "sha256": "0e07f491e69ee8752f7d6ea638890f7818c5c46e0f05e2634382be453d29d0b2",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "drone-dive": {
+    "sha256": "32a035ac06cd5615073b61688e18f497311d0eac46d490bf157c58acae0e9fdf",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "enemy-alert": {
+    "sha256": "8429817a1641e09c75534e5e2922f813538ec4c519b4cae6e9bdf622678e5f92",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "enemy-fuse": {
+    "sha256": "2a9df542a5503998aa40ec839a503a50ed29f1bc52b3ca20dea79b5cc7537575",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "pickup": {
+    "sha256": "fb46d8eca09c08b5f880113f9853319a8f3aac57c121b0e79cd6ff3b34fe8d0c",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  },
+  "debris": {
+    "sha256": "a63793d3a9452919c40408bf534b9d1ef060862533ecb0622c3d1c0d5236b47c",
+    "status": "needs-local-confirmation",
+    "reviewer": "Gemini audio analysis of edited reel; no speaker playback",
+    "source": "https://gemini.google.com/app/332970831e192c5d",
+    "reel": "review-utility.wav",
+    "limitation": "Browser audio answers were inconsistent; no artistic approval or confirmed listening may be inferred."
+  }
+}

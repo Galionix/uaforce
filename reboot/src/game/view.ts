@@ -21,7 +21,7 @@ const hash=(x:number,y:number=0)=>{const n=Math.sin(x*127.1+y*311.7)*43758.5453;
 export class View {
   private abilityArt=new AbilityArt();private screenPulse=0;private cinematicBlasts:{x:number;y:number;age:number;size:number}[]=[];
   private gore=new Gore();private deathCaptions:{x:number;y:number;text:string;life:number}[]=[];private lastDeathCaption=-100;
-  app=true;fps=60;onFrame:(dt:number)=>void=()=>{};
+  app=true;fps=60;onFrame:(dt:number)=>void=()=>{};onGoreImpact:(x:number,y:number)=>void=()=>{};
   private c:CanvasRenderingContext2D; private request=0;private last=0;private clock=0;
   private needsDraw=true;private cameraX=0;private cameraY=0;private shake=0;private particles:Particle[]=[];
   private backdrops=MISSIONS.map(()=>new Image());private heroImages=HEROES.map(()=>new Image());private mavka=new Image();private infantry=new Image();private theme="river";private frameBounds:number[][][]=[];
@@ -129,7 +129,7 @@ export class View {
     for(const l of world.ladders){const x=l.x*S-this.cameraX,y=266-l.top*S+this.cameraY,h=(l.top-l.bottom)*S;this.rect(x-5,y,2,h,'#8f7d4d');this.rect(x+5,y,2,h,'#635b3c');for(let yy=2;yy<h;yy+=6){this.rect(x-5,y+yy,12,2,'#a18d59');this.rect(x-5,y+yy+2,12,1,'#3f3c29');}}
     for(let x=-16;x<W+16;x+=16)for(let y=314+Math.round(this.cameraY);y<H;y+=16)this.c.drawImage(this.tile('earth',Math.abs(Math.floor((x+this.cameraX)/16))%5),x,y);
     for(const b of world.boxes)if(b.hp>0)this.box(b);
-    if(playing)this.gore.step(Math.min(dt,1/30),world.boxes);
+    if(playing)this.gore.step(Math.min(dt,1/30),world.boxes,this.onGoreImpact);
     for(const s of this.gore.stains)this.rect(s.x*S-this.cameraX-s.w*S/2,266-s.y*S+this.cameraY-1,s.w*S,s.h*S,s.color);
     for(const a of world.allies)if(!a.rescued){this.sprite(a.x,0,1,3,true);const x=a.x*S-this.cameraX,y=266+this.cameraY;this.rect(x-12,y-35,24,2,'#9c9e80');this.rect(x-12,y-1,24,2,'#565f4a');for(let i=-12;i<=12;i+=6)this.rect(x+i,y-34,1,34,'#8a9682');this.label('ВРЯТУЙ',x,y-41,'#e0d791');}
     for(const k of world.medkits)if(!k.used){const x=k.x*S-this.cameraX,y=266+this.cameraY;this.rect(x-5,y-7,10,7,'#dbd8b0');this.rect(x-1,y-6,2,5,'#a93d2c');this.rect(x-3,y-4,6,2,'#a93d2c');}

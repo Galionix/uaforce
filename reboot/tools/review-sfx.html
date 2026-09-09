@@ -1,0 +1,39 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UA Force · перевірка звукових ефектів</title>
+<style>
+:root{color-scheme:dark;font:18px system-ui;background:#101721;color:#f1f4e9}body{max-width:1080px;margin:40px auto;padding:0 20px}h1{font-size:28px}p{line-height:1.5;color:#bdc6cf}input,button{font:inherit;padding:12px;border:2px solid #536477;background:#1b2838;color:inherit}input{width:min(80%,600px)}button{cursor:pointer}button:disabled{opacity:.4;cursor:default}.row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #344255}.id{font-weight:650;word-break:break-word}.detail{font-size:15px;color:#aebbc9;margin-top:4px}#status{color:#ffd45d}#stop{background:#793742}@media(max-width:650px){.row{grid-template-columns:1fr auto}.old{grid-column:2}.detail{font-size:14px}}
+</style>
+<h1>UA Force · нові звукові ефекти</h1>
+<p>Локальна монтажна перевірка. Тут немає автопрогравання. Кнопка запускає тільки один обраний звук; новий вибір зупиняє попередній. Цикли програються двічі для перевірки стику.</p>
+<input id="filter" placeholder="Герой або ефект: lesya, death, reload…" aria-label="Пошук ефектів"> <button id="stop">Зупинити</button>
+<p id="status">Завантаження переліку…</p><div id="list"></div>
+<script type="module">
+const silent=new URLSearchParams(location.search).has('silent');let context,source,generation=0;const buffers=new Map();
+const base='/tools/audio-source/local-sfx/edited/',oldBase='/tools/audio-source/before-local-regeneration/';
+const [manifest,old]=await Promise.all([fetch(base+'manifest.json').then(r=>r.json()),fetch(oldBase+'manifest.json').then(r=>r.json())]);
+let cursor=0;const oldClips=new Map(old.clips.map(c=>{const value={...c,offset:cursor};cursor+=c.seconds+.04;return[c.id,value]}));
+cursor=0;const clips=manifest.clips.map(c=>{const value={...c,offset:cursor};cursor+=c.seconds+.04;return value});
+function stop(){generation++;source?.stop();source=null;}
+document.querySelector('#stop').onclick=stop;
+async function play(c,original){
+ if(silent)return;stop();const token=generation;
+ context??=new AudioContext();await context.resume();const url=(original?oldBase:base)+'combat-bank.wav';
+ if(!buffers.has(url))buffers.set(url,fetch(url).then(r=>r.arrayBuffer()).then(b=>context.decodeAudioData(b)));
+ const buffer=await buffers.get(url);if(token!==generation)return;
+ const s=context.createBufferSource(),gain=context.createGain();source=s;s.buffer=buffer;gain.gain.value=.4;s.connect(gain);gain.connect(context.destination);
+ if(c.loop){s.loop=true;s.loopStart=c.offset;s.loopEnd=c.offset+c.seconds;s.start(0,c.offset);s.stop(context.currentTime+c.seconds*2);}else s.start(0,c.offset,c.seconds);
+ s.onended=()=>{s.disconnect();gain.disconnect();if(source===s)source=null};
+ document.querySelector('#status').textContent=(original?'Попередній: ':'Кандидат: ')+c.id;
+}
+function render(){
+ const filter=document.querySelector('#filter').value.toLowerCase(),list=document.querySelector('#list');list.replaceChildren();
+ for(const c of clips.filter(c=>c.id.includes(filter))){
+  const row=document.createElement('div');row.className='row';const text=document.createElement('div'),id=document.createElement('div'),detail=document.createElement('div');
+  id.className='id';id.textContent=c.id;detail.className='detail';detail.textContent=`${c.seconds.toFixed(2)} с · ${c.loop?'цикл':'разовий ефект'}`;text.append(id,detail);row.append(text);
+  for(const original of [false,true]){const button=document.createElement('button'),clip=original?oldClips.get(c.id):c;button.textContent=original?'Попередній':'Новий';button.className=original?'old':'';button.disabled=silent||!clip;button.onclick=()=>play(clip,original).catch(e=>document.querySelector('#status').textContent=String(e));row.append(button)}
+  list.append(row);
+ }
+ document.querySelector('#status').textContent=silent?'Тихий перегляд: звук вимкнено.':`${clips.length} кандидатів. Це панель перевірки, а не оцінка якості на слух.`;
+}
+document.querySelector('#filter').value=new URLSearchParams(location.search).get('filter')??'';document.querySelector('#filter').oninput=render;document.addEventListener('visibilitychange',()=>{if(document.hidden)stop()});window.addEventListener('pagehide',stop);render();
+</script></html>

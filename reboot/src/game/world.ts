@@ -1,4 +1,4 @@
-import {missionInfantry,stepInfantry,type Infantry} from './infantry.ts';
+import {missionInfantry,stepInfantry,type Infantry,type InfantryKind} from './infantry.ts';
 import {nearbyBarrel,interactBarrel,stepBarrels,dropBarrel} from './barrels.ts';
 import {DeathLines,type DeathCause} from './enemy-death.ts';
 import {MotionFoley} from './hero-foley.ts';
@@ -16,7 +16,7 @@ export type Actions = { move: number; jump: boolean; jumpHeld?:boolean; fire: bo
 export type Box = { id: number; x: number; y: number; w: number; h: number; hp: number; maxHp: number; vx?:number;vy?:number; kind: 'crate' | 'barrel' | 'wall' | 'radio' | 'platform' | 'earth' | 'stone' };
 export type Enemy = { id: number; x: number; y: number; hp: number; maxHp: number; dir: number; cooldown: number; windup: number; anchor: number; heavy: boolean; vehicle?:Vehicle;infantry?:Infantry;boss?:BossActor; rooted?:number; poison?:number; distracted?:number };
 export type Bullet = { id: number; x: number; y: number; vx: number; vy: number; life: number; friendly: boolean; damage: number; hero?:HeroId;ordnance?:'shell'|'rocket';blastRadius?:number };
-export type Event = { type: 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
+export type Event = { type: 'goreLand' | 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; deathRole?:InfantryKind;deathCause?:DeathCause;soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
 export const IDLE: Actions = { move: 0, jump: false, fire: false, special: false, interact: false };
 
 export function createPlayerBody(){return { x: 3, y: 0, vy: 0, hp: 100, facing: 1, grounded: true, invulnerable: 0, cooldown: 0, energy: 100, coyote: 0.12, wallSide:0,wallLock:0,wallVx:0,wallClimbing:false,ladder: -1, ladderLock: 0, detachVx: 0, ladderNeedsRelease:false, cast:0, attack:0, specialCooldown:0, specialRecovery:[] as number[], form:0, cloak:0, fireCount:0, ammo:0, reloading:0, burstShots:0, weaponTrigger:false };}
@@ -175,7 +175,7 @@ export class World {
     if (enemy.hp <= 0) {
       if(enemy.boss)bossDefeated(this,enemy);this.kills++;
       if(enemy.vehicle||enemy.boss)this.event('burst',enemy.x,enemy.y+.8);
-      else this.events.push({type:'enemyDeath',x:enemy.x,y:enemy.y+.9,text:this.deathLines.next(Math.random,{cause,role:enemy.infantry?.kind})});
+      else this.events.push({type:'enemyDeath',x:enemy.x,y:enemy.y+.9,deathRole:enemy.infantry?.kind??(enemy.heavy?'gunner':'rifle'),deathCause:cause,text:this.deathLines.next(Math.random,{cause,role:enemy.infantry?.kind})});
     }
   }
   damageBox(box: Box, damage: number) {

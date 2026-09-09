@@ -14,7 +14,6 @@ audio=[]
 for sub in ['music','cues','announcer']:
  audio.extend('/'+str(p.relative_to(root/'public')) for p in (root/'public/assets/audio'/sub).glob('*.wav') if p.stem!='sirko')
 audio.append('/assets/audio/sfx/combat-bank.wav')
-audio.extend('/assets/audio/'+p for p in ['rifle.wav','pain1.wav','reload.wav','Menu Selection Click.wav'])
 
 def convert(url):
  src=root/'public'/url.lstrip('/');sha=hashlib.sha256(src.read_bytes()).hexdigest()[:16]

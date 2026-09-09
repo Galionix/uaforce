@@ -5,6 +5,8 @@ from pathlib import Path
 import numpy as np
 import subprocess,json,hashlib,wave
 from functools import lru_cache
+if (Path(__file__).resolve().parents[1]/'docs/SFX_STYLE.md').exists():
+ raise SystemExit('Legacy library builder is archived. Current owner scope: docs/SFX_STYLE.md. Use generate-local-sfx.py and pack-local-sfx.py; do not overwrite generated SFX with the old library.')
 R=Path(__file__).resolve().parents[1]; LIB=R/'tools/audio-source/sfx-library'; OUT=R/'public/assets/audio/sfx';OUT.mkdir(exist_ok=True)
 SR=24000
 @lru_cache(None)

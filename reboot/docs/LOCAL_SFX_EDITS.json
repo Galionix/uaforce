@@ -1,0 +1,1728 @@
+{
+  "lesya-weapon-0": {
+    "sourceId": "lesya-weapon-2",
+    "masterSha256": "9c628ffd3ab8ea6ed4a26e935086d87ca85da60eda48f491dd2b6689a409fcc7",
+    "start": 3.12049485,
+    "rate": 0.97,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.36,
+    "mix": []
+  },
+  "lesya-weapon-1": {
+    "sourceId": "lesya-weapon-2",
+    "masterSha256": "9c628ffd3ab8ea6ed4a26e935086d87ca85da60eda48f491dd2b6689a409fcc7",
+    "start": 3.12049485,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.36,
+    "mix": []
+  },
+  "franko-weapon-0": {
+    "sourceId": "franko-weapon-2",
+    "masterSha256": "5eb8f65a832426910f4eaa5fc558f7139c8c5749e32fad5d34ac2bc1c04c8784",
+    "rate": 0.97,
+    "reason": "Newly generated take 2 retained as clean family variation after edited-audio review."
+  },
+  "franko-weapon-1": {
+    "sourceId": "franko-weapon-2",
+    "masterSha256": "5eb8f65a832426910f4eaa5fc558f7139c8c5749e32fad5d34ac2bc1c04c8784",
+    "rate": 1.03,
+    "reason": "Newly generated take 2 retained as clean family variation after edited-audio review."
+  },
+  "it-army-weapon-0": {
+    "sourceId": "source-electric-0",
+    "masterSha256": "4623584a1255850e0e249123f836438ac1ef0ea198308ae1cef31a16c3b8c501",
+    "start": 3.832,
+    "rate": 0.97,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.832,
+      "similarity": 0.4748629927635193
+    },
+    "description": "The sound of electricity sparking and crackling.",
+    "seconds": 0.5,
+    "mix": []
+  },
+  "it-army-weapon-1": {
+    "sourceId": "source-electric-0",
+    "masterSha256": "4623584a1255850e0e249123f836438ac1ef0ea198308ae1cef31a16c3b8c501",
+    "start": 3.832,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.832,
+      "similarity": 0.4748629927635193
+    },
+    "description": "The sound of electricity sparking and crackling.",
+    "seconds": 0.5,
+    "mix": []
+  },
+  "it-army-weapon-2": {
+    "sourceId": "source-electric-0",
+    "masterSha256": "4623584a1255850e0e249123f836438ac1ef0ea198308ae1cef31a16c3b8c501",
+    "start": 3.832,
+    "rate": 1.03,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.832,
+      "similarity": 0.4748629927635193
+    },
+    "description": "The sound of electricity sparking and crackling.",
+    "seconds": 0.5,
+    "mix": []
+  },
+  "gore-splat-0": {
+    "sourceId": "gore-splat-1",
+    "masterSha256": "da545de4c6c55ed885654a5f7c817522aa2de07f3ea28647e9917040295c9002",
+    "start": 4.2,
+    "seconds": 0.5,
+    "reason": "PCM-screened material-bearing interval, not the loudest unrelated transient.",
+    "screen": {
+      "start": 4.2,
+      "similarity": 0.4505518674850464
+    },
+    "rate": 0.96,
+    "mix": []
+  },
+  "gore-splat-1": {
+    "sourceId": "gore-splat-1",
+    "masterSha256": "da545de4c6c55ed885654a5f7c817522aa2de07f3ea28647e9917040295c9002",
+    "start": 4.2,
+    "seconds": 0.5,
+    "reason": "PCM-screened material-bearing interval, not the loudest unrelated transient.",
+    "screen": {
+      "start": 4.2,
+      "similarity": 0.4505518674850464
+    },
+    "rate": 1,
+    "mix": []
+  },
+  "gore-splat-2": {
+    "sourceId": "gore-splat-1",
+    "masterSha256": "da545de4c6c55ed885654a5f7c817522aa2de07f3ea28647e9917040295c9002",
+    "start": 4.2,
+    "seconds": 0.5,
+    "reason": "PCM-screened material-bearing interval, not the loudest unrelated transient.",
+    "screen": {
+      "start": 4.2,
+      "similarity": 0.4505518674850464
+    },
+    "rate": 1.04,
+    "mix": []
+  },
+  "gore-blood-burst-0": {
+    "sourceId": "gore-splat-1",
+    "masterSha256": "da545de4c6c55ed885654a5f7c817522aa2de07f3ea28647e9917040295c9002",
+    "start": 4.2,
+    "seconds": 0.65,
+    "reason": "PCM-screened material-bearing interval, not the loudest unrelated transient.",
+    "screen": {
+      "start": 4.2,
+      "similarity": 0.4505518674850464
+    },
+    "rate": 0.96,
+    "mix": [
+      {
+        "sourceId": "shevchenko-hit",
+        "masterSha256": "2eebf9ee52aaa33933072e2bba29edc90e273fd77c6c31792a7122dbf45cb6dd",
+        "start": 1.777,
+        "rate": 1,
+        "gain": 0.12,
+        "cut": 0.3,
+        "at": 0
+      }
+    ]
+  },
+  "gore-blood-burst-1": {
+    "sourceId": "gore-splat-1",
+    "masterSha256": "da545de4c6c55ed885654a5f7c817522aa2de07f3ea28647e9917040295c9002",
+    "start": 4.2,
+    "seconds": 0.65,
+    "reason": "PCM-screened material-bearing interval, not the loudest unrelated transient.",
+    "screen": {
+      "start": 4.2,
+      "similarity": 0.4505518674850464
+    },
+    "rate": 1,
+    "mix": [
+      {
+        "sourceId": "shevchenko-hit",
+        "masterSha256": "2eebf9ee52aaa33933072e2bba29edc90e273fd77c6c31792a7122dbf45cb6dd",
+        "start": 1.777,
+        "rate": 1,
+        "gain": 0.12,
+        "cut": 0.3,
+        "at": 0
+      }
+    ]
+  },
+  "gore-blood-burst-2": {
+    "sourceId": "gore-splat-1",
+    "masterSha256": "da545de4c6c55ed885654a5f7c817522aa2de07f3ea28647e9917040295c9002",
+    "start": 4.2,
+    "seconds": 0.65,
+    "reason": "PCM-screened material-bearing interval, not the loudest unrelated transient.",
+    "screen": {
+      "start": 4.2,
+      "similarity": 0.4505518674850464
+    },
+    "rate": 1.04,
+    "mix": [
+      {
+        "sourceId": "shevchenko-hit",
+        "masterSha256": "2eebf9ee52aaa33933072e2bba29edc90e273fd77c6c31792a7122dbf45cb6dd",
+        "start": 1.777,
+        "rate": 1,
+        "gain": 0.12,
+        "cut": 0.3,
+        "at": 0
+      }
+    ]
+  },
+  "skovoroda-weapon-0": {
+    "sourceId": "mamai-melee-weapon-1",
+    "masterSha256": "e77be1df06062d120993a91b147878ed38ef34dd28b5124142bcef23ff22dd65",
+    "start": 5.187,
+    "rate": 0.97,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.3,
+    "mix": []
+  },
+  "skovoroda-weapon-1": {
+    "sourceId": "mamai-melee-weapon-1",
+    "masterSha256": "e77be1df06062d120993a91b147878ed38ef34dd28b5124142bcef23ff22dd65",
+    "start": 5.187,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.3,
+    "mix": []
+  },
+  "skovoroda-weapon-2": {
+    "sourceId": "mamai-melee-weapon-1",
+    "masterSha256": "e77be1df06062d120993a91b147878ed38ef34dd28b5124142bcef23ff22dd65",
+    "start": 5.187,
+    "rate": 1.03,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.3,
+    "mix": []
+  },
+  "lesya-weapon-2": {
+    "sourceId": "lesya-weapon-2",
+    "masterSha256": "9c628ffd3ab8ea6ed4a26e935086d87ca85da60eda48f491dd2b6689a409fcc7",
+    "start": 3.12049485,
+    "rate": 1.03,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.36,
+    "mix": []
+  },
+  "bayraktar-weapon-2": {
+    "sourceId": "bayraktar-weapon-1",
+    "masterSha256": "e1962988a0694d9ab2b2c3f42ebd6f48631f5b9cd7cf9d31d0bc1b6f8f2dd04a",
+    "start": 1.377,
+    "rate": 0.97,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.34,
+    "mix": []
+  },
+  "franko-hit": {
+    "sourceId": "source-rocks-0",
+    "masterSha256": "cfed157b959aeb383c131acc2526c9f9f5771a0cd42110894470c70e48f15917",
+    "start": 1.632,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.632,
+      "similarity": 0.5345536470413208
+    },
+    "description": "The sound of rocks crumbling.",
+    "seconds": 0.55,
+    "mix": [
+      {
+        "sourceId": "source-metal-1",
+        "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+        "start": 4.8,
+        "rate": 1,
+        "gain": 0.35,
+        "cut": 0.4,
+        "at": 0
+      }
+    ]
+  },
+  "skovoroda-hit": {
+    "sourceId": "source-metal-1",
+    "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+    "start": 4.8,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 4.8,
+      "similarity": 0.4908759891986847
+    },
+    "description": "The sound of metal clanging.",
+    "seconds": 0.5,
+    "mix": []
+  },
+  "roots": {
+    "sourceId": "source-wood-0",
+    "masterSha256": "2732ece8f7e58f21aab8d0f6742ed6403af081f7207f65a587a957f3d1fef882",
+    "start": 0.0,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 0.0,
+      "similarity": 0.4710254669189453
+    },
+    "description": "The sound of wood cracking.",
+    "seconds": 0.8,
+    "mix": [
+      {
+        "sourceId": "source-rocks-0",
+        "masterSha256": "cfed157b959aeb383c131acc2526c9f9f5771a0cd42110894470c70e48f15917",
+        "start": 1.632,
+        "rate": 1,
+        "gain": 0.4,
+        "cut": 0.6,
+        "at": 0.1
+      }
+    ]
+  },
+  "stone-hit": {
+    "sourceId": "source-rocks-0",
+    "masterSha256": "cfed157b959aeb383c131acc2526c9f9f5771a0cd42110894470c70e48f15917",
+    "start": 1.632,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.632,
+      "similarity": 0.5345536470413208
+    },
+    "description": "The sound of rocks crumbling.",
+    "seconds": 0.55,
+    "mix": []
+  },
+  "mine-arm": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.22,
+    "mix": []
+  },
+  "glass-fire": {
+    "sourceId": "source-metal-1",
+    "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+    "start": 4.8,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 4.8,
+      "similarity": 0.4908759891986847
+    },
+    "description": "The sound of metal clanging.",
+    "seconds": 0.7,
+    "mix": [
+      {
+        "sourceId": "source-fire-1",
+        "masterSha256": "d49202371d068a38b8d8fec731eb15cf5230247eb674cebcbfa8db7ceabda533",
+        "start": 1.2,
+        "rate": 1,
+        "gain": 0.7,
+        "cut": 0.65,
+        "at": 0.05
+      }
+    ]
+  },
+  "shevchenko-special": {
+    "sourceId": "source-paper-0",
+    "masterSha256": "4fd4b44bcd9a671dbb9acd67d9a3dff18258b7acc9c4ef0e44ec60f46d5140bf",
+    "start": 3.9,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.9,
+      "similarity": 0.5365288853645325
+    },
+    "description": "The sound of paper rustling.",
+    "seconds": 1.2,
+    "mix": [
+      {
+        "sourceId": "shevchenko-weapon-0",
+        "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+        "start": 0.792,
+        "rate": 1,
+        "gain": 0.5,
+        "cut": 0.4,
+        "at": 0
+      }
+    ]
+  },
+  "lesya-special": {
+    "sourceId": "source-crow-1",
+    "masterSha256": "ab3e61c72469146311e8ffd04c5c7225328a2c55a8ca4a79c25621fc4261dcd7",
+    "start": 2.4,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 2.4,
+      "similarity": 0.6713747978210449
+    },
+    "description": "The sound of a crow cawing.",
+    "seconds": 0.8,
+    "mix": [
+      {
+        "sourceId": "source-wings-1",
+        "masterSha256": "2c2a54e395811003ebf2551f638dbf42117305ee2cc5bb080c62c60c2effcda6",
+        "start": 0.9,
+        "rate": 1,
+        "gain": 0.2,
+        "cut": 0.5,
+        "at": 0
+      }
+    ]
+  },
+  "lesya-ultimate": {
+    "sourceId": "source-wood-0",
+    "masterSha256": "2732ece8f7e58f21aab8d0f6742ed6403af081f7207f65a587a957f3d1fef882",
+    "start": 0.0,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 0.0,
+      "similarity": 0.4710254669189453
+    },
+    "description": "The sound of wood cracking.",
+    "seconds": 1.1,
+    "mix": [
+      {
+        "sourceId": "source-rocks-0",
+        "masterSha256": "cfed157b959aeb383c131acc2526c9f9f5771a0cd42110894470c70e48f15917",
+        "start": 1.632,
+        "rate": 1,
+        "gain": 0.7,
+        "cut": 0.75,
+        "at": 0.15
+      }
+    ]
+  },
+  "franko-special": {
+    "sourceId": "source-rocks-0",
+    "masterSha256": "cfed157b959aeb383c131acc2526c9f9f5771a0cd42110894470c70e48f15917",
+    "start": 1.632,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.632,
+      "similarity": 0.5345536470413208
+    },
+    "description": "The sound of rocks crumbling.",
+    "seconds": 0.8,
+    "mix": [
+      {
+        "sourceId": "source-metal-1",
+        "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+        "start": 4.8,
+        "rate": 1,
+        "gain": 0.3,
+        "cut": 0.45,
+        "at": 0
+      }
+    ]
+  },
+  "bandera-special": {
+    "sourceId": "shevchenko-weapon-0",
+    "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+    "start": 0.792,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.34,
+    "mix": []
+  },
+  "mamai-special": {
+    "sourceId": "source-string-1",
+    "masterSha256": "4eb04cc1637702faf4e29de936a961b11ff1888d5c95d07805992a858a06d82f",
+    "start": 4.2,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 4.2,
+      "similarity": 0.31363892555236816
+    },
+    "description": "The sound of an acoustic string instrument plucking.",
+    "seconds": 0.45,
+    "mix": [
+      {
+        "sourceId": "shevchenko-weapon-0",
+        "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+        "start": 0.792,
+        "rate": 1,
+        "gain": 0.2,
+        "cut": 0.25,
+        "at": 0
+      }
+    ]
+  },
+  "mamai-ultimate": {
+    "sourceId": "source-horse-1",
+    "masterSha256": "9e5181e8b126725e1e7dbad55d14de4ba8fce650599709c8aeb5568456c3849b",
+    "start": 1.777,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.777,
+      "similarity": 0.6149022579193115
+    },
+    "description": "The sound of a horse galloping.",
+    "seconds": 1.3,
+    "mix": [
+      {
+        "sourceId": "source-metal-1",
+        "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+        "start": 4.8,
+        "rate": 1,
+        "gain": 0.1,
+        "cut": 0.4,
+        "at": 0
+      }
+    ]
+  },
+  "bayraktar-special": {
+    "sourceId": "source-rotor-0",
+    "masterSha256": "b38880446b7ad82000ff18f757c1af253de755e04bff8e13458074a2b29f4947",
+    "start": 2.392,
+    "rate": 1.04,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 2.392,
+      "similarity": 0.6957667469978333
+    },
+    "description": "The sound of a helicopter hovering.",
+    "seconds": 0.7,
+    "mix": []
+  },
+  "ghost-ultimate": {
+    "sourceId": "source-jet-0",
+    "masterSha256": "d916d44f497230a06c7d59349cb9e3ff30847bbc06595edede7f63a427f34197",
+    "start": 0.337,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 0.337,
+      "similarity": 0.5006922483444214
+    },
+    "description": "The sound of a jet airplane engine roaring.",
+    "seconds": 1.8,
+    "mix": []
+  },
+  "zelensky-special": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.25,
+    "mix": []
+  },
+  "zelensky-ultimate": {
+    "sourceId": "source-rotor-0",
+    "masterSha256": "b38880446b7ad82000ff18f757c1af253de755e04bff8e13458074a2b29f4947",
+    "start": 2.392,
+    "rate": 1.08,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 2.392,
+      "similarity": 0.6957667469978333
+    },
+    "description": "The sound of a helicopter hovering.",
+    "seconds": 1,
+    "mix": [
+      {
+        "sourceId": "source-paper-0",
+        "masterSha256": "4fd4b44bcd9a671dbb9acd67d9a3dff18258b7acc9c4ef0e44ec60f46d5140bf",
+        "start": 3.9,
+        "rate": 1,
+        "gain": 0.25,
+        "cut": 0.5,
+        "at": 0
+      }
+    ]
+  },
+  "bilozerska-special": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 0.96,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.25,
+    "mix": []
+  },
+  "bilozerska-ultimate": {
+    "sourceId": "bilozerska-weapon-0",
+    "masterSha256": "c93f591a6843c064417039c13a43a9992fe911bb76dc6d9bea001ea16382bbd8",
+    "start": 0.452,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 1.1,
+    "mix": [
+      {
+        "sourceId": "shevchenko-weapon-0",
+        "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+        "start": 0.792,
+        "rate": 1,
+        "gain": 0.5,
+        "cut": 0.4,
+        "at": 0
+      },
+      {
+        "sourceId": "explosion",
+        "masterSha256": "e3004674e5d2bc99b0c11021fa7c2ce3aa56fea55f8444aa242eff97318b89f3",
+        "start": 0.0,
+        "rate": 1,
+        "gain": 0.3,
+        "cut": 0.9,
+        "at": 0.06
+      }
+    ]
+  },
+  "it-army-special": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.4,
+    "mix": [
+      {
+        "sourceId": "source-electric-0",
+        "masterSha256": "4623584a1255850e0e249123f836438ac1ef0ea198308ae1cef31a16c3b8c501",
+        "start": 3.832,
+        "rate": 1,
+        "gain": 0.3,
+        "cut": 0.35,
+        "at": 0
+      }
+    ]
+  },
+  "it-army-ultimate": {
+    "sourceId": "source-electric-0",
+    "masterSha256": "4623584a1255850e0e249123f836438ac1ef0ea198308ae1cef31a16c3b8c501",
+    "start": 3.832,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.832,
+      "similarity": 0.4748629927635193
+    },
+    "description": "The sound of electricity sparking and crackling.",
+    "seconds": 1.2,
+    "mix": [
+      {
+        "sourceId": "explosion",
+        "masterSha256": "e3004674e5d2bc99b0c11021fa7c2ce3aa56fea55f8444aa242eff97318b89f3",
+        "start": 0.0,
+        "rate": 1,
+        "gain": 0.45,
+        "cut": 0.8,
+        "at": 0.15
+      }
+    ]
+  },
+  "skovoroda-special": {
+    "sourceId": "source-paper-0",
+    "masterSha256": "4fd4b44bcd9a671dbb9acd67d9a3dff18258b7acc9c4ef0e44ec60f46d5140bf",
+    "start": 3.9,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.9,
+      "similarity": 0.5365288853645325
+    },
+    "description": "The sound of paper rustling.",
+    "seconds": 0.6,
+    "mix": [
+      {
+        "sourceId": "shevchenko-weapon-0",
+        "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+        "start": 0.792,
+        "rate": 1,
+        "gain": 0.2,
+        "cut": 0.3,
+        "at": 0
+      }
+    ]
+  },
+  "skovoroda-ultimate": {
+    "sourceId": "source-metal-1",
+    "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+    "start": 4.8,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 4.8,
+      "similarity": 0.4908759891986847
+    },
+    "description": "The sound of metal clanging.",
+    "seconds": 0.9,
+    "mix": [
+      {
+        "sourceId": "shevchenko-weapon-0",
+        "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+        "start": 0.792,
+        "rate": 1,
+        "gain": 0.45,
+        "cut": 0.5,
+        "at": 0
+      }
+    ]
+  },
+  "lesya-special-loop": {
+    "sourceId": "source-wings-1",
+    "masterSha256": "2c2a54e395811003ebf2551f638dbf42117305ee2cc5bb080c62c60c2effcda6",
+    "start": 0.9,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 0.9,
+      "similarity": 0.6681152582168579
+    },
+    "description": "The sound of bird wings flapping.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "lesya-ultimate-loop": {
+    "sourceId": "source-wood-0",
+    "masterSha256": "2732ece8f7e58f21aab8d0f6742ed6403af081f7207f65a587a957f3d1fef882",
+    "start": 0.0,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 0.0,
+      "similarity": 0.4710254669189453
+    },
+    "description": "The sound of wood cracking.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "franko-special-loop": {
+    "sourceId": "source-rocks-0",
+    "masterSha256": "cfed157b959aeb383c131acc2526c9f9f5771a0cd42110894470c70e48f15917",
+    "start": 1.632,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.632,
+      "similarity": 0.5345536470413208
+    },
+    "description": "The sound of rocks crumbling.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "bandera-special-loop": {
+    "sourceId": "source-fire-1",
+    "masterSha256": "d49202371d068a38b8d8fec731eb15cf5230247eb674cebcbfa8db7ceabda533",
+    "start": 1.2,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.2,
+      "similarity": 0.6383180618286133
+    },
+    "description": "The sound of fire crackling.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "mamai-special-loop": {
+    "sourceId": "shevchenko-weapon-0",
+    "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+    "start": 0.792,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.95,
+    "mix": []
+  },
+  "mamai-ultimate-loop": {
+    "sourceId": "source-horse-1",
+    "masterSha256": "9e5181e8b126725e1e7dbad55d14de4ba8fce650599709c8aeb5568456c3849b",
+    "start": 1.777,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.777,
+      "similarity": 0.6149022579193115
+    },
+    "description": "The sound of a horse galloping.",
+    "seconds": 0.95,
+    "mix": []
+  },
+  "bayraktar-special-loop": {
+    "sourceId": "source-rotor-0",
+    "masterSha256": "b38880446b7ad82000ff18f757c1af253de755e04bff8e13458074a2b29f4947",
+    "start": 2.392,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 2.392,
+      "similarity": 0.6957667469978333
+    },
+    "description": "The sound of a helicopter hovering.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "bayraktar-ultimate-loop": {
+    "sourceId": "source-jet-0",
+    "masterSha256": "d916d44f497230a06c7d59349cb9e3ff30847bbc06595edede7f63a427f34197",
+    "start": 0.337,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 0.337,
+      "similarity": 0.5006922483444214
+    },
+    "description": "The sound of a jet airplane engine roaring.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "ghost-ultimate-loop": {
+    "sourceId": "source-jet-0",
+    "masterSha256": "d916d44f497230a06c7d59349cb9e3ff30847bbc06595edede7f63a427f34197",
+    "start": 0.337,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 0.337,
+      "similarity": 0.5006922483444214
+    },
+    "description": "The sound of a jet airplane engine roaring.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "zelensky-ultimate-loop": {
+    "sourceId": "source-rotor-0",
+    "masterSha256": "b38880446b7ad82000ff18f757c1af253de755e04bff8e13458074a2b29f4947",
+    "start": 2.392,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 2.392,
+      "similarity": 0.6957667469978333
+    },
+    "description": "The sound of a helicopter hovering.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "it-army-ultimate-loop": {
+    "sourceId": "source-electric-0",
+    "masterSha256": "4623584a1255850e0e249123f836438ac1ef0ea198308ae1cef31a16c3b8c501",
+    "start": 3.832,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.832,
+      "similarity": 0.4748629927635193
+    },
+    "description": "The sound of electricity sparking and crackling.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "skovoroda-special-loop": {
+    "sourceId": "source-paper-0",
+    "masterSha256": "4fd4b44bcd9a671dbb9acd67d9a3dff18258b7acc9c4ef0e44ec60f46d5140bf",
+    "start": 3.9,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.9,
+      "similarity": 0.5365288853645325
+    },
+    "description": "The sound of paper rustling.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "skovoroda-ultimate-loop": {
+    "sourceId": "shevchenko-weapon-0",
+    "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+    "start": 0.792,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "shevchenko-special-end": {
+    "sourceId": "source-paper-0",
+    "masterSha256": "4fd4b44bcd9a671dbb9acd67d9a3dff18258b7acc9c4ef0e44ec60f46d5140bf",
+    "start": 3.9,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.9,
+      "similarity": 0.5365288853645325
+    },
+    "description": "The sound of paper rustling.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "shevchenko-ultimate-end": {
+    "sourceId": "source-paper-0",
+    "masterSha256": "4fd4b44bcd9a671dbb9acd67d9a3dff18258b7acc9c4ef0e44ec60f46d5140bf",
+    "start": 3.9,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.9,
+      "similarity": 0.5365288853645325
+    },
+    "description": "The sound of paper rustling.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "lesya-special-end": {
+    "sourceId": "source-wood-0",
+    "masterSha256": "2732ece8f7e58f21aab8d0f6742ed6403af081f7207f65a587a957f3d1fef882",
+    "start": 0.0,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 0.0,
+      "similarity": 0.4710254669189453
+    },
+    "description": "The sound of wood cracking.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "lesya-ultimate-end": {
+    "sourceId": "source-wood-0",
+    "masterSha256": "2732ece8f7e58f21aab8d0f6742ed6403af081f7207f65a587a957f3d1fef882",
+    "start": 0.0,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 0.0,
+      "similarity": 0.4710254669189453
+    },
+    "description": "The sound of wood cracking.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "franko-special-end": {
+    "sourceId": "source-rocks-0",
+    "masterSha256": "cfed157b959aeb383c131acc2526c9f9f5771a0cd42110894470c70e48f15917",
+    "start": 1.632,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.632,
+      "similarity": 0.5345536470413208
+    },
+    "description": "The sound of rocks crumbling.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "franko-ultimate-end": {
+    "sourceId": "source-rocks-0",
+    "masterSha256": "cfed157b959aeb383c131acc2526c9f9f5771a0cd42110894470c70e48f15917",
+    "start": 1.632,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.632,
+      "similarity": 0.5345536470413208
+    },
+    "description": "The sound of rocks crumbling.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "bandera-special-end": {
+    "sourceId": "source-metal-1",
+    "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+    "start": 4.8,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 4.8,
+      "similarity": 0.4908759891986847
+    },
+    "description": "The sound of metal clanging.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "bandera-ultimate-end": {
+    "sourceId": "source-metal-1",
+    "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+    "start": 4.8,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 4.8,
+      "similarity": 0.4908759891986847
+    },
+    "description": "The sound of metal clanging.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "mamai-special-end": {
+    "sourceId": "source-metal-1",
+    "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+    "start": 4.8,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 4.8,
+      "similarity": 0.4908759891986847
+    },
+    "description": "The sound of metal clanging.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "mamai-ultimate-end": {
+    "sourceId": "source-metal-1",
+    "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+    "start": 4.8,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 4.8,
+      "similarity": 0.4908759891986847
+    },
+    "description": "The sound of metal clanging.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "bayraktar-special-end": {
+    "sourceId": "source-rotor-0",
+    "masterSha256": "b38880446b7ad82000ff18f757c1af253de755e04bff8e13458074a2b29f4947",
+    "start": 2.392,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 2.392,
+      "similarity": 0.6957667469978333
+    },
+    "description": "The sound of a helicopter hovering.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "bayraktar-ultimate-end": {
+    "sourceId": "source-rotor-0",
+    "masterSha256": "b38880446b7ad82000ff18f757c1af253de755e04bff8e13458074a2b29f4947",
+    "start": 2.392,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 2.392,
+      "similarity": 0.6957667469978333
+    },
+    "description": "The sound of a helicopter hovering.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "ghost-special-end": {
+    "sourceId": "shevchenko-weapon-0",
+    "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+    "start": 0.792,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "ghost-ultimate-end": {
+    "sourceId": "shevchenko-weapon-0",
+    "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+    "start": 0.792,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "zelensky-special-end": {
+    "sourceId": "source-paper-0",
+    "masterSha256": "4fd4b44bcd9a671dbb9acd67d9a3dff18258b7acc9c4ef0e44ec60f46d5140bf",
+    "start": 3.9,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.9,
+      "similarity": 0.5365288853645325
+    },
+    "description": "The sound of paper rustling.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "zelensky-ultimate-end": {
+    "sourceId": "source-paper-0",
+    "masterSha256": "4fd4b44bcd9a671dbb9acd67d9a3dff18258b7acc9c4ef0e44ec60f46d5140bf",
+    "start": 3.9,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.9,
+      "similarity": 0.5365288853645325
+    },
+    "description": "The sound of paper rustling.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "bilozerska-special-end": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "bilozerska-ultimate-end": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "it-army-special-end": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "it-army-ultimate-end": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "skovoroda-special-end": {
+    "sourceId": "source-paper-0",
+    "masterSha256": "4fd4b44bcd9a671dbb9acd67d9a3dff18258b7acc9c4ef0e44ec60f46d5140bf",
+    "start": 3.9,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.9,
+      "similarity": 0.5365288853645325
+    },
+    "description": "The sound of paper rustling.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "skovoroda-ultimate-end": {
+    "sourceId": "source-paper-0",
+    "masterSha256": "4fd4b44bcd9a671dbb9acd67d9a3dff18258b7acc9c4ef0e44ec60f46d5140bf",
+    "start": 3.9,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 3.9,
+      "similarity": 0.5365288853645325
+    },
+    "description": "The sound of paper rustling.",
+    "seconds": 0.35,
+    "mix": []
+  },
+  "lesya-reload-end": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1.03,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.2,
+    "mix": []
+  },
+  "bandera-reload-end": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1.03,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.2,
+    "mix": []
+  },
+  "mamai-reload-end": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 0.96,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.2,
+    "mix": []
+  },
+  "bayraktar-reload-end": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1.03,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.2,
+    "mix": []
+  },
+  "ghost-reload-end": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1.03,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.2,
+    "mix": []
+  },
+  "zelensky-reload-end": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1.03,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.2,
+    "mix": []
+  },
+  "bilozerska-reload-end": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 0.96,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.2,
+    "mix": []
+  },
+  "it-army-reload-end": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1.03,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.2,
+    "mix": []
+  },
+  "plane-engine": {
+    "sourceId": "source-jet-0",
+    "masterSha256": "d916d44f497230a06c7d59349cb9e3ff30847bbc06595edede7f63a427f34197",
+    "start": 0.337,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 0.337,
+      "similarity": 0.5006922483444214
+    },
+    "description": "The sound of a jet airplane engine roaring.",
+    "seconds": 1.8,
+    "mix": []
+  },
+  "drone-engine": {
+    "sourceId": "source-rotor-0",
+    "masterSha256": "b38880446b7ad82000ff18f757c1af253de755e04bff8e13458074a2b29f4947",
+    "start": 2.392,
+    "rate": 1.08,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 2.392,
+      "similarity": 0.6957667469978333
+    },
+    "description": "The sound of a helicopter hovering.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "drone-dive": {
+    "sourceId": "source-rotor-0",
+    "masterSha256": "b38880446b7ad82000ff18f757c1af253de755e04bff8e13458074a2b29f4947",
+    "start": 2.392,
+    "rate": 1.1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 2.392,
+      "similarity": 0.6957667469978333
+    },
+    "description": "The sound of a helicopter hovering.",
+    "seconds": 0.65,
+    "mix": [
+      {
+        "sourceId": "shevchenko-weapon-0",
+        "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+        "start": 0.792,
+        "rate": 1,
+        "gain": 0.6,
+        "cut": 0.5,
+        "at": 0
+      }
+    ]
+  },
+  "enemy-fuse": {
+    "sourceId": "source-fire-1",
+    "masterSha256": "d49202371d068a38b8d8fec731eb15cf5230247eb674cebcbfa8db7ceabda533",
+    "start": 1.2,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.2,
+      "similarity": 0.6383180618286133
+    },
+    "description": "The sound of fire crackling.",
+    "seconds": 0.75,
+    "mix": []
+  },
+  "barrel-throw": {
+    "sourceId": "shevchenko-weapon-0",
+    "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+    "start": 0.792,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.35,
+    "mix": [
+      {
+        "sourceId": "source-metal-1",
+        "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+        "start": 4.8,
+        "rate": 1,
+        "gain": 0.3,
+        "cut": 0.2,
+        "at": 0.12
+      }
+    ]
+  },
+  "armor-hit": {
+    "sourceId": "source-metal-1",
+    "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+    "start": 4.8,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 4.8,
+      "similarity": 0.4908759891986847
+    },
+    "description": "The sound of metal clanging.",
+    "seconds": 0.3,
+    "mix": []
+  },
+  "follower-down": {
+    "sourceId": "source-metal-1",
+    "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+    "start": 4.8,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 4.8,
+      "similarity": 0.4908759891986847
+    },
+    "description": "The sound of metal clanging.",
+    "seconds": 0.6,
+    "mix": [
+      {
+        "sourceId": "source-rocks-0",
+        "masterSha256": "cfed157b959aeb383c131acc2526c9f9f5771a0cd42110894470c70e48f15917",
+        "start": 1.632,
+        "rate": 1,
+        "gain": 0.4,
+        "cut": 0.45,
+        "at": 0
+      }
+    ]
+  },
+  "legacy-hurt": {
+    "sourceId": "death-rifle-2",
+    "masterSha256": "de4f214e9e3fb01218bcf233a8a72876f696b1b5d465247f76e268c7290e6a56",
+    "start": 1.187,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.55,
+    "mix": []
+  },
+  "death-assault-0": {
+    "sourceId": "death-assault-0",
+    "masterSha256": "792dbc11a440fc1b17eee656767ea0288feefb3d6e0e3fef6ad8f08d89f6c02d",
+    "start": 4.137018333333333,
+    "rate": 0.94,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.8,
+    "mix": []
+  },
+  "death-scout-0": {
+    "sourceId": "death-sniper-2",
+    "masterSha256": "927cab7f79c6a28fde40e7a626f77335d443e499d2514858335e56a2dc2d0c49",
+    "start": 1.087,
+    "rate": 0.94,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.8,
+    "mix": [
+      {
+        "sourceId": "bolt",
+        "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+        "start": 1.642,
+        "rate": 1,
+        "gain": 0.09,
+        "cut": 0.18,
+        "at": 0.12
+      }
+    ]
+  },
+  "death-shield-0": {
+    "sourceId": "death-gunner-1",
+    "masterSha256": "b56b052de8654dbd78d3f7ced696a07cdde9272b765a36f983f3c5b38f7acfa7",
+    "start": 4.092,
+    "rate": 0.94,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.8,
+    "mix": [
+      {
+        "sourceId": "source-metal-1",
+        "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+        "start": 4.8,
+        "rate": 1,
+        "gain": 0.12,
+        "cut": 0.45,
+        "at": 0.1
+      }
+    ]
+  },
+  "death-demolition-0": {
+    "sourceId": "death-demolition-1",
+    "masterSha256": "262a7831497679e48e758fba11b0aea688a9d28fa19b596c266a443c26fd6880",
+    "start": 0.627,
+    "rate": 0.94,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.8,
+    "mix": []
+  },
+  "death-assault-1": {
+    "sourceId": "death-assault-0",
+    "masterSha256": "792dbc11a440fc1b17eee656767ea0288feefb3d6e0e3fef6ad8f08d89f6c02d",
+    "start": 4.137018333333333,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.8,
+    "mix": []
+  },
+  "death-scout-1": {
+    "sourceId": "death-sniper-2",
+    "masterSha256": "927cab7f79c6a28fde40e7a626f77335d443e499d2514858335e56a2dc2d0c49",
+    "start": 1.087,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.8,
+    "mix": [
+      {
+        "sourceId": "bolt",
+        "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+        "start": 1.642,
+        "rate": 1,
+        "gain": 0.09,
+        "cut": 0.18,
+        "at": 0.12
+      }
+    ]
+  },
+  "death-shield-1": {
+    "sourceId": "death-gunner-1",
+    "masterSha256": "b56b052de8654dbd78d3f7ced696a07cdde9272b765a36f983f3c5b38f7acfa7",
+    "start": 4.092,
+    "rate": 0.965,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.8,
+    "mix": [
+      {
+        "sourceId": "source-metal-1",
+        "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+        "start": 4.8,
+        "rate": 1,
+        "gain": 0.12,
+        "cut": 0.45,
+        "at": 0.1
+      }
+    ]
+  },
+  "death-demolition-1": {
+    "sourceId": "death-demolition-1",
+    "masterSha256": "262a7831497679e48e758fba11b0aea688a9d28fa19b596c266a443c26fd6880",
+    "start": 0.627,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.8,
+    "mix": []
+  },
+  "death-assault-2": {
+    "sourceId": "death-assault-0",
+    "masterSha256": "792dbc11a440fc1b17eee656767ea0288feefb3d6e0e3fef6ad8f08d89f6c02d",
+    "start": 4.137018333333333,
+    "rate": 1.06,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.8,
+    "mix": []
+  },
+  "death-scout-2": {
+    "sourceId": "death-sniper-2",
+    "masterSha256": "927cab7f79c6a28fde40e7a626f77335d443e499d2514858335e56a2dc2d0c49",
+    "start": 1.087,
+    "rate": 1.06,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.8,
+    "mix": [
+      {
+        "sourceId": "bolt",
+        "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+        "start": 1.642,
+        "rate": 1,
+        "gain": 0.09,
+        "cut": 0.18,
+        "at": 0.12
+      }
+    ]
+  },
+  "death-shield-2": {
+    "sourceId": "death-gunner-1",
+    "masterSha256": "b56b052de8654dbd78d3f7ced696a07cdde9272b765a36f983f3c5b38f7acfa7",
+    "start": 4.092,
+    "rate": 0.99,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.8,
+    "mix": [
+      {
+        "sourceId": "source-metal-1",
+        "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+        "start": 4.8,
+        "rate": 1,
+        "gain": 0.12,
+        "cut": 0.45,
+        "at": 0.1
+      }
+    ]
+  },
+  "death-demolition-2": {
+    "sourceId": "death-demolition-1",
+    "masterSha256": "262a7831497679e48e758fba11b0aea688a9d28fa19b596c266a443c26fd6880",
+    "start": 0.627,
+    "rate": 1.06,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 0.8,
+    "mix": []
+  },
+  "gore-croak-0": {
+    "sourceId": "gore-croak-0",
+    "masterSha256": "a529ee839975ef83cbc737fe23f82f0ebf5436132e8727f47314166868b66d31",
+    "start": 5.1,
+    "seconds": 0.75,
+    "reason": "PCM-screened material-bearing interval, not the loudest unrelated transient.",
+    "screen": {
+      "start": 5.1,
+      "similarity": 0.6972720623016357
+    }
+  },
+  "gore-gib-land-0": {
+    "sourceId": "gore-splat-1",
+    "masterSha256": "da545de4c6c55ed885654a5f7c817522aa2de07f3ea28647e9917040295c9002",
+    "start": 4.2,
+    "seconds": 0.5,
+    "reason": "PCM-screened material-bearing interval, not the loudest unrelated transient.",
+    "screen": {
+      "start": 4.2,
+      "similarity": 0.4505518674850464
+    },
+    "rate": 0.96,
+    "mix": []
+  },
+  "gore-croak-1": {
+    "sourceId": "gore-croak-1",
+    "masterSha256": "f813f470feed89f7d9723a859470b00021de62d6e03137cca25e16bba93d79b7",
+    "start": 4.2,
+    "seconds": 0.75,
+    "reason": "PCM-screened material-bearing interval, not the loudest unrelated transient.",
+    "screen": {
+      "start": 4.2,
+      "similarity": 0.5879018902778625
+    }
+  },
+  "gore-gib-land-1": {
+    "sourceId": "gore-splat-1",
+    "masterSha256": "da545de4c6c55ed885654a5f7c817522aa2de07f3ea28647e9917040295c9002",
+    "start": 4.2,
+    "seconds": 0.5,
+    "reason": "PCM-screened material-bearing interval, not the loudest unrelated transient.",
+    "screen": {
+      "start": 4.2,
+      "similarity": 0.4505518674850464
+    },
+    "rate": 1,
+    "mix": []
+  },
+  "gore-croak-2": {
+    "sourceId": "gore-croak-2",
+    "masterSha256": "0824b06564d6bd96f9d576f900da6ec1437b6d8167a9ad60b50b1c56fe9cc610",
+    "start": 0.437,
+    "seconds": 0.75,
+    "reason": "PCM-screened material-bearing interval, not the loudest unrelated transient.",
+    "screen": {
+      "start": 0.437,
+      "similarity": 0.7037132978439331
+    }
+  },
+  "gore-gib-land-2": {
+    "sourceId": "gore-splat-1",
+    "masterSha256": "da545de4c6c55ed885654a5f7c817522aa2de07f3ea28647e9917040295c9002",
+    "start": 4.2,
+    "seconds": 0.5,
+    "reason": "PCM-screened material-bearing interval, not the loudest unrelated transient.",
+    "screen": {
+      "start": 4.2,
+      "similarity": 0.4505518674850464
+    },
+    "rate": 1.04,
+    "mix": []
+  },
+  "death-boss-iron-warden": {
+    "sourceId": "explosion",
+    "masterSha256": "e3004674e5d2bc99b0c11021fa7c2ce3aa56fea55f8444aa242eff97318b89f3",
+    "start": 0.0,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 2.5,
+    "mix": [
+      {
+        "sourceId": "source-metal-1",
+        "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+        "start": 4.8,
+        "rate": 1,
+        "gain": 0.5,
+        "cut": 0.5,
+        "at": 0.2
+      },
+      {
+        "sourceId": "source-rocks-0",
+        "masterSha256": "cfed157b959aeb383c131acc2526c9f9f5771a0cd42110894470c70e48f15917",
+        "start": 1.632,
+        "rate": 1,
+        "gain": 0.6,
+        "cut": 0.75,
+        "at": 1
+      }
+    ]
+  },
+  "death-boss-swarm-master": {
+    "sourceId": "source-rotor-0",
+    "masterSha256": "b38880446b7ad82000ff18f757c1af253de755e04bff8e13458074a2b29f4947",
+    "start": 2.392,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 2.392,
+      "similarity": 0.6957667469978333
+    },
+    "description": "The sound of a helicopter hovering.",
+    "seconds": 2.5,
+    "mix": [
+      {
+        "sourceId": "explosion",
+        "masterSha256": "e3004674e5d2bc99b0c11021fa7c2ce3aa56fea55f8444aa242eff97318b89f3",
+        "start": 0.0,
+        "rate": 1,
+        "gain": 0.9,
+        "cut": 1.2,
+        "at": 0.55
+      },
+      {
+        "sourceId": "source-metal-1",
+        "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+        "start": 4.8,
+        "rate": 1,
+        "gain": 0.5,
+        "cut": 0.5,
+        "at": 1.7
+      }
+    ]
+  },
+  "death-boss-putin": {
+    "sourceId": "death-boss-putin",
+    "masterSha256": "1a6737191ad788eb74ee7505aaff2483def4bf3a76e729e30c076187eb9f5853",
+    "start": 0.742,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe.",
+    "seconds": 2.5,
+    "mix": [
+      {
+        "sourceId": "source-rocks-0",
+        "masterSha256": "cfed157b959aeb383c131acc2526c9f9f5771a0cd42110894470c70e48f15917",
+        "start": 1.632,
+        "rate": 1,
+        "gain": 0.3,
+        "cut": 0.75,
+        "at": 1.4
+      }
+    ]
+  },
+  "bandera-ultimate": {
+    "sourceId": "source-engine-tag-0",
+    "masterSha256": "1a5d6c89497dcb97a3d55643cdfce7da2dfae6b3832dff4bd464f16ad2ba8145",
+    "start": 1.067,
+    "rate": 1.05,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.067,
+      "similarity": 0.41846007108688354
+    },
+    "description": "The sound of a diesel engine running.",
+    "seconds": 1.3,
+    "mix": [
+      {
+        "sourceId": "source-metal-1",
+        "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+        "start": 4.8,
+        "rate": 1,
+        "gain": 0.15,
+        "cut": 0.3,
+        "at": 0
+      }
+    ]
+  },
+  "bandera-ultimate-loop": {
+    "sourceId": "source-engine-tag-0",
+    "masterSha256": "1a5d6c89497dcb97a3d55643cdfce7da2dfae6b3832dff4bd464f16ad2ba8145",
+    "start": 1.067,
+    "rate": 1.05,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.067,
+      "similarity": 0.41846007108688354
+    },
+    "description": "The sound of a diesel engine running.",
+    "seconds": 1.75,
+    "mix": []
+  },
+  "tank-engine": {
+    "sourceId": "source-engine-tag-0",
+    "masterSha256": "1a5d6c89497dcb97a3d55643cdfce7da2dfae6b3832dff4bd464f16ad2ba8145",
+    "start": 1.067,
+    "rate": 0.94,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.067,
+      "similarity": 0.41846007108688354
+    },
+    "description": "The sound of a diesel engine running.",
+    "seconds": 2.5,
+    "mix": []
+  },
+  "tank-jump": {
+    "sourceId": "source-engine-tag-0",
+    "masterSha256": "1a5d6c89497dcb97a3d55643cdfce7da2dfae6b3832dff4bd464f16ad2ba8145",
+    "start": 1.067,
+    "rate": 1,
+    "reason": "Selected from a newly generated material using actual PCM similarity screening.",
+    "screen": {
+      "start": 1.067,
+      "similarity": 0.41846007108688354
+    },
+    "description": "The sound of a diesel engine running.",
+    "seconds": 0.6,
+    "mix": [
+      {
+        "sourceId": "source-metal-1",
+        "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+        "start": 4.8,
+        "rate": 1,
+        "gain": 0.2,
+        "cut": 0.3,
+        "at": 0
+      }
+    ]
+  }
+}

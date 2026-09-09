@@ -196,6 +196,7 @@ function ui(){
   if($('interact-prompt').title!==prompt){$('interact-prompt').setAttribute('aria-label',prompt);$('interact-prompt').title=prompt;}
   diagnostics();
 }
+view.onGoreImpact=(x,y)=>{if(world.mode==='playing')sound.event({type:'goreLand',x,y},world.player.x);};
 view.onFrame=dt=>{
   flags.step(dt);
   sound.bossBattle=!!world.boss?.boss?.active;sound.scoreTheme=world.mission.score;

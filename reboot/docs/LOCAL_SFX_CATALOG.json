@@ -1,0 +1,3509 @@
+{
+  "model": "Stable Audio 3 Small SFX",
+  "runtime": "official MLX",
+  "style": "docs/SFX_STYLE.md",
+  "serviceCostUSD": 0,
+  "jobs": [
+    {
+      "id": "shevchenko-weapon-0",
+      "seconds": 0.415875,
+      "loop": false,
+      "prompt": "A low powerful whoosh of air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909000,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "shevchenko-weapon-1",
+      "seconds": 0.40570833333333334,
+      "loop": false,
+      "prompt": "A low powerful whoosh of air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909001,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "shevchenko-weapon-2",
+      "seconds": 0.39608333333333334,
+      "loop": false,
+      "prompt": "A low powerful whoosh of air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909002,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "lesya-weapon-0",
+      "seconds": 0.3617916666666667,
+      "loop": false,
+      "prompt": "a single crossbow string snapping and bolt releasing Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909003,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "lesya-weapon-1",
+      "seconds": 0.3529583333333333,
+      "loop": false,
+      "prompt": "a single crossbow string snapping and bolt releasing Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909004,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "lesya-weapon-2",
+      "seconds": 0.344625,
+      "loop": false,
+      "prompt": "a single crossbow string snapping and bolt releasing Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909005,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "franko-weapon-0",
+      "seconds": 0.12883333333333333,
+      "loop": false,
+      "prompt": "A fast powerful swoosh through the air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909006,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "franko-weapon-1",
+      "seconds": 0.12583333333333332,
+      "loop": false,
+      "prompt": "A fast powerful swoosh through the air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909007,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "franko-weapon-2",
+      "seconds": 0.12304166666666666,
+      "loop": false,
+      "prompt": "A fast powerful swoosh through the air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909008,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bandera-weapon-0",
+      "seconds": 0.174125,
+      "loop": false,
+      "prompt": "one single submachine gun shot, a short dry sharp report Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909009,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bandera-weapon-1",
+      "seconds": 0.17,
+      "loop": false,
+      "prompt": "one single submachine gun shot, a short dry sharp report Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909010,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bandera-weapon-2",
+      "seconds": 0.166125,
+      "loop": false,
+      "prompt": "one single submachine gun shot, a short dry sharp report Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909011,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-weapon-0",
+      "seconds": 0.5485,
+      "loop": false,
+      "prompt": "one flintlock pistol shot, deep powder bang Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909012,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-weapon-1",
+      "seconds": 0.535,
+      "loop": false,
+      "prompt": "one flintlock pistol shot, deep powder bang Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909013,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-weapon-2",
+      "seconds": 0.5222083333333334,
+      "loop": false,
+      "prompt": "one flintlock pistol shot, deep powder bang Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909014,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-melee-weapon-0",
+      "seconds": 0.25616666666666665,
+      "loop": false,
+      "prompt": "one sharp curved sword swishing through air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909015,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-melee-weapon-1",
+      "seconds": 0.25,
+      "loop": false,
+      "prompt": "one sharp curved sword swishing through air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909016,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-melee-weapon-2",
+      "seconds": 0.24416666666666667,
+      "loop": false,
+      "prompt": "one sharp curved sword swishing through air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909017,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bayraktar-weapon-0",
+      "seconds": 0.3617916666666667,
+      "loop": false,
+      "prompt": "one short mounted machine gun shot with metallic clack Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909018,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bayraktar-weapon-1",
+      "seconds": 0.3529583333333333,
+      "loop": false,
+      "prompt": "one short mounted machine gun shot with metallic clack Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909019,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bayraktar-weapon-2",
+      "seconds": 0.344625,
+      "loop": false,
+      "prompt": "one short mounted machine gun shot with metallic clack Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909020,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "ghost-weapon-0",
+      "seconds": 0.24591666666666667,
+      "loop": false,
+      "prompt": "one single assault rifle shot, dry sharp crack Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909021,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "ghost-weapon-1",
+      "seconds": 0.24,
+      "loop": false,
+      "prompt": "one single assault rifle shot, dry sharp crack Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909022,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "ghost-weapon-2",
+      "seconds": 0.23441666666666666,
+      "loop": false,
+      "prompt": "one single assault rifle shot, dry sharp crack Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909023,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "zelensky-weapon-0",
+      "seconds": 0.3177083333333333,
+      "loop": false,
+      "prompt": "one single pistol gunshot, crisp dry report Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909024,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "zelensky-weapon-1",
+      "seconds": 0.31,
+      "loop": false,
+      "prompt": "one single pistol gunshot, crisp dry report Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909025,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "zelensky-weapon-2",
+      "seconds": 0.30270833333333336,
+      "loop": false,
+      "prompt": "one single pistol gunshot, crisp dry report Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909026,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bilozerska-weapon-0",
+      "seconds": 0.8818333333333334,
+      "loop": false,
+      "prompt": "one heavy sniper rifle shot, powerful sharp crack with brief low tail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909027,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bilozerska-weapon-1",
+      "seconds": 0.86,
+      "loop": false,
+      "prompt": "one heavy sniper rifle shot, powerful sharp crack with brief low tail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909028,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bilozerska-weapon-2",
+      "seconds": 0.8392916666666667,
+      "loop": false,
+      "prompt": "one heavy sniper rifle shot, powerful sharp crack with brief low tail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909029,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "it-army-weapon-0",
+      "seconds": 0.3177083333333333,
+      "loop": false,
+      "prompt": "short electrical spark discharge and relay snap Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909030,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "it-army-weapon-1",
+      "seconds": 0.31,
+      "loop": false,
+      "prompt": "short electrical spark discharge and relay snap Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909031,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "it-army-weapon-2",
+      "seconds": 0.30270833333333336,
+      "loop": false,
+      "prompt": "short electrical spark discharge and relay snap Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909032,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "skovoroda-weapon-0",
+      "seconds": 0.06954166666666667,
+      "loop": false,
+      "prompt": "iron frying pan swinging through air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909033,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "skovoroda-weapon-1",
+      "seconds": 0.06804166666666667,
+      "loop": false,
+      "prompt": "iron frying pan swinging through air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909034,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "skovoroda-weapon-2",
+      "seconds": 0.06666666666666667,
+      "loop": false,
+      "prompt": "iron frying pan swinging through air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909035,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "shevchenko-hit",
+      "seconds": 0.42,
+      "loop": false,
+      "prompt": "heavy wooden mace smacking with a low crack Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909036,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "lesya-hit",
+      "seconds": 0.42,
+      "loop": false,
+      "prompt": "crossbow bolt hitting with wet squelch Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909037,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "franko-hit",
+      "seconds": 0.42,
+      "loop": false,
+      "prompt": "iron hammer smashing rock Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909038,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bandera-hit",
+      "seconds": 0.42,
+      "loop": false,
+      "prompt": "short crunchy impact with leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909039,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-hit",
+      "seconds": 0.42,
+      "loop": false,
+      "prompt": "short crunchy impact with leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909040,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bayraktar-hit",
+      "seconds": 0.42,
+      "loop": false,
+      "prompt": "short crunchy impact with compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909041,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "ghost-hit",
+      "seconds": 0.42,
+      "loop": false,
+      "prompt": "short crunchy impact with flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909042,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "zelensky-hit",
+      "seconds": 0.42,
+      "loop": false,
+      "prompt": "short crunchy impact with cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909043,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bilozerska-hit",
+      "seconds": 0.42,
+      "loop": false,
+      "prompt": "short crunchy impact with soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909044,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "it-army-hit",
+      "seconds": 0.42,
+      "loop": false,
+      "prompt": "short crunchy impact with small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909045,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "skovoroda-hit",
+      "seconds": 0.42,
+      "loop": false,
+      "prompt": "iron frying pan smacking with a short comic clang Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909046,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "ricochet",
+      "seconds": 0.45,
+      "loop": false,
+      "prompt": "one bullet ricocheting off iron with a short metallic ping Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909047,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "explosion",
+      "seconds": 1.3,
+      "loop": false,
+      "prompt": "one powerful explosion with sharp crack, deep boom and falling rubble Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909048,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "glass-fire",
+      "seconds": 0.65,
+      "loop": false,
+      "prompt": "glass bottle shattering followed by a brief whoosh of fire Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909049,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "roots",
+      "seconds": 0.7,
+      "loop": false,
+      "prompt": "thick wooden roots cracking and tearing from soil Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909050,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "stone-hit",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "one heavy stone impact, gritty crack and falling chips Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909051,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "thunder",
+      "seconds": 1.3,
+      "loop": false,
+      "prompt": "one massive lightning crack, deep thunder tail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909052,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "rail-shot",
+      "seconds": 1.1,
+      "loop": false,
+      "prompt": "one massive rifle blast with ripping air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909053,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bolt",
+      "seconds": 0.4,
+      "loop": false,
+      "prompt": "rifle bolt pulled and locked, two dry metal clicks Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909054,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mine-arm",
+      "seconds": 0.22,
+      "loop": false,
+      "prompt": "one crisp mechanical mine latch snapping shut Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909055,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "rocket",
+      "seconds": 0.65,
+      "loop": false,
+      "prompt": "one rocket igniting with a short explosive hiss and air rush Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909056,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "shevchenko-special",
+      "seconds": 1.7,
+      "loop": false,
+      "prompt": "thick paper pages bursting open with a powerful gust Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909057,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "lesya-special",
+      "seconds": 0.554,
+      "loop": false,
+      "prompt": "A raven cawing loudly Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909058,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "lesya-ultimate",
+      "seconds": 0.71,
+      "loop": false,
+      "prompt": "thick tree roots tearing through soil and twisting wood Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909059,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "franko-special",
+      "seconds": 0.5923333333333334,
+      "loop": false,
+      "prompt": "stone blocks grinding and slamming together Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909060,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "franko-ultimate",
+      "seconds": 0.985,
+      "loop": false,
+      "prompt": "massive rock smashing with a deep earth-shaking crack Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909061,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bandera-special",
+      "seconds": 0.332875,
+      "loop": false,
+      "prompt": "glass bottle whipping through the air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909062,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bandera-ultimate",
+      "seconds": 1.31,
+      "loop": false,
+      "prompt": "old powerful car engine starting with a throaty roar Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909063,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-special",
+      "seconds": 0.17,
+      "loop": false,
+      "prompt": "one bright pluck of bandura strings with a woody spinning whoosh Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909064,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-ultimate",
+      "seconds": 1.01,
+      "loop": false,
+      "prompt": "horses charging, pounding hooves and rattling harness Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909065,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bayraktar-special",
+      "seconds": 0.51,
+      "loop": false,
+      "prompt": "small propeller drone motor starting Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909066,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bayraktar-ultimate",
+      "seconds": 0.9433333333333334,
+      "loop": false,
+      "prompt": "several rockets launching with rushing air and powerful thrust Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909067,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "ghost-special",
+      "seconds": 0.51,
+      "loop": false,
+      "prompt": "fast rush of air vanishing into a soft gust Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909068,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "ghost-ultimate",
+      "seconds": 1.8282083333333334,
+      "loop": false,
+      "prompt": "fighter jet roaring overhead with powerful air turbulence Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909069,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "zelensky-special",
+      "seconds": 0.21591666666666667,
+      "loop": false,
+      "prompt": "radio switch clicking and military equipment moving Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909070,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "zelensky-ultimate",
+      "seconds": 0.4217916666666667,
+      "loop": false,
+      "prompt": "large drone rotor accelerating with cloth flag flapping Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909071,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bilozerska-special",
+      "seconds": 0.27241666666666664,
+      "loop": false,
+      "prompt": "small metal mine placed on dirt, short latch click Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909072,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bilozerska-ultimate",
+      "seconds": 0.51,
+      "loop": false,
+      "prompt": "massive armor-piercing rifle shot with tearing air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909073,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "it-army-special",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "mechanical relay switches engaging with motor starting Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909074,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "it-army-ultimate",
+      "seconds": 1.0933333333333333,
+      "loop": false,
+      "prompt": "electrical transformer power surge, sparking and heavy mechanical shutdown Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909075,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "skovoroda-special",
+      "seconds": 0.48570833333333335,
+      "loop": false,
+      "prompt": "thick book opening and pages whipping past Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909076,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "skovoroda-ultimate",
+      "seconds": 0.71,
+      "loop": false,
+      "prompt": "resonant struck bronze with soft rushing air Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909077,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "shevchenko-ultimate",
+      "seconds": 0.6,
+      "loop": false,
+      "prompt": "massive lightning crack and rolling thunder Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909078,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "lesya-special-loop",
+      "seconds": 1.75,
+      "loop": true,
+      "prompt": "sustained even texture of A raven cawing loudly, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909079,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "lesya-ultimate-loop",
+      "seconds": 1.75,
+      "loop": true,
+      "prompt": "sustained even texture of thick tree roots tearing through soil and twisting wood, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909080,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "franko-special-loop",
+      "seconds": 1.75,
+      "loop": true,
+      "prompt": "sustained even texture of stone blocks grinding and slamming together, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909081,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bandera-special-loop",
+      "seconds": 1.75,
+      "loop": true,
+      "prompt": "sustained even texture of glass bottle whipping through the air, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909082,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bandera-ultimate-loop",
+      "seconds": 1.75,
+      "loop": true,
+      "prompt": "sustained even texture of old powerful car engine starting with a throaty roar, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909083,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-special-loop",
+      "seconds": 0.95,
+      "loop": true,
+      "prompt": "sustained even texture of one bright pluck of bandura strings with a woody spinning whoosh, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909084,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-ultimate-loop",
+      "seconds": 0.95,
+      "loop": true,
+      "prompt": "sustained even texture of horses charging, pounding hooves and rattling harness, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909085,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bayraktar-special-loop",
+      "seconds": 1.75,
+      "loop": true,
+      "prompt": "sustained even texture of small propeller drone motor starting, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909086,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bayraktar-ultimate-loop",
+      "seconds": 1.75,
+      "loop": true,
+      "prompt": "sustained even texture of several rockets launching with rushing air and powerful thrust, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909087,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "ghost-ultimate-loop",
+      "seconds": 1.75,
+      "loop": true,
+      "prompt": "sustained even texture of fighter jet roaring overhead with powerful air turbulence, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909088,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "zelensky-ultimate-loop",
+      "seconds": 1.75,
+      "loop": true,
+      "prompt": "sustained even texture of large drone rotor accelerating with cloth flag flapping, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909089,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "it-army-ultimate-loop",
+      "seconds": 1.75,
+      "loop": true,
+      "prompt": "sustained even texture of electrical transformer power surge, sparking and heavy mechanical shutdown, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909090,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "skovoroda-special-loop",
+      "seconds": 1.75,
+      "loop": true,
+      "prompt": "sustained even texture of thick book opening and pages whipping past, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909091,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "skovoroda-ultimate-loop",
+      "seconds": 1.75,
+      "loop": true,
+      "prompt": "sustained even texture of resonant struck bronze with soft rushing air, no discrete opening impact Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909092,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "shevchenko-special-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909093,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "shevchenko-ultimate-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909094,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "lesya-special-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909095,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "lesya-ultimate-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909096,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "franko-special-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909097,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "franko-ultimate-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909098,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bandera-special-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909099,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bandera-ultimate-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909100,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-special-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909101,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-ultimate-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909102,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bayraktar-special-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909103,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bayraktar-ultimate-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909104,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "ghost-special-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909105,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "ghost-ultimate-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909106,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "zelensky-special-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909107,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "zelensky-ultimate-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909108,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bilozerska-special-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909109,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bilozerska-ultimate-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909110,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "it-army-special-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909111,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "it-army-ultimate-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909112,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "skovoroda-special-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909113,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "skovoroda-ultimate-end",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "brief fading movement and settling of book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909114,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "lesya-reload",
+      "seconds": 1.2799583333333333,
+      "loop": false,
+      "prompt": "weapon reloading, deliberate separated mechanical handling and clicks, crossbow string drawn and bolt inserted Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909115,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "lesya-reload-end",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one final crisp weapon latch snapping into place, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909116,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bandera-reload",
+      "seconds": 2.2799583333333335,
+      "loop": false,
+      "prompt": "weapon reloading, deliberate separated mechanical handling and clicks, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909117,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bandera-reload-end",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one final crisp weapon latch snapping into place, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909118,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-reload",
+      "seconds": 2.6799583333333334,
+      "loop": false,
+      "prompt": "weapon reloading, deliberate separated mechanical handling and clicks, flintlock powder and ramrod handling Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909119,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "mamai-reload-end",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one final crisp weapon latch snapping into place, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909120,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bayraktar-reload",
+      "seconds": 2.88,
+      "loop": false,
+      "prompt": "weapon reloading, deliberate separated mechanical handling and clicks, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909121,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bayraktar-reload-end",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one final crisp weapon latch snapping into place, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909122,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "ghost-reload",
+      "seconds": 1.98,
+      "loop": false,
+      "prompt": "weapon reloading, deliberate separated mechanical handling and clicks, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909123,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "ghost-reload-end",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one final crisp weapon latch snapping into place, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909124,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "zelensky-reload",
+      "seconds": 1.68,
+      "loop": false,
+      "prompt": "weapon reloading, deliberate separated mechanical handling and clicks, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909125,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "zelensky-reload-end",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one final crisp weapon latch snapping into place, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909126,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bilozerska-reload",
+      "seconds": 4.68,
+      "loop": false,
+      "prompt": "weapon reloading, deliberate separated mechanical handling and clicks, sniper rifle magazine removed and inserted Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909127,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "bilozerska-reload-end",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one final crisp weapon latch snapping into place, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909128,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "it-army-reload",
+      "seconds": 1.88,
+      "loop": false,
+      "prompt": "weapon reloading, deliberate separated mechanical handling and clicks, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909129,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "it-army-reload-end",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one final crisp weapon latch snapping into place, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909130,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "support-infantry",
+      "seconds": 0.21,
+      "loop": false,
+      "prompt": "one single dry rifle gunshot Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909131,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "support-turret",
+      "seconds": 0.23,
+      "loop": false,
+      "prompt": "one single heavy turret gunshot with metallic recoil Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909132,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "turret-step",
+      "seconds": 0.3529583333333333,
+      "loop": false,
+      "prompt": "one heavy robot footstep, metal joint clack Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909133,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "follower-hurt",
+      "seconds": 0.22908333333333333,
+      "loop": false,
+      "prompt": "short dull body impact with equipment rattle Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909134,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "follower-down",
+      "seconds": 0.27241666666666664,
+      "loop": false,
+      "prompt": "a compact mechanical collapse and armor falling onto dirt Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909135,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "barrel-lift",
+      "seconds": 0.6039583333333334,
+      "loop": false,
+      "prompt": "metal barrel lifted, hollow metal scrape and cloth strain Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909136,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "barrel-throw",
+      "seconds": 0.17,
+      "loop": false,
+      "prompt": "metal barrel thrown with quick whoosh and hollow clank Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909137,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "armor-hit",
+      "seconds": 0.08679166666666667,
+      "loop": false,
+      "prompt": "one hard bullet impact on thick tank armor Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909138,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "tank-land",
+      "seconds": 0.289875,
+      "loop": false,
+      "prompt": "heavy tank suspension landing, deep metal clunk and dirt crunch Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909139,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "tank-jump",
+      "seconds": 0.5814583333333333,
+      "loop": false,
+      "prompt": "heavy suspension spring releasing with engine grunt Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909140,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "hatch",
+      "seconds": 0.39591666666666664,
+      "loop": false,
+      "prompt": "heavy tank hatch opening and clanking shut Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909141,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "tank-shot",
+      "seconds": 1.2407916666666667,
+      "loop": false,
+      "prompt": "one massive tank cannon shot, concussive boom and short metal recoil Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909142,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "tank-engine",
+      "seconds": 2.51,
+      "loop": false,
+      "prompt": "steady low diesel tank engine rumble with track rattle Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909143,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "plane-engine",
+      "seconds": 1.8282083333333334,
+      "loop": false,
+      "prompt": "jet engine rushing overhead, steady low air roar Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909144,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "drone-engine",
+      "seconds": 0.75075,
+      "loop": false,
+      "prompt": "small propeller engine whirring steadily Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909145,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "drone-dive",
+      "seconds": 0.61,
+      "loop": false,
+      "prompt": "small propeller engine rapidly approaching with rising air rush Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909146,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "enemy-alert",
+      "seconds": 0.15708333333333332,
+      "loop": false,
+      "prompt": "one sharp attention whistle and crisp metallic tap Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909147,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "enemy-fuse",
+      "seconds": 0.7529583333333333,
+      "loop": false,
+      "prompt": "short sputtering burning fuse, accelerating dry crackles Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909148,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "pickup",
+      "seconds": 0.207625,
+      "loop": false,
+      "prompt": "small ammo box latch opening, satisfying clean metal click Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909149,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "debris",
+      "seconds": 0.289875,
+      "loop": false,
+      "prompt": "brief shower of small stone and wood fragments landing Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909150,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-step-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909151,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-step-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909152,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-step-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909153,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-climb-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909154,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-climb-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909155,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-climb-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909156,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-jump-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909157,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-jump-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909158,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-jump-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909159,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-land-0",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909160,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-land-1",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909161,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-land-2",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909162,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-hurt-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909163,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-hurt-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909164,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-hurt-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909165,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-ready-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909166,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-ready-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909167,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-shevchenko-ready-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, thick paper and leather coat Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909168,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-step-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909169,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-step-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909170,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-step-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909171,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-climb-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909172,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-climb-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909173,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-climb-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909174,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-jump-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909175,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-jump-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909176,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-jump-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909177,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-land-0",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909178,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-land-1",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909179,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-land-2",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909180,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-hurt-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909181,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-hurt-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909182,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-hurt-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909183,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-ready-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909184,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-ready-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909185,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-lesya-ready-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, soft cloth and feathers Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909186,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-step-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909187,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-step-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909188,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-step-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909189,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-climb-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909190,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-climb-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909191,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-climb-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909192,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-jump-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909193,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-jump-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909194,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-jump-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909195,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-land-0",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909196,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-land-1",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909197,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-land-2",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909198,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-hurt-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909199,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-hurt-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909200,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-hurt-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909201,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-ready-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909202,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-ready-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909203,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-franko-ready-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, heavy boots and gritty stone Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909204,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-step-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909205,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-step-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909206,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-step-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909207,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-climb-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909208,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-climb-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909209,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-climb-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909210,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-jump-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909211,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-jump-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909212,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-jump-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909213,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-land-0",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909214,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-land-1",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909215,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-land-2",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909216,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-hurt-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909217,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-hurt-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909218,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-hurt-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909219,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-ready-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909220,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-ready-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909221,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bandera-ready-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, leather belt and military boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909222,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-step-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909223,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-step-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909224,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-step-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909225,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-climb-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909226,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-climb-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909227,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-climb-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909228,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-jump-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909229,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-jump-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909230,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-jump-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909231,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-land-0",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909232,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-land-1",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909233,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-land-2",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909234,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-hurt-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909235,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-hurt-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909236,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-hurt-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909237,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-ready-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909238,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-ready-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909239,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-mamai-ready-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, leather boots and loose chainmail Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909240,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-step-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909241,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-step-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909242,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-step-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909243,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-climb-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909244,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-climb-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909245,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-climb-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909246,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-jump-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909247,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-jump-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909248,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-jump-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909249,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-land-0",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909250,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-land-1",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909251,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-land-2",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909252,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-hurt-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909253,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-hurt-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909254,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-hurt-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909255,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-ready-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909256,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-ready-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909257,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bayraktar-ready-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, compact mechanical joints Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909258,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-step-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909259,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-step-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909260,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-step-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909261,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-climb-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909262,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-climb-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909263,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-climb-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909264,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-jump-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909265,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-jump-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909266,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-jump-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909267,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-land-0",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909268,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-land-1",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909269,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-land-2",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909270,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-hurt-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909271,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-hurt-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909272,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-hurt-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909273,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-ready-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909274,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-ready-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909275,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-ghost-ready-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, flight jacket and light boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909276,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-step-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909277,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-step-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909278,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-step-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909279,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-climb-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909280,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-climb-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909281,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-climb-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909282,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-jump-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909283,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-jump-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909284,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-jump-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909285,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-land-0",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909286,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-land-1",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909287,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-land-2",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909288,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-hurt-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909289,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-hurt-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909290,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-hurt-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909291,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-ready-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909292,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-ready-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909293,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-zelensky-ready-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, cloth and light leather boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909294,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-step-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909295,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-step-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909296,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-step-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909297,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-climb-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909298,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-climb-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909299,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-climb-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909300,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-jump-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909301,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-jump-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909302,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-jump-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909303,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-land-0",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909304,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-land-1",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909305,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-land-2",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909306,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-hurt-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909307,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-hurt-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909308,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-hurt-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909309,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-ready-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909310,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-ready-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909311,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-bilozerska-ready-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, soft tactical fabric and quiet boots Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909312,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-step-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909313,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-step-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909314,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-step-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909315,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-climb-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909316,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-climb-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909317,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-climb-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909318,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-jump-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909319,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-jump-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909320,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-jump-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909321,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-land-0",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909322,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-land-1",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909323,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-land-2",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909324,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-hurt-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909325,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-hurt-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909326,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-hurt-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909327,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-ready-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909328,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-ready-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909329,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-it-army-ready-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, small metal switches and cloth Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909330,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-step-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909331,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-step-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909332,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-step-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one footstep on dry earth, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909333,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-climb-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909334,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-climb-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909335,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-climb-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one hand gripping a wooden ladder rung, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909336,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-jump-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909337,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-jump-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909338,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-jump-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "quick takeoff scuff and cloth movement, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909339,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-land-0",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909340,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-land-1",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909341,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-land-2",
+      "seconds": 0.26,
+      "loop": false,
+      "prompt": "one body landing on earth with a dull thud, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909342,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-hurt-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909343,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-hurt-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909344,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-hurt-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one dull body impact and brief nonverbal grunt, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909345,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-ready-0",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909346,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-ready-1",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909347,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "foley-skovoroda-ready-2",
+      "seconds": 0.2,
+      "loop": false,
+      "prompt": "one small crisp equipment latch click, book pages and soft leather shoes Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909348,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "legacy-shot",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "one single dry rifle gunshot Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909349,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "legacy-hurt",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "short nonverbal startled grunt, exaggerated cartoon character Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909350,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "legacy-reload",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "rifle magazine inserted with a short mechanical clack Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909351,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "legacy-rescue",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "A mechanical button clicking once Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909352,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-rifle-0",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "short startled male yelp, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909353,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-rifle-1",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "short startled male yelp, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909354,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-rifle-2",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "short startled male yelp, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909355,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-assault-0",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "short rough breathy grunt, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909356,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-assault-1",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "short rough breathy grunt, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909357,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-assault-2",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "short rough breathy grunt, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909358,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-gunner-0",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "deep heavy male grunt, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909359,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-gunner-1",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "deep heavy male grunt, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909360,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-gunner-2",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "deep heavy male grunt, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909361,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-sniper-0",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "short sharp breathy gasp, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909362,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-sniper-1",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "short sharp breathy gasp, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909363,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-sniper-2",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "short sharp breathy gasp, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909364,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-scout-0",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "muffled surprised grunt and radio click, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909365,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-scout-1",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "muffled surprised grunt and radio click, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909366,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-scout-2",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "muffled surprised grunt and radio click, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909367,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-shield-0",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "low grunt and metal shield clatter, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909368,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-shield-1",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "low grunt and metal shield clatter, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909369,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-shield-2",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "low grunt and metal shield clatter, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909370,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-demolition-0",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "high goofy descending yelp, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909371,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-demolition-1",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "high goofy descending yelp, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909372,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-demolition-2",
+      "seconds": 0.8,
+      "loop": false,
+      "prompt": "high goofy descending yelp, nonverbal theatrical cartoon defeat. Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909373,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "gore-splat-0",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "Water splashing loudly Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909374,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "gore-splat-1",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "Water splashing loudly Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909375,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "gore-splat-2",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "Water splashing loudly Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909376,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "gore-croak-0",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "A frog croaking with a low wet gurgle Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909377,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "gore-croak-1",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "A frog croaking with a low wet gurgle Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909378,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "gore-croak-2",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "A frog croaking with a low wet gurgle Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909379,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "gore-gib-land-0",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "A single water drop plopping into water Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909380,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "gore-gib-land-1",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "A single water drop plopping into water Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909381,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "gore-gib-land-2",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "A single water drop plopping into water Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909382,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "gore-blood-burst-0",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "A watermelon being smashed Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909383,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "gore-blood-burst-1",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "A watermelon being smashed Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909384,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "gore-blood-burst-2",
+      "seconds": 0.5,
+      "loop": false,
+      "prompt": "A watermelon being smashed Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909385,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-boss-iron-warden",
+      "seconds": 2.5,
+      "loop": false,
+      "prompt": "heavy armored vehicle collapsing with deep metal crunch, bolts falling and a final low thud Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909386,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-boss-swarm-master",
+      "seconds": 2.5,
+      "loop": false,
+      "prompt": "propellers breaking, motor sputtering to a halt and multiple compact explosive pops Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909387,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "death-boss-putin",
+      "seconds": 2.5,
+      "loop": false,
+      "prompt": "huge explosive blast with collapsing machinery, low theatrical nonverbal croak and wet splatter Dry close-mic sound effect, punchy attack and short decay, no music.",
+      "seed": 909388,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    }
+  ]
+}

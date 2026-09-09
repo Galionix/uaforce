@@ -16,10 +16,11 @@ export class Sound {
   private context:AudioContext|null=null;private gain:GainNode|null=null;
   private buffers=new Map<string,AudioBuffer>();private loading:Promise<void>|null=null;
   private voices=new Map<AudioBufferSourceNode,string>();
-  private loops=new Map<object,{source:AudioBufferSourceNode;amp:GainNode;key:SfxId}>();
+  private loops=new Map<string,{source:AudioBufferSourceNode;amp:GainNode;key:SfxId}>();
   private sampleSerial=0;private sampleLast=new Map<string,number>();
   private foleySerial=0;private foleyLast=new Map<string,number>();private lastCombat=-100;
   private lastDeath=-100;
+  private deathVariants=new Map<string,number>();private lastGore=-100;private variationState=0x51f15e;
   private lastVoice=-100;private wasPlaying=false;
   async enable(){
     if(this.silent)return;
@@ -31,7 +32,7 @@ export class Sound {
       this.score=new ScorePlayer(this.context,this.musicBus);
       this.director=new Announcer(this.context,this.voiceBus,this.musicBus,active=>{this.ducked=active;this.updateMix();});
       void this.director.preload();this.updateMix();
-      this.loading=Promise.all([['shot','rifle.wav'],['hurt','pain1.wav'],['reload','reload.wav'],['rescue','Menu Selection Click.wav'],['voiceWave','announcer/zelensky-shout.wav'],['combatBank','sfx/combat-bank.wav']].map(async([name,file])=>{
+      this.loading=Promise.all([['voiceWave','announcer/zelensky-shout.wav'],['combatBank','sfx/combat-bank.wav']].map(async([name,file])=>{
         try{const r=await fetch(assetUrl('/assets/audio/'+file));if(!r.ok)return;this.buffers.set(name,await this.context!.decodeAudioData(await r.arrayBuffer()));}catch{/* Sound failure must not stop a mission. */}
       })).then(()=>{});
 
@@ -50,7 +51,7 @@ export class Sound {
     void this.deliver(stage?{...stage,key:'preview:'+id,voices:[id],priority:3}:{key:'preview:'+id,voices:[id],riff:'hero',priority:3});
   }
   stopAll(){this.score?.stop();this.lifecycle++;this.director?.stop();this.stopEffects();}
-  private stopEffects(){this.foleyLast.clear();this.lastCombat=-100;this.sampleLast.clear();for(const {source,amp} of this.loops.values()){try{source.stop();}catch{}source.disconnect();amp.disconnect();}this.loops.clear();for(const s of this.voices.keys())try{s.stop();}catch{}this.voices.clear();}
+  private stopEffects(){this.foleyLast.clear();this.lastCombat=-100;this.lastDeath=-100;this.lastGore=-100;this.sampleLast.clear();for(const {source,amp} of this.loops.values()){try{source.stop();}catch{}source.disconnect();amp.disconnect();}this.loops.clear();for(const s of this.voices.keys())try{s.stop();}catch{}this.voices.clear();}
   private stopKind(kind:string){for(const [s,k]of this.voices)if(k===kind){try{s.stop();}catch{}this.voices.delete(s);}}
   private play(kind:string,volume:number,duration:number,offset=0,scope=kind){
     const clip=SFX_ASSETS[kind as SfxId],ctx=this.context,buffer=this.buffers.get(clip?'combatBank':kind);
@@ -70,17 +71,32 @@ export class Sound {
     const now=this.context?.currentTime??0;if(gate&&now-(this.sampleLast.get(key)??-100)<gate)return;
     this.sampleLast.set(key,now);this.play(key,volume,clip.seconds,0,scope);
   }
+  /** Cosmetic randomness never advances the authoritative world's RNG. */
+  private deathVariant(group:string){
+    const previous=this.deathVariants.get(group);
+    let state=this.variationState;state^=state<<13;state^=state>>>17;state^=state<<5;this.variationState=state;
+    const random=(state>>>0)/4294967296;
+    const next=previous===undefined?Math.floor(random*3):(previous+1+Math.floor(random*2))%3;
+    this.deathVariants.set(group,next);return `${group}-${next}`;
+  }
   /** Snapshot-owned loops cannot outlive their effect, follower, hero or pause. */
   syncWorld(world:World){
     const ctx=this.context,buffer=this.buffers.get('combatBank');
     if(world.mode!=='playing'||!ctx||ctx.state!=='running'||!buffer){this.stopLoops();return;}
     const living=new Set(world.followers.filter(f=>f.hp>0).map(f=>'follower:'+f.id));
     for(const [,scope]of this.voices)if(scope.startsWith('follower:')&&!living.has(scope))this.stopKind(scope);
-    const wanted=new Map<object,{key:SfxId;x:number;level:number}>();
+    const wanted=new Map<string,{key:SfxId;x:number;level:number}>(),ordinals=new Map<string,number>();
     for(const f of world.effects){
       const key=`${f.hero}-${f.kind}-loop` as SfxId;
-      if(f.life>0&&key in SFX_ASSETS&&!(f.hero==='bandera'&&f.kind==='special'&&f.age<.65))wanted.set(f,{key,x:f.x,level:.15});
+      const group=`effect:${f.playerId??0}:${f.hero}:${f.kind}`,ordinal=ordinals.get(group)??0;ordinals.set(group,ordinal+1);
+      // Co-op snapshots replace JS objects. A stable presentation slot keeps
+      // sustained audio running instead of restarting on every network packet.
+      if(f.life>0&&key in SFX_ASSETS&&!(f.hero==='bandera'&&f.kind==='special'&&f.age<.65))wanted.set(`${group}:${ordinal}`,{key,x:f.x,level:.15});
     }
+    for(const t of world.mounts)if(t.armor>0&&world.players.some(a=>a.mounted?.id===t.id))
+      wanted.set('mount:'+t.id,{key:'tank-engine',x:t.x,level:t.moving?.11:.035});
+    for(const e of world.enemies)if(e.hp>0&&e.vehicle?.active)
+      wanted.set('vehicle:'+e.id,{key:e.vehicle.kind==='tank'?'tank-engine':e.vehicle.kind==='plane'?'plane-engine':'drone-engine',x:e.x,level:e.vehicle.kind==='tank'?.09:.11});
     for(const [object,loop]of this.loops)if(!wanted.has(object)){try{loop.source.stop();}catch{}loop.source.disconnect();loop.amp.disconnect();this.loops.delete(object);}
     for(const [object,{key,x,level}]of wanted){
       const distance=Math.abs(x-world.player.x),volume=level*Math.max(0,1-distance/20);
@@ -105,6 +121,10 @@ export class Sound {
     this.sample(`foley-${hero}-${kind}-${this.foleySerial++%3}`,level*(movement&&now-this.lastCombat<.4?.3:1));
   }
   event(e:Event,listenerX=e.x){
+    // The finale sound accompanies the victory announcement; it must not be
+    // swallowed by the announcer's early return or replace its approved voice.
+    if(e.type==='bossDefeated'&&e.boss&&Math.abs(e.x-listenerX)<=20)
+      this.sample('death-boss-'+e.boss,.7*Math.max(.12,1-Math.abs(e.x-listenerX)/24),.5);
     const cue=announcement(e.type,e.boss??e.hero,e.unlocked);
     if(cue){
       if(['won','lost','respawn','boarded'].includes(e.type))this.stopAll();
@@ -112,6 +132,7 @@ export class Sound {
       void this.deliver(cue);return;
     }
     const distance=Math.abs(e.x-listenerX);if(distance>20)return;
+    if(['mountEngine','tankEngine','planeEngine','droneEngine'].includes(e.type))return; // persistent state-owned loops
     const level=Math.max(.12,1-distance/24),sample=(key:string,v=.45,gate=0)=>this.sample(key,v*level,gate,e.soundOwner!==undefined?'follower:'+e.soundOwner:key);
     if(['shot','enemyShot','special','ultimate','hostileBlast','mountShot','tankShot'].includes(e.type))this.lastCombat=this.context?.currentTime??-100;
     if(e.type==='followerDown'&&e.soundOwner!==undefined)this.stopKind('follower:'+e.soundOwner);
@@ -120,27 +141,33 @@ export class Sound {
     if(foleyKind&&e.hero){this.foley(e.hero,foleyKind);return;}
     if(e.type==='enemyDeath'){
       const now=this.context?.currentTime??0;if(now-this.lastDeath<.16||this.announcing)return;this.lastDeath=now;
-      this.play('hurt',.3*level,.48);sample('shevchenko-hit',.18);return;
+      sample(this.deathVariant('death-'+(e.deathRole??'rifle')),.3);
+      sample(this.deathVariant(e.deathCause==='combat'?'gore-splat':'gore-blood-burst'),.23);
+      if(e.deathRole==='demolition')sample(this.deathVariant('gore-croak'),.16);
+      return;
+    }
+    if(e.type==='goreLand'){
+      const now=this.context?.currentTime??0;if(now-this.lastGore<.09||this.announcing)return;this.lastGore=now;
+      sample(this.deathVariant('gore-gib-land'),.11);return;
     }
     if(e.type==='shot'){
       if(e.hero)sample(`${e.hero}${e.variant==='melee'&&e.hero==='mamai'?'-melee':''}-weapon-${this.sampleSerial++%3}`,e.hero==='bilozerska'?.6:.4);
-      else this.play('shot',.25*level,.17);
+      else sample('legacy-shot',.25);
     }else if((e.type==='special'||e.type==='ultimate')&&e.hero){
       if(e.type==='ultimate')for(const h of ['lesya','bandera','mamai','bayraktar','ghost','zelensky','bilozerska','it-army'])this.stopKind(h+'-reload');
       sample(`${e.hero}-${e.type}`,e.type==='ultimate'?.65:.5);
     }else if(e.type==='reloadStart'&&e.hero){this.stopKind(e.hero+'-reload');sample(e.hero+'-reload',.28);}
     else if(e.type==='reloadEnd'&&e.hero){this.stopKind(e.hero+'-reload');sample(e.hero+'-reload-end',.25);}
     else if(e.type==='voiceWave'){const now=this.context?.currentTime??0;if(now-this.lastVoice>3){this.lastVoice=now;this.play('voiceWave',.55*level,2);}sample('zelensky-hit',.3);}
-    else if(e.type==='hurt'){if(e.hero)this.foley(e.hero,'hurt');else this.play('hurt',.4*level,.45);}
+    else if(e.type==='hurt'){if(e.hero)this.foley(e.hero,'hurt');else sample('legacy-hurt',.4);}
     else if(e.type==='enemyShot')sample('support-infantry',.18,.055);
     else if(e.type==='enemySniperShot')sample('bilozerska-weapon-0',.27,.2);
-    else if(e.type==='enemyReload')this.play('reload',.08*level,.3);
+    else if(e.type==='enemyReload')sample('legacy-reload',.08);
     else if(e.type==='supportShot')sample(e.variant==='turret'?'support-turret':'support-infantry',.24);
-    else if(e.type==='rescue')this.play('rescue',.4*level,.2);
+    else if(e.type==='rescue')sample('legacy-rescue',.4);
     else {
       const map:Partial<Record<Event['type'],[string,number,number?]>>={
         ammoPickup:['pickup',.4],barrelLift:['barrel-lift',.35],barrelThrow:['barrel-throw',.35],
-        mountEngine:['tank-engine',.13,.45],tankEngine:['tank-engine',.12,.45],planeEngine:['plane-engine',.14,.45],droneEngine:['drone-engine',.15,.45],
         mountJump:['tank-jump',.35],mountLand:['tank-land',.5],mountShot:['tank-shot',.65],tankShot:['tank-shot',.6],armorHit:['armor-hit',.4,.1],
         mountBroken:['explosion',.65],mountEnter:['hatch',.4],mountExit:['hatch',.4],tankAim:['turret-step',.25],bossWindup:['tank-jump',.4],
         rocketLaunch:['rocket',.4],droneDive:['drone-dive',.4],hostileBlast:['explosion',.65,.09],

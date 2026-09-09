@@ -66,7 +66,7 @@ export class Gore{
   for(let i=0;i<34;i++)this.bits.push({x,y,vx:(random()-.5)*14,vy:2+random()*10,life:i<7?3:1.5+random(),size:i<7?3+Math.floor(random()*3):1+Math.floor(random()*2),color:['#c62e33','#8c1827','#ec4b46','#561526'][i%4],chunk:i<7,bounced:false});
   if(this.bits.length>420)this.bits.splice(0,this.bits.length-420);
  }
- step(dt:number,boxes:Box[]){
+ step(dt:number,boxes:Box[],onImpact?:(x:number,y:number)=>void){
   const solids=boxes.filter(b=>b.hp>0&&b.kind!=='barrel');
   const columns=new Map<number,Box[]>();
   for(const b of solids)for(let x=Math.floor(b.x-b.w/2-.03);x<=Math.floor(b.x+b.w/2+.03);x++){const list=columns.get(x)??[];list.push(b);columns.set(x,list);}
@@ -78,6 +78,7 @@ export class Gore{
     else if(b.kind!=='platform'&&p.y>b.y&&p.y<b.y+b.h&&Math.abs(p.x-b.x)<b.w/2&&Math.abs(oldX-b.x)>=b.w/2){this.stains.push({x:b.x+Math.sign(oldX-b.x)*b.w/2,y:p.y,w:.1,h:.18,life:32,box:b.id,color:p.color});p.life=0;break;}
    }
    if(hit&&p.life>0){p.y=hit.y+hit.h;this.stains.push({x:p.x,y:p.y,w:p.chunk?.45:.2,h:.09,life:32,box:hit.id,color:p.color});
+    if(p.chunk&&!p.bounced&&p.vy<-2)onImpact?.(p.x,p.y);
     if(p.chunk&&!p.bounced){p.bounced=true;p.vy=Math.abs(p.vy)*.27;p.vx*=.45;}else p.life=0;
    }
   }

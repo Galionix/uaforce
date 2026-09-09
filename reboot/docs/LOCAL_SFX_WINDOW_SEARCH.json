@@ -1,0 +1,134 @@
+[
+  {
+    "id": "gore-splat-0",
+    "sourceId": "gore-splat-0",
+    "seconds": 0.5,
+    "description": "The sound of wet slime squelching."
+  },
+  {
+    "id": "gore-splat-1",
+    "sourceId": "gore-splat-1",
+    "seconds": 0.5,
+    "description": "The sound of wet slime squelching."
+  },
+  {
+    "id": "gore-splat-2",
+    "sourceId": "gore-splat-2",
+    "seconds": 0.5,
+    "description": "The sound of wet slime squelching."
+  },
+  {
+    "id": "gore-croak-0",
+    "sourceId": "gore-croak-0",
+    "seconds": 0.75,
+    "description": "The sound of a frog croaking."
+  },
+  {
+    "id": "gore-croak-1",
+    "sourceId": "gore-croak-1",
+    "seconds": 0.75,
+    "description": "The sound of a frog croaking."
+  },
+  {
+    "id": "gore-croak-2",
+    "sourceId": "gore-croak-2",
+    "seconds": 0.75,
+    "description": "The sound of a frog croaking."
+  },
+  {
+    "id": "gore-gib-land-0",
+    "sourceId": "gore-gib-land-0",
+    "seconds": 0.5,
+    "description": "The sound of water splashing."
+  },
+  {
+    "id": "gore-gib-land-1",
+    "sourceId": "gore-gib-land-1",
+    "seconds": 0.5,
+    "description": "The sound of water splashing."
+  },
+  {
+    "id": "gore-gib-land-2",
+    "sourceId": "gore-gib-land-2",
+    "seconds": 0.5,
+    "description": "The sound of water splashing."
+  },
+  {
+    "id": "material-crow",
+    "sourceId": "source-crow-1",
+    "seconds": 0.8,
+    "description": "The sound of a crow cawing."
+  },
+  {
+    "id": "material-wings",
+    "sourceId": "source-wings-1",
+    "seconds": 1.75,
+    "description": "The sound of bird wings flapping."
+  },
+  {
+    "id": "material-rock",
+    "sourceId": "source-rocks-0",
+    "seconds": 0.75,
+    "description": "The sound of rocks crumbling."
+  },
+  {
+    "id": "material-wood",
+    "sourceId": "source-wood-0",
+    "seconds": 0.6,
+    "description": "The sound of wood cracking."
+  },
+  {
+    "id": "material-paper",
+    "sourceId": "source-paper-0",
+    "seconds": 0.6,
+    "description": "The sound of paper rustling."
+  },
+  {
+    "id": "material-fire",
+    "sourceId": "source-fire-1",
+    "seconds": 1.75,
+    "description": "The sound of fire crackling."
+  },
+  {
+    "id": "material-jet",
+    "sourceId": "source-jet-0",
+    "seconds": 1.75,
+    "description": "The sound of a jet airplane engine roaring."
+  },
+  {
+    "id": "material-rotor",
+    "sourceId": "source-rotor-0",
+    "seconds": 1.75,
+    "description": "The sound of a helicopter hovering."
+  },
+  {
+    "id": "material-horse",
+    "sourceId": "source-horse-1",
+    "seconds": 1.3,
+    "description": "The sound of a horse galloping."
+  },
+  {
+    "id": "material-pluck",
+    "sourceId": "source-string-1",
+    "seconds": 0.45,
+    "description": "The sound of an acoustic string instrument plucking."
+  },
+  {
+    "id": "material-electric",
+    "sourceId": "source-electric-0",
+    "seconds": 0.65,
+    "description": "The sound of electricity sparking and crackling."
+  },
+  {
+    "id": "material-metal",
+    "sourceId": "source-metal-1",
+    "seconds": 0.5,
+    "description": "The sound of metal clanging."
+  },
+  {
+    "id": "material-engine",
+    "sourceId": "source-engine-tag-0",
+    "seconds": 2.5,
+    "description": "The sound of a diesel engine running."
+  }
+]

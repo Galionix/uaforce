@@ -1,0 +1,1747 @@
+[
+  {
+    "id": "shevchenko-weapon-0",
+    "seconds": 0.415875,
+    "loop": false
+  },
+  {
+    "id": "shevchenko-weapon-1",
+    "seconds": 0.40570833333333334,
+    "loop": false
+  },
+  {
+    "id": "shevchenko-weapon-2",
+    "seconds": 0.39608333333333334,
+    "loop": false
+  },
+  {
+    "id": "lesya-weapon-0",
+    "seconds": 0.3617916666666667,
+    "loop": false
+  },
+  {
+    "id": "lesya-weapon-1",
+    "seconds": 0.3529583333333333,
+    "loop": false
+  },
+  {
+    "id": "lesya-weapon-2",
+    "seconds": 0.344625,
+    "loop": false
+  },
+  {
+    "id": "franko-weapon-0",
+    "seconds": 0.12883333333333333,
+    "loop": false
+  },
+  {
+    "id": "franko-weapon-1",
+    "seconds": 0.12583333333333332,
+    "loop": false
+  },
+  {
+    "id": "franko-weapon-2",
+    "seconds": 0.12304166666666666,
+    "loop": false
+  },
+  {
+    "id": "bandera-weapon-0",
+    "seconds": 0.174125,
+    "loop": false
+  },
+  {
+    "id": "bandera-weapon-1",
+    "seconds": 0.17,
+    "loop": false
+  },
+  {
+    "id": "bandera-weapon-2",
+    "seconds": 0.166125,
+    "loop": false
+  },
+  {
+    "id": "mamai-weapon-0",
+    "seconds": 0.5485,
+    "loop": false
+  },
+  {
+    "id": "mamai-weapon-1",
+    "seconds": 0.535,
+    "loop": false
+  },
+  {
+    "id": "mamai-weapon-2",
+    "seconds": 0.5222083333333334,
+    "loop": false
+  },
+  {
+    "id": "mamai-melee-weapon-0",
+    "seconds": 0.25616666666666665,
+    "loop": false
+  },
+  {
+    "id": "mamai-melee-weapon-1",
+    "seconds": 0.25,
+    "loop": false
+  },
+  {
+    "id": "mamai-melee-weapon-2",
+    "seconds": 0.24416666666666667,
+    "loop": false
+  },
+  {
+    "id": "bayraktar-weapon-0",
+    "seconds": 0.3617916666666667,
+    "loop": false
+  },
+  {
+    "id": "bayraktar-weapon-1",
+    "seconds": 0.3529583333333333,
+    "loop": false
+  },
+  {
+    "id": "bayraktar-weapon-2",
+    "seconds": 0.344625,
+    "loop": false
+  },
+  {
+    "id": "ghost-weapon-0",
+    "seconds": 0.24591666666666667,
+    "loop": false
+  },
+  {
+    "id": "ghost-weapon-1",
+    "seconds": 0.24,
+    "loop": false
+  },
+  {
+    "id": "ghost-weapon-2",
+    "seconds": 0.23441666666666666,
+    "loop": false
+  },
+  {
+    "id": "zelensky-weapon-0",
+    "seconds": 0.3177083333333333,
+    "loop": false
+  },
+  {
+    "id": "zelensky-weapon-1",
+    "seconds": 0.31,
+    "loop": false
+  },
+  {
+    "id": "zelensky-weapon-2",
+    "seconds": 0.30270833333333336,
+    "loop": false
+  },
+  {
+    "id": "bilozerska-weapon-0",
+    "seconds": 0.8818333333333334,
+    "loop": false
+  },
+  {
+    "id": "bilozerska-weapon-1",
+    "seconds": 0.86,
+    "loop": false
+  },
+  {
+    "id": "bilozerska-weapon-2",
+    "seconds": 0.8392916666666667,
+    "loop": false
+  },
+  {
+    "id": "it-army-weapon-0",
+    "seconds": 0.3177083333333333,
+    "loop": false
+  },
+  {
+    "id": "it-army-weapon-1",
+    "seconds": 0.31,
+    "loop": false
+  },
+  {
+    "id": "it-army-weapon-2",
+    "seconds": 0.30270833333333336,
+    "loop": false
+  },
+  {
+    "id": "skovoroda-weapon-0",
+    "seconds": 0.06954166666666667,
+    "loop": false
+  },
+  {
+    "id": "skovoroda-weapon-1",
+    "seconds": 0.06804166666666667,
+    "loop": false
+  },
+  {
+    "id": "skovoroda-weapon-2",
+    "seconds": 0.06666666666666667,
+    "loop": false
+  },
+  {
+    "id": "shevchenko-hit",
+    "seconds": 0.42,
+    "loop": false
+  },
+  {
+    "id": "lesya-hit",
+    "seconds": 0.42,
+    "loop": false
+  },
+  {
+    "id": "franko-hit",
+    "seconds": 0.42,
+    "loop": false
+  },
+  {
+    "id": "bandera-hit",
+    "seconds": 0.42,
+    "loop": false
+  },
+  {
+    "id": "mamai-hit",
+    "seconds": 0.42,
+    "loop": false
+  },
+  {
+    "id": "bayraktar-hit",
+    "seconds": 0.42,
+    "loop": false
+  },
+  {
+    "id": "ghost-hit",
+    "seconds": 0.42,
+    "loop": false
+  },
+  {
+    "id": "zelensky-hit",
+    "seconds": 0.42,
+    "loop": false
+  },
+  {
+    "id": "bilozerska-hit",
+    "seconds": 0.42,
+    "loop": false
+  },
+  {
+    "id": "it-army-hit",
+    "seconds": 0.42,
+    "loop": false
+  },
+  {
+    "id": "skovoroda-hit",
+    "seconds": 0.42,
+    "loop": false
+  },
+  {
+    "id": "ricochet",
+    "seconds": 0.45,
+    "loop": false
+  },
+  {
+    "id": "explosion",
+    "seconds": 1.3,
+    "loop": false
+  },
+  {
+    "id": "glass-fire",
+    "seconds": 0.65,
+    "loop": false
+  },
+  {
+    "id": "roots",
+    "seconds": 0.7,
+    "loop": false
+  },
+  {
+    "id": "stone-hit",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "thunder",
+    "seconds": 1.3,
+    "loop": false
+  },
+  {
+    "id": "rail-shot",
+    "seconds": 1.1,
+    "loop": false
+  },
+  {
+    "id": "bolt",
+    "seconds": 0.4,
+    "loop": false
+  },
+  {
+    "id": "mine-arm",
+    "seconds": 0.22,
+    "loop": false
+  },
+  {
+    "id": "rocket",
+    "seconds": 0.65,
+    "loop": false
+  },
+  {
+    "id": "shevchenko-special",
+    "seconds": 1.7,
+    "loop": false
+  },
+  {
+    "id": "lesya-special",
+    "seconds": 0.554,
+    "loop": false
+  },
+  {
+    "id": "lesya-ultimate",
+    "seconds": 0.71,
+    "loop": false
+  },
+  {
+    "id": "franko-special",
+    "seconds": 0.5923333333333334,
+    "loop": false
+  },
+  {
+    "id": "franko-ultimate",
+    "seconds": 0.985,
+    "loop": false
+  },
+  {
+    "id": "bandera-special",
+    "seconds": 0.332875,
+    "loop": false
+  },
+  {
+    "id": "bandera-ultimate",
+    "seconds": 1.31,
+    "loop": false
+  },
+  {
+    "id": "mamai-special",
+    "seconds": 0.17,
+    "loop": false
+  },
+  {
+    "id": "mamai-ultimate",
+    "seconds": 1.01,
+    "loop": false
+  },
+  {
+    "id": "bayraktar-special",
+    "seconds": 0.51,
+    "loop": false
+  },
+  {
+    "id": "bayraktar-ultimate",
+    "seconds": 0.9433333333333334,
+    "loop": false
+  },
+  {
+    "id": "ghost-special",
+    "seconds": 0.51,
+    "loop": false
+  },
+  {
+    "id": "ghost-ultimate",
+    "seconds": 1.8282083333333334,
+    "loop": false
+  },
+  {
+    "id": "zelensky-special",
+    "seconds": 0.21591666666666667,
+    "loop": false
+  },
+  {
+    "id": "zelensky-ultimate",
+    "seconds": 0.4217916666666667,
+    "loop": false
+  },
+  {
+    "id": "bilozerska-special",
+    "seconds": 0.27241666666666664,
+    "loop": false
+  },
+  {
+    "id": "bilozerska-ultimate",
+    "seconds": 0.51,
+    "loop": false
+  },
+  {
+    "id": "it-army-special",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "it-army-ultimate",
+    "seconds": 1.0933333333333333,
+    "loop": false
+  },
+  {
+    "id": "skovoroda-special",
+    "seconds": 0.48570833333333335,
+    "loop": false
+  },
+  {
+    "id": "skovoroda-ultimate",
+    "seconds": 0.71,
+    "loop": false
+  },
+  {
+    "id": "shevchenko-ultimate",
+    "seconds": 0.6,
+    "loop": false
+  },
+  {
+    "id": "lesya-special-loop",
+    "seconds": 1.75,
+    "loop": true
+  },
+  {
+    "id": "lesya-ultimate-loop",
+    "seconds": 1.75,
+    "loop": true
+  },
+  {
+    "id": "franko-special-loop",
+    "seconds": 1.75,
+    "loop": true
+  },
+  {
+    "id": "bandera-special-loop",
+    "seconds": 1.75,
+    "loop": true
+  },
+  {
+    "id": "bandera-ultimate-loop",
+    "seconds": 1.75,
+    "loop": true
+  },
+  {
+    "id": "mamai-special-loop",
+    "seconds": 0.95,
+    "loop": true
+  },
+  {
+    "id": "mamai-ultimate-loop",
+    "seconds": 0.95,
+    "loop": true
+  },
+  {
+    "id": "bayraktar-special-loop",
+    "seconds": 1.75,
+    "loop": true
+  },
+  {
+    "id": "bayraktar-ultimate-loop",
+    "seconds": 1.75,
+    "loop": true
+  },
+  {
+    "id": "ghost-ultimate-loop",
+    "seconds": 1.75,
+    "loop": true
+  },
+  {
+    "id": "zelensky-ultimate-loop",
+    "seconds": 1.75,
+    "loop": true
+  },
+  {
+    "id": "it-army-ultimate-loop",
+    "seconds": 1.75,
+    "loop": true
+  },
+  {
+    "id": "skovoroda-special-loop",
+    "seconds": 1.75,
+    "loop": true
+  },
+  {
+    "id": "skovoroda-ultimate-loop",
+    "seconds": 1.75,
+    "loop": true
+  },
+  {
+    "id": "shevchenko-special-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "shevchenko-ultimate-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "lesya-special-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "lesya-ultimate-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "franko-special-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "franko-ultimate-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "bandera-special-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "bandera-ultimate-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "mamai-special-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "mamai-ultimate-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "bayraktar-special-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "bayraktar-ultimate-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "ghost-special-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "ghost-ultimate-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "zelensky-special-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "zelensky-ultimate-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "bilozerska-special-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "bilozerska-ultimate-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "it-army-special-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "it-army-ultimate-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "skovoroda-special-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "skovoroda-ultimate-end",
+    "seconds": 0.5,
+    "loop": false
+  },
+  {
+    "id": "lesya-reload",
+    "seconds": 1.2799583333333333,
+    "loop": false
+  },
+  {
+    "id": "lesya-reload-end",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "bandera-reload",
+    "seconds": 2.2799583333333335,
+    "loop": false
+  },
+  {
+    "id": "bandera-reload-end",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "mamai-reload",
+    "seconds": 2.6799583333333334,
+    "loop": false
+  },
+  {
+    "id": "mamai-reload-end",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "bayraktar-reload",
+    "seconds": 2.88,
+    "loop": false
+  },
+  {
+    "id": "bayraktar-reload-end",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "ghost-reload",
+    "seconds": 1.98,
+    "loop": false
+  },
+  {
+    "id": "ghost-reload-end",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "zelensky-reload",
+    "seconds": 1.68,
+    "loop": false
+  },
+  {
+    "id": "zelensky-reload-end",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "bilozerska-reload",
+    "seconds": 4.68,
+    "loop": false
+  },
+  {
+    "id": "bilozerska-reload-end",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "it-army-reload",
+    "seconds": 1.88,
+    "loop": false
+  },
+  {
+    "id": "it-army-reload-end",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "support-infantry",
+    "seconds": 0.21,
+    "loop": false
+  },
+  {
+    "id": "support-turret",
+    "seconds": 0.23,
+    "loop": false
+  },
+  {
+    "id": "turret-step",
+    "seconds": 0.3529583333333333,
+    "loop": false
+  },
+  {
+    "id": "follower-hurt",
+    "seconds": 0.22908333333333333,
+    "loop": false
+  },
+  {
+    "id": "follower-down",
+    "seconds": 0.27241666666666664,
+    "loop": false
+  },
+  {
+    "id": "barrel-lift",
+    "seconds": 0.6039583333333334,
+    "loop": false
+  },
+  {
+    "id": "barrel-throw",
+    "seconds": 0.17,
+    "loop": false
+  },
+  {
+    "id": "armor-hit",
+    "seconds": 0.08679166666666667,
+    "loop": false
+  },
+  {
+    "id": "tank-land",
+    "seconds": 0.289875,
+    "loop": false
+  },
+  {
+    "id": "tank-jump",
+    "seconds": 0.5814583333333333,
+    "loop": false
+  },
+  {
+    "id": "hatch",
+    "seconds": 0.39591666666666664,
+    "loop": false
+  },
+  {
+    "id": "tank-shot",
+    "seconds": 1.2407916666666667,
+    "loop": false
+  },
+  {
+    "id": "tank-engine",
+    "seconds": 2.51,
+    "loop": false
+  },
+  {
+    "id": "plane-engine",
+    "seconds": 1.8282083333333334,
+    "loop": false
+  },
+  {
+    "id": "drone-engine",
+    "seconds": 0.75075,
+    "loop": false
+  },
+  {
+    "id": "drone-dive",
+    "seconds": 0.61,
+    "loop": false
+  },
+  {
+    "id": "enemy-alert",
+    "seconds": 0.15708333333333332,
+    "loop": false
+  },
+  {
+    "id": "enemy-fuse",
+    "seconds": 0.7529583333333333,
+    "loop": false
+  },
+  {
+    "id": "pickup",
+    "seconds": 0.207625,
+    "loop": false
+  },
+  {
+    "id": "debris",
+    "seconds": 0.289875,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-step-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-step-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-step-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-climb-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-climb-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-climb-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-jump-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-jump-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-jump-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-land-0",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-land-1",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-land-2",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-hurt-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-hurt-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-hurt-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-ready-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-ready-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-shevchenko-ready-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-step-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-step-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-step-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-climb-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-climb-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-climb-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-jump-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-jump-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-jump-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-land-0",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-land-1",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-land-2",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-hurt-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-hurt-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-hurt-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-ready-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-ready-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-lesya-ready-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-step-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-step-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-step-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-climb-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-climb-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-climb-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-jump-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-jump-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-jump-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-land-0",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-land-1",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-land-2",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-hurt-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-hurt-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-hurt-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-ready-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-ready-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-franko-ready-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-step-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-step-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-step-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-climb-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-climb-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-climb-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-jump-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-jump-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-jump-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-land-0",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-land-1",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-land-2",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-hurt-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-hurt-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-hurt-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-ready-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-ready-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bandera-ready-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-step-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-step-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-step-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-climb-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-climb-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-climb-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-jump-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-jump-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-jump-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-land-0",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-land-1",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-land-2",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-hurt-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-hurt-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-hurt-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-ready-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-ready-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-mamai-ready-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-step-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-step-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-step-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-climb-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-climb-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-climb-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-jump-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-jump-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-jump-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-land-0",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-land-1",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-land-2",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-hurt-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-hurt-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-hurt-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-ready-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-ready-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bayraktar-ready-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-step-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-step-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-step-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-climb-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-climb-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-climb-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-jump-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-jump-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-jump-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-land-0",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-land-1",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-land-2",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-hurt-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-hurt-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-hurt-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-ready-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-ready-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-ghost-ready-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-step-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-step-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-step-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-climb-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-climb-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-climb-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-jump-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-jump-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-jump-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-land-0",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-land-1",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-land-2",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-hurt-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-hurt-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-hurt-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-ready-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-ready-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-zelensky-ready-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-step-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-step-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-step-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-climb-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-climb-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-climb-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-jump-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-jump-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-jump-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-land-0",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-land-1",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-land-2",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-hurt-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-hurt-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-hurt-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-ready-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-ready-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-bilozerska-ready-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-step-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-step-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-step-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-climb-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-climb-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-climb-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-jump-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-jump-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-jump-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-land-0",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-land-1",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-land-2",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-hurt-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-hurt-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-hurt-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-ready-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-ready-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-it-army-ready-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-step-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-step-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-step-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-climb-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-climb-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-climb-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-jump-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-jump-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-jump-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-land-0",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-land-1",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-land-2",
+    "seconds": 0.26,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-hurt-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-hurt-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-hurt-2",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-ready-0",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-ready-1",
+    "seconds": 0.2,
+    "loop": false
+  },
+  {
+    "id": "foley-skovoroda-ready-2",
+    "seconds": 0.2,
+    "loop": false
+  }
+]

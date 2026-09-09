@@ -1,0 +1,100 @@
+{
+  "bayraktar-weapon-1": {
+    "sourceId": "bayraktar-weapon-1",
+    "masterSha256": "e1962988a0694d9ab2b2c3f42ebd6f48631f5b9cd7cf9d31d0bc1b6f8f2dd04a",
+    "start": 1.377,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "bilozerska-weapon-0": {
+    "sourceId": "bilozerska-weapon-0",
+    "masterSha256": "c93f591a6843c064417039c13a43a9992fe911bb76dc6d9bea001ea16382bbd8",
+    "start": 0.452,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "bolt": {
+    "sourceId": "bolt",
+    "masterSha256": "9a7a6456e53c3e2b3f18ebb1da70c04ed6366ed92b61d22e36003b65fa30f71f",
+    "start": 1.642,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "death-assault-0": {
+    "sourceId": "death-assault-0",
+    "masterSha256": "792dbc11a440fc1b17eee656767ea0288feefb3d6e0e3fef6ad8f08d89f6c02d",
+    "start": 4.137018333333333,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "death-boss-putin": {
+    "sourceId": "death-boss-putin",
+    "masterSha256": "1a6737191ad788eb74ee7505aaff2483def4bf3a76e729e30c076187eb9f5853",
+    "start": 0.742,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "death-demolition-1": {
+    "sourceId": "death-demolition-1",
+    "masterSha256": "262a7831497679e48e758fba11b0aea688a9d28fa19b596c266a443c26fd6880",
+    "start": 0.627,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "death-gunner-1": {
+    "sourceId": "death-gunner-1",
+    "masterSha256": "b56b052de8654dbd78d3f7ced696a07cdde9272b765a36f983f3c5b38f7acfa7",
+    "start": 4.092,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "death-rifle-2": {
+    "sourceId": "death-rifle-2",
+    "masterSha256": "de4f214e9e3fb01218bcf233a8a72876f696b1b5d465247f76e268c7290e6a56",
+    "start": 1.187,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "death-sniper-2": {
+    "sourceId": "death-sniper-2",
+    "masterSha256": "927cab7f79c6a28fde40e7a626f77335d443e499d2514858335e56a2dc2d0c49",
+    "start": 1.087,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "explosion": {
+    "sourceId": "explosion",
+    "masterSha256": "e3004674e5d2bc99b0c11021fa7c2ce3aa56fea55f8444aa242eff97318b89f3",
+    "start": 0.0,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "lesya-weapon-0": {
+    "sourceId": "lesya-weapon-2",
+    "masterSha256": "9c628ffd3ab8ea6ed4a26e935086d87ca85da60eda48f491dd2b6689a409fcc7",
+    "start": 3.12049485,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "mamai-melee-weapon-1": {
+    "sourceId": "mamai-melee-weapon-1",
+    "masterSha256": "e77be1df06062d120993a91b147878ed38ef34dd28b5124142bcef23ff22dd65",
+    "start": 5.187,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "shevchenko-hit": {
+    "sourceId": "shevchenko-hit",
+    "masterSha256": "2eebf9ee52aaa33933072e2bba29edc90e273fd77c6c31792a7122dbf45cb6dd",
+    "start": 1.777,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  },
+  "shevchenko-weapon-0": {
+    "sourceId": "shevchenko-weapon-0",
+    "masterSha256": "ebc5a1b39239b4ac4000ccdc3c06b1bcd58d0718dd37165d703b26ac802551c1",
+    "start": 0.792,
+    "rate": 1,
+    "reason": "Frozen source interval from a newly generated, recognizable family take. Pitch is applied once by the destination recipe."
+  }
+}
