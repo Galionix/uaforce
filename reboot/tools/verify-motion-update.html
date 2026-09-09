@@ -1,0 +1,17 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>Рух і заставки — без звуку</title><style>#controls{position:fixed;top:10px;left:10px;z-index:30;display:flex;gap:8px}#report{position:fixed;bottom:8px;right:8px;z-index:30;background:#08141c;color:white;font:14px monospace;white-space:pre-wrap;max-width:400px}#frames{position:fixed;top:90px;right:10px;z-index:10;display:flex;gap:8px;background:#163640}#frames canvas{width:128px;height:128px;image-rendering:pixelated}</style><canvas id="scene"></canvas><nav id="controls"><button id="hero">Герой</button><button id="boss">Бос</button><button id="run">Біг усіх бійців</button></nav><pre id="report"></pre><div id="frames"></div><script type="module">
+import '/src/style.css';import {World,IDLE} from '/src/game/world.ts';import {View} from '/src/game/view.ts';import {Sound} from '/src/game/audio.ts';import {Cinematic} from '/src/game/cinematic.ts';import {HEROES} from '/src/game/content.ts';import {heroFrame} from '/src/game/hero-animation.ts';
+const view=new View(document.querySelector('#scene')),sound=new Sound(true);let w=new World(),running=false,results=[],i=0;const cinematic=new Cinematic(sound,()=>{},w=>view.reset(w));await view.init();
+function reveal(kind,id){w=new World(kind==='boss'?5:0);w.beginCinematic(kind,id);running=false;view.reset(w);cinematic.sync(w);}
+document.querySelector('#hero').onclick=()=>reveal('hero','shevchenko');document.querySelector('#boss').onclick=()=>reveal('boss','putin');
+const controls=document.createElement('nav');controls.style.cssText='position:absolute;right:12px;bottom:12px;z-index:10;display:flex;gap:4px';
+for(const t of [.3,.9,1.5,1.84,3]){const b=document.createElement('button');b.textContent=t+' с';b.onclick=()=>{cinematic.elapsed=t;cinematic.animate();cinematic.button.disabled=false;};controls.append(b);}cinematic.dialog.append(controls);
+const play=document.createElement('button');play.textContent='Відтворити рух';play.onclick=()=>{cinematic.elapsed=0;cinematic.button.disabled=true;running=true;};controls.append(play);
+let samples=[];document.querySelector('#run').onclick=()=>{results=[];i=0;w=new World(0,HEROES.map(h=>h.id));w.mode='playing';w.enemies=[];running=false;view.reset(w);document.querySelector('#frames').replaceChildren();
+ for(const [index,h] of HEROES.entries()){
+ const framePrints=[];
+ for(const t of [0,.09,.18,.27]){const frame=heroFrame({...w.player,attack:1},t,true),bounds=view.frameBounds[index][frame],c=document.createElement('canvas');c.width=64;c.height=64;const ctx=c.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.drawImage(view.heroImages[index],...bounds,12,5,40,54);framePrints.push(c.toDataURL());if(index===0)document.querySelector('#frames').append(c);}
+ results.push({hero:h.id,distinctFrames:new Set(framePrints).size});}
+};
+view.onFrame=dt=>{if(w.mode==='cinematic'){if(running)cinematic.step(dt);}else if(results.length){i+=dt;w.heroId=HEROES[Math.floor(i/3)%HEROES.length].id;w.player.attack=1;w.player.grounded=true;w.player.x=5+(i%3)*2;}view.render(w,dt,results.length?1:0);
+ document.querySelector('#report').textContent=JSON.stringify({silent:true,mode:w.mode,worldTime:w.time,loaded:cinematic.loaded,phase:cinematic.dialog.dataset.phase,elapsed:Math.round(cinematic.elapsed*100)/100,results},null,2);};view.reset(w);
+</script></html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#121710" />
+    <title>UaForce — перегляд матеріалів</title>
+  </head>
+  <body>
+    <header><a href="#">UA<span>FORCE</span></a><p>МАТЕРІАЛИ КОМАНДИ</p><span class="tag">Перегляд матеріалів</span></header>
+    <main>
+      <section class="scene-panel" aria-label="Початкова сцена в PlayCanvas">
+        <div class="scene-heading"><div><small>01 / СЦЕНА КОМАНДИ</small><h1>Руйнування починаються тут.</h1></div><span class="tag">PlayCanvas · WebGL 2</span></div>
+        <canvas id="scene" aria-label="3D сцена UaForce, відновлена з початкового GLB"></canvas>
+        <div class="scene-footer"><p id="status" role="status">Завантаження початкового GLB…</p><button id="reset" type="button">Повернути камеру</button></div>
+        <div class="controls"><label>Ракурс <input id="orbit" type="range" min="-180" max="180" value="65" /></label><label>Масштаб <input id="zoom" type="range" min="0.25" max="1.5" step="0.01" value="0.8" /></label><label>Анімація <select id="animation"><option value="">Без анімації</option></select></label></div>
+      </section>
+      <section class="art-panel" aria-labelledby="art-title"><small>02 / ГЕНЕРАЦІЇ КОМАНДИ</small><h2 id="art-title">Один характер.<br>Три ракурси.</h2><p>Початкові зображення збережено. Зовнішність, силует і пропорції стали основою ігрового героя.</p><div class="portraits"><img src="/assets/cossack-front.png" alt="Початкова генерація: козак на повний зріст, спереду" /><img src="/assets/cossack-three-quarter.png" alt="Початкова генерація: козак у три чверті" /><img src="/assets/cossack-profile.png" alt="Початкова генерація: козак у профіль" /></div><p class="caption">Це початкові референси, а не готова анімована 3D-модель.</p></section>
+    </main>
+    <footer>Архів матеріалів команди. <a href="/">Повернутися до гри</a>.</footer>
+    <script type="module" src="/src/assets-review.ts"></script>
+  </body>
+</html>

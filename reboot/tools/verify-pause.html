@@ -1,0 +1,17 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>Перевірка паузи — без звуку</title><body><script type="module">
+if(new URLSearchParams(location.search).get('silent')!=='1')throw Error('silent=1 required');
+const markup=await(await fetch('/')).text(),doc=new DOMParser().parseFromString(markup,'text/html');
+doc.querySelectorAll('script').forEach(s=>s.remove());document.body.innerHTML=doc.body.innerHTML;document.body.className=doc.body.className;
+const pad={index:0,id:'DualSense test controller',mapping:'standard',connected:true,axes:[0,0,0,0],buttons:Array.from({length:18},()=>({pressed:false,value:0}))};
+Object.defineProperty(navigator,'getGamepads',{value:()=>[pad]});
+await import('/src/main.ts');
+const toolbar=document.createElement('aside');toolbar.style.cssText='position:fixed;z-index:10000;bottom:5px;left:20%;display:flex;gap:4px;font:14px monospace';document.body.append(toolbar);
+let focus;toolbar.addEventListener('pointerdown',()=>{focus=document.activeElement;});
+function button(label,fn){const b=document.createElement('button');b.textContent=label;b.style.cssText='font:14px monospace;padding:5px';b.onclick=()=>{focus?.focus();fn();};toolbar.append(b);}
+function press(index,ms=90){pad.buttons[index].pressed=true;setTimeout(()=>pad.buttons[index].pressed=false,ms);}
+button('QA Start',()=>press(9));button('QA Hold R2',()=>pad.buttons[7].pressed=!pad.buttons[7].pressed);
+button('QA Down',()=>press(13));button('QA Hold Down',()=>press(13,650));button('QA Up',()=>press(12));button('QA Cross',()=>press(0));
+button('QA Stick Up',()=>{pad.axes[1]=-.55;setTimeout(()=>pad.axes[1]=0,90);});
+const out=document.createElement('output');out.style.cssText='position:fixed;left:4px;bottom:50px;z-index:10000;color:white;background:#13252a;padding:5px;font:14px monospace';document.body.append(out);
+setInterval(()=>out.textContent=JSON.stringify({silent:true,focus:document.activeElement?.id,pause:!document.querySelector('#pause-menu').hidden,settings:document.querySelector('#settings').open,time:document.querySelector('#time').textContent,heldR2:pad.buttons[7].pressed}),80);
+</script></body></html>

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+dist-release/
+.release/
+.wrangler/
+.env
+.env.*
+!.env.example
+.DS_Store
+__pycache__/
+tools/audio-source/
+tools/art-source/
+docs/evidence/
+docs/releases/
+docs/DEPLOYMENT_RECEIPT.json

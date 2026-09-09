@@ -1,0 +1,11 @@
+<!doctype html><html lang="uk"><meta charset="UTF-8"><title>UaForce — перевірка загроз без звуку</title><style>body{margin:0;background:#12251e;color:#ecedd1;font:18px monospace}canvas{width:min(100%,1280px);image-rendering:pixelated}nav{padding:8px;display:flex;gap:8px;flex-wrap:wrap}button{padding:9px;font:inherit}output{display:block;padding:8px;max-width:1000px}</style><nav><button id="tank">Танк</button><button id="plane">Ракетоносець</button><button id="shahed">Шахед</button><button id="step">Крок 0.2 с</button><button id="play">Рух / пауза</button><button id="move">Відійти</button><button id="fire">Постріл</button></nav><output></output><canvas></canvas><script type="module">
+import{World,IDLE}from'/src/game/world.ts';import{View}from'/src/game/view.ts';import{addVehicle}from'/src/game/enemies.ts';
+const view=new View(document.querySelector('canvas'));let world,frozen=true;
+function reset(kind){world=new World(0,['bilozerska'],'bilozerska');world.mode='playing';world.player.x=38;world.enemies=[];world.allies=[];world.medkits=[];world.boxes=world.boxes.filter(b=>b.y<0);addVehicle(world,kind,kind==='plane'?52:48,kind==='tank'?0:kind==='plane'?9:5,0);world.step(1/60,IDLE);view.reset(world);}
+for(const kind of ['tank','plane','shahed'])document.getElementById(kind).onclick=()=>{frozen=true;reset(kind);};
+document.getElementById('step').onclick=()=>{for(let i=0;i<12;i++)world.step(1/60,IDLE);view.reset(world);};
+document.getElementById('play').onclick=()=>frozen=!frozen;
+document.getElementById('move').onclick=()=>{for(let i=0;i<45;i++)world.step(1/60,{...IDLE,move:-1});view.reset(world);};
+document.getElementById('fire').onclick=()=>{world.step(1/60,{...IDLE,fire:true});world.step(1/60,IDLE);view.reset(world);};
+view.onFrame=dt=>{if(!frozen)world.step(dt,IDLE);for(const e of world.events)view.event(e);world.events=[];view.render(world,dt,0);document.querySelector('output').textContent=JSON.stringify({silent:true,hp:world.player.hp,kills:world.kills,enemy:world.enemies.map(e=>({kind:e.vehicle.kind,phase:e.vehicle.phase,hp:e.hp,x:+e.x.toFixed(1),y:+e.y.toFixed(1),shots:e.vehicle.shots})),projectiles:world.bullets.map(b=>b.ordnance??'bullet')});};reset('tank');await view.init();view.reset(world);
+</script></html>

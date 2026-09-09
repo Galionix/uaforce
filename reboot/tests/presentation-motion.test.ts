@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {heroFrame} from '../src/game/hero-animation.ts';import {revealTimeline} from '../src/game/reveal-timeline.ts';
+const p={grounded:true,ladder:-1,wallClimbing:false,cast:0,attack:1,reloading:0};
+test('holding fire while running still cycles actual locomotion frames',()=>{const frames=Array.from({length:20},(_,i)=>heroFrame(p,i/60,true));assert.deepEqual([...new Set(frames)].sort(),[0,1,2]);assert.equal(heroFrame(p,.2,false),5);assert.equal(heroFrame({...p,grounded:false},.2,true),3);});
+test('climbing and wall climbing keep their poses even during fire',()=>{for(const pose of [{...p,ladder:0},{...p,wallClimbing:true}])assert.deepEqual([heroFrame(pose,0,true),heroFrame(pose,.2,true)],[6,7]);});
+test('reveal travels after charge, separates title entrance and settles after the second impact',()=>{const charge=revealTimeline(.3),entry=revealTimeline(.9),title=revealTimeline(1.5),impact=revealTimeline(1.84),hold=revealTimeline(3);assert.equal(charge.crop,100);assert.equal(charge.titleOpacity,0);assert.ok(entry.x>0&&entry.x<charge.x);assert.equal(entry.titleOpacity,0);assert.ok(title.titleX<0&&title.titleOpacity===1);assert.ok(impact.shakeX!==0||impact.shakeY!==0);assert.equal(hold.x,0);assert.equal(hold.shakeX,0);assert.equal(hold.titleX,0);});
+test('reduced motion gives readable stationary art and text without impacts',()=>{const p=revealTimeline(0,true);assert.equal(p.x,0);assert.equal(p.crop,0);assert.equal(p.titleOpacity,1);assert.equal(p.shakeX,0);});

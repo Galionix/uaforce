@@ -1,0 +1,17 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>UaForce — боси, без звуку</title>
+<style>#qa{position:fixed;z-index:10;top:10px;left:10px;display:flex;gap:8px}#qa button{font:18px monospace}#report{position:fixed;z-index:10;bottom:8px;color:white;background:#111}</style>
+<canvas id="scene"></canvas><div id="qa"></div><pre id="report"></pre>
+<script type="module">
+import '../src/style.css';import {World,IDLE} from '../src/game/world.ts';import {BOSSES} from '../src/game/bosses.ts';import {View} from '../src/game/view.ts';import {Sound} from '../src/game/audio.ts';import {Cinematic} from '../src/game/cinematic.ts';
+const view=new View(document.querySelector('#scene')),sound=new Sound(true);let world=new World(),selected=5;
+const cine=new Cinematic(sound,()=>{},w=>view.reset(w));await view.init();
+function setup(m,intro){selected=m;world=new World(m);world.mode='playing';world.player.x=BOSSES[world.boss.boss.id].left;world.step(1/60,IDLE);if(intro)cine.sync(world);else{world.finishCinematic();world.player.x=world.boss.x-5;world.mode='paused';}view.reset(world);}
+function button(label,click){const b=document.createElement('button');b.textContent=label;b.onclick=click;document.querySelector('#qa').append(b);}
+for(const m of [1,2,5])button(BOSSES[new World(m).mission.boss].name,()=>setup(m,true));
+button('Арена',()=>setup(selected,false));button('Перемога',()=>{world.mode='playing';world.damageEnemy(world.boss,world.boss.maxHp);for(const e of world.events){view.event(e);sound.event(e);}world.events=[];world.mode='paused';view.reset(world);});
+button('Лівий ящик',()=>{const c=world.ammoCrates.find(c=>c.arena);world.player.x=c.x;world.player.y=c.y;view.reset(world);});
+button('Підібрати',()=>{world.mode='playing';world.player.energy=0;world.player.invulnerable=999;world.boss.rooted=999;world.step(1/60,IDLE);world.mode='paused';view.reset(world);});
+button('Минути 9 с',()=>{world.mode='playing';world.player.x=BOSSES[world.boss.boss.id].left+1;world.player.invulnerable=999;world.boss.rooted=999;for(let i=0;i<540;i++)world.step(1/60,IDLE);world.mode='paused';view.reset(world);});
+button('Повторити бій',()=>{world.mode='playing';world.player.invulnerable=0;world.damagePlayer(100);world.mode='paused';view.reset(world);});
+view.onFrame=dt=>{if(world.mode==='cinematic')cine.step(dt);view.render(world,dt,0);document.querySelector('#report').textContent=JSON.stringify({silent:true,boss:world.boss?.boss?.id,mode:world.mode,hp:world.boss?.hp,objectiveComplete:world.objectiveComplete,simulationTime:world.time,supplies:world.ammoCrates.filter(c=>c.arena),energy:world.player.energy});};setup(5,false);
+</script></html>

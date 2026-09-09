@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {actorBounds,isolatedBounds} from '../src/game/sprite-bounds.ts';
+test('actor bounds ignore disconnected neighboring weapon spill and keep source pixels intact',()=>{const a=new Uint8ClampedArray(20*10*4);for(let y=2;y<8;y++)for(let x=3;x<7;x++)a[(y*20+x)*4+3]=255;for(let y=0;y<3;y++)a[(y*20+9)*4+3]=255;for(let y=3;y<9;y++)for(let x=14;x<19;x++)a[(y*20+x)*4+3]=255;const before=a.slice();assert.deepEqual(actorBounds(a,20,10,2,1),[[3,2,4,6],[14,3,5,6]]);assert.deepEqual(a,before);});
+
+test('isolated boss crop keeps disconnected equipment and ignores faint transparent backdrop',()=>{const a=new Uint8ClampedArray(20*10*4);a[3]=30;for(let y=3;y<9;y++)for(let x=4;x<15;x++)a[(y*20+x)*4+3]=255;a[(2*20+17)*4+3]=255;assert.deepEqual(isolatedBounds(a,20,10),[4,2,14,7]);assert.deepEqual(isolatedBounds(new Uint8ClampedArray(800),20,10),[0,0,20,10]);});

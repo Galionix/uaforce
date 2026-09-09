@@ -1,0 +1,26 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>UaForce · перевірка звуку без відтворення</title><style>body{background:#101e21;color:#e9e7d5;font:22px monospace;padding:30px}pre{white-space:pre-wrap}</style><h1>Перевірка SFX · без звуку</h1><pre id="result">Декодування…</pre><script type="module">
+import {SFX_ASSETS,SFX_BANK} from '/src/game/sfx-assets.ts';
+import {Sound} from '/src/game/audio.ts';
+import {World,IDLE} from '/src/game/world.ts';
+import {HEROES} from '/src/game/content.ts';
+const result=document.querySelector('#result');
+try{
+ const silent=new Sound(true);await silent.enable();
+ const context=new OfflineAudioContext(1,1,24000),buffer=await context.decodeAudioData(await(await fetch(SFX_BANK)).arrayBuffer());
+ const bad=[];const pcm=buffer.getChannelData(0);
+ for(const [key,c]of Object.entries(SFX_ASSETS)){
+  const a=Math.round(c.offset*24000),b=Math.round((c.offset+c.seconds)*24000);let power=0,peak=0;
+  for(let i=a;i<b;i++){power+=pcm[i]*pcm[i];peak=Math.max(peak,Math.abs(pcm[i]));}
+  if(b>pcm.length||power/(b-a)<1e-8||peak>.801)bad.push(key);
+ }
+ let events=0;
+ for(const h of HEROES){
+  const w=new World(0,HEROES.map(h=>h.id),h.id);w.mode='playing';w.player.x=5;w.enemies=[];w.mounts=[];w.allies=[];w.boxes=w.boxes.filter(b=>b.y<0||b.kind==='radio');
+  for(let i=0;i<420;i++){
+   w.step(1/60,{...IDLE,fire:i%60===1,special:i===0,ultimate:i===3});
+   for(const e of w.events){if(e.sfx&&!(e.sfx in SFX_ASSETS))bad.push(e.sfx);silent.event(e,w.player.x);events++;}w.events=[];silent.syncWorld(w);
+  }
+ }
+ result.textContent=JSON.stringify({passed:bad.length===0,clips:Object.keys(SFX_ASSETS).length,seconds:buffer.duration,rate:buffer.sampleRate,heroes:HEROES.length,events,bad,realtimeAudioContextCreated:false,playback:false},null,2);
+}catch(e){result.textContent=String(e);throw e;}
+</script></html>

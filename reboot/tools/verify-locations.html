@@ -1,0 +1,11 @@
+<!doctype html><html lang="uk"><meta charset="UTF-8"><title>UaForce — локації без звуку</title><style>body{margin:0;background:#14271f;color:#eee;font:18px monospace}nav{display:flex;flex-wrap:wrap;gap:6px;padding:8px}button{font:inherit;padding:7px}canvas{width:min(100%,1280px);image-rendering:pixelated}output{display:block;padding:8px}</style><nav id="locations"></nav><nav><button id="spend">Використати ульту</button><button id="collect">Підійти до ящика</button><button id="advance">Почекати 12 с</button><button id="end">Кінець локації</button></nav><output></output><canvas></canvas><script type="module">
+import{World,IDLE}from'/src/game/world.ts';import{MISSIONS}from'/src/game/content.ts';import{View}from'/src/game/view.ts';
+const view=new View(document.querySelector('canvas'));let world;
+function scene(i,start){world=new World(i);world.mode='playing';world.player.x=start;world.enemies=[];view.reset(world);}
+for(const [i,m]of MISSIONS.entries())for(const d of m.districts){const b=document.createElement('button');b.textContent=m.region+' · '+d.name;b.onclick=()=>scene(i,d.start+10);document.querySelector('#locations').append(b);}
+document.querySelector('#spend').onclick=()=>{world.step(1/60,{...IDLE,ultimate:true});view.reset(world);};
+document.querySelector('#collect').onclick=()=>{const crate=world.ammoCrates.find(c=>!c.used);world.player.x=crate.x-1.3;world.player.y=crate.y;for(let i=0;i<20;i++)world.step(1/60,{...IDLE,move:1});view.reset(world);};
+document.querySelector('#advance').onclick=()=>{for(let i=0;i<720;i++)world.step(1/60,IDLE);view.reset(world);};
+document.querySelector('#end').onclick=()=>{world.player.x=world.mission.exit-10;view.reset(world);};
+view.onFrame=dt=>{view.render(world,dt,0);document.querySelector('output').textContent=JSON.stringify({silent:true,section:world.section.name,length:world.mission.length,exit:world.mission.exit,x:+world.player.x.toFixed(1),ultimate:world.player.energy,ammo:world.ammoCrates.map(c=>({x:c.x,used:c.used})),checkpoints:world.mission.checkpoints});};scene(0,10);await view.init();view.reset(world);
+</script></html>

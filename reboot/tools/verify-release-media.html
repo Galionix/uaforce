@@ -1,0 +1,17 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>UaForce — беззвучна перевірка релізу</title><button id="check">Перевірити медіа без звуку</button><output>Очікування</output><script type="module">
+const output=document.querySelector('output');document.querySelector('button').onclick=async()=>{
+ const results=[],failures=[];const context=new OfflineAudioContext(2,1,44100);
+ try{
+ const score=await(await fetch('/docs/BACKGROUND_MUSIC.json')).json();
+ const map=await(await fetch('/.release/manifest.json')).json();
+ for(const [original,path] of Object.entries(map)){
+  try{const url='http://127.0.0.1:5180'+path;
+   if(path.endsWith('.mp3')){const r=await fetch(url);if(!r.ok)throw Error('HTTP '+r.status);const buffer=await context.decodeAudioData(await r.arrayBuffer());const d=buffer.duration;if(original.includes('/music/')){const expected=score.clips.find(c=>'/'+c.file.replace('public/','')===original)?.seconds;if(!expected)throw Error('missing score metadata');if(Math.abs(d-expected)>.08)throw Error('loop duration '+d);}results.push({original,seconds:d});}
+   else{const im=new Image();im.src=url;await im.decode();if(!im.naturalWidth)throw Error('image empty');results.push({original,width:im.naturalWidth,height:im.naturalHeight});}
+  }catch(e){failures.push({original,error:String(e)});}
+  output.textContent=JSON.stringify({silent:true,checked:results.length,failures});
+ }
+ output.textContent=JSON.stringify({silent:true,complete:true,checked:results.length,failures,music:results.filter(r=>r.original.includes('/music/'))});
+ }catch(e){output.textContent=String(e);}
+};
+</script></html>
