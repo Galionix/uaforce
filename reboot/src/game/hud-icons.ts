@@ -3,6 +3,7 @@ import type {HeroId} from './content';
 const path=(color:string,d:string)=>`<path fill="${color}" d="${d}"/>`;
 const ink='#10191e',gold='#ffd476',light='#fff0c6',green='#80e6b1',stone='#aeb8c0';
 const art:Record<string,string>={
+ bug:path(gold,'M11 3h3v4h4V3h3v5h3v5h5v3h-5v4h5v3h-5v5h-4v3h-8v-3H8v-5H3v-3h5v-4H3v-3h5V8h3z')+path(ink,'M14 12h4v14h-4zM11 9h3v3h-3zM18 9h3v3h-3z'),
  barrel:path(ink,'M6 2h20v28H6z')+path('#c03d2a','M8 4h16v24H8z')+path('#e6ae77','M5 7h22v3H5zM5 22h22v3H5z')+path(light,'M13 12h6v6h-6zM12 19h8v2h-8z')+path(ink,'M14 14h1v2h-1zM17 14h1v2h-1z'),
  tank:path(stone,'M2 19h27v8H2zM6 13h18v7H6zM10 8h11v6H10zM20 11h11v3H20z')+path(ink,'M5 22h4v3H5zM12 22h4v3h-4zM20 22h4v3h-4z')+path(green,'M7 15h7v3H7z'),
  exit:path(gold,'M4 3h14v5H9v19h9v4H4zM20 8h4v5h7v5h-7v5h-4v-5H12v-5h8z'),

@@ -1,4 +1,6 @@
 import {SUPPORT_URL,supportUrl} from './game/support';
+import {Feedback} from './game/feedback';
+import {FlagTransition} from './game/flag-transition';
 import {SnapshotWriter,applySnapshot} from './game/coop-state';
 import type {OnlineRoom,RoomCommand} from './game/online';
 import {reducedPresentation} from './game/motion-settings';
@@ -39,6 +41,9 @@ let transition=0;
 let world=new World(progress.mission,progress.unlocked,progress.hero), ready=false, accumulator=0, uiTime=0, toastTime=0, settingsWasPlaying=false, menuIndex=0;
 let pendingJump=false,pendingSpecial=false,pendingUltimate=false,pendingFire=false,pendingInteract=false;
 const cinematic=new Cinematic(sound,()=>{input.clear();accumulator=0;pendingJump=pendingSpecial=pendingUltimate=pendingFire=pendingInteract=false;},w=>view.reset(w));
+const flags=new FlagTransition();
+const feedback=new Feedback(canvas,()=>({mission:world.mission.name,hero:world.hero.name,mode:world.mode,session:online?`кооп / ${online.role}`:practice?'випробування':'одиночна',controller:input.pad?.id??'клавіатура'}),()=>{pause();sound.stopAll();input.clear();},()=>input.clear());
+for(const id of ['feedback-open','menu-feedback','pause-feedback','about-feedback'])$(id).onclick=()=>feedback.show();
 const bossStatus=document.createElement('div');bossStatus.id='boss-status';bossStatus.hidden=true;bossStatus.innerHTML='<span></span><progress max=1></progress>';canvas.parentElement!.append(bossStatus);
 const formatTime=(seconds:number)=>`${Math.floor(seconds/60).toString().padStart(2,'0')}:${Math.floor(seconds%60).toString().padStart(2,'0')}`;
 function toast(message:string){$('toast').textContent=message;$('toast').classList.add('visible');toastTime=1.8;}
@@ -46,7 +51,7 @@ function remember(){if(practice||online)return;progress={...progress,unlocked:[.
 function startMission(index:number){
   if(!ready)return;if(online?.role==='guest'){online.command('next');return;}practice=false;transition=0;sound.stopAll();const guestHero=world.players[1]?.heroId;world=new World(index,progress.unlocked,progress.hero);if(online?.connected){world.addPlayer(guestHero??'lesya');writer=new SnapshotWriter(world);}world.mode='playing';
   if(!online){progress.mission=index;progress.completed=false;saveProgress(progress);}view.reset(world);input.clear();accumulator=0;menu.hidden=true;pauseMenu.hidden=true;canvas.focus();sound.announce('missionStart',world.heroId);
-  toast(world.mission.name);
+  flags.play(index%2===1);toast(world.mission.name);
 }
 function begin(){if(practice){startPractice(world.heroId);return;}startMission(world.mode==='won'?(world.missionIndex+1)%MISSIONS.length:world.missionIndex);}
 function resume(focusCanvas=true){if(world.mode!=='paused')return;if(online?.role==='guest'){online.command('resume');return;}world.mode='playing';menu.hidden=true;pauseMenu.hidden=true;input.clear();if(focusCanvas)canvas.focus();void sound.enable();}
@@ -68,7 +73,7 @@ function showMenu(){
   $('result').textContent=won||lost?`${formatTime(world.time)} · ${world.kills} ворогів · ${world.rescued}/${world.allies.length} звільнено`:'';
   input.clear();$('primary').focus();
 }
-function startPractice(id:typeof HEROES[number]['id']){if(!ready||online)return;transition=0;practice=true;sound.stopAll();world=practiceWorld(id);view.reset(world);roster.close();menu.hidden=true;pauseMenu.hidden=true;input.clear();accumulator=0;canvas.focus();sound.announce('missionStart',id);toast(world.hero.name);}
+function startPractice(id:typeof HEROES[number]['id']){if(!ready||online)return;transition=0;practice=true;sound.stopAll();world=practiceWorld(id);view.reset(world);roster.close();menu.hidden=true;pauseMenu.hidden=true;input.clear();accumulator=0;canvas.focus();flags.play();sound.announce('missionStart',id);toast(world.hero.name);}
 for(const hero of HEROES){const button=document.createElement('button');button.className='roster-hero';button.innerHTML=`<span class="roster-image" data-hero="${hero.id}"></span><strong>${hero.name}</strong><span>${hero.weapon}</span>`;button.title=hero.description;button.onclick=()=>startPractice(hero.id);$('roster-grid').append(button);}
 $('roster-open').onclick=()=>{pause();input.clear();roster.showModal();menuIndex=0;$('roster-grid').querySelector('button')?.focus();};
 for(const [i,mission] of MISSIONS.entries()){const button=document.createElement('button');button.className='operation-card';button.innerHTML=`<b>${String(i+1).padStart(2,'0')}</b><span><strong>${mission.name}</strong><small>${mission.region}</small></span>`;button.title=mission.brief;button.onclick=()=>{operations.close();transition=0;world=new World(i,progress.unlocked,progress.hero);view.reset(world);showMenu();};$('operations-grid').append(button);}
@@ -90,7 +95,7 @@ $('pause-resume').onclick=()=>resume();
 $('pause-restart').onclick=begin;
 $('pause-settings').onclick=openSettings;
 $('pause-roster').onclick=()=>{$('roster-open').click();};
-$('pause-main').onclick=()=>{if(online){leaveOnline();return;}remember();practice=false;transition=0;sound.stopAll();world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);showMenu();};
+$('pause-main').onclick=()=>{if(online){leaveOnline();return;}remember();practice=false;transition=0;sound.stopAll();world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);showMenu();flags.play(true);};
 $('pause').onclick=()=>world.mode==='playing'?pause():resume();
 window.addEventListener('blur',()=>{sound.stopAll();pause('Пауза: вікно втратило фокус');});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){sound.stopAll();pause('Пауза: вкладку приховано');}});
@@ -192,16 +197,17 @@ function ui(){
   diagnostics();
 }
 view.onFrame=dt=>{
+  flags.step(dt);
   sound.bossBattle=!!world.boss?.boss?.active;sound.scoreTheme=world.mission.score;
-  const frame=input.poll(dt),wasMenu=!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open;
+  const frame=input.poll(dt),wasMenu=!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||feedback.open||flags.active;
   if(online?.role==='guest'&&online.connected){pendingJump ||= frame.action.jump;pendingSpecial ||= frame.action.special;pendingUltimate ||= !!frame.action.ultimate;netClock+=dt;if(netClock>=1/30){online.input(wasMenu?{move:0,jump:false,fire:false,special:false,interact:false}:{...frame.action,jump:pendingJump,special:pendingSpecial,ultimate:pendingUltimate});pendingJump=pendingSpecial=pendingUltimate=false;netClock=0;}}
   if(world.mode==='cinematic'){cinematic.sync(world);cinematic.step(dt,frame.confirm||frame.action.jump);view.render(world,dt,0);sound.step(dt,false,false);publishOnline(dt);ui();return;}
-  if(frame.pause){if(onlineMenu.open)closeOnlineMenu();else if(about.open)closeAbout();else if(operations.open)closeOperations();else if(roster.open)closeRoster();else if(settings.open)closeSettings();else if(world.mode==='playing')pause();else if(world.mode==='paused')resume();}
+  if(frame.pause){if(feedback.open)feedback.close();else if(onlineMenu.open)closeOnlineMenu();else if(about.open)closeAbout();else if(operations.open)closeOperations();else if(roster.open)closeRoster();else if(settings.open)closeSettings();else if(world.mode==='playing')pause();else if(world.mode==='paused')resume();}
   if(wasMenu){
     if(!menu.hidden){menuClock+=dt;menuFx.draw(menuClock,'menu');}
     if(frame.confirm)void sound.enable();
     $('menu-audio').textContent=sound.audioReady&&sound.music?'♫ Музика увімкнена':'♫ Увімкнути музику';
-    const root=onlineMenu.open?onlineMenu:about.open?about:operations.open?operations:roster.open?roster:settings.open?settings:!pauseMenu.hidden?pauseMenu:menu;
+    const root=feedback.open?feedback.dialog:onlineMenu.open?onlineMenu:about.open?about:operations.open?operations:roster.open?roster:settings.open?settings:!pauseMenu.hidden?pauseMenu:menu;
     const buttons=Array.from(root.querySelectorAll<HTMLButtonElement>('button')).filter(b=>!b.hidden&&!b.disabled&&b.getClientRects().length>0);
     if(frame.up||frame.down){menuIndex=((buttons.indexOf(document.activeElement as HTMLButtonElement)>=0?buttons.indexOf(document.activeElement as HTMLButtonElement):menuIndex)+(frame.down?1:-1)+buttons.length)%Math.max(1,buttons.length);buttons[menuIndex]?.focus();}
     if(frame.confirm&&!input.capture){const focused=document.activeElement;((focused instanceof HTMLButtonElement&&root.contains(focused))?focused:buttons[menuIndex])?.click();}
@@ -226,14 +232,14 @@ view.onFrame=dt=>{
   }
   publishOnline(dt);world.events=[];cinematic.sync(world);view.render(world,dt,frame.action.move);sound.syncWorld(world);sound.step(dt,musicDanger(world,frame.action.fire),world.mode==='playing',frame.action.fire,world.mode==='ready'&&!menu.hidden&&document.hasFocus()&&!document.hidden&&!settings.open);
   if(toastTime>0){toastTime-=dt;if(toastTime<=0)$('toast').classList.remove('visible');}
-  if(transition>0&&!sound.announcing&&!settings.open&&document.hasFocus()&&!document.hidden){transition-=dt;if(transition<=0)startMission(world.missionIndex+1);}
+  if(transition>0&&!sound.announcing&&!settings.open&&!feedback.open&&document.hasFocus()&&!document.hidden){transition-=dt;if(transition<=0)startMission(world.missionIndex+1);}
   uiTime+=dt;if(uiTime>.08){ui();uiTime=0;}
 };
 
 function syncOnlineControls(){for(const id of ['pause-restart','pause-roster'])$(id).hidden=!!online;}
 function leaveOnline(message?:string){
  const old=online;online=null;old?.close();writer=null;outgoingEvents=[];netClock=0;netSequence=0;guestEpoch='';
- sound.stopAll();cinematic.dismiss();onlineMenu.close();practice=false;transition=0;
+ sound.stopAll();cinematic.dismiss();onlineMenu.close();feedback.close();flags.stop();practice=false;transition=0;
  world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);syncOnlineControls();showMenu();
  if(message){$('online-status').textContent=message;onlineMenu.showModal();$('online-close').focus();}
 }
@@ -267,7 +273,7 @@ async function enterOnline(role:'host'|'guest'){
    connected:guestHero=>{
     if(role==='host'){
      sound.stopAll();world=new World(world.missionIndex,HEROES.map(h=>h.id),hero);world.addPlayer(guestHero);world.mode='playing';writer=new SnapshotWriter(world);
-     onlineMenu.close();menu.hidden=true;pauseMenu.hidden=true;view.reset(world);input.clear();accumulator=0;canvas.focus();sound.announce('missionStart',hero);
+     onlineMenu.close();menu.hidden=true;pauseMenu.hidden=true;view.reset(world);input.clear();accumulator=0;canvas.focus();flags.play();sound.announce('missionStart',hero);
     }else $('online-status').textContent='Друг поруч. Завантаження спільної операції…';
     syncOnlineControls();
    },
@@ -275,7 +281,7 @@ async function enterOnline(role:'host'|'guest'){
     const fresh=s.epoch!==guestEpoch;
     if(fresh){sound.stopAll();cinematic.dismiss();world=new World(s.mission,s.state.unlocked as typeof world.unlocked,s.players[0].heroId);guestEpoch=s.epoch;}
     const before=world.mode;applySnapshot(world,s);
-    if(fresh){onlineMenu.close();menu.hidden=true;pauseMenu.hidden=true;view.reset(world);input.clear();canvas.focus();}
+    if(fresh){onlineMenu.close();menu.hidden=true;pauseMenu.hidden=true;view.reset(world);input.clear();canvas.focus();flags.play(s.mission%2===1);}
     if(world.mode==='playing'){menu.hidden=true;pauseMenu.hidden=true;cinematic.dismiss();}
     if(world.mode==='paused'&&before!=='paused'){sound.stopAll();menu.hidden=true;pauseMenu.hidden=false;input.clear();$('pause-mission').textContent=world.mission.name;$('pause-resume').focus();}
    },

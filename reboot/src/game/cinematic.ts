@@ -1,4 +1,5 @@
 import {reducedPresentation} from './motion-settings';
+import {FlagTransition} from './flag-transition';
 import {revealTimeline} from './reveal-timeline';
 import {PresentationFx} from './presentation-fx';
 import {assetUrl} from './assets.ts';
@@ -9,9 +10,10 @@ import type {Sound} from './audio';
 /** The world owns the pause; this controller only presents and acknowledges it. */
 export class Cinematic {
  onConfirm:(()=>boolean)|null=null;
- dismiss(){if(this.dialog.open){this.dialog.close();this.current=null;this.serial=-1;this.loadToken++;}}
+ dismiss(){this.flag.stop();if(this.dialog.open){this.dialog.close();this.current=null;this.serial=-1;this.loadToken++;}}
  readonly dialog=document.createElement('dialog');
  private loaded=false;private announced=false;private loadToken=0;
+ private flag:FlagTransition;
  private fx!:PresentationFx;private get reduced(){return reducedPresentation();}
  private button=document.createElement('button');private elapsed=0;private current:World|null=null;private serial=-1;
  constructor(private sound:Sound,private resetInput:()=>void,private redraw:(w:World)=>void){
@@ -19,6 +21,7 @@ export class Cinematic {
   this.dialog.innerHTML='<img class="reveal-art" alt=""><div class="reveal-shade"></div><div class="reveal-copy"><p class="reveal-kicker"></p><h1 id="reveal-name"></h1><p class="reveal-subtitle"></p></div>';
   const effects=document.createElement('canvas');effects.className='reveal-fx';effects.setAttribute('aria-hidden','true');this.dialog.append(effects);this.fx=new PresentationFx(effects);
   this.button.className='reveal-continue';this.button.onclick=()=>this.confirm();this.dialog.append(this.button);document.body.append(this.dialog);
+  this.flag=new FlagTransition(this.dialog);
   this.dialog.addEventListener('cancel',e=>e.preventDefault());
   this.dialog.addEventListener('keydown',e=>{if(['Enter','Space'].includes(e.code)){e.preventDefault();if(!e.repeat)this.confirm();}});
  }
@@ -35,13 +38,13 @@ export class Cinematic {
   this.button.textContent=boss?'Прийняти бій · Enter / ✕ / A':'До бою · Enter / ✕ / A';this.button.disabled=true;
   this.animate();this.dialog.showModal();this.dialog.focus();this.redraw(w);
   // A cold network load must not consume the entire entrance before the art is visible.
-  const ready=()=>{if(this.loadToken!==loadToken)return;this.loaded=true;this.elapsed=0;this.dialog.dataset.ready='true';};
+  const ready=()=>{if(this.loadToken!==loadToken)return;this.loaded=true;this.elapsed=0;this.dialog.dataset.ready='true';this.flag.play(kind==='boss');};
   this.dialog.dataset.ready='false';void img.decode().then(ready,ready);
  }
  step(dt:number,confirm=false){
   if(!this.dialog.open)return;
   if(document.hidden||!document.hasFocus()||!this.loaded)return;
-  const before=this.elapsed;this.elapsed+=Math.min(dt,.1);this.animate();
+  const before=this.elapsed;this.elapsed+=Math.min(dt,.1);this.flag.step(dt);this.animate();
   if(!this.announced&&this.elapsed>=.48){this.announced=true;this.sound.announce(this.dialog.dataset.kind==='boss'?'bossEncounter':'heroChanged',this.dialog.dataset.boss!,true);}
   for(const impact of [.5,1.8])if(before<impact&&this.elapsed>=impact)this.sound.event({type:this.dialog.dataset.kind==='boss'?'hostileBlast':'burst',x:0,y:0});
   this.button.disabled=this.elapsed<3.6||(this.sound.announcing&&this.elapsed<12);
