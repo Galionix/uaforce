@@ -69,3 +69,5 @@ body:not(.menu-open) .logo{display:none}.top-actions{margin-left:auto}.utility-i
 .cinematic[data-ready=false] .reveal-art{visibility:hidden}
 .cinematic .reveal-shade{transform:translateX(calc((1 - var(--band,0)) * -100%))}
 @media(prefers-reduced-motion:reduce){.cinematic .reveal-art,.cinematic .reveal-copy,.cinematic .reveal-shade{will-change:auto}}
+
+.project-links{display:flex;gap:1rem;align-items:center;margin-top:1rem}.project-links button{background:transparent;border:0;font-size:1rem;padding:.3rem;color:#c9d4c1}.menu-buttons small{font-size:.6em;color:#eac376}#online-menu,#about-game{max-width:min(640px,92vw)}#online-menu label{display:grid;gap:.5rem;margin:1rem 0}#online-menu input,#online-menu select{font:inherit;padding:.65rem;background:#172722;color:#fff3cf;border:2px solid #778c70}#online-code{text-transform:uppercase;letter-spacing:.16em}.online-actions{display:grid;gap:.5rem}#online-status{min-height:1.6em;color:#ffdf6a;overflow-wrap:anywhere}#about-game a{color:#ffdf6a}#support-link{display:inline-block;padding:1rem;border:2px solid #ffdf6a}

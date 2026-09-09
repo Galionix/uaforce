@@ -36,10 +36,10 @@ export function stepInfantry(w:World,e:Enemy,dt:number){
  if(a.fuse>=0){a.state='fuse';navigate(e.x,e.y,0);a.fuse-=dt;if(a.fuse<=0){w.damageEnemy(e,e.hp);hostileBlast(w,e.x,e.y+.9,2.8,38);}return;}
  const cloud=e.distracted?w.effects.find(f=>f.hero==='lesya'&&f.kind==='special'):undefined;
  const decoy=cloud?{x:cloud.x,y:cloud.y+3}:undefined;
- const targets=decoy?[decoy]:[...(w.player.cloak<=0?[w.player]:[]),...w.followers.filter(f=>f.hp>0)];
+ const targets=decoy?[decoy]:[...w.players.filter(a=>a.body.cloak<=0).map(a=>a.body),...w.followers.filter(f=>f.hp>0)];
  const visible=targets.filter(t=>Math.hypot(t.x-e.x,t.y-e.y)<=spec.sight&&clearShot(w,e,t)).sort((x,y)=>Math.hypot(x.x-e.x,x.y-e.y)-Math.hypot(y.x-e.x,y.y-e.y));
  const target=visible[0];
- if(target&&!decoy&&a.kind!=='demolition'&&Math.hypot(target.x-e.x,target.y-e.y)<1){if(target===w.player)w.damagePlayer(12,true);else{const follower=w.followers.find(f=>f===target);if(follower&&follower.contactCooldown<=0){w.damageFollower(follower,12);follower.contactCooldown=.65;}}}
+ if(target&&!decoy&&a.kind!=='demolition'&&Math.hypot(target.x-e.x,target.y-e.y)<1){const actor=w.players.find(a=>a.body===target);if(actor)w.withPlayer(actor.id,()=>w.damagePlayer(12,true));else{const follower=w.followers.find(f=>f===target);if(follower&&follower.contactCooldown<=0){w.damageFollower(follower,12);follower.contactCooldown=.65;}}}
  if(target){
   if(a.memory<=0){alert(w,e,target.x,target.y);
    if(a.kind==='scout')for(const other of w.enemies){if(other===e||other.hp<=0||!other.infantry||other.infantry.memory>0||Math.hypot(other.x-e.x,other.y-e.y)>9)continue;alert(w,other,target.x,target.y);}

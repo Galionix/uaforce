@@ -2,7 +2,7 @@ import type {World,Box} from './world.ts';
 import {enemyActive,enemySize} from './enemies.ts';
 export const BARREL={gravity:24,throwSpeed:8,impactSpeed:6.5};
 const supports=new WeakMap<Box,Box>();
-export function nearbyBarrel(w:World){return w.boxes.filter(b=>b.kind==='barrel'&&b.hp>0&&Math.abs(b.x-w.player.x)<1.9&&Math.abs(b.y-w.player.y)<1.4).sort((a,b)=>Math.abs(a.x-w.player.x)-Math.abs(b.x-w.player.x))[0];}
+export function nearbyBarrel(w:World){return w.boxes.filter(b=>b.kind==='barrel'&&b.hp>0&&!w.players.some(a=>a.heldBarrel===b.id)&&Math.abs(b.x-w.player.x)<1.9&&Math.abs(b.y-w.player.y)<1.4).sort((a,b)=>Math.abs(a.x-w.player.x)-Math.abs(b.x-w.player.x))[0];}
 export function dropBarrel(w:World){const b=w.boxes.find(b=>b.id===w.heldBarrel);w.heldBarrel=null;if(b){b.vx=0;b.vy=0;}}
 export function interactBarrel(w:World,drop=false){
  const p=w.player,b=w.boxes.find(b=>b.id===w.heldBarrel&&b.hp>0);
@@ -16,8 +16,9 @@ export function interactBarrel(w:World,drop=false){
 export function stepBarrels(w:World,dt:number){
  for(const b of w.boxes){
   if(b.kind!=='barrel'||b.hp<=0)continue;
-  if(b.id===w.heldBarrel){
-   const p=w.player;
+  const holder=w.players.find(a=>a.heldBarrel===b.id);
+  if(holder){
+   const p=holder.body;
    for(const a of w.boxes)if(a!==b&&a.hp>0&&a.kind!=='platform'&&Math.abs(a.x-p.x)<(a.w+b.w)/2-.01&&p.y+1.7<a.y+a.h-.01&&p.y+1.7+b.h>a.y+.01){
     if(b.y+b.h<=a.y+.03){p.y=Math.min(p.y,a.y-b.h-1.7);p.vy=Math.min(0,p.vy);}else p.x=b.x;
    }
@@ -31,7 +32,7 @@ export function stepBarrels(w:World,dt:number){
    b.x+=(b.vx??0)*h;b.y+=b.vy*h;
    let contactSpeed=0,grounded=false;
    for(const a of w.boxes){
-    if(a===b||a.hp<=0||a.id===w.heldBarrel)continue;
+    if(a===b||a.hp<=0||w.players.some(p=>p.heldBarrel===a.id))continue;
     const overlapX=Math.abs(b.x-a.x)<(b.w+a.w)/2-.01,top=a.y+a.h;
     if(overlapX&&b.vy<=0&&oldY>=top-.025&&b.y<=top){contactSpeed=Math.max(contactSpeed,-b.vy);b.y=top;b.vy=0;grounded=true;supports.set(b,a);}
     else if(a.kind!=='platform'&&overlapX&&b.vy>0&&oldY+b.h<=a.y+.025&&b.y+b.h>=a.y){contactSpeed=Math.max(contactSpeed,b.vy);b.y=a.y-b.h;b.vy=0;}
@@ -48,5 +49,5 @@ export function stepBarrels(w:World,dt:number){
    if(b.x<.5||b.x>w.mission.length-.5){b.x=Math.max(.5,Math.min(w.mission.length-.5,b.x));b.vx=0;}
   }
  }
- if(w.heldBarrel!==null&&!w.boxes.some(b=>b.id===w.heldBarrel&&b.hp>0))w.heldBarrel=null;
+ for(const a of w.players)if(a.heldBarrel!==null&&!w.boxes.some(b=>b.id===a.heldBarrel&&b.hp>0))a.heldBarrel=null;
 }

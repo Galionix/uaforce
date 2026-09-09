@@ -8,6 +8,8 @@ import type {World} from './world';
 import type {Sound} from './audio';
 /** The world owns the pause; this controller only presents and acknowledges it. */
 export class Cinematic {
+ onConfirm:(()=>boolean)|null=null;
+ dismiss(){if(this.dialog.open){this.dialog.close();this.current=null;this.serial=-1;this.loadToken++;}}
  readonly dialog=document.createElement('dialog');
  private loaded=false;private announced=false;private loadToken=0;
  private fx!:PresentationFx;private get reduced(){return reducedPresentation();}
@@ -58,6 +60,7 @@ export class Cinematic {
  }
  confirm(){
   if(!this.current||!this.dialog.open||this.button.disabled)return;
+  if(this.onConfirm&&!this.onConfirm())return;
   this.sound.stopAll();this.current.finishCinematic();this.dialog.close();this.resetInput();this.redraw(this.current);
   document.querySelector<HTMLCanvasElement>('#scene')?.focus();
  }

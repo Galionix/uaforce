@@ -22,13 +22,13 @@ export function hostileBlast(w:World,x:number,y:number,radius:number,damage:numb
  w.emit('hostileBlast',x,y);
  const exposed=(t:{x:number;y:number})=>!w.boxes.some(b=>b.hp>0&&segmentHit(x,y,t.x,t.y+.8,b.x-b.w/2,b.y,b.x+b.w/2,b.y+b.h)!==null);
  // Determine shielding before damaging the wall, so one explosion cannot erase it then hit through it.
- const playerHit=!w.mounted&&Math.hypot(w.player.x-x,w.player.y+.8-y)<radius&&exposed(w.player);
+ const playersHit=w.players.filter(a=>!a.mounted&&Math.hypot(a.body.x-x,a.body.y+.8-y)<radius&&exposed(a.body));
  const tanks=w.mounts.filter(t=>{if(t.armor<=0)return false;const point={x:Math.max(t.x-TANK.w/2,Math.min(t.x+TANK.w/2,x)),y:Math.max(t.y,Math.min(t.y+TANK.h,y))};return Math.hypot(point.x-x,point.y-y)<radius&&exposed({x:point.x,y:point.y-.8});});
  const followers=w.followers.filter(f=>f.hp>0&&Math.hypot(f.x-x,f.y+.8-y)<radius&&exposed(f));
  for(const b of w.boxes)if(b.hp>0&&Math.hypot(b.x-x,b.y+b.h/2-y)<radius)w.damageBox(b,damage*2);
  for(const t of tanks)damageMount(w,t,damage);
  for(const f of followers)w.damageFollower(f,damage);
- if(playerHit)w.damagePlayer(damage);
+ for(const a of playersHit)w.withPlayer(a.id,()=>w.damagePlayer(damage));
 }
 export function launchHostile(w:World,e:Enemy,kind:'shell'|'rocket',tx:number,ty:number){
  const x=e.x+(kind==='shell'?e.dir*2.6:0),y=e.y+(kind==='shell'?1.95:0),speed=kind==='shell'?14:9;
@@ -47,7 +47,7 @@ export function stepVehicle(w:World,e:Enemy,dt:number){
  v.age+=dt;
  if(v.phase==='warning'){if(v.age<VEHICLES[v.kind].warning)return;v.phase='hunt';v.age=0;}
  const decoy=e.distracted?w.effects.find(f=>f.hero==='lesya'&&f.kind==='special'):undefined;
- const target=decoy??[...(w.player.cloak<=0?[w.player]:[]),...w.followers.filter(f=>f.hp>0)].sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y))[0];
+ const target=decoy??[...w.players.filter(a=>a.body.cloak<=0).map(a=>a.body),...w.followers.filter(f=>f.hp>0)].sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y))[0];
  if(v.kind==='tank'){
   const floor=Math.max(-2,...w.boxes.filter(b=>b.hp>0&&Math.abs(b.x-e.x)<b.w/2+1.2&&b.y+b.h<=e.y+.1).map(b=>b.y+b.h));e.y=Math.max(floor,e.y-8*dt);
   e.cooldown=Math.max(0,e.cooldown-dt);
@@ -85,7 +85,7 @@ export function stepVehicle(w:World,e:Enemy,dt:number){
   let hit=2;
   const test=(x:number,y:number,width:number,height:number)=>{const t=segmentHit(oldX,oldY+.4,e.x,e.y+.4,x-width/2-.4,y-.3,x+width/2+.4,y+height);if(t!==null)hit=Math.min(hit,t);};
   for(const b of w.boxes)if(b.hp>0)test(b.x,b.y,b.w,b.h);
-  if(!w.mounted)test(w.player.x,w.player.y,.65,1.6);for(const t of w.mounts)if(t.armor>0)test(t.x,t.y,TANK.w,TANK.h);for(const f of w.followers)if(f.hp>0)test(f.x,f.y,.7,1.5);
+  for(const a of w.players)if(!a.mounted)test(a.body.x,a.body.y,.65,1.6);for(const t of w.mounts)if(t.armor>0)test(t.x,t.y,TANK.w,TANK.h);for(const f of w.followers)if(f.hp>0)test(f.x,f.y,.7,1.5);
   if(hit<=1||e.y<-2||v.age>12){e.hp=0;v.active=false;const t=Math.min(1,hit);hostileBlast(w,oldX+(e.x-oldX)*t,oldY+(e.y-oldY)*t+.4,2.8,32);}
  }
 }

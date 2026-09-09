@@ -1,0 +1,30 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>UA Force — тиха перевірка WebRTC</title><style>body{font:18px monospace;background:#14221c;color:#ffe395}pre{white-space:pre-wrap}button{font:inherit;padding:12px}</style><button id="run">Перевірити двох клієнтів</button><pre id="result">Без звуку. Справжній PeerServer Cloud і два RTCPeerConnection.</pre><script type="module">
+import {OnlineRoom} from '/src/game/online.ts';import {World,IDLE} from '/src/game/world.ts';import {SnapshotWriter,applySnapshot} from '/src/game/coop-state.ts';
+const out=document.querySelector('#result');let host,guest,timer,timeout;
+document.querySelector('#run').onclick=()=>{
+ host?.close();guest?.close();clearInterval(timer);clearTimeout(timeout);
+ const w=new World();w.addPlayer('lesya');w.mode='playing';w.enemies=[];const writer=new SnapshotWriter(w),remote=new World();
+ let sequence=0,packets=0,frame=0,sawMove=false,sawShot=false,sawDamage=false,sawPause=false,sawLeave=false,maxBytes=0;
+ const report=()=>({packets,sawMove,sawShot,sawDamage,sawPause,sawLeave,maxBytes,silent:true});
+ const done=()=>{clearInterval(timer);clearTimeout(timeout);out.textContent=JSON.stringify({...report(),passed:sawMove&&sawShot&&sawDamage&&sawPause&&sawLeave},null,2);};
+ const callbacks={status:t=>out.textContent=t,created:()=>{},connected:()=>{},snapshot:()=>{},command:c=>{if(c==='pause')w.mode='paused';},ended:t=>{out.textContent=t;}};
+ host=new OnlineRoom('host',OnlineRoom.code(),'shevchenko',{...callbacks,created:code=>{
+  guest=new OnlineRoom('guest',code,'lesya',{...callbacks,snapshot:s=>{
+   packets++;maxBytes=Math.max(maxBytes,JSON.stringify(s).length);applySnapshot(remote,s);sawMove ||= remote.player.x>4.1;sawShot ||= remote.bullets.some(b=>b.hero==='lesya');sawDamage ||= remote.player.hp<100;sawPause ||= remote.mode==='paused';
+   out.textContent=JSON.stringify(report(),null,2);
+   if(sawPause){clearInterval(timer);host.close();}
+  },ended:()=>{sawLeave=true;done();}});
+ },connected:()=>{
+  timer=setInterval(()=>{
+   frame++;guest.input({...IDLE,move:1,fire:true});w.stepPlayers(1/60,[IDLE,host.remote.take(performance.now()/1000)]);
+   if(frame===70)w.withPlayer(1,()=>w.damagePlayer(20));
+   // Exercise a payload larger than the PeerJS JSON channel MTU.
+   if(frame===80)for(let i=0;i<300;i++)w.bullets.push({id:w.nextId(),x:1,y:18,vx:0,vy:0,life:2,friendly:true,damage:1});
+   if(frame===100)guest.command('pause');
+   if(frame%3===0){host.state(writer.snapshot(++sequence,w.events));w.events=[];}
+  },1000/60);
+ }});
+ timeout=setTimeout(()=>{host?.close();guest?.close();done();},25000);
+};
+window.addEventListener('pagehide',()=>{host?.close();guest?.close();clearInterval(timer);clearTimeout(timeout);});
+</script></html>

@@ -10,7 +10,7 @@ import {stepFollowers, clearShot, type Follower} from './followers.ts';
 import {cycleWeapon,resetWeapon,WEAPONS} from './weapons.ts';
 import {attack,mamaiMelee,canSpecial,launchEffect,stepHeroEffect,effectAudioPhase} from './hero-combat.ts';
 import { HEROES, MISSIONS, heroById, type HeroId, type Mission } from './content.ts';
-export type Effect={kind:'weapon'|'special'|'ultimate';hero:HeroId;x:number;y:number;dir:number;life:number;age:number;hit:Set<number>;originX?:number;originY?:number;target?:number;audioMarks?:Set<string>};
+export type Effect={playerId?:number;kind:'weapon'|'special'|'ultimate';hero:HeroId;x:number;y:number;dir:number;life:number;age:number;hit:Set<number>;originX?:number;originY?:number;target?:number;audioMarks?:Set<string>};
 export type Mode = 'ready' | 'playing' | 'paused' | 'lost' | 'won' | 'cinematic';
 export type Actions = { move: number; jump: boolean; jumpHeld?:boolean; fire: boolean; special: boolean; ultimate?: boolean; interact: boolean; climb?: number };
 export type Box = { id: number; x: number; y: number; w: number; h: number; hp: number; maxHp: number; vx?:number;vy?:number; kind: 'crate' | 'barrel' | 'wall' | 'radio' | 'platform' | 'earth' | 'stone' };
@@ -18,17 +18,44 @@ export type Enemy = { id: number; x: number; y: number; hp: number; maxHp: numbe
 export type Bullet = { id: number; x: number; y: number; vx: number; vy: number; life: number; friendly: boolean; damage: number; hero?:HeroId;ordnance?:'shell'|'rocket';blastRadius?:number };
 export type Event = { type: 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
 export const IDLE: Actions = { move: 0, jump: false, fire: false, special: false, interact: false };
+
+export function createPlayerBody(){return { x: 3, y: 0, vy: 0, hp: 100, facing: 1, grounded: true, invulnerable: 0, cooldown: 0, energy: 100, coyote: 0.12, wallSide:0,wallLock:0,wallVx:0,wallClimbing:false,ladder: -1, ladderLock: 0, detachVx: 0, ladderNeedsRelease:false, cast:0, attack:0, specialCooldown:0, specialRecovery:[] as number[], form:0, cloak:0, fireCount:0, ammo:0, reloading:0, burstShots:0, weaponTrigger:false };}
+export type PlayerActor={id:number;body:ReturnType<typeof createPlayerBody>;heroId:HeroId;lives:number;checkpoint:number;mounted:Mount|null;heldBarrel:number|null;interactHeld:boolean;motionFoley:MotionFoley;move:number};
+function createActor(id:number,heroId:HeroId):PlayerActor {return {id,body:createPlayerBody(),heroId,lives:3,checkpoint:3,mounted:null,heldBarrel:null,interactHeld:false,motionFoley:new MotionFoley(),move:0};}
+
 export class World {
-  heldBarrel:number|null=null;private deathLines=new DeathLines();
+  players:PlayerActor[]=[createActor(0,"shevchenko")];
+  private activePlayer=0;
+  get actor(){return this.players[this.activePlayer];}
+  get player(){return this.actor.body;}
+  get heroId(){return this.actor.heroId;}
+  set heroId(value:HeroId){this.actor.heroId=value;}
+  get lives(){return this.actor.lives;}
+  set lives(value:number){this.actor.lives=value;}
+  get checkpoint(){return this.actor.checkpoint;}
+  set checkpoint(value:number){this.actor.checkpoint=value;}
+  get mounted(){return this.actor.mounted;}
+  set mounted(value:Mount|null){this.actor.mounted=value;}
+  get heldBarrel(){return this.actor.heldBarrel;}
+  set heldBarrel(value:number|null){this.actor.heldBarrel=value;}
+  private get interactHeld(){return this.actor.interactHeld;}
+  private set interactHeld(value:boolean){this.actor.interactHeld=value;}
+  private get motionFoley(){return this.actor.motionFoley;}
+  selectPlayer(id:number){if(!this.players[id])throw new Error("Unknown player");this.activePlayer=id;}
+  withPlayer<T>(id:number,fn:()=>T):T {const before=this.activePlayer;this.selectPlayer(id);try{return fn();}finally{this.activePlayer=before;}}
+  addPlayer(hero:HeroId=this.heroId){if(this.players.length>=2)throw new Error("Two players maximum");const actor=createActor(1,hero);actor.body.x=this.player.x+1;actor.body.y=this.player.y;resetWeapon(actor.body,WEAPONS[hero]);this.players.push(actor);return actor;}
+  nearestPlayer(x:number,y:number){return [...this.players].filter(a=>a.lives>0).sort((a,b)=>Math.hypot(a.body.x-x,a.body.y-y)-Math.hypot(b.body.x-x,b.body.y-y))[0]??this.players[0];}
+  clearOwned(){const id=this.actor.id;this.followers=this.followers.filter(f=>(f.playerId??0)!==id);this.effects=this.effects.filter(f=>(f.playerId??0)!==id);}
+
+  private deathLines=new DeathLines();
   mode: Mode = 'ready';
-  mounts:Mount[]=[];mounted:Mount|null=null;private interactHeld=false;private motionFoley=new MotionFoley();
+  mounts:Mount[]=[];
   cinematic:{kind:'hero'|'boss';id:string;serial:number}|null=null;
   private cinematicSerial=0;
   boss:Enemy|null=null;
   beginCinematic(kind:'hero'|'boss',id:string){this.cinematic={kind,id,serial:++this.cinematicSerial};this.mode='cinematic';}
   finishCinematic(){if(this.mode!=='cinematic'||!this.cinematic)return;this.cinematic=null;this.mode='playing';this.player.invulnerable=Math.max(this.player.invulnerable,.8);}
-  player = { x: 3, y: 0, vy: 0, hp: 100, facing: 1, grounded: true, invulnerable: 0, cooldown: 0, energy: 100, coyote: 0.12, wallSide:0,wallLock:0,wallVx:0,wallClimbing:false,ladder: -1, ladderLock: 0, detachVx: 0, ladderNeedsRelease:false, cast:0, attack:0, specialCooldown:0, specialRecovery:[] as number[], form:0, cloak:0, fireCount:0, ammo:0, reloading:0, burstShots:0, weaponTrigger:false };
-  mission: Mission; missionIndex:number; heroId:HeroId; unlocked:HeroId[];
+  mission: Mission; missionIndex:number; unlocked:HeroId[];
   evac={phase:"waiting" as "waiting"|"arriving"|"boarding"|"departing"|"done",time:0,x:112,y:8};
   boxes: Box[] = [];
   ladders = [{x:18,bottom:0,top:8.5},{x:34,bottom:0,top:8.5},{x:51,bottom:0,top:8.5},{x:65,bottom:0,top:8.5},{x:79,bottom:0,top:8.5}];
@@ -40,7 +67,7 @@ export class World {
   medkits:{x:number;used:boolean;arena?:BossId}[] = [{ x: 36, used: false }, { x: 71, used: false }];
   effects:Effect[]=[];
   events: Event[] = [];
-  time = 0; kills = 0; lives = 3; checkpoint = 3; shots = 0; hits = 0; destroyed = 0;
+  time = 0; kills = 0; shots = 0; hits = 0; destroyed = 0;
   private serial = 1;
   nextId(){return this.serial++;}
   emit(type:Event["type"],x:number,y:number){this.event(type,x,y);}
@@ -97,7 +124,7 @@ export class World {
   private changeHero(){
     this.motionFoley.reset();
     const next=HEROES.find(h=>!this.unlocked.includes(h.id));
-    this.followers=[];this.effects=[];this.bullets=this.bullets.filter(b=>!b.friendly);this.player.cloak=0;this.player.fireCount=0;this.player.cooldown=0;this.player.form=0;this.player.specialCooldown=0;this.player.specialRecovery=[];
+    this.clearOwned();if(this.players.length===1)this.bullets=this.bullets.filter(b=>!b.friendly);this.player.cloak=0;this.player.fireCount=0;this.player.cooldown=0;this.player.form=0;this.player.specialCooldown=0;this.player.specialRecovery=[];
     this.heroId=next?.id??this.unlocked[(this.unlocked.indexOf(this.heroId)+1)%this.unlocked.length];
     resetWeapon(this.player,WEAPONS[this.heroId]);
     if(next){this.unlocked.push(next.id);this.beginCinematic('hero',next.id);}
@@ -125,9 +152,10 @@ export class World {
     p.hp = Math.max(0, p.hp - amount); p.invulnerable = .65;
     this.event('hurt', p.x, p.y + .8);
     if (p.hp === 0) {
-      this.lives--;this.followers=[];dropBarrel(this);resetBoss(this);
+      this.lives--;this.clearOwned();dropBarrel(this);if(this.players.length===1)resetBoss(this);
+      if(this.players.length>1&&this.lives<=0)this.lives=1;
       if (this.lives <= 0) { this.mode = 'lost'; this.event('lost', p.x, p.y); }
-      else { this.motionFoley.reset();p.x = this.checkpoint; p.y = 0; p.ladder=-1;p.ladderLock=0;p.detachVx=0;p.wallSide=0;p.wallLock=0;p.wallVx=0;p.wallClimbing=false;p.ladderNeedsRelease=false; p.vy = 0; p.hp = 100; p.invulnerable = 2.5; this.bullets = []; this.effects=[];p.form=0;p.cloak=0;p.fireCount=0;resetWeapon(p,WEAPONS[this.heroId]);this.event('respawn',p.x,p.y); }
+      else { this.motionFoley.reset();p.x = this.checkpoint; p.y = 0; p.ladder=-1;p.ladderLock=0;p.detachVx=0;p.wallSide=0;p.wallLock=0;p.wallVx=0;p.wallClimbing=false;p.ladderNeedsRelease=false; p.vy = 0; p.hp = 100; p.invulnerable = 2.5; if(this.players.length===1)this.bullets = []; this.clearOwned();p.form=0;p.cloak=0;p.fireCount=0;resetWeapon(p,WEAPONS[this.heroId]);this.event('respawn',p.x,p.y); }
     }
   }
   damageFollower(f:Follower,damage:number){
@@ -157,7 +185,7 @@ export class World {
     this.enemies.filter(e => e.hp > 0 && Math.hypot(e.x - x, e.y + .8 - y) < radius).forEach(e => this.damageEnemy(e, damage,cause));
     this.boxes.filter(b => b.hp > 0 && Math.hypot(b.x - x, b.y + b.h / 2 - y) < radius).forEach(b => this.damageBox(b, damage));
     if(hurtPlayer)for(const f of this.followers)if(Math.hypot(f.x-x,f.y+.8-y)<radius)this.damageFollower(f,damage);
-    if (hurtPlayer && Math.hypot(this.player.x - x, this.player.y + .8 - y) < radius) this.damagePlayer(18);
+    if(hurtPlayer)for(const a of this.players)if(Math.hypot(a.body.x-x,a.body.y+.8-y)<radius)this.withPlayer(a.id,()=>this.damagePlayer(18));
   }
   private ordnanceBlast(b:Bullet,x:number,y:number){
     if(b.friendly)this.explode(x,y,b.blastRadius!,b.damage);else hostileBlast(this,x,y,b.blastRadius!,b.damage);
@@ -168,10 +196,10 @@ export class World {
     this.event(friendly ? 'shot' : 'enemyShot', x, y);
   }
   private stepEffects(dt:number){
-    for(const f of this.effects){
+    for(const f of [...this.effects])this.withPlayer(f.playerId??0,()=>{
       f.age+=dt;f.life-=dt;effectAudioPhase(this,f);
-      if(f.kind==='weapon'||!['shevchenko','lesya','franko'].includes(f.hero)){stepHeroEffect(this,f,dt);continue;}
-      if(f.life<=0)continue;
+      if(f.kind==='weapon'||!['shevchenko','lesya','franko'].includes(f.hero)){stepHeroEffect(this,f,dt);return;}
+      if(f.life<=0)return;
       if(f.kind==='special'){
         if(f.hero==='shevchenko'){
           for(const e of this.enemies)if(e.hp>0&&!f.hit.has(e.id)&&Math.abs(e.x-f.x)<8&&Math.abs(e.y-f.y)<4){f.hit.add(e.id);e.rooted=3;e.windup=0;this.emitSfx('shevchenko-hit',e.x,e.y,f.hero);}
@@ -196,15 +224,12 @@ export class World {
         for(const e of this.enemies)if(!f.hit.has(e.id)&&Math.abs(e.x-f.x)<radius&&Math.abs(e.y-f.y)<4){f.hit.add(e.id);this.damageEnemy(e,220);}
         for(const b of this.boxes)if(!f.hit.has(b.id)&&Math.abs(b.x-f.x)<radius&&b.y>=f.y&&b.y<f.y+5){f.hit.add(b.id);this.damageBox(b,280);}
       }
-    }
+    });
     for(const f of this.effects)if(f.life<=0&&f.kind!=='weapon')this.emitSfx(`${f.hero}-${f.kind}-end`,f.x,f.y,f.hero);
     this.effects=this.effects.filter(f=>f.life>0);
   }
-  step(dt: number, action: Actions) {
-    if (this.mode !== 'playing') return;
-    if(triggerBoss(this))return;
-    dt = Math.min(dt, 1 / 30); this.time += dt;
-    this.stepEvac(dt);if(this.evac.phase==='departing'||this.mode!=='playing')return;
+  private stepPlayer(dt:number,action:Actions){
+    this.actor.move=action.move;
     const p = this.player;
     const recovering=p.specialRecovery.length;
     p.cloak=Math.max(0,p.cloak-dt);p.invulnerable = Math.max(0, p.invulnerable - dt); p.specialRecovery=p.specialRecovery.map(t=>Math.max(0,t-dt)).filter(t=>t>1e-8);p.specialCooldown=this.specialCharges>0?0:Math.min(...p.specialRecovery);p.form=Math.max(0,p.form-dt);p.cast=Math.max(0,p.cast-dt);p.attack=Math.max(0,p.attack-dt);
@@ -278,52 +303,71 @@ export class World {
     }
     }
     if(vehicleControl)this.motionFoley.reset();
-    this.stepEffects(dt);
+    if(this.players.length===1)this.stepEffects(dt);
     const reached=this.mission.checkpoints.filter(x=>p.x>x&&x>this.checkpoint).at(-1);
     if(reached!==undefined){this.checkpoint=reached;p.hp=100;this.event('checkpoint',reached,1);}
     for(const crate of this.ammoCrates){
-      if(crate.used&&crate.arena&&this.boss?.boss?.active){
+      if(this.actor.id===0&&crate.used&&crate.arena&&this.boss?.boss?.active){
         crate.restock=Math.max(0,(crate.restock??ARENA_RESTOCK_SECONDS)-dt);
         if(crate.restock===0)crate.used=false;
       }
       if(crate.used)continue;
       const floor=Math.max(-2,...this.boxes.filter(b=>b.hp>0&&Math.abs(b.x-crate.x)<b.w/2+.25&&b.y+b.h<=crate.y+.05).map(b=>b.y+b.h));
-      crate.y=Math.max(floor,crate.y-8*dt);
+      crate.y=Math.max(floor,crate.y-8*dt/this.players.length);
       if(p.energy<100&&Math.abs(p.x-crate.x)<.9&&Math.abs(p.y-crate.y)<1.2){crate.used=true;if(crate.arena)crate.restock=ARENA_RESTOCK_SECONDS;p.energy=100;this.event('ammoPickup',crate.x,crate.y+1);}
     }
     for (const kit of this.medkits) if (!kit.used && p.hp<100 && Math.abs(kit.x - p.x) < .8 && p.y < 1) { kit.used = true; p.hp = Math.min(100, p.hp + 35); }
-    stepBarrels(this,dt);
+    if(this.players.length===1)stepBarrels(this,dt);
     if (action.interact&&!vehicleControl&&!barrelAction&&!carried) {
       for (const ally of this.allies) if (!ally.rescued && Math.abs(ally.x - p.x) < 2.2 && p.y < 2) { ally.rescued = true; p.hp = Math.min(100, p.hp + 25); this.event('rescue', ally.x, 1);this.changeHero();p.invulnerable=Math.max(p.invulnerable,1); }
     }
+  }
+  step(dt:number, action:Actions){this.stepPlayers(dt,[action]);}
+  stepPlayers(dt:number,actions:Actions[]){
+    if(this.mode!=='playing')return;
+    for(const actor of this.players)if(this.withPlayer(actor.id,()=>triggerBoss(this))){
+      const arena=this.boss?.boss&&BOSSES[this.boss.boss.id];
+      if(arena&&this.players.length>1)for(const a of this.players){a.body.x=Math.max(arena.left+1,Math.min(arena.right-1,a.body.x));a.checkpoint=arena.left+2;}
+      return;
+    }
+    dt=Math.min(dt,1/30);this.time+=dt;
+    this.withPlayer(this.nearestPlayer(this.mission.exit,0).id,()=>this.stepEvac(dt));
+    if(this.evac.phase==='departing'||this.mode!=='playing'){
+      if(this.evac.phase==='departing')for(const a of this.players){a.body.x=this.evac.x;a.body.y=this.evac.y-1;}
+      return;
+    }
+    for(const actor of this.players){this.withPlayer(actor.id,()=>this.stepPlayer(dt,actions[actor.id]??IDLE));if(this.cinematic)break;}
+    if(this.players.length>1){this.stepEffects(dt);stepBarrels(this,dt);}
     if(this.cinematic)return;
     stepFollowers(this,dt);
     for (const enemy of this.enemies) {
       if (enemy.hp <= 0) continue;
       const poisoned=Math.min(dt,enemy.poison??0);enemy.poison=Math.max(0,(enemy.poison??0)-dt);if(poisoned)this.damageEnemy(enemy,18*poisoned);if(enemy.hp<=0)continue;
       enemy.distracted=Math.max(0,(enemy.distracted??0)-dt);
-      if(enemy.boss){stepBoss(this,enemy,dt);continue;}
-      if(enemy.vehicle){stepVehicle(this,enemy,dt);continue;}
-      stepInfantry(this,enemy,dt);
+      this.withPlayer(this.nearestPlayer(enemy.x,enemy.y).id,()=>{
+        if(enemy.boss)stepBoss(this,enemy,dt);
+        else if(enemy.vehicle)stepVehicle(this,enemy,dt);
+        else stepInfantry(this,enemy,dt);
+      });
     }
     for (const bullet of this.bullets) {
       if (bullet.life <= 0) continue;
       const travel=Math.min(dt,bullet.life);
       const nextX = bullet.x + bullet.vx * travel, nextY = bullet.y + bullet.vy * travel;
-      let nearest = 2; let target: Box | Enemy | Follower | Mount | 'player' | null = null;
+      let nearest = 2; let target: Box | Enemy | Follower | Mount | PlayerActor | null = null;
       const test = (x: number, y: number, w: number, h: number, candidate: typeof target) => {
         const t = segmentHit(bullet.x, bullet.y, nextX, nextY, x - w / 2, y, x + w / 2, y + h);
         if (t !== null && t < nearest) { nearest = t; target = candidate; }
       };
       for (const b of this.boxes) if (b.hp > 0) test(b.x, b.y, b.w, b.h, b);
       if (bullet.friendly) for (const enemy of this.enemies) { if (enemyActive(enemy)) test(enemy.x, enemy.y, enemySize(enemy).w, enemySize(enemy).h, enemy); }
-      else {if(!this.mounted)test(p.x, p.y, .65, 1.6, 'player');for(const t of this.mounts)if(t.armor>0)test(t.x,t.y,TANK.w,TANK.h,t);for(const f of this.followers)if(f.hp>0)test(f.x,f.y,.7,1.5,f);}
+      else {for(const a of this.players)if(!a.mounted)test(a.body.x,a.body.y,.65,1.6,a);for(const t of this.mounts)if(t.armor>0)test(t.x,t.y,TANK.w,TANK.h,t);for(const f of this.followers)if(f.hp>0)test(f.x,f.y,.7,1.5,f);}
       if (target) {
         bullet.life = 0;
-        const hit = target as Box | Enemy | Follower | Mount | 'player';
+        const hit = target as Box | Enemy | Follower | Mount | PlayerActor;
         if(bullet.friendly&&bullet.hero&&!bullet.ordnance)this.emitSfx(bullet.hero+'-hit',bullet.x+(nextX-bullet.x)*nearest,bullet.y+(nextY-bullet.y)*nearest,bullet.hero);
         if(bullet.ordnance){const t=Math.max(0,nearest-1e-4);this.ordnanceBlast(bullet,bullet.x+(nextX-bullet.x)*t,bullet.y+(nextY-bullet.y)*t);}
-        else if (hit === 'player') this.damagePlayer(bullet.damage);
+        else if ('body' in hit) this.withPlayer(hit.id,()=>this.damagePlayer(bullet.damage));
         else if('armor' in hit)damageMount(this,hit,bullet.damage);
         else if ('owner' in hit)this.damageFollower(hit,bullet.damage);
         else if ('kind' in hit) { if (bullet.friendly) this.hits++; this.damageBox(hit, bullet.damage); }

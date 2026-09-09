@@ -1,64 +1,31 @@
-# UaForce — локальна браузерна версія
+# UA Force
 
-Піксельний бойовик із горизонтальною стрільбою, руйнуванням укриттів, порятунком полонених та евакуацією. Три операції: «Тихий берег» (Херсонщина), «Останній рубіж» (Київ), «Острів свободи» (Зміїний). Основна гра: TypeScript, Canvas 2D, Vite. PlayCanvas залишився лише у переглядачі ранніх 3D-матеріалів.
+Fast Ukrainian arcade action with destructible levels, historical heroes, dark humor and exaggerated cartoon chaos.
 
-## Запуск на macOS / Windows
+**Play the free prototype: https://uaforce.thedimas.com**
 
-Потрібен Node.js 22.18+.
+By **Dimasss / Galionix and the UA Force team**. Early public development, September 2026.
+
+The playable single-player includes eleven fighters and six operations. Game UI is Ukrainian. Keyboard and gamepad; no mouse aiming. Progress stays in the browser. A separate experimental two-player online mode uses host-authoritative WebRTC with PeerJS; some networks require TURN, which is not configured in this prototype.
+
+## Run
 
 ```sh
+cd reboot
 npm ci
-npm run build
-npm run preview -- --port 5179
+npm run dev -- --port 5179
 ```
 
-Відкрити http://127.0.0.1:5179/. На поточному Mac сервер уже працює. Для розробки: `npm run dev -- --port 5178`. Сервер доступний лише на локальному комп’ютері.
+Space / gamepad cross = jump. F / square = interact, including entering and leaving a tank. Controls can be rebound in settings.
 
-## Керування
+All automated checks must be silent: open `?silent=1`. Do not change the owner's saved volume.
 
-| Дія | Клавіатура | Стандартний геймпад |
-|---|---|---|
-| Рух | A/D або ←/→ | Лівий стік / хрестовина |
-| Драбина | W/S або ↑/↓ | Стік / хрестовина вгору-вниз |
-| Стрибок, зокрема з драбини | Space | A / ✕ |
-| Основна атака | J | RT / R2 |
-| Спецприйом | E | RB / R1 |
-| Ульта | Q | LT / L2 |
-| Звільнити полоненого | F | X / □ |
-| Пауза | Escape | Start / Options |
-| Меню | ↑/↓ та Enter | Стік / хрестовина та A / ✕ |
+```sh
+npm test
+npm run build
+npm run build:release
+```
 
-Атака спрямована ліворуч або праворуч. Її висоту регулює стрибок. Миша не потрібна. Призначення кнопок, вісь руху й мертва зона налаштовуються та зберігаються локально. Втрата фокуса або від’єднання геймпада ставить гру на паузу.
+Release preparation additionally needs Python 3, FFmpeg and `cwebp`. Upload `.release/uaforce.zip` to the existing Cloudflare Pages project. The release excludes the old materials viewer and raw research. Source media remain local and in the source repository; do not deploy the entire workspace.
 
-## Герої
-
-| Герой | Основна атака | Спецприйом | Ульта |
-|---|---|---|---|
-| Тарас Шевченко | Булава зі звуковими хвилями | Заповіт: оглушення | Перо пише «Воля», три блискавки |
-| Леся Українка | Арбалет з отрутою | Ворони відвертають ворожий вогонь | Бойова Мавка з рухомим корінням |
-| Іван Франко | Молот зблизька | Кам’яний заслін перехоплює кулі | Ударна хвиля руйнує укриття з обох боків |
-
-Спецприйом відновлюється за 8–10 с; заслін Франка має два незалежні заряди по 10 с. Ульта має власний заряд. Подробиці, джерела й баланс: [COMBAT_ABILITIES.md](docs/COMBAT_ABILITIES.md). Набори Шевченка й Лесі відповідають знайденій картці команди; здібності Франка — нова інтерпретація.
-
-Бойовий HUD компактний: портрет і здоров’я, дев’ять піксельних іконок зброї/вмінь, кругові індикатори та сегменти зарядів. Розгорнуті пояснення залишені у меню; на екрані цілі показані піктограмами. [Опис і перевірка HUD](docs/COMPACT_HUD.md).
-
-Текст збільшено до 16–25 px залежно від ширини вікна. У налаштуваннях є додатковий масштаб 100–160%, що зберігається між запусками.
-
-Кожен має окремий восьмикадровий спрайт, анімації здібності й лазання, тембр основної атаки та особливий звуковий мотив. Перші два порятунки відкривають Лесю та Франка; наступні змінюють героя серед відкритих. Загін і поточний герой зберігаються між операціями та після перезавантаження. Старі збереження з безіменними персонажами мігрують зі збереженням кількості відкритих героїв.
-
-Після перемоги над командиром підійдіть до останнього прапора. Гелікоптер прилетить, забере героя автоматично та відлетить. Через короткий підсумок почнеться наступна операція. Полонені й радіовузол — додаткові цілі. Після третьої операції — завершення кампанії.
-
-## Перевірка 2026-09-08
-
-- `npm test`: 49 тестів. Усі три операції проходяться звичайними діями моделі зі звільненням двох полонених і евакуацією. Перевірені драбини, відстрибування з утриманим напрямком, пауза, збереження, здібності, звук та адаптер геймпада.
-- `npm run build`: перевірка TypeScript і production build. Попередження про великий PlayCanvas bundle стосується окремого переглядача матеріалів.
-- Вбудований браузер macOS: українське меню, запуск клавіатурою, Шевченко та його здібність; нові E/Q та незалежні індикатори, масштаб 160%; окрема тестова сцена — Мавка, ворони й кам’яний заслін.
-- Фізичний геймпад власник перевіряв у попередній версії. Оновлене керування та звук потребують його повторної перевірки на власному пристрої. Windows і повне ручне проходження всіх місій у браузері ще не перевірені.
-
-## Джерела та матеріали
-
-[Анаунсер та звукові події](docs/AUDIO_DELIVERY.md): 12 оголошень імен, 8 реплік етапів гри, музичні акценти та окреме регулювання гучності. Прослуховування доступне в налаштуваннях. [Подальший баланс звуку](docs/BACKLOG.md).
-
-Початкові генерації й звуки команди збережено; історію походження містить `public/assets/provenance.json`. Ранні безіменні персонажі залишаються архівними концептами, не складом ігрового загону. Приватна переписка й повний Telegram-архів у збірку не входять.
-
-[Рішення щодо героїв](docs/HISTORICAL_HEROES.md), [промпти зображень](docs/IMAGE_PROMPTS.md), [візуальні референси](docs/BROFORCE_REFERENCE_STUDY.md).
+Single-player simulation is `src/game/world.ts`, rendering `view.ts`, input `input.ts`. Online transport is lazily loaded from `online.ts`; `coop-state.ts` contains its wire adapter. Public support is configured in `support.ts` only after checkout verification; the game stays free.

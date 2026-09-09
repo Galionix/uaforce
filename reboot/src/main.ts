@@ -1,3 +1,6 @@
+import {SUPPORT_URL,supportUrl} from './game/support';
+import {SnapshotWriter,applySnapshot} from './game/coop-state';
+import type {OnlineRoom,RoomCommand} from './game/online';
 import {reducedPresentation} from './game/motion-settings';
 import {assetUrl} from './game/assets';
 import {PresentationFx} from './game/presentation-fx';
@@ -24,6 +27,10 @@ const updateAbilities=mountAbilities($('ability-icons'));
 const roster=$<HTMLDialogElement>('roster'), operations=$<HTMLDialogElement>('operations');
 const menuFx=new PresentationFx($<HTMLCanvasElement>('menu-fx'));
 let menuClock=0;
+const onlineMenu=$<HTMLDialogElement>('online-menu'),about=$<HTMLDialogElement>('about-game');
+let online:OnlineRoom|null=null,onlineLoading=false,roomCode='',writer:SnapshotWriter|null=null,netClock=0,netSequence=0,guestEpoch='';
+let outgoingEvents:typeof world.events=[];
+
 let practice=false;
 const input=new Input(canvas), view=new View(canvas), sound=new Sound(new URLSearchParams(location.search).get('silent')==='1');
 let progress=readProgress();
@@ -34,32 +41,33 @@ const cinematic=new Cinematic(sound,()=>{input.clear();accumulator=0;pendingJump
 const bossStatus=document.createElement('div');bossStatus.id='boss-status';bossStatus.hidden=true;bossStatus.innerHTML='<span></span><progress max=1></progress>';canvas.parentElement!.append(bossStatus);
 const formatTime=(seconds:number)=>`${Math.floor(seconds/60).toString().padStart(2,'0')}:${Math.floor(seconds%60).toString().padStart(2,'0')}`;
 function toast(message:string){$('toast').textContent=message;$('toast').classList.add('visible');toastTime=1.8;}
-function remember(){if(practice)return;progress={...progress,unlocked:[...world.unlocked],hero:world.heroId};saveProgress(progress);}
+function remember(){if(practice||online)return;progress={...progress,unlocked:[...world.unlocked],hero:world.heroId};saveProgress(progress);}
 function startMission(index:number){
-  if(!ready)return;practice=false;transition=0;sound.stopAll();world=new World(index,progress.unlocked,progress.hero);world.mode='playing';
-  progress.mission=index;progress.completed=false;saveProgress(progress);view.reset(world);input.clear();accumulator=0;menu.hidden=true;pauseMenu.hidden=true;canvas.focus();sound.announce('missionStart',world.heroId);
+  if(!ready)return;if(online?.role==='guest'){online.command('next');return;}practice=false;transition=0;sound.stopAll();const guestHero=world.players[1]?.heroId;world=new World(index,progress.unlocked,progress.hero);if(online?.connected){world.addPlayer(guestHero??'lesya');writer=new SnapshotWriter(world);}world.mode='playing';
+  if(!online){progress.mission=index;progress.completed=false;saveProgress(progress);}view.reset(world);input.clear();accumulator=0;menu.hidden=true;pauseMenu.hidden=true;canvas.focus();sound.announce('missionStart',world.heroId);
   toast(world.mission.name);
 }
 function begin(){if(practice){startPractice(world.heroId);return;}startMission(world.mode==='won'?(world.missionIndex+1)%MISSIONS.length:world.missionIndex);}
-function resume(){if(world.mode!=='paused')return;world.mode='playing';menu.hidden=true;pauseMenu.hidden=true;input.clear();canvas.focus();void sound.enable();}
+function resume(focusCanvas=true){if(world.mode!=='paused')return;if(online?.role==='guest'){online.command('resume');return;}world.mode='playing';menu.hidden=true;pauseMenu.hidden=true;input.clear();if(focusCanvas)canvas.focus();void sound.enable();}
 function showMenu(){
   pauseMenu.hidden=true;menu.hidden=false;menuIndex=0;
   const won=world.mode==='won',lost=world.mode==='lost',paused=world.mode==='paused',last=world.missionIndex===MISSIONS.length-1;
   $('menu-kicker').textContent=won?(last?'КАМПАНІЮ ЗАВЕРШЕНО':'ЕВАКУАЦІЯ УСПІШНА'):lost?'ЗАГІН ВТРАЧЕНО':paused?'ОПЕРАЦІЮ ПРИЗУПИНЕНО':'ЗА СВОЇХ. ДО КІНЦЯ.';
   $('menu-title').textContent=won?(last?'Хуйло переможено.':'Летимо далі.'):lost?'Ще одна спроба.':paused?'Тримаємо позицію.':'UA FORCE';
   $('menu-copy').textContent=won?(last?'Командний бункер знищено. Російський наступ зупинено. Усі операції завершено.':'Наступна операція — '+MISSIONS[world.missionIndex+1].name+'.'):lost?'Підкріплення вичерпано. Спробуйте інший маршрут, стрибайте з драбин і використовуйте здібність героя.':paused?'Гра на паузі. Продовжуйте, коли будете готові.':world.mission.name+' · '+world.mission.region;
-  $('primary').textContent=paused?'Продовжити':won?(last?'Грати знову':'Наступна операція →'):lost?'Спробувати знову':'До бою';
+  $('primary').textContent=paused?'Продовжити':won?(last?'Грати знову':'Наступна операція →'):lost?'Спробувати знову':'Одиночна гра';
   if(practice){$('menu-kicker').textContent='ВИПРОБУВАННЯ БІЙЦЯ';$('menu-title').textContent=world.hero.name;$('menu-copy').textContent='J / RT — зброя · E / RB — спецприйом · Q / LT — ульта. Обери іншого бійця або повтори випробування.';if(!paused)$('primary').textContent='Повторити випробування';}
   $('campaign-return').hidden=!practice;
+  for(const id of ['online-open','roster-open','operations-open'])$(id).hidden=!!online;
   $('restart').hidden=!paused;$('hero-cycle').hidden=practice||paused||lost;$('mission-cycle').hidden=true;
   $('mission-cycle').textContent=`Обрати операцію: ${world.missionIndex+1}/${MISSIONS.length} · ${world.mission.region}`;
-  $('operations-open').hidden=paused||practice||lost;
+  $('operations-open').hidden=!!online||paused||practice||lost;
   $('hero-description').textContent=world.hero.description+' '+weaponDescription(world.heroId)+' Ульта відновлюється тільки з ящика боєприпасів.';
   $('hero-cycle').textContent=`Герой: ${world.hero.name} · відкрито ${world.unlocked.length}/${HEROES.length}`;
   $('result').textContent=won||lost?`${formatTime(world.time)} · ${world.kills} ворогів · ${world.rescued}/${world.allies.length} звільнено`:'';
   input.clear();$('primary').focus();
 }
-function startPractice(id:typeof HEROES[number]['id']){if(!ready)return;transition=0;practice=true;sound.stopAll();world=practiceWorld(id);view.reset(world);roster.close();menu.hidden=true;pauseMenu.hidden=true;input.clear();accumulator=0;canvas.focus();sound.announce('missionStart',id);toast(world.hero.name);}
+function startPractice(id:typeof HEROES[number]['id']){if(!ready||online)return;transition=0;practice=true;sound.stopAll();world=practiceWorld(id);view.reset(world);roster.close();menu.hidden=true;pauseMenu.hidden=true;input.clear();accumulator=0;canvas.focus();sound.announce('missionStart',id);toast(world.hero.name);}
 for(const hero of HEROES){const button=document.createElement('button');button.className='roster-hero';button.innerHTML=`<span class="roster-image" data-hero="${hero.id}"></span><strong>${hero.name}</strong><span>${hero.weapon}</span>`;button.title=hero.description;button.onclick=()=>startPractice(hero.id);$('roster-grid').append(button);}
 $('roster-open').onclick=()=>{pause();input.clear();roster.showModal();menuIndex=0;$('roster-grid').querySelector('button')?.focus();};
 for(const [i,mission] of MISSIONS.entries()){const button=document.createElement('button');button.className='operation-card';button.innerHTML=`<b>${String(i+1).padStart(2,'0')}</b><span><strong>${mission.name}</strong><small>${mission.region}</small></span>`;button.title=mission.brief;button.onclick=()=>{operations.close();transition=0;world=new World(i,progress.unlocked,progress.hero);view.reset(world);showMenu();};$('operations-grid').append(button);}
@@ -72,16 +80,16 @@ window.addEventListener('keydown',()=>{void sound.enable();},{once:true});
 function closeRoster(){roster.close();input.clear();$(pauseMenu.hidden?'roster-open':'pause-roster').focus();}
 $('roster-close').onclick=closeRoster;roster.addEventListener('cancel',e=>{e.preventDefault();closeRoster();});
 $('campaign-return').onclick=()=>{practice=false;transition=0;sound.stopAll();world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);showMenu();};
-function pause(reason?:string){if(world.mode!=='playing')return;world.mode='paused';sound.stopAll();menu.hidden=true;pauseMenu.hidden=false;menuIndex=0;input.clear();$('pause-mission').textContent=world.mission.name;$('pause-resume').focus();if(reason)toast(reason);}
+function pause(reason?:string){if(world.mode!=='playing')return;if(online?.role==='guest'){online.command('pause');sound.stopAll();return;}world.mode='paused';sound.stopAll();menu.hidden=true;pauseMenu.hidden=false;menuIndex=0;input.clear();$('pause-mission').textContent=world.mission.name;$('pause-resume').focus();if(reason)toast(reason);}
 $('mission-cycle').onclick=()=>{transition=0;world=new World((world.missionIndex+1)%MISSIONS.length,progress.unlocked,progress.hero);view.reset(world);showMenu();};
 $('hero-cycle').onclick=()=>{world.followers=[];world.heroId=world.unlocked[(world.unlocked.indexOf(world.heroId)+1)%world.unlocked.length];resetWeapon(world.player,WEAPONS[world.heroId]);remember();view.reset(world);showMenu();};
 $('primary').onclick=()=>world.mode==='paused'?resume():begin();$('restart').onclick=begin;
 pauseMenu.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const buttons=Array.from(pauseMenu.querySelectorAll<HTMLButtonElement>('button'));const at=buttons.indexOf(document.activeElement as HTMLButtonElement);e.preventDefault();buttons[(at+(e.shiftKey?-1:1)+buttons.length)%buttons.length]?.focus();});
-$('pause-resume').onclick=resume;
+$('pause-resume').onclick=()=>resume();
 $('pause-restart').onclick=begin;
 $('pause-settings').onclick=openSettings;
 $('pause-roster').onclick=()=>{$('roster-open').click();};
-$('pause-main').onclick=()=>{remember();practice=false;transition=0;sound.stopAll();world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);showMenu();};
+$('pause-main').onclick=()=>{if(online){leaveOnline();return;}remember();practice=false;transition=0;sound.stopAll();world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);showMenu();};
 $('pause').onclick=()=>world.mode==='playing'?pause():resume();
 window.addEventListener('blur',()=>{sound.stopAll();pause('Пауза: вікно втратило фокус');});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){sound.stopAll();pause('Пауза: вкладку приховано');}});
@@ -160,7 +168,7 @@ function ui(){
   document.body.classList.toggle('paused',!pauseMenu.hidden);
   $('hero-name').textContent=world.hero.name;
   if(ready&&portraitHero!==world.heroId){portraitHero=world.heroId;const url=view.portrait(world.heroId);$<HTMLImageElement>('hero-portrait').src=url;$<HTMLImageElement>('menu-portrait').src=assetUrl(`/assets/cinematics/${world.heroId}.png`);$<HTMLImageElement>('menu-portrait').alt=world.hero.name;}
-  document.title=`UaForce — ${world.mission.name}`;
+  document.title=`UA Force — ${world.mission.name}`;
   $('mission-name').textContent=`${world.mission.region} · ${world.section.name}`;
   $('health-text').textContent=String(Math.ceil(world.mounted?.armor??world.player.hp));$('health-bar').style.width=(world.mounted?world.mounted.armor/world.mounted.maxArmor*100:world.player.hp)+'%';$('lives').textContent=String(world.lives);
   const heroStatus=`${world.hero.name}. ${world.mounted?'Броня танка '+Math.ceil(world.mounted.armor):'Здоров’я '+Math.ceil(world.player.hp)}. Життя: ${world.lives}.`;
@@ -184,40 +192,106 @@ function ui(){
 }
 view.onFrame=dt=>{
   sound.bossBattle=!!world.boss?.boss?.active;sound.scoreTheme=world.mission.score;
-  const frame=input.poll(dt),wasMenu=!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open;
-  if(world.mode==='cinematic'){cinematic.sync(world);cinematic.step(dt,frame.confirm||frame.action.jump);view.render(world,dt,0);sound.step(dt,false,false);ui();return;}
-  if(frame.pause){if(operations.open)closeOperations();else if(roster.open)closeRoster();else if(settings.open)closeSettings();else if(world.mode==='playing')pause();else if(world.mode==='paused')resume();}
+  const frame=input.poll(dt),wasMenu=!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open;
+  if(online?.role==='guest'&&online.connected){pendingJump ||= frame.action.jump;pendingSpecial ||= frame.action.special;pendingUltimate ||= !!frame.action.ultimate;netClock+=dt;if(netClock>=1/30){online.input(wasMenu?{move:0,jump:false,fire:false,special:false,interact:false}:{...frame.action,jump:pendingJump,special:pendingSpecial,ultimate:pendingUltimate});pendingJump=pendingSpecial=pendingUltimate=false;netClock=0;}}
+  if(world.mode==='cinematic'){cinematic.sync(world);cinematic.step(dt,frame.confirm||frame.action.jump);view.render(world,dt,0);sound.step(dt,false,false);publishOnline(dt);ui();return;}
+  if(frame.pause){if(onlineMenu.open)closeOnlineMenu();else if(about.open)closeAbout();else if(operations.open)closeOperations();else if(roster.open)closeRoster();else if(settings.open)closeSettings();else if(world.mode==='playing')pause();else if(world.mode==='paused')resume();}
   if(wasMenu){
     if(!menu.hidden){menuClock+=dt;menuFx.draw(menuClock,'menu');}
     if(frame.confirm)void sound.enable();
     $('menu-audio').textContent=sound.audioReady&&sound.music?'♫ Музика увімкнена':'♫ Увімкнути музику';
-    const root=operations.open?operations:roster.open?roster:settings.open?settings:!pauseMenu.hidden?pauseMenu:menu;
+    const root=onlineMenu.open?onlineMenu:about.open?about:operations.open?operations:roster.open?roster:settings.open?settings:!pauseMenu.hidden?pauseMenu:menu;
     const buttons=Array.from(root.querySelectorAll<HTMLButtonElement>('button')).filter(b=>!b.hidden&&!b.disabled&&b.getClientRects().length>0);
     if(frame.up||frame.down){menuIndex=((buttons.indexOf(document.activeElement as HTMLButtonElement)>=0?buttons.indexOf(document.activeElement as HTMLButtonElement):menuIndex)+(frame.down?1:-1)+buttons.length)%Math.max(1,buttons.length);buttons[menuIndex]?.focus();}
     if(frame.confirm&&!input.capture){const focused=document.activeElement;((focused instanceof HTMLButtonElement&&root.contains(focused))?focused:buttons[menuIndex])?.click();}
   }
-  if(world.mode==='playing'&&!wasMenu&&!settings.open){
+  if(world.mode==='playing'&&!wasMenu&&!settings.open&&online?.role!=='guest'){
     pendingJump ||= frame.action.jump;pendingSpecial ||= frame.action.special;pendingUltimate ||= !!frame.action.ultimate;pendingFire ||= frame.action.fire;pendingInteract ||= frame.action.interact;
     accumulator+=dt;let first=true;
-    while(accumulator>=1/60){world.step(1/60,{...frame.action,jump:first&&pendingJump,special:first&&pendingSpecial,ultimate:first&&pendingUltimate,fire:frame.action.fire||pendingFire,interact:frame.action.interact||pendingInteract});first=false;pendingJump=false;pendingSpecial=false;pendingUltimate=false;pendingFire=false;pendingInteract=false;accumulator-=1/60;}
-  }else {accumulator=0;pendingJump=false;pendingSpecial=false;pendingUltimate=false;pendingFire=false;pendingInteract=false;}
+    while(accumulator>=1/60){const action={...frame.action,jump:first&&pendingJump,special:first&&pendingSpecial,ultimate:first&&pendingUltimate,fire:frame.action.fire||pendingFire,interact:frame.action.interact||pendingInteract};if(online?.connected)world.stepPlayers(1/60,[action,online.remote.take(performance.now()/1000)]);else world.step(1/60,action);first=false;pendingJump=false;pendingSpecial=false;pendingUltimate=false;pendingFire=false;pendingInteract=false;accumulator-=1/60;}
+  }else {accumulator=0;if(online?.role!=='guest'){pendingJump=false;pendingSpecial=false;pendingUltimate=false;}pendingFire=false;pendingInteract=false;}
   for(const event of world.events){
     view.event(event);if(!(event.type==='heroChanged'&&event.unlocked)&&event.type!=='bossEncounter')sound.event(event,world.player.x);
     if(event.type==='heroChanged'){remember();if(!event.unlocked)toast(world.hero.name);}
     if(event.type==='bossDefeated'&&event.boss)toast(BOSSES[event.boss].defeat);
     if(event.type==='evacCalled')toast('Евакуація');
     if(event.type==='won'||event.type==='lost'){
-      if(event.type==='won'&&!practice){
+      if(event.type==='won'&&!practice&&!online){
         saveRecord({seconds:world.time,rescued:world.rescued,kills:world.kills,shots:world.shots,hits:world.hits},world.missionIndex);
         remember();progress.mission=Math.min(MISSIONS.length-1,world.missionIndex+1);progress.completed=world.missionIndex===MISSIONS.length-1;saveProgress(progress);
         if(!progress.completed)transition=1.2;
       }showMenu();
     }
   }
-  world.events=[];cinematic.sync(world);view.render(world,dt,frame.action.move);sound.syncWorld(world);sound.step(dt,musicDanger(world,frame.action.fire),world.mode==='playing',frame.action.fire,world.mode==='ready'&&!menu.hidden&&document.hasFocus()&&!document.hidden&&!settings.open);
+  publishOnline(dt);world.events=[];cinematic.sync(world);view.render(world,dt,frame.action.move);sound.syncWorld(world);sound.step(dt,musicDanger(world,frame.action.fire),world.mode==='playing',frame.action.fire,world.mode==='ready'&&!menu.hidden&&document.hasFocus()&&!document.hidden&&!settings.open);
   if(toastTime>0){toastTime-=dt;if(toastTime<=0)$('toast').classList.remove('visible');}
   if(transition>0&&!sound.announcing&&!settings.open&&document.hasFocus()&&!document.hidden){transition-=dt;if(transition<=0)startMission(world.missionIndex+1);}
   uiTime+=dt;if(uiTime>.08){ui();uiTime=0;}
 };
-void view.init().then(()=>{ready=true;for(const node of Array.from(document.querySelectorAll<HTMLElement>('.roster-image'))){const im=document.createElement('img');im.src=view.portrait(node.dataset.hero!);im.alt='';node.append(im);}view.reset(world);$<HTMLButtonElement>('primary').disabled=false;showMenu();const record=readRecord(world.missionIndex);if(record)$('result').textContent=`Найкращий час: ${formatTime(record.seconds)}`;ui();}).catch(error=>{$('primary').textContent='Не вдалося завантажити гру';$('menu-copy').textContent='Оновіть сторінку та перевірте локальний сервер.';console.error(error);});
-window.addEventListener('pagehide',()=>{input.destroy();sound.dispose();if(view.app)view.dispose();},{once:true});
+
+function syncOnlineControls(){for(const id of ['pause-restart','pause-roster'])$(id).hidden=!!online;}
+function leaveOnline(message?:string){
+ const old=online;online=null;old?.close();writer=null;outgoingEvents=[];netClock=0;netSequence=0;guestEpoch='';
+ sound.stopAll();cinematic.dismiss();onlineMenu.close();practice=false;transition=0;
+ world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);syncOnlineControls();showMenu();
+ if(message){$('online-status').textContent=message;onlineMenu.showModal();$('online-close').focus();}
+}
+function publishOnline(dt:number){
+ if(online?.role!=='host'||!online.connected||!writer)return;
+ outgoingEvents.push(...world.events);if(outgoingEvents.length>256)outgoingEvents.splice(0,outgoingEvents.length-256);
+ netClock+=dt;if(netClock>=.05){online.state(writer.snapshot(++netSequence,outgoingEvents));outgoingEvents=[];netClock=0;}
+}
+function onlineCommand(command:RoomCommand){
+ if(command==='pause')pause('Пауза друга');
+ if(command==='resume')resume(false);
+ if(command==='continue'&&world.mode==='cinematic')cinematic.confirm();
+ if(command==='next'&&world.mode==='won')begin();
+}
+cinematic.onConfirm=()=>{if(online?.role==='guest'){online.command('continue');return false;}return true;};
+async function enterOnline(role:'host'|'guest'){
+ if(!ready||onlineLoading)return;
+ if(online)leaveOnline();onlineLoading=true;$('online-status').textContent='Підключення…';
+ try{
+  const {OnlineRoom,normalizeRoom,validRoom}=await import('./game/online');
+  roomCode=role==='host'?OnlineRoom.code():normalizeRoom($<HTMLInputElement>('online-code').value);
+  if(!validRoom(roomCode)){$('online-status').textContent='Введіть 8 символів коду кімнати.';return;}
+  const hero=$<HTMLSelectElement>('online-hero').value as typeof HEROES[number]['id'];
+  online=new OnlineRoom(role,roomCode,hero,{
+   status:text=>$('online-status').textContent=text,
+   created:code=>{$('online-status').textContent='Код: '+code.slice(0,4)+' '+code.slice(4)+' · очікуємо друга';$('online-invite').hidden=false;},
+   connected:guestHero=>{
+    if(role==='host'){
+     sound.stopAll();world=new World(world.missionIndex,HEROES.map(h=>h.id),hero);world.addPlayer(guestHero);world.mode='playing';writer=new SnapshotWriter(world);
+     onlineMenu.close();menu.hidden=true;pauseMenu.hidden=true;view.reset(world);input.clear();accumulator=0;canvas.focus();sound.announce('missionStart',hero);
+    }else $('online-status').textContent='Друг поруч. Завантаження спільної операції…';
+    syncOnlineControls();
+   },
+   snapshot:s=>{
+    const fresh=s.epoch!==guestEpoch;
+    if(fresh){sound.stopAll();cinematic.dismiss();world=new World(s.mission,s.state.unlocked as typeof world.unlocked,s.players[0].heroId);guestEpoch=s.epoch;}
+    const before=world.mode;applySnapshot(world,s);
+    if(fresh){onlineMenu.close();menu.hidden=true;pauseMenu.hidden=true;view.reset(world);input.clear();canvas.focus();}
+    if(world.mode==='playing'){menu.hidden=true;pauseMenu.hidden=true;cinematic.dismiss();}
+    if(world.mode==='paused'&&before!=='paused'){sound.stopAll();menu.hidden=true;pauseMenu.hidden=false;input.clear();$('pause-mission').textContent=world.mission.name;$('pause-resume').focus();}
+   },
+   command:onlineCommand,
+   ended:message=>leaveOnline(message),
+  });
+ }catch{$('online-status').textContent='Не вдалося підключити кімнати. Перевірте інтернет і спробуйте знову.';}
+ finally{onlineLoading=false;}
+}
+for(const hero of HEROES)$<HTMLSelectElement>('online-hero').add(new Option(hero.name,hero.id));
+$('online-open').onclick=()=>{input.clear();$('online-status').textContent='';$('online-invite').hidden=true;onlineMenu.showModal();$('online-create').focus();};
+function closeOnlineMenu(){if(online&&!online.connected){leaveOnline();return;}onlineMenu.close();input.clear();$('online-open').focus();}
+$('online-close').onclick=closeOnlineMenu;onlineMenu.addEventListener('cancel',e=>{e.preventDefault();closeOnlineMenu();});
+$('online-create').onclick=()=>void enterOnline('host');$('online-join').onclick=()=>void enterOnline('guest');
+async function copyLink(url:string){try{await navigator.clipboard.writeText(url);toast('Посилання скопійовано');return true;}catch{toast('Скопіюйте посилання з адресного рядка');return false;}}
+$('online-invite').onclick=()=>{const url=new URL(location.href);url.search='';url.searchParams.set('room',roomCode);void copyLink(url.href);};
+$('share-game').onclick=()=>void copyLink('https://uaforce.thedimas.com');
+const support=supportUrl(SUPPORT_URL);if(support){$('support-development').hidden=false;$<HTMLAnchorElement>('support-link').href=support;}
+$('about-open').onclick=()=>{input.clear();about.showModal();$('about-close').focus();};
+function closeAbout(){about.close();input.clear();$('about-open').focus();}
+$('about-close').onclick=closeAbout;about.addEventListener('cancel',e=>{e.preventDefault();closeAbout();});
+
+void view.init().then(()=>{ready=true;for(const node of Array.from(document.querySelectorAll<HTMLElement>('.roster-image'))){const im=document.createElement('img');im.src=view.portrait(node.dataset.hero!);im.alt='';node.append(im);}view.reset(world);$<HTMLButtonElement>('primary').disabled=false;showMenu();const invite=new URLSearchParams(location.search).get('room');if(invite){$<HTMLInputElement>('online-code').value=invite;$('online-open').click();}const record=readRecord(world.missionIndex);if(record)$('result').textContent=`Найкращий час: ${formatTime(record.seconds)}`;ui();}).catch(error=>{$('primary').textContent='Не вдалося завантажити гру';$('menu-copy').textContent='Оновіть сторінку та перевірте локальний сервер.';console.error(error);});
+window.addEventListener('pagehide',()=>{online?.close();input.destroy();sound.dispose();if(view.app)view.dispose();},{once:true});

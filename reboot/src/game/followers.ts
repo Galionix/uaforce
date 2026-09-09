@@ -3,7 +3,7 @@ import {segmentHit, type World, type Enemy} from './world.ts';
 import {cycleWeapon, resetWeapon, type WeaponState, type WeaponSpec} from './weapons.ts';
 import type {HeroId} from './content.ts';
 export type Follower = WeaponState & {
- id:number; kind:'infantry'|'turret'; owner:HeroId; source?:number; slot:number;
+ id:number; playerId?:number; kind:'infantry'|'turret'; owner:HeroId; source?:number; slot:number;
  x:number;y:number;vy:number;dir:number;hp:number;maxHp:number;
  state:'follow'|'approach'|'attack'|'return';target?:number;grounded:boolean;
  ladder:number;moving:boolean;attack:number;hurt:number;contactCooldown:number;stepSound?:number;
@@ -17,7 +17,7 @@ const solid=(w:World,x:number,y:number)=>w.boxes.find(b=>b.hp>0&&b.kind!=='platf
 export function summonFollowers(w:World,kind:Follower['kind'],source?:number){
  const cap=kind==='infantry'?2:1;
  for(let slot=0;slot<cap;slot++){
-  if(w.followers.some(f=>f.hp>0&&f.kind===kind&&f.slot===slot))continue;
+  if(w.followers.some(f=>f.hp>0&&(f.playerId??0)===w.actor.id&&f.kind===kind&&f.slot===slot))continue;
   const node=w.boxes.find(b=>b.id===source),base=node??w.player;
   // Find free footing beside the summoner / hacked node, never inside cover.
   let x=base.x,y=base.y,found=false;
@@ -27,7 +27,7 @@ export function summonFollowers(w:World,kind:Follower['kind'],source?:number){
   }
   if(!found)continue;
   const hp=kind==='infantry'?60:110;
-  const f:Follower={id:w.nextId(),kind,source,slot,owner:w.heroId,x,y,vy:0,dir:w.player.facing,hp,maxHp:hp,state:'follow',grounded:false,ladder:-1,moving:false,attack:0,hurt:0,contactCooldown:0,ammo:0,reloading:0,cooldown:0,burstShots:0,weaponTrigger:false};
+  const f:Follower={id:w.nextId(),playerId:w.actor.id,kind,source,slot,owner:w.heroId,x,y,vy:0,dir:w.player.facing,hp,maxHp:hp,state:'follow',grounded:false,ladder:-1,moving:false,attack:0,hurt:0,contactCooldown:0,ammo:0,reloading:0,cooldown:0,burstShots:0,weaponTrigger:false};
   resetWeapon(f,FOLLOWER_WEAPONS[kind]);w.followers.push(f);
  }
 }
@@ -69,8 +69,8 @@ export function navigateGround(w:World,f:GroundActor,tx:number,ty:number,dt:numb
  if(f.y<=-2){f.y=-2;f.vy=0;f.grounded=true;}
 }
 export function stepFollowers(w:World,dt:number){
- const p=w.player;
  for(const f of w.followers){
+  const p=w.players[f.playerId??0]?.body??w.player;
   if(f.hp<=0)continue;
   f.attack=Math.max(0,f.attack-dt);f.hurt=Math.max(0,f.hurt-dt);f.contactCooldown=Math.max(0,f.contactCooldown-dt);
   const ownerDistance=Math.hypot(f.x-p.x,f.y-p.y);

@@ -4,7 +4,7 @@ export type Mount={id:number;kind:'tank';x:number;y:number;vy:number;grounded:bo
 export const TANK={w:4,h:2.2,speed:4.2,jump:13,gravity:20,reload:2.5,armor:360,damage:105,range:26};
 export function addMount(w:World,x:number){const t:Mount={id:w.nextId(),kind:'tank',x,y:0,vy:0,grounded:false,jumpHeld:false,landing:0,dir:1,armor:TANK.armor,maxArmor:TANK.armor,cooldown:0,contactCooldown:0,moving:false,engine:0,hurt:0,recoil:0};w.mounts.push(t);return t;}
 export function missionMounts(w:World){for(const x of w.mission.mounts)addMount(w,x);}
-export function nearbyMount(w:World){return w.mounts.filter(t=>t.armor>0&&Math.abs(t.x-w.player.x)<3&&Math.abs(t.y-w.player.y)<2.5).sort((a,b)=>Math.abs(a.x-w.player.x)-Math.abs(b.x-w.player.x))[0];}
+export function nearbyMount(w:World){return w.mounts.filter(t=>t.armor>0&&!w.players.some(a=>a.mounted===t)&&Math.abs(t.x-w.player.x)<3&&Math.abs(t.y-w.player.y)<2.5).sort((a,b)=>Math.abs(a.x-w.player.x)-Math.abs(b.x-w.player.x))[0];}
 export function exitMount(w:World,broken=false){
  const t=w.mounted;if(!t)return;w.mounted=null;t.moving=false;t.engine=0;
  const p=w.player;p.x=t.x;p.y=t.y+TANK.h+.25;p.vy=11;p.grounded=false;p.ladder=-1;p.coyote=0;p.detachVx=-t.dir*3;p.invulnerable=Math.max(p.invulnerable,broken?1.5:.8);
@@ -13,7 +13,7 @@ export function exitMount(w:World,broken=false){
 export function damageMount(w:World,t:Mount,amount:number){
  if(w.mode!=='playing'||t.armor<=0)return;
  t.armor=Math.max(0,t.armor-amount);t.hurt=.12;w.emit('armorHit',t.x,t.y+1);
- if(t.armor===0){if(w.mounted===t)exitMount(w,true);else w.emit('mountBroken',t.x,t.y+1);t.moving=false;}
+ if(t.armor===0){const rider=w.players.find(a=>a.mounted===t);if(rider)w.withPlayer(rider.id,()=>exitMount(w,true));else w.emit('mountBroken',t.x,t.y+1);t.moving=false;}
 }
 /** Returns true when vehicle controls consumed this frame, including entry/exit. */
 export function stepMounts(w:World,dt:number,a:Actions,interactEdge:boolean){
@@ -23,6 +23,8 @@ export function stepMounts(w:World,dt:number,a:Actions,interactEdge:boolean){
   const t=nearbyMount(w);if(t){w.mounted=t;consumed=true;w.player.ladder=-1;w.player.cloak=0;w.player.form=0;w.player.attack=0;w.player.cast=0;w.player.detachVx=0;w.emit('mountEnter',t.x,t.y+1);}
  }
  for(const t of w.mounts){
+  const rider=w.players.find(a=>a.mounted===t);
+  if(rider?rider.id!==w.actor.id:w.actor.id!==0)continue;
   t.contactCooldown=Math.max(0,t.contactCooldown-dt);t.cooldown=Math.max(0,t.cooldown-dt);t.hurt=Math.max(0,t.hurt-dt);t.recoil=Math.max(0,t.recoil-dt);t.landing=Math.max(0,t.landing-dt);t.moving=false;
   // Recheck support after terrain destruction; a cached grounded flag permits air jumps.
   t.grounded=t.vy<=0&&(t.y<=-2||w.boxes.some(b=>b.hp>0&&Math.abs(b.x-t.x)<b.w/2+TANK.w/2-.3&&Math.abs(t.y-b.y-b.h)<.04));

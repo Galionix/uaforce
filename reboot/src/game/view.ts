@@ -148,7 +148,7 @@ export class View {
     }
     drawArena(this.c,world,this.cameraX,this.cameraY);
     if(world.boss&&world.boss.hp<=0)drawBossWreck(this.c,world.boss,world.boss.x*S-this.cameraX,266-world.boss.y*S+this.cameraY,world.time);
-    for(const tank of world.mounts)drawMount(this.c,tank,tank.x*S-this.cameraX,266-tank.y*S+this.cameraY,this.clock,world.mounted===tank);
+    for(const tank of world.mounts)drawMount(this.c,tank,tank.x*S-this.cameraX,266-tank.y*S+this.cameraY,this.clock,world.players.some(a=>a.mounted===tank));
     for(const enemy of world.enemies)if(enemyActive(enemy)){if(enemy.boss){drawBoss(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.bossArt.get(enemy.boss.id),this.clock);continue;}if(enemy.vehicle){drawVehicle(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.clock);continue;}if(enemy.infantry?.kind!=='demolition')this.sprite(enemy.x,enemy.y,enemy.dir,enemy.heavy||enemy.infantry?.kind==='gunner'?2:enemy.infantry?.moving?Math.floor(this.clock*10)%2:0,true,enemy.heavy||enemy.infantry?.kind==='gunner');drawInfantryGear(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.clock);if(enemy.heavy){const x=enemy.x*S-this.cameraX;this.rect(x-13,266-enemy.y*S-42+this.cameraY,26,2,'#402f27');this.rect(x-13,266-enemy.y*S-42+this.cameraY,26*enemy.hp/enemy.maxHp,2,'#db5a39');}}
     for(const f of world.followers)if(f.hp>0){
       const x=Math.round(f.x*S-this.cameraX),y=Math.round(266-f.y*S+this.cameraY);
@@ -167,8 +167,11 @@ export class View {
       this.rect(x-9,y-31,18,3,'#172928');this.rect(x-8,y-30,16*f.hp/f.maxHp,1,f.hp<f.maxHp*.3?'#ee986b':'#88dbb0');
       if(f.reloading>0){const duration=FOLLOWER_WEAPONS[f.kind].reloadTime;this.rect(x-8,y-27,16*(1-f.reloading/duration),1,'#f4b456');}
     }
-    const p=world.player;this.c.globalAlpha=p.cloak>0?.38:1;if(!world.mounted&&world.evac.phase!=='departing'&&(p.invulnerable<=0||Math.floor(this.clock*12)%2===0))this.sprite(p.x,p.y,p.facing,heroFrame(p,this.clock,Math.abs(move)>.1),false,false,HEROES.findIndex(h=>h.id===world.heroId),world.heroId==='lesya'&&p.form>0);this.c.globalAlpha=1;
-    if(world.heroId==='mamai'&&p.attack>0&&!world.effects.some(f=>f.kind==='weapon')){const xx=p.x*S-this.cameraX,yy=266-(p.y+1)*S+this.cameraY;this.rect(xx+p.facing*4,yy,12*p.facing,3,'#c6ad7a');this.rect(xx+p.facing*5,yy+2,4*p.facing,4,'#845b38');}
+    for(const actor of world.players){
+    const p=actor.body;this.c.globalAlpha=p.cloak>0?.38:1;if(!actor.mounted&&world.evac.phase!=='departing'&&(p.invulnerable<=0||Math.floor(this.clock*12)%2===0))this.sprite(p.x,p.y,p.facing,heroFrame(p,this.clock,Math.abs(world.players.length===1?move:actor.move)>.1),false,false,HEROES.findIndex(h=>h.id===actor.heroId),actor.heroId==='lesya'&&p.form>0);this.c.globalAlpha=1;
+    if(actor.heroId==='mamai'&&p.attack>0&&!world.effects.some(f=>f.kind==='weapon')){const xx=p.x*S-this.cameraX,yy=266-(p.y+1)*S+this.cameraY;this.rect(xx+p.facing*4,yy,12*p.facing,3,'#c6ad7a');this.rect(xx+p.facing*5,yy+2,4*p.facing,4,'#845b38');}
+      if(world.players.length>1){const x=p.x*S-this.cameraX,y=266-p.y*S+this.cameraY;this.label('P'+(actor.id+1),x,y-42,actor.id===0?'#ffdf6a':'#70d8ff');this.rect(x-10,y-36,20,2,'#172928');this.rect(x-10,y-36,20*p.hp/100,2,actor.id===0?'#ffdf6a':'#70d8ff');}
+    }
     for(const b of world.bullets){
       const x=b.x*S-this.cameraX,y=266-b.y*S+this.cameraY,dir=Math.sign(b.vx);
       if(b.ordnance){this.c.save();this.c.translate(Math.round(x),Math.round(y));this.c.rotate(Math.atan2(-b.vy,b.vx));this.rect(-8,-2,12,4,b.ordnance==='rocket'?'#bdc5ac':'#d3af71');this.rect(4,-1,3,2,'#f7db9a');this.rect(-12,-1,5,2,'#f88042');this.rect(-18,-1,4,2,'#777c68');this.c.restore();

@@ -10,7 +10,7 @@ export function launchEffect(w:World,kind:'special'|'ultimate'){
  const p=w.player,hero=w.heroId;
  if(kind==='special'&&hero==='zelensky'){summonFollowers(w,'infantry');return;}
  if(kind==='special'&&hero==='it-army'){const target=hackTarget(w);if(target)summonFollowers(w,'turret',target.id);return;}
- const f:Effect={kind,hero,x:p.x+(hero==='franko'&&kind==='special'?p.facing*1.6:0),y:p.y,originX:p.x,originY:p.y,dir:p.facing,life:(kind==='special'?SPECIAL_LIFE:ULTIMATE_LIFE)[hero],age:0,hit:new Set()};
+ const f:Effect={playerId:w.actor.id,kind,hero,x:p.x+(hero==='franko'&&kind==='special'?p.facing*1.6:0),y:p.y,originX:p.x,originY:p.y,dir:p.facing,life:(kind==='special'?SPECIAL_LIFE:ULTIMATE_LIFE)[hero],age:0,hit:new Set()};
  if(hero==='ghost'&&kind==='special')p.cloak=3;
  w.effects.push(f);
 }
@@ -20,14 +20,14 @@ export function attack(w:World,melee=false){
  const p=w.player,id=w.heroId;
  p.cloak=0;p.fireCount++;
  if(melee){
-  w.effects.push({kind:'weapon',hero:id,x:p.x,y:p.y,originX:p.x,originY:p.y,dir:p.facing,life:.2,age:0,hit:new Set()});
+  w.effects.push({playerId:w.actor.id,kind:'weapon',hero:id,x:p.x,y:p.y,originX:p.x,originY:p.y,dir:p.facing,life:.2,age:0,hit:new Set()});
   for(const e of w.enemies)if(enemyActive(e)&&(e.x-p.x)*p.facing>=0&&(e.x-p.x)*p.facing<2.7&&Math.abs(e.y-p.y)<1.8){w.damageEnemy(e,78);w.emitSfx(id+'-hit',e.x,e.y,id);}
   w.events.push({type:'shot',hero:id,variant:'melee',x:p.x,y:p.y+1});
  }else w.projectile(p.x+p.facing*.45,p.y+1.03,p.facing,0,true);
- if(id==='skovoroda'){reflect(w,p.x+p.facing,p.y+1,2.8);w.effects.push({kind:'weapon',hero:id,x:p.x,y:p.y,dir:p.facing,life:.22,age:0,hit:new Set()});}
+ if(id==='skovoroda'){reflect(w,p.x+p.facing,p.y+1,2.8);w.effects.push({playerId:w.actor.id,kind:'weapon',hero:id,x:p.x,y:p.y,dir:p.facing,life:.22,age:0,hit:new Set()});}
  if(id==='zelensky'&&p.fireCount%3===0){
   for(const e of w.enemies)if(enemyActive(e)&&(e.x-p.x)*p.facing>=0&&(e.x-p.x)*p.facing<6&&Math.abs(e.y-p.y)<3){e.rooted=1.25;e.windup=0;}
-  w.effects.push({kind:'weapon',hero:id,x:p.x,y:p.y,dir:p.facing,life:.35,age:0,hit:new Set()});w.emit('voiceWave',p.x,p.y+1);
+  w.effects.push({playerId:w.actor.id,kind:'weapon',hero:id,x:p.x,y:p.y,dir:p.facing,life:.35,age:0,hit:new Set()});w.emit('voiceWave',p.x,p.y+1);
  }
 }
 /** Each effect owns its hit set and timing, so held keys cannot retrigger a one-shot impact. */
