@@ -1,0 +1,33 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>UA Force — два тихі ігрові клієнти</title><style>body{margin:0;background:#14221c;color:#ffe395;font:14px monospace}iframe{width:49vw;height:70vh;border:0}button{font:inherit;padding:10px}pre{white-space:pre-wrap}</style><button id="run">Перевірити пропуск сцени від гостя</button><button id="capture">Зберегти кадр гри</button><pre id="result">Обидві гри відкриті без звуку.</pre><iframe id="host" src="/?silent=1"></iframe><iframe id="guest" src="/?silent=1"></iframe><script type="module">
+const h=document.querySelector('#host'),g=document.querySelector('#guest'),out=document.querySelector('#result');let running=false;
+const q=(f,id)=>f.contentDocument?.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function until(fn){const end=Date.now()+20000;while(Date.now()<end){if(fn())return;await sleep(100);}throw Error('UI timeout: '+q(h,'online-status')?.textContent+' / '+q(g,'online-status')?.textContent);}
+document.querySelector('#run').onclick=async()=>{if(running)return;running=true;try{
+ await until(()=>q(h,'primary')&&!q(h,'primary').disabled&&q(g,'primary')&&!q(g,'primary').disabled);
+ q(h,'operations-open').click();q(h,'operations-grid').querySelector('button').click();q(h,'online-open').click();q(h,'online-create').click();await until(()=>q(h,'online-status').textContent.startsWith('Код:'));
+ const code=q(h,'online-status').textContent.match(/Код: ([A-Z2-9]{4}) ([A-Z2-9]{4})/).slice(1).join('');
+ q(g,'online-open').click();q(g,'online-code').value=code;q(g,'online-hero').value='lesya';q(g,'online-join').click();
+ await until(()=>q(h,'menu').hidden&&q(g,'menu').hidden&&q(g,'hero-name').textContent==='Леся Українка');
+ out.textContent='Два клієнти з’єднано';await sleep(1000);
+ if(!q(h,'pause-menu').hidden){q(g,'pause-resume').click();await until(()=>q(h,'pause-menu').hidden&&q(g,'pause-menu').hidden);}
+ out.textContent='Перевірка сюжетної сцени';
+ h.contentWindow.focus();
+ h.contentWindow.dispatchEvent(new h.contentWindow.KeyboardEvent('keydown',{code:'KeyD',bubbles:true}));
+ await until(()=>h.contentDocument.body.classList.contains('story-active')&&g.contentDocument.body.classList.contains('story-active'));
+ h.contentWindow.dispatchEvent(new h.contentWindow.KeyboardEvent('keyup',{code:'KeyD',bubbles:true}));
+ await until(()=>!g.contentDocument.querySelector('.story-skip').hidden);
+ const skipStart=performance.now();g.contentDocument.querySelector('.story-skip').click();
+ await until(()=>!h.contentDocument.body.classList.contains('story-active')&&!g.contentDocument.body.classList.contains('story-active'));
+ const guestSceneSkip=performance.now()-skipStart<1700;
+ if(!guestSceneSkip)throw Error('Guest skip did not end the scene promptly');
+ out.textContent='Перевірка паузи';
+ q(h,'pause').click();await until(()=>!q(h,'pause-menu').hidden&&!q(g,'pause-menu').hidden);
+ q(g,'pause-resume').click();await until(()=>q(h,'pause-menu').hidden&&q(g,'pause-menu').hidden);
+ out.textContent='Перевірка виходу';await sleep(700);q(h,'pause').click();await until(()=>!q(g,'pause-menu').hidden);
+ const result={connected:true,guestSceneSkip,hostHero:q(h,'hero-name').textContent,guestHero:q(g,'hero-name').textContent,sharedPause:true,guestResume:true,silent:true};
+ q(h,'pause-main').click();await until(()=>q(g,'online-status').textContent.includes('закрив'));
+ result.hostLeaving=true;result.singlePlayerRestored=!q(h,'menu').hidden&&!q(g,'menu').hidden;result.passed=true;out.textContent=JSON.stringify(result,null,2);
+ }catch(e){out.textContent=String(e);}finally{running=false;}};
+document.querySelector('#capture').onclick=()=>{const canvas=q(h,'scene'),a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='uaforce-gameplay-2026-09-09.png';a.click();};
+</script></html>

@@ -263,7 +263,7 @@ function publishOnline(dt:number){
 function onlineCommand(command:RoomCommand){
  if(command==='pause')pause('Пауза друга');
  if(command==='resume')resume(false);
- if(command==='continue'&&world.mode==='cinematic')cinematic.confirm();
+ if(command==='continue'){if(world.story&&world.mode==='playing')skipStory(world);else if(world.mode==='cinematic')cinematic.confirm();}
  if(command==='next'&&world.mode==='won')begin();
 }
 cinematic.onConfirm=()=>{if(online?.role==='guest'){online.command('continue');return false;}return true;};
