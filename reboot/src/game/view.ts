@@ -1,3 +1,4 @@
+import {interactionTarget,TEAM_BOOST} from './interactions.ts';
 import {teamCamera} from './shared-screen.ts';
 import {drawFlagWipe} from './flag-wipe.ts';
 import {AbilityArt} from './ability-art';
@@ -22,6 +23,8 @@ const S=16,W=640,H=360;
 const hash=(x:number,y:number=0)=>{const n=Math.sin(x*127.1+y*311.7)*43758.5453;return n-Math.floor(n);};
 /** Pixel coordinates are the art grid; CSS scales the completed frame without smoothing. */
 export class View {
+  interactKey='F'; private enemyClock=0;
+
   private abilityArt=new AbilityArt();private screenPulse=0;private cinematicBlasts:{x:number;y:number;age:number;size:number}[]=[];
   private gore=new Gore();private deathCaptions:{x:number;y:number;text:string;life:number}[]=[];private lastDeathCaption=-100;
   app=true;fps=60;onFrame:(dt:number)=>void=()=>{};onGoreImpact:(x:number,y:number)=>void=()=>{};
@@ -125,7 +128,7 @@ export class View {
     }
   }
   render(world:World,dt:number,move:number){
-    const playing=world.mode==='playing';if(!playing&&!this.needsDraw)return;this.needsDraw=false;if(playing)this.clock+=dt;
+    const playing=world.mode==='playing';if(!playing&&!this.needsDraw)return;this.needsDraw=false;if(playing){this.clock+=dt;this.enemyClock+=dt*(world.highFive.left>0?TEAM_BOOST.enemyRate:1);}
     if(world.story){const camera=world.players.length>1?teamCamera(world,world.story.camera):world.story.camera;this.cameraX=Math.max(0,Math.min(world.mission.length*S-W,camera.x*S-W/2));this.cameraY=Math.max(0,camera.y*S-80);}
     else if(world.players.length>1){const camera=teamCamera(world);this.cameraX=camera.x*S-W/2;this.cameraY=Math.max(0,camera.y*S-80);}
     else {const targetX=Math.max(0,Math.min(world.mission.length*S-W,world.player.x*S-W*.32));this.cameraX+=Math.min(1,dt*6)*(targetX-this.cameraX);this.cameraY+=Math.min(1,dt*5)*(Math.max(0,world.player.y*S-94)-this.cameraY);}
@@ -163,7 +166,7 @@ export class View {
     drawArena(this.c,world,this.cameraX,this.cameraY);
     if(world.boss&&world.boss.hp<=0)drawBossWreck(this.c,world.boss,world.boss.x*S-this.cameraX,266-world.boss.y*S+this.cameraY,world.time);
     for(const tank of world.mounts)drawMount(this.c,tank,tank.x*S-this.cameraX,266-tank.y*S+this.cameraY,this.clock,world.players.some(a=>a.mounted===tank));
-    for(const enemy of world.enemies)if(enemyActive(enemy)){if(enemy.boss){drawBoss(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.bossArt.get(enemy.boss.id),this.clock);continue;}if(enemy.vehicle){drawVehicle(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.clock,this.abilityArt);continue;}if(enemy.infantry?.kind!=='demolition')this.sprite(enemy.x,enemy.y,enemy.dir,enemy.infantry?.moving?Math.floor(this.clock*(enemy.panic?16:10))%2:enemy.heavy||(enemy.infantry?.attack??0)>0||enemy.infantry?.kind==='gunner'?2:0,true,enemy.heavy||enemy.infantry?.kind==='gunner');drawInfantryGear(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.clock);if(enemy.heavy){const x=enemy.x*S-this.cameraX;this.rect(x-13,266-enemy.y*S-42+this.cameraY,26,2,'#402f27');this.rect(x-13,266-enemy.y*S-42+this.cameraY,26*enemy.hp/enemy.maxHp,2,'#db5a39');}}
+    for(const enemy of world.enemies)if(enemyActive(enemy)){if(enemy.boss){drawBoss(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.bossArt.get(enemy.boss.id),this.enemyClock);continue;}if(enemy.vehicle){drawVehicle(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.enemyClock,this.abilityArt);continue;}if(enemy.infantry?.kind!=='demolition')this.sprite(enemy.x,enemy.y,enemy.dir,enemy.infantry?.moving?Math.floor(this.enemyClock*(enemy.panic?16:10))%2:enemy.heavy||(enemy.infantry?.attack??0)>0||enemy.infantry?.kind==='gunner'?2:0,true,enemy.heavy||enemy.infantry?.kind==='gunner');drawInfantryGear(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.enemyClock);if(enemy.heavy){const x=enemy.x*S-this.cameraX;this.rect(x-13,266-enemy.y*S-42+this.cameraY,26,2,'#402f27');this.rect(x-13,266-enemy.y*S-42+this.cameraY,26*enemy.hp/enemy.maxHp,2,'#db5a39');}}
     for(const f of world.followers)if(f.hp>0){
       const x=Math.round(f.x*S-this.cameraX),y=Math.round(266-f.y*S+this.cameraY);
       this.c.globalAlpha=f.hurt>0?.55:1;
@@ -177,9 +180,25 @@ export class View {
       if(f.reloading>0){const duration=FOLLOWER_WEAPONS[f.kind].reloadTime;this.rect(x-8,y-27,16*(1-f.reloading/duration),1,'#f4b456');}
     }
     for(const actor of world.players){
-    const p=actor.body;this.c.globalAlpha=p.cloak>0?.38:1;if(!actor.mounted&&world.evac.phase!=='departing'&&(world.story||p.invulnerable<=0||Math.floor(this.clock*12)%2===0))this.sprite(p.x,p.y,p.facing,heroFrame(p,this.clock,Math.abs(world.players.length===1&&!world.story?move:actor.move)>.1),false,false,HEROES.findIndex(h=>h.id===actor.heroId),actor.heroId==='lesya'&&p.form>0);this.c.globalAlpha=1;
+    const p=actor.body;this.c.globalAlpha=p.cloak>0?.38:1;if(!actor.mounted&&world.evac.phase!=='departing'&&(world.story||p.invulnerable<=0||Math.floor(this.clock*12)%2===0))this.sprite(p.x,p.y,p.facing,world.highFive.age<.45?0:heroFrame(p,this.clock,Math.abs(world.players.length===1&&!world.story?move:actor.move)>.1),false,false,HEROES.findIndex(h=>h.id===actor.heroId),actor.heroId==='lesya'&&p.form>0);this.c.globalAlpha=1;
     if(actor.heroId==='mamai'&&p.attack>0&&!world.effects.some(f=>f.kind==='weapon')){const xx=p.x*S-this.cameraX,yy=266-(p.y+1)*S+this.cameraY;this.rect(xx+p.facing*4,yy,12*p.facing,3,'#c6ad7a');this.rect(xx+p.facing*5,yy+2,4*p.facing,4,'#845b38');}
       if(world.players.length>1){const x=p.x*S-this.cameraX,y=266-p.y*S+this.cameraY;this.label('P'+(actor.id+1),x,y-42,actor.id===0?'#ffdf6a':'#70d8ff');this.rect(x-10,y-36,20,2,'#172928');this.rect(x-10,y-36,20*p.hp/100,2,actor.id===0?'#ffdf6a':'#70d8ff');}
+    }
+    if(world.highFive.age<.65){
+      const t=world.highFive.age,c=this.c,flash=Math.max(0,1-Math.abs(t-.18)/.17);
+      const x=world.highFive.x*S-this.cameraX,y=266-world.highFive.y*S+this.cameraY;
+      // Pixel forearms reach up, palms meet, then recoil. No static overlay card.
+      for(const actor of world.players){const ax=actor.body.x*S-this.cameraX,ay=266-(actor.body.y+1)*S+this.cameraY,reach=Math.min(1,t/.15)*Math.max(0,1-(t-.3)/.35);const hx=ax+Math.max(-14,Math.min(14,x-ax))*reach,hy=ay-14*reach;c.strokeStyle=actor.id===0?'#f5d364':'#67cced';c.lineWidth=4;c.beginPath();c.moveTo(Math.round(ax),Math.round(ay));c.lineTo(Math.round((ax+hx)/2),Math.round(ay-3));c.lineTo(Math.round(hx),Math.round(hy));c.stroke();this.rect(Math.round(hx)-3,Math.round(hy)-4,6,7,'#edbd85');}
+      if(flash>0)for(let i=0;i<8;i++){const a=i*Math.PI/4,r=8+t*35;this.rect(Math.round(x+Math.cos(a)*r),Math.round(y-8+Math.sin(a)*r),3,3,i%2?'#62d8ff':'#ffe783');}
+    }
+    if(world.highFive.left>0){
+      // A small shared timer above the heroes; no text covers the battle.
+      for(const a of world.players){const x=a.body.x*S-this.cameraX,y=266-a.body.y*S+this.cameraY;this.rect(x-10,y-60,20,2,'#173b48');this.rect(x-10,y-60,20*world.highFive.left/TEAM_BOOST.seconds,2,'#6ee4f2');}
+    }
+    const hint=interactionTarget(world);
+    if(hint){const x=Math.round(hint.x*S-this.cameraX),y=Math.round(266-hint.y*S+this.cameraY),pressed=this.clock%1.25>.9;
+      this.rect(x-9,y-9,18,19,'#07151d');this.rect(x-8,y-8+(pressed?2:0),16,14,'#f4db87');this.rect(x-6,y-6+(pressed?2:0),12,10,'#182c37');
+      this.c.fillStyle='#fff4cc';this.c.textAlign='center';this.c.font='bold 11px monospace';this.c.fillText(this.interactKey,x,y+3+(pressed?2:0));
     }
     for(const b of world.bullets){
       const x=b.x*S-this.cameraX,y=266-b.y*S+this.cameraY,dir=Math.sign(b.vx);

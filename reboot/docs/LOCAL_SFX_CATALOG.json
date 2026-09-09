@@ -3614,6 +3614,15 @@
       "dtype": "fp32",
       "cfg": 3,
       "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech"
+    },
+    {
+      "id": "team-high-five",
+      "seconds": 1.05,
+      "loop": false,
+      "prompt": "One crisp loud palm to palm high five hand clap, followed by a short powerful airy swoosh. Exaggerated cartoon action celebration, dry close sound effect, no speech, no music, no electronic tones.",
+      "seed": 910501,
+      "generateSeconds": 6,
+      "dtype": "fp32"
     }
   ]
 }

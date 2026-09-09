@@ -1596,6 +1596,10 @@ export const SFX_ASSETS = {
   "enemy-aggro-2": {
     "offset": 211.53575,
     "seconds": 1.1
+  },
+  "team-high-five": {
+    "offset": 212.67575,
+    "seconds": 1.05
   }
 } as const;
 export type SfxId=keyof typeof SFX_ASSETS;

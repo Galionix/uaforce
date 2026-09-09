@@ -1,12 +1,12 @@
 import type {World,Box} from './world.ts';
 import {enemyActive,enemySize} from './enemies.ts';
-export const BARREL={gravity:24,throwSpeed:8,impactSpeed:6.5};
+export const BARREL={gravity:24,throwSpeed:17,throwLift:7,impactSpeed:6.5};
 const supports=new WeakMap<Box,Box>();
 export function nearbyBarrel(w:World){return w.boxes.filter(b=>b.kind==='barrel'&&b.hp>0&&!w.players.some(a=>a.heldBarrel===b.id)&&Math.abs(b.x-w.player.x)<1.9&&Math.abs(b.y-w.player.y)<1.4).sort((a,b)=>Math.abs(a.x-w.player.x)-Math.abs(b.x-w.player.x))[0];}
 export function dropBarrel(w:World){const b=w.boxes.find(b=>b.id===w.heldBarrel);w.heldBarrel=null;if(b){b.vx=0;b.vy=0;}}
 export function interactBarrel(w:World,drop=false){
  const p=w.player,b=w.boxes.find(b=>b.id===w.heldBarrel&&b.hp>0);
- if(b){w.heldBarrel=null;b.vx=p.facing*(drop?1.5:BARREL.throwSpeed);b.vy=drop?-2:3;w.emit('barrelThrow',b.x,b.y);return true;}
+ if(b){w.heldBarrel=null;b.vx=p.facing*(drop?1.5:BARREL.throwSpeed);b.vy=drop?-2:BARREL.throwLift;w.emit('barrelThrow',b.x,b.y);return true;}
  const next=nearbyBarrel(w);if(!next)return false;
  // Do not lift a barrel through a low ceiling.
  if(w.boxes.some(a=>a!==next&&a.hp>0&&a.kind!=='platform'&&Math.abs(a.x-p.x)<a.w/2+next.w/2&&a.y<p.y+1.7+next.h&&a.y+a.h>p.y+1.7))return false;

@@ -195,7 +195,7 @@ function ui(){
   $('time').textContent=formatTime(world.time);$('fps').textContent=`${Math.round(view.fps)} кадр/с`;
   const prompt=world.mode==='playing'?world.prompt:'';
   const rescue=prompt==='Звільнити полоненого',vehicle=prompt==='Сісти в танк'||prompt==='Вийти з танка',barrel=prompt==='Підняти бочку'||prompt==='Кинути бочку';
-  const promptHtml=prompt?`${rescue||vehicle||barrel?'<kbd>'+battleKey('interact')+'</kbd>':''}${icon(barrel?'barrel':vehicle?(world.mounted?'exit':'tank'):rescue?'captive':'helicopter')}${!rescue&&!vehicle&&!barrel&&world.evac.phase==='waiting'?'<b>→</b>':''}`:'';
+  const promptHtml=prompt&&!rescue&&!vehicle&&!barrel?`${rescue||vehicle||barrel?'<kbd>'+battleKey('interact')+'</kbd>':''}${icon(barrel?'barrel':vehicle?(world.mounted?'exit':'tank'):rescue?'captive':'helicopter')}${!rescue&&!vehicle&&!barrel&&world.evac.phase==='waiting'?'<b>→</b>':''}`:'';
   if(promptSignature!==promptHtml){promptSignature=promptHtml;$('interact-prompt').innerHTML=promptHtml;}
   if($('interact-prompt').title!==prompt){$('interact-prompt').setAttribute('aria-label',prompt);$('interact-prompt').title=prompt;}
   diagnostics();
@@ -209,6 +209,7 @@ view.onFrame=dt=>{
   flags.step(dt);
   syncStoryControls();
   sound.bossBattle=!!world.boss?.boss?.active;sound.scoreTheme=world.mission.score;
+  view.interactKey=battleKey('interact');
   const frame=input.poll(dt),wasMenu=!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||feedback.open||flags.active;
   if(online?.role==='guest'&&online.connected){pendingJump ||= frame.action.jump;pendingSpecial ||= frame.action.special;pendingUltimate ||= !!frame.action.ultimate;netClock+=dt;if(netClock>=1/30){online.input(wasMenu?{move:0,jump:false,fire:false,special:false,interact:false}:{...frame.action,jump:pendingJump,special:pendingSpecial,ultimate:pendingUltimate});pendingJump=pendingSpecial=pendingUltimate=false;netClock=0;}}
   if(world.mode==='cinematic'){cinematic.sync(world);cinematic.step(dt,frame.confirm||frame.action.jump);view.render(world,dt,0);sound.step(dt,false,false);publishOnline(dt);ui();return;}

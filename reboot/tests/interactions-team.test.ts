@@ -1,0 +1,34 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {World,IDLE,type Box} from '../src/game/world.ts';
+import {interactionTarget,TEAM_BOOST} from '../src/game/interactions.ts';
+import {addInfantry} from '../src/game/infantry.ts';
+import {addMount} from '../src/game/mounts.ts';
+import {SnapshotWriter,applySnapshot} from '../src/game/coop-state.ts';
+const stage=(coop=false)=>{const w=new World();w.mode='playing';w.storyDone=['river-watch'];w.enemies=[];w.allies=[];w.mounts=[];w.medkits=[];w.ammoCrates=[];w.ladders=[];w.boxes=[{id:w.nextId(),x:50,y:-3,w:100,h:3,hp:Infinity,maxHp:Infinity,kind:'earth'}];w.player.x=20;if(coop)w.addPlayer('lesya');return w;};
+function barrel(w:World,x=21){const b:Box={id:w.nextId(),x,y:0,w:1,h:1,hp:25,maxHp:25,kind:'barrel'};w.boxes.push(b);return b;}
+const tick=(w:World,n:number,actions=[IDLE,IDLE])=>{for(let i=0;i<n;i++)w.stepPlayers(1/60,actions);};
+test('thrown barrel clears blast radius even when the thrower runs forward; drop remains vertical',()=>{
+ for(const dir of [-1,1]){const w=stage(),b=barrel(w,20+dir);w.player.facing=dir;tick(w,1,[{...IDLE,interact:true}]);tick(w,1);tick(w,1,[{...IDLE,interact:true}]);for(let i=0;i<180&&b.hp>0;i++)tick(w,1,[{...IDLE,move:dir}]);assert.equal(b.hp,0);assert.ok(Math.abs(b.x-w.player.x)>4,`gap ${Math.abs(b.x-w.player.x)}`);assert.equal(w.player.hp,100);}
+ const w=stage(),b=barrel(w);tick(w,1,[{...IDLE,interact:true}]);tick(w,1);tick(w,1,[{...IDLE,interact:true,climb:-1}]);assert.ok(b.vy!<0);assert.ok(Math.abs(b.vx!)<2);
+});
+test('nearby hint follows interaction priority, vanishes with distance and excludes broken equipment',()=>{
+ const w=stage(true),b=barrel(w);assert.equal(interactionTarget(w)?.kind,'barrel');const t=addMount(w,21);assert.equal(interactionTarget(w)?.kind,'tank');w.allies=[{x:20,rescued:false}];assert.equal(interactionTarget(w)?.kind,'rescue');w.allies=[];t.armor=0;b.hp=0;assert.equal(interactionTarget(w)?.kind,'highFive');w.player.x=40;assert.equal(interactionTarget(w),undefined);w.mode='paused';assert.equal(interactionTarget(w),undefined);
+});
+test('either player can high-five once, held buttons cannot spam it and objects retain priority',()=>{
+ for(const id of [0,1]){const w=stage(true);const actions=[IDLE,IDLE].map((a,i)=>({...a,interact:i===id}));tick(w,1,actions);assert.equal(w.highFive.left,5);assert.equal(w.events.filter(e=>e.type==='highFive').length,1);tick(w,1300,actions);assert.equal(w.events.filter(e=>e.type==='highFive').length,1);tick(w,1);tick(w,1,actions);assert.equal(w.events.filter(e=>e.type==='highFive').length,2);}
+ const w=stage(true),b=barrel(w);tick(w,1,[{...IDLE,interact:true},IDLE]);assert.equal(w.heldBarrel,b.id);assert.equal(w.highFive.left,0);
+});
+test('high-five cannot occur through walls, in the air, in tanks or during a story',()=>{
+ const w=stage(true);w.boxes.push({id:w.nextId(),x:20.5,y:0,w:.1,h:3,hp:100,maxHp:100,kind:'wall'});assert.equal(interactionTarget(w),undefined);w.boxes.pop();w.players[1].body.grounded=false;assert.equal(interactionTarget(w),undefined);w.players[1].body.grounded=true;w.players[1].mounted=addMount(w,21);assert.notEqual(interactionTarget(w)?.kind,'highFive');
+});
+test('boost slows hostile projectiles and preserves their finite range; friendly bullets and players retain speed',()=>{
+ const w=stage(true);tick(w,1,[{...IDLE,interact:true},IDLE]);w.bullets=[{id:1,x:40,y:8,vx:10,vy:0,life:2,friendly:false,damage:1},{id:2,x:40,y:10,vx:10,vy:0,life:2,friendly:true,damage:1}];tick(w,60,[{...IDLE,move:1},{...IDLE,move:1}]);assert.ok(Math.abs(w.bullets[0].x-43)<.01);assert.ok(Math.abs(w.bullets[1].x-50)<.01);assert.ok(Math.abs(w.player.x-27)<.05);assert.ok(Math.abs(w.highFive.left-4)<.01);
+ tick(w,250);assert.equal(w.highFive.left,0);tick(w,180);assert.equal(w.bullets.length,0);
+});
+test('pause and story freeze boost timers and snapshots preserve the animation and slow state',()=>{
+ const w=stage(true);tick(w,1,[IDLE,{...IDLE,interact:true}]);w.mode='paused';const state=JSON.stringify(w.highFive);tick(w,100);assert.equal(JSON.stringify(w.highFive),state);const guest=new World();applySnapshot(guest,new SnapshotWriter(w).snapshot(1,w.events));assert.deepEqual(guest.highFive,w.highFive);assert.equal(guest.events.filter(e=>e.type==='highFive').length,1);
+});
+
+test('enemy patrol and reaction clocks advance at 30 percent while the team boost is active',()=>{
+ const w=stage(true);const e=addInfantry(w,'rifle',55);e.infantry!.reaction=2;w.highFive.left=5;tick(w,60);assert.ok(Math.abs(e.infantry!.reaction-1.7)<.01);w.highFive.left=0;tick(w,60);assert.ok(Math.abs(e.infantry!.reaction-.7)<.01);
+});

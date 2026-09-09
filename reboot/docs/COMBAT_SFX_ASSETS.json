@@ -11308,13 +11308,40 @@
           "at": 0
         }
       ]
+    },
+    {
+      "id": "team-high-five",
+      "file": "public/assets/audio/sfx/team-high-five.wav",
+      "seconds": 1.05,
+      "loop": false,
+      "peak": 0.7599999999999999,
+      "rms": 0.024400738736182443,
+      "sha256": "aabcde6b2c902aa77c4cf3993d3adc283492e6377ac923ca6f895d2590602515",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "team-high-five.wav",
+          "sourceSha256": "37d79fd8000d1df0c047ba5eaeb07bd82229dc836b5fc60a8eabd1b50825726e",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 910501,
+          "prompt": "One crisp loud palm to palm high five hand clap, followed by a short powerful airy swoosh. Exaggerated cartoon action celebration, dry close sound effect, no speech, no music, no electronic tones.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 0.107,
+          "rate": 1,
+          "cut": 1.05,
+          "gain": 1,
+          "at": 0
+        }
+      ]
     }
   ],
   "missing": [],
   "bank": {
     "file": "public/assets/audio/sfx/combat-bank.wav",
-    "sha256": "bd9a31d2ab7e36337e3d65d0672b5b9cffb90036377ef415bc205ef0180aeeae",
-    "seconds": 212.67575
+    "sha256": "1a495c88fcfd6a65584ea74bbe3d722952a85a35950810abcefbe77bd2cf826d",
+    "seconds": 213.76575
   },
   "review": {
     "status": "local-playtest-candidate",

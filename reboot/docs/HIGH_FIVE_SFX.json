@@ -1,0 +1,49 @@
+{
+  "model": "Stable Audio 3 Small SFX",
+  "runtime": "official MLX",
+  "serviceCostUSD": 0,
+  "jobs": [
+    {
+      "id": "team-high-five",
+      "seconds": 1.05,
+      "loop": false,
+      "prompt": "One crisp loud palm to palm high five hand clap, followed by a short powerful airy swoosh. Exaggerated cartoon action celebration, dry close sound effect, no speech, no music, no electronic tones.",
+      "seed": 910501,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    }
+  ],
+  "screening": {
+    "sha256": "aabcde6b2c902aa77c4cf3993d3adc283492e6377ac923ca6f895d2590602515",
+    "model": "laion/clap-htsat-unfused",
+    "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+    "expected": "One crisp loud palm to palm high five hand clap, followed by a short powerful airy swoosh. Exaggerated cartoon action celebration, dry close sound effect, no speech, no music, no electronic tones.",
+    "expectedScore": 0.6119685769081116,
+    "top": [
+      {
+        "description": "One crisp loud palm to palm high five hand clap, followed by a short powerful airy swoosh. Exaggerated cartoon action celebration, dry close sound effect, no speech, no music, no electronic tones.",
+        "similarity": 0.612
+      },
+      {
+        "description": "one single pistol gunshot, crisp dry report",
+        "similarity": 0.4389
+      },
+      {
+        "description": "The sound of a single gunshot.",
+        "similarity": 0.4089
+      },
+      {
+        "description": "a single crossbow string snapping and bolt releasing",
+        "similarity": 0.3991
+      },
+      {
+        "description": "fast rush of air vanishing into a soft gust",
+        "similarity": 0.3829
+      }
+    ],
+    "musicScore": 0.0356,
+    "playback": false,
+    "status": "screened-not-an-artistic-approval"
+  },
+  "humanAudition": false
+}

@@ -1,3 +1,4 @@
+import {doHighFive,TEAM_BOOST} from './interactions.ts';
 import {storyTrigger,stepStory,type StoryState} from './story-scenes.ts';
 import {constrainTeam,sharedRespawn} from './shared-screen.ts';
 import {missionInfantry,stepInfantry,frighten,type Infantry,type InfantryKind} from './infantry.ts';
@@ -18,7 +19,7 @@ export type Actions = { move: number; jump: boolean; jumpHeld?:boolean; fire: bo
 export type Box = { id: number; x: number; y: number; w: number; h: number; hp: number; maxHp: number; vx?:number;vy?:number; kind: 'crate' | 'barrel' | 'wall' | 'radio' | 'platform' | 'earth' | 'stone' };
 export type Enemy = { id: number; x: number; y: number; hp: number; maxHp: number; dir: number; cooldown: number; windup: number; anchor: number; heavy: boolean; vehicle?:Vehicle;infantry?:Infantry;boss?:BossActor; panic?:{remaining:number;playerId:number;hero:HeroId;kind:Effect['kind'];voiceIn:number}; rooted?:number; poison?:number; distracted?:number };
 export type Bullet = { id: number; x: number; y: number; vx: number; vy: number; life: number; friendly: boolean; damage: number; hero?:HeroId;ordnance?:'shell'|'rocket';blastRadius?:number };
-export type Event = { type: 'enemySuspect' | 'enemyPanic' | 'goreLand' | 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; deathRole?:InfantryKind;deathCause?:DeathCause;soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
+export type Event = { type: 'highFive' | 'enemySuspect' | 'enemyPanic' | 'goreLand' | 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; deathRole?:InfantryKind;deathCause?:DeathCause;soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
 export const IDLE: Actions = { move: 0, jump: false, fire: false, special: false, interact: false };
 
 export function createPlayerBody(){return { x: 3, y: 0, vy: 0, hp: 100, facing: 1, grounded: true, invulnerable: 0, cooldown: 0, energy: 100, coyote: 0.12, wallSide:0,wallLock:0,wallVx:0,wallClimbing:false,ladder: -1, ladderLock: 0, detachVx: 0, ladderNeedsRelease:false, cast:0, attack:0, specialCooldown:0, specialRecovery:[] as number[], form:0, cloak:0, fireCount:0, ammo:0, reloading:0, burstShots:0, weaponTrigger:false };}
@@ -51,6 +52,7 @@ export class World {
 
   private deathLines=new DeathLines();
   mode: Mode = 'ready';
+  highFive={left:0,cooldown:0,age:10,x:0,y:0};
   story:StoryState|null=null;storyDone:string[]=[];storyPending:string|null=null;
   mounts:Mount[]=[];
   cinematic:{kind:'hero'|'boss';id:string;serial:number}|null=null;
@@ -248,10 +250,12 @@ export class World {
     p.cloak=Math.max(0,p.cloak-dt);p.invulnerable = Math.max(0, p.invulnerable - dt); p.specialRecovery=p.specialRecovery.map(t=>Math.max(0,t-dt)).filter(t=>t>1e-8);p.specialCooldown=this.specialCharges>0?0:Math.min(...p.specialRecovery);p.form=Math.max(0,p.form-dt);p.cast=Math.max(0,p.cast-dt);p.attack=Math.max(0,p.attack-dt);
     if(p.specialRecovery.length<recovering)this.event('abilityReady',p.x,p.y+1);
     const interactEdge=action.interact&&!this.interactHeld;this.interactHeld=action.interact;
+    const highFiveAction=interactEdge&&doHighFive(this);
+    if(highFiveAction)action={...action,interact:false};
     const carried=this.heldBarrel!==null;
     const barrelAction=carried&&interactEdge&&interactBarrel(this,(action.climb??0)<-.3);
-    const vehicleControl=stepMounts(this,dt,action,interactEdge&&!carried);
-    if(!vehicleControl&&!carried&&interactEdge&&!this.allies.some(a=>!a.rescued&&Math.abs(a.x-p.x)<2.2&&p.y<2))interactBarrel(this);
+    const vehicleControl=stepMounts(this,dt,action,interactEdge&&!carried&&!highFiveAction);
+    if(!vehicleControl&&!carried&&interactEdge&&!highFiveAction&&!this.allies.some(a=>!a.rescued&&Math.abs(a.x-p.x)<2.2&&p.y<2))interactBarrel(this);
     if(!vehicleControl){
     const move = Math.max(-1, Math.min(1, action.move));
     if (move) p.facing = Math.sign(move);
@@ -345,7 +349,7 @@ export class World {
       if(arena&&this.players.length>1)for(const a of this.players){a.body.x=Math.max(arena.left+1,Math.min(arena.right-1,a.body.x));a.checkpoint=arena.left+2;}
       return;
     }
-    dt=Math.min(dt,1/30);this.time+=dt;this.noises=this.noises.filter(n=>n.until>this.time);
+    dt=Math.min(dt,1/30);this.highFive.left=Math.max(0,this.highFive.left-dt);this.highFive.cooldown=Math.max(0,this.highFive.cooldown-dt);this.highFive.age+=dt;this.time+=dt;this.noises=this.noises.filter(n=>n.until>this.time);
     this.withPlayer(this.nearestPlayer(this.mission.exit,0).id,()=>this.stepEvac(dt));
     if(this.evac.phase==='departing'||this.mode!=='playing'){
       if(this.evac.phase==='departing')for(const a of this.players){a.body.x=this.evac.x;a.body.y=this.evac.y-1;}
@@ -357,19 +361,21 @@ export class World {
     if(this.players.length>1){this.stepEffects(dt);stepBarrels(this,dt);}
     if(this.cinematic)return;
     stepFollowers(this,dt);
+    const enemyDt=dt*(this.highFive.left>0?TEAM_BOOST.enemyRate:1);
     for (const enemy of this.enemies) {
       if (enemy.hp <= 0) continue;
       const poisoned=Math.min(dt,enemy.poison??0);enemy.poison=Math.max(0,(enemy.poison??0)-dt);if(poisoned)this.damageEnemy(enemy,18*poisoned);if(enemy.hp<=0)continue;
       enemy.distracted=Math.max(0,(enemy.distracted??0)-dt);
       this.withPlayer(this.nearestPlayer(enemy.x,enemy.y).id,()=>{
-        if(enemy.boss)stepBoss(this,enemy,dt);
-        else if(enemy.vehicle)stepVehicle(this,enemy,dt);
-        else stepInfantry(this,enemy,dt);
+        if(enemy.boss)stepBoss(this,enemy,enemyDt);
+        else if(enemy.vehicle)stepVehicle(this,enemy,enemyDt);
+        else stepInfantry(this,enemy,enemyDt);
       });
     }
     for (const bullet of this.bullets) {
       if (bullet.life <= 0) continue;
-      const travel=Math.min(dt,bullet.life);
+      const bulletDt=bullet.friendly?dt:enemyDt;
+      const travel=Math.min(bulletDt,bullet.life);
       const nextX = bullet.x + bullet.vx * travel, nextY = bullet.y + bullet.vy * travel;
       let nearest = 2; let target: Box | Enemy | Follower | Mount | PlayerActor | null = null;
       const test = (x: number, y: number, w: number, h: number, candidate: typeof target) => {
@@ -390,8 +396,8 @@ export class World {
         else if ('kind' in hit) { if (bullet.friendly) this.hits++; this.damageBox(hit, bullet.damage); }
         else { if (bullet.friendly) this.hits++; if(hit.infantry?.shield&&bullet.vx*hit.dir<0){hit.infantry.shield=Math.max(0,hit.infantry.shield-bullet.damage);this.event('enemyShieldHit',hit.x,hit.y+1);}else {this.damageEnemy(hit, bullet.damage);if(bullet.hero==='lesya'&&hit.hp>0)hit.poison=3;if(bullet.hero==='it-army'&&hit.hp>0){hit.rooted=.65;hit.windup=0;}} }
       }
-      if(!target&&bullet.ordnance&&bullet.life<=dt)this.ordnanceBlast(bullet,nextX,nextY);
-      bullet.x = nextX; bullet.y = nextY; bullet.life -= dt;
+      if(!target&&bullet.ordnance&&bullet.life<=bulletDt)this.ordnanceBlast(bullet,nextX,nextY);
+      bullet.x = nextX; bullet.y = nextY; bullet.life -= bulletDt;
     }
     this.bullets = this.bullets.filter(b => b.life > 0 && b.y > -3 && b.y < 20);
   }
