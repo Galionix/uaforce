@@ -1,3 +1,4 @@
+import {skipStory} from './game/story-scenes.ts';
 import {SUPPORT_URL,supportUrl} from './game/support';
 import {Feedback} from './game/feedback';
 import {FlagTransition} from './game/flag-transition';
@@ -42,6 +43,9 @@ let world=new World(progress.mission,progress.unlocked,progress.hero), ready=fal
 let pendingJump=false,pendingSpecial=false,pendingUltimate=false,pendingFire=false,pendingInteract=false;
 const cinematic=new Cinematic(sound,()=>{input.clear();accumulator=0;pendingJump=pendingSpecial=pendingUltimate=pendingFire=pendingInteract=false;},w=>view.reset(w));
 const flags=new FlagTransition();
+const storySkip=document.createElement('button');storySkip.className='story-skip';storySkip.textContent='Пропустити · Enter';storySkip.hidden=true;document.body.append(storySkip);
+storySkip.onclick=()=>{if(online?.role==='guest')online.command('continue');else skipStory(world);};
+let storyWasActive=false;
 const feedback=new Feedback(canvas,()=>({mission:world.mission.name,hero:world.hero.name,mode:world.mode,session:online?`кооп / ${online.role}`:practice?'випробування':'одиночна',controller:input.pad?.id??'клавіатура'}),()=>{pause();sound.stopAll();input.clear();},()=>input.clear());
 for(const id of ['feedback-open','menu-feedback','pause-feedback','about-feedback'])$(id).onclick=()=>feedback.show();
 const bossStatus=document.createElement('div');bossStatus.id='boss-status';bossStatus.hidden=true;bossStatus.innerHTML='<span></span><progress max=1></progress>';canvas.parentElement!.append(bossStatus);
@@ -197,12 +201,18 @@ function ui(){
   diagnostics();
 }
 view.onGoreImpact=(x,y)=>{if(world.mode==='playing')sound.event({type:'goreLand',x,y},world.player.x);};
+function syncStoryControls(){
+  const inStory=!!world.story;document.body.classList.toggle('story-active',inStory);storySkip.hidden=!inStory||world.mode!=='playing'||world.story!.age<.8||world.story!.exit!==null;
+  if(storyWasActive!==inStory){input.clear();pendingJump=pendingSpecial=pendingUltimate=pendingFire=pendingInteract=false;sound.stopAll();storyWasActive=inStory;}
+}
 view.onFrame=dt=>{
   flags.step(dt);
+  syncStoryControls();
   sound.bossBattle=!!world.boss?.boss?.active;sound.scoreTheme=world.mission.score;
   const frame=input.poll(dt),wasMenu=!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||feedback.open||flags.active;
   if(online?.role==='guest'&&online.connected){pendingJump ||= frame.action.jump;pendingSpecial ||= frame.action.special;pendingUltimate ||= !!frame.action.ultimate;netClock+=dt;if(netClock>=1/30){online.input(wasMenu?{move:0,jump:false,fire:false,special:false,interact:false}:{...frame.action,jump:pendingJump,special:pendingSpecial,ultimate:pendingUltimate});pendingJump=pendingSpecial=pendingUltimate=false;netClock=0;}}
   if(world.mode==='cinematic'){cinematic.sync(world);cinematic.step(dt,frame.confirm||frame.action.jump);view.render(world,dt,0);sound.step(dt,false,false);publishOnline(dt);ui();return;}
+  if(world.story&&world.mode==='playing'&&world.story.age>=.8&&frame.confirm)storySkip.click();
   if(frame.pause){if(feedback.open)feedback.close();else if(onlineMenu.open)closeOnlineMenu();else if(about.open)closeAbout();else if(operations.open)closeOperations();else if(roster.open)closeRoster();else if(settings.open)closeSettings();else if(world.mode==='playing')pause();else if(world.mode==='paused')resume();}
   if(wasMenu){
     if(!menu.hidden){menuClock+=dt;menuFx.draw(menuClock,'menu');}
@@ -216,8 +226,9 @@ view.onFrame=dt=>{
   if(world.mode==='playing'&&!wasMenu&&!settings.open&&online?.role!=='guest'){
     pendingJump ||= frame.action.jump;pendingSpecial ||= frame.action.special;pendingUltimate ||= !!frame.action.ultimate;pendingFire ||= frame.action.fire;pendingInteract ||= frame.action.interact;
     accumulator+=dt;let first=true;
-    while(accumulator>=1/60){const action={...frame.action,jump:first&&pendingJump,special:first&&pendingSpecial,ultimate:first&&pendingUltimate,fire:frame.action.fire||pendingFire,interact:frame.action.interact||pendingInteract};if(online?.connected)world.stepPlayers(1/60,[action,online.remote.take(performance.now()/1000)]);else world.step(1/60,action);first=false;pendingJump=false;pendingSpecial=false;pendingUltimate=false;pendingFire=false;pendingInteract=false;accumulator-=1/60;}
+    while(accumulator>=1/60){const wasStory=!!world.story;const action={...frame.action,jump:first&&pendingJump,special:first&&pendingSpecial,ultimate:first&&pendingUltimate,fire:frame.action.fire||pendingFire,interact:frame.action.interact||pendingInteract};if(online?.connected)world.stepPlayers(1/60,[action,online.remote.take(performance.now()/1000)]);else world.step(1/60,action);first=false;pendingJump=false;pendingSpecial=false;pendingUltimate=false;pendingFire=false;pendingInteract=false;accumulator-=1/60;if(wasStory!==!!world.story){accumulator=0;break;}}
   }else {accumulator=0;if(online?.role!=='guest'){pendingJump=false;pendingSpecial=false;pendingUltimate=false;}pendingFire=false;pendingInteract=false;}
+  syncStoryControls();
   for(const event of world.events){
     view.event(event);if(!(event.type==='heroChanged'&&event.unlocked)&&event.type!=='bossEncounter')sound.event(event,world.player.x);
     if(event.type==='heroChanged'){remember();if(!event.unlocked)toast(world.hero.name);}
@@ -231,7 +242,7 @@ view.onFrame=dt=>{
       }showMenu();
     }
   }
-  publishOnline(dt);world.events=[];cinematic.sync(world);view.render(world,dt,frame.action.move);sound.syncWorld(world);sound.step(dt,musicDanger(world,frame.action.fire),world.mode==='playing',frame.action.fire,world.mode==='ready'&&!menu.hidden&&document.hasFocus()&&!document.hidden&&!settings.open);
+  publishOnline(dt);world.events=[];cinematic.sync(world);view.render(world,dt,frame.action.move);if(!world.story)sound.syncWorld(world);sound.step(dt,!!world.story?false:musicDanger(world,frame.action.fire),world.mode==='playing',frame.action.fire,world.mode==='ready'&&!menu.hidden&&document.hasFocus()&&!document.hidden&&!settings.open);
   if(toastTime>0){toastTime-=dt;if(toastTime<=0)$('toast').classList.remove('visible');}
   if(transition>0&&!sound.announcing&&!settings.open&&!feedback.open&&document.hasFocus()&&!document.hidden){transition-=dt;if(transition<=0)startMission(world.missionIndex+1);}
   uiTime+=dt;if(uiTime>.08){ui();uiTime=0;}

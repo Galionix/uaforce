@@ -1,3 +1,5 @@
+import {storyTrigger,stepStory,type StoryState} from './story-scenes.ts';
+import {constrainTeam,sharedRespawn} from './shared-screen.ts';
 import {missionInfantry,stepInfantry,frighten,type Infantry,type InfantryKind} from './infantry.ts';
 import {nearbyBarrel,interactBarrel,stepBarrels,dropBarrel} from './barrels.ts';
 import {DeathLines,type DeathCause} from './enemy-death.ts';
@@ -49,6 +51,7 @@ export class World {
 
   private deathLines=new DeathLines();
   mode: Mode = 'ready';
+  story:StoryState|null=null;storyDone:string[]=[];storyPending:string|null=null;
   mounts:Mount[]=[];
   cinematic:{kind:'hero'|'boss';id:string;serial:number}|null=null;
   private cinematicSerial=0;
@@ -165,7 +168,7 @@ export class World {
       this.lives--;this.clearOwned();dropBarrel(this);if(this.players.length===1)resetBoss(this);
       if(this.players.length>1&&this.lives<=0)this.lives=1;
       if (this.lives <= 0) { this.mode = 'lost'; this.event('lost', p.x, p.y); }
-      else { this.motionFoley.reset();p.x = this.checkpoint; p.y = 0; p.ladder=-1;p.ladderLock=0;p.detachVx=0;p.wallSide=0;p.wallLock=0;p.wallVx=0;p.wallClimbing=false;p.ladderNeedsRelease=false; p.vy = 0; p.hp = 100; p.invulnerable = 2.5; if(this.players.length===1)this.bullets = []; this.clearOwned();p.form=0;p.cloak=0;p.fireCount=0;resetWeapon(p,WEAPONS[this.heroId]);this.event('respawn',p.x,p.y); }
+      else { this.motionFoley.reset();p.x = this.checkpoint; p.y = 0; p.ladder=-1;p.ladderLock=0;p.detachVx=0;p.wallSide=0;p.wallLock=0;p.wallVx=0;p.wallClimbing=false;p.ladderNeedsRelease=false; p.vy = 0; p.hp = 100; p.invulnerable = 2.5; if(this.players.length===1)this.bullets = []; this.clearOwned();p.form=0;p.cloak=0;p.fireCount=0;resetWeapon(p,WEAPONS[this.heroId]);sharedRespawn(this);this.event('respawn',p.x,p.y); }
     }
   }
   damageFollower(f:Follower,damage:number){
@@ -335,6 +338,8 @@ export class World {
   step(dt:number, action:Actions){this.stepPlayers(dt,[action]);}
   stepPlayers(dt:number,actions:Actions[]){
     if(this.mode!=='playing')return;
+    if(this.story){stepStory(this,Math.min(dt,1/30));return;}
+    const before=this.players.map(a=>({x:a.body.x,y:a.body.y}));
     for(const actor of this.players)if(this.withPlayer(actor.id,()=>triggerBoss(this))){
       const arena=this.boss?.boss&&BOSSES[this.boss.boss.id];
       if(arena&&this.players.length>1)for(const a of this.players){a.body.x=Math.max(arena.left+1,Math.min(arena.right-1,a.body.x));a.checkpoint=arena.left+2;}
@@ -347,6 +352,8 @@ export class World {
       return;
     }
     for(const actor of this.players){this.withPlayer(actor.id,()=>this.stepPlayer(dt,actions[actor.id]??IDLE));if(this.cinematic)break;}
+    constrainTeam(this,before);
+    storyTrigger(this,before);if(this.story)return;
     if(this.players.length>1){this.stepEffects(dt);stepBarrels(this,dt);}
     if(this.cinematic)return;
     stepFollowers(this,dt);

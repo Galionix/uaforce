@@ -1,0 +1,12 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>Катсцени та спільний екран — без звуку</title><style>nav{position:fixed;top:8px;left:8px;z-index:10;display:flex;gap:5px;flex-wrap:wrap}nav button{font:14px monospace;padding:8px}output{position:fixed;bottom:0;left:8px;z-index:10;color:white;background:#071015dc;font:12px monospace;max-width:98vw}</style><canvas id="scene"></canvas><nav></nav><output></output><script type="module">
+import '/src/style.css';import {World,IDLE} from '/src/game/world.ts';import {View} from '/src/game/view.ts';import {beginStory,skipStory} from '/src/game/story-scenes.ts';import {teamCamera} from '/src/game/shared-screen.ts';
+const view=new View(document.querySelector('canvas'));let w=new World(),frozen=true,actions=[IDLE,IDLE];
+function button(name,fn){const b=document.createElement('button');b.textContent=name;b.onclick=fn;document.querySelector('nav').append(b);}
+function scene(mission,id){w=new World(mission);w.mode='playing';w.player.x=8;beginStory(w,id);actions=[IDLE,IDLE];frozen=false;view.reset(w);}
+button('Катсцена берега',()=>scene(0,'river-watch'));button('Катсцена порту',()=>scene(2,'harbor-watch'));
+button('Крок 0.2 с',()=>{for(let i=0;i<12;i++)step();view.reset(w);});button('Рух / пауза',()=>frozen=!frozen);button('Пропустити',()=>skipStory(w));
+button('Кооп: край екрана',()=>{w=new World();w.mode='playing';w.addPlayer('lesya');w.enemies=[];w.allies=[];w.mounts=[];w.ladders=[];w.boxes=w.boxes.filter(b=>b.y<0);w.players[0].body.x=12;w.players[1].body.x=41.8;actions=[IDLE,{...IDLE,move:1}];frozen=false;view.reset(w);});
+button('Наздогнати першим',()=>actions=[{...IDLE,move:1},{...IDLE,move:1}]);
+function step(){w.stepPlayers(1/60,actions);for(const e of w.events)view.event(e);w.events=[];}
+view.onFrame=dt=>{if(!frozen)step();view.render(w,dt,w.players[0].move);document.querySelector('output').textContent=JSON.stringify({silent:true,story:w.story,players:w.players.map(a=>({id:a.id,x:+a.body.x.toFixed(2),y:+a.body.y.toFixed(2),move:a.move})),gap:Math.abs(w.players[0].body.x-(w.players[1]?.body.x??w.players[0].body.x)),camera:teamCamera(w)});};await view.init();view.reset(w);
+</script></html>

@@ -1,3 +1,5 @@
+import {teamCamera} from './shared-screen.ts';
+import {drawFlagWipe} from './flag-wipe.ts';
 import {AbilityArt} from './ability-art';
 import {reducedPresentation} from './motion-settings';
 import {buildHeroRunFrames,RUN_RIGS,MAVKA_RUN_RIG} from './hero-run.ts';
@@ -124,8 +126,9 @@ export class View {
   }
   render(world:World,dt:number,move:number){
     const playing=world.mode==='playing';if(!playing&&!this.needsDraw)return;this.needsDraw=false;if(playing)this.clock+=dt;
-    const targetX=Math.max(0,Math.min(world.mission.length*S-W,world.player.x*S-W*.32));this.cameraX+=Math.min(1,dt*6)*(targetX-this.cameraX);
-    this.cameraY+=Math.min(1,dt*5)*(Math.max(0,world.player.y*S-94)-this.cameraY);
+    if(world.story){const camera=world.players.length>1?teamCamera(world,world.story.camera):world.story.camera;this.cameraX=Math.max(0,Math.min(world.mission.length*S-W,camera.x*S-W/2));this.cameraY=Math.max(0,camera.y*S-80);}
+    else if(world.players.length>1){const camera=teamCamera(world);this.cameraX=camera.x*S-W/2;this.cameraY=Math.max(0,camera.y*S-80);}
+    else {const targetX=Math.max(0,Math.min(world.mission.length*S-W,world.player.x*S-W*.32));this.cameraX+=Math.min(1,dt*6)*(targetX-this.cameraX);this.cameraY+=Math.min(1,dt*5)*(Math.max(0,world.player.y*S-94)-this.cameraY);}
     this.theme=world.mission.theme;this.c.imageSmoothingEnabled=false;this.background(world);
     this.c.save();if(playing&&!reducedPresentation()&&this.shake>.1)this.c.translate(Math.round((Math.random()-.5)*this.shake),Math.round((Math.random()-.5)*this.shake));if(playing)this.shake=Math.max(0,this.shake-dt*28);
     // Rooms are dark cutaways. Their floors and edges below are live destructible blocks.
@@ -160,7 +163,7 @@ export class View {
     drawArena(this.c,world,this.cameraX,this.cameraY);
     if(world.boss&&world.boss.hp<=0)drawBossWreck(this.c,world.boss,world.boss.x*S-this.cameraX,266-world.boss.y*S+this.cameraY,world.time);
     for(const tank of world.mounts)drawMount(this.c,tank,tank.x*S-this.cameraX,266-tank.y*S+this.cameraY,this.clock,world.players.some(a=>a.mounted===tank));
-    for(const enemy of world.enemies)if(enemyActive(enemy)){if(enemy.boss){drawBoss(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.bossArt.get(enemy.boss.id),this.clock);continue;}if(enemy.vehicle){drawVehicle(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.clock,this.abilityArt);continue;}if(enemy.infantry?.kind!=='demolition')this.sprite(enemy.x,enemy.y,enemy.dir,enemy.infantry?.moving?Math.floor(this.clock*(enemy.panic?16:10))%2:enemy.heavy||enemy.infantry?.kind==='gunner'?2:0,true,enemy.heavy||enemy.infantry?.kind==='gunner');drawInfantryGear(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.clock);if(enemy.heavy){const x=enemy.x*S-this.cameraX;this.rect(x-13,266-enemy.y*S-42+this.cameraY,26,2,'#402f27');this.rect(x-13,266-enemy.y*S-42+this.cameraY,26*enemy.hp/enemy.maxHp,2,'#db5a39');}}
+    for(const enemy of world.enemies)if(enemyActive(enemy)){if(enemy.boss){drawBoss(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.bossArt.get(enemy.boss.id),this.clock);continue;}if(enemy.vehicle){drawVehicle(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.clock,this.abilityArt);continue;}if(enemy.infantry?.kind!=='demolition')this.sprite(enemy.x,enemy.y,enemy.dir,enemy.infantry?.moving?Math.floor(this.clock*(enemy.panic?16:10))%2:enemy.heavy||(enemy.infantry?.attack??0)>0||enemy.infantry?.kind==='gunner'?2:0,true,enemy.heavy||enemy.infantry?.kind==='gunner');drawInfantryGear(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.clock);if(enemy.heavy){const x=enemy.x*S-this.cameraX;this.rect(x-13,266-enemy.y*S-42+this.cameraY,26,2,'#402f27');this.rect(x-13,266-enemy.y*S-42+this.cameraY,26*enemy.hp/enemy.maxHp,2,'#db5a39');}}
     for(const f of world.followers)if(f.hp>0){
       const x=Math.round(f.x*S-this.cameraX),y=Math.round(266-f.y*S+this.cameraY);
       this.c.globalAlpha=f.hurt>0?.55:1;
@@ -174,7 +177,7 @@ export class View {
       if(f.reloading>0){const duration=FOLLOWER_WEAPONS[f.kind].reloadTime;this.rect(x-8,y-27,16*(1-f.reloading/duration),1,'#f4b456');}
     }
     for(const actor of world.players){
-    const p=actor.body;this.c.globalAlpha=p.cloak>0?.38:1;if(!actor.mounted&&world.evac.phase!=='departing'&&(p.invulnerable<=0||Math.floor(this.clock*12)%2===0))this.sprite(p.x,p.y,p.facing,heroFrame(p,this.clock,Math.abs(world.players.length===1?move:actor.move)>.1),false,false,HEROES.findIndex(h=>h.id===actor.heroId),actor.heroId==='lesya'&&p.form>0);this.c.globalAlpha=1;
+    const p=actor.body;this.c.globalAlpha=p.cloak>0?.38:1;if(!actor.mounted&&world.evac.phase!=='departing'&&(world.story||p.invulnerable<=0||Math.floor(this.clock*12)%2===0))this.sprite(p.x,p.y,p.facing,heroFrame(p,this.clock,Math.abs(world.players.length===1&&!world.story?move:actor.move)>.1),false,false,HEROES.findIndex(h=>h.id===actor.heroId),actor.heroId==='lesya'&&p.form>0);this.c.globalAlpha=1;
     if(actor.heroId==='mamai'&&p.attack>0&&!world.effects.some(f=>f.kind==='weapon')){const xx=p.x*S-this.cameraX,yy=266-(p.y+1)*S+this.cameraY;this.rect(xx+p.facing*4,yy,12*p.facing,3,'#c6ad7a');this.rect(xx+p.facing*5,yy+2,4*p.facing,4,'#845b38');}
       if(world.players.length>1){const x=p.x*S-this.cameraX,y=266-p.y*S+this.cameraY;this.label('P'+(actor.id+1),x,y-42,actor.id===0?'#ffdf6a':'#70d8ff');this.rect(x-10,y-36,20,2,'#172928');this.rect(x-10,y-36,20*p.hp/100,2,actor.id===0?'#ffdf6a':'#70d8ff');}
     }
@@ -213,6 +216,7 @@ export class View {
     this.c.restore();
     if(playing)this.screenPulse=Math.max(0,this.screenPulse-dt);
     if(!reducedPresentation()&&this.screenPulse>0){this.c.save();this.c.globalAlpha=Math.min(.22,this.screenPulse*1.25);this.rect(0,0,W,H,'#d8f2ff');this.c.restore();}
+    if(world.story){this.rect(0,0,W,30,'#071015');this.rect(0,H-58,W,58,'#071015');if(world.story.caption){this.c.font='bold 15px monospace';this.c.textAlign='center';this.c.fillStyle='#f6e9b6';this.c.fillText(world.story.caption,W/2,H-32,W-32);}if(world.story.exit!==null)drawFlagWipe(this.c,W,H,world.story.exit,false,reducedPresentation());}
   }
   private label(text:string,x:number,y:number,color:string){this.c.font='bold 11px monospace';this.c.textAlign='center';this.c.fillStyle='#10201beb';this.c.fillRect(Math.round(x-this.c.measureText(text).width/2-3),Math.round(y-11),this.c.measureText(text).width+6,15);this.c.fillStyle='#11201b';this.c.fillText(text,Math.round(x)+1,Math.round(y)+1);this.c.fillStyle=color;this.c.fillText(text,Math.round(x),Math.round(y));}
   private flag(x:number,w:World){const xx=x*S-this.cameraX,yy=266+this.cameraY;this.rect(xx,yy-40,2,40,'#cdcba6');const active=x===3||(x===w.mission.exit?w.objectiveComplete:w.checkpoint>=x);this.rect(xx+2,yy-40,13,5,active?'#379bd7':'#686f61');this.rect(xx+2,yy-35,13,5,active?'#f7d252':'#565e50');}
