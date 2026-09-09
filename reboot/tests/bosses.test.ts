@@ -3,7 +3,7 @@ import {World,IDLE} from '../src/game/world.ts';import {BOSSES,stepBoss} from '.
 const tick=(w:World,n=60)=>{for(let i=0;i<n;i++)w.step(1/60,IDLE);};
 function encounter(m=1){const w=new World(m);w.mode='playing';const e=w.boss!;w.player.x=BOSSES[e.boss!.id].left;w.step(1/60,IDLE);return w;}
 test('first unlock freezes the entire simulation until acknowledged; familiar rescue does not',()=>{
- const w=new World();w.mode='playing';w.player.x=w.allies[0].x;w.step(1/60,{...IDLE,interact:true});assert.deepEqual(w.cinematic,{kind:'hero',id:'lesya',serial:1});
+ const w=new World();w.mode='playing';w.player.x=w.allies[0].x;w.step(1/60,{...IDLE,interact:true});assert.notEqual(w.heroId,'shevchenko');assert.deepEqual(w.cinematic,{kind:'hero',id:w.heroId,serial:1});
  const before=JSON.stringify(w);for(let i=0;i<600;i++)w.step(1/60,{move:1,jump:true,fire:true,special:true,ultimate:true,interact:true});assert.equal(JSON.stringify(w),before);
  w.finishCinematic();assert.equal(w.mode,'playing');const t=w.time;w.step(1/60,IDLE);assert.ok(w.time>t);
  const known=new World(0,HEROES.map(h=>h.id));known.mode='playing';known.player.x=known.allies[0].x;known.step(1/60,{...IDLE,interact:true});assert.equal(known.cinematic,null);assert.equal(known.mode,'playing');

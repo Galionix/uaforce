@@ -1,17 +1,18 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {World,IDLE} from '../src/game/world.ts';import {HEROES,MISSIONS} from '../src/game/content.ts';import {parseProgress} from '../src/game/storage.ts';
-test('rescues unlock distinct heroes first, then rotate unlocked heroes',()=>{
- const w=new World();w.mode='playing';w.enemies=[];
- w.player.x=w.allies[0].x;w.step(1/60,{...IDLE,interact:true});assert.equal(w.heroId,'lesya');assert.equal(w.unlocked.length,2);w.finishCinematic();
- w.player.x=w.allies[1].x;w.step(1/60,{...IDLE,interact:true});assert.equal(w.heroId,'franko');assert.equal(w.unlocked.length,3);
- const next=new World(1,w.unlocked,w.heroId);next.mode='playing';next.enemies=[];next.player.x=next.allies[0].x;next.step(1/60,{...IDLE,interact:true});assert.equal(next.heroId,'bandera');assert.equal(next.unlocked.length,4);
+test('random unlocks persist across rescues and mission changes',()=>{
+ const w=new World(0,['shevchenko'],'shevchenko',()=>.999);w.mode='playing';w.enemies=[];
+ w.player.x=w.allies[0].x;w.step(1/60,{...IDLE,interact:true});assert.equal(w.heroId,'skovoroda');assert.equal(w.unlocked.length,2);w.finishCinematic();
+ w.player.x=w.allies[1].x;w.step(1/60,{...IDLE,interact:true});assert.equal(w.heroId,'it-army');assert.equal(w.unlocked.length,3);
+ const next=new World(1,w.unlocked,w.heroId,()=>.999);next.mode='playing';next.enemies=[];next.player.x=next.allies[0].x;next.step(1/60,{...IDLE,interact:true});assert.equal(next.heroId,'bilozerska');assert.equal(next.unlocked.length,4);
 });
 test('progress validates saved heroes and preserves unlocked roster across reload',()=>{
  const p=parseProgress(JSON.stringify({mission:1,hero:'franko',unlocked:HEROES.map(h=>h.id),completed:false}));const w=new World(p.mission,p.unlocked,p.hero);assert.equal(w.heroId,'franko');assert.equal(w.missionIndex,1);
  assert.equal(parseProgress('{oops').hero,'shevchenko');assert.equal(parseProgress('{"hero":"fake","mission":999}').mission,MISSIONS.length-1);
 });
 for(let mission=0;mission<MISSIONS.length;mission++)test(`mission ${mission+1} can be completed using ordinary actions and helicopter extraction`,()=>{
- const w=new World(mission);w.mode='playing';let lastX=w.player.x,blocked=0,dropX:number|null=null;
+ // Keep this navigation bot's kit sequence reproducible; random draws have separate coverage.
+ const w=new World(mission,['shevchenko'],'shevchenko',()=>0);w.mode='playing';let lastX=w.player.x,blocked=0,dropX:number|null=null;
  for(let i=0;i<60*300&&(w.mode==='playing'||w.mode==='cinematic');i++){
   if(w.mode==='cinematic'){w.finishCinematic();continue;}
   const p=w.player;blocked=Math.abs(p.x-lastX)<.01?blocked+1:0;lastX=p.x;

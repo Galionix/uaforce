@@ -32,7 +32,7 @@ test('damage uses checkpoint, invulnerability and finite lives',()=>{
   w.player.invulnerable=0;w.damagePlayer(100);w.player.invulnerable=0;w.damagePlayer(100);assert.equal(w.mode,'lost');assert.equal(w.lives,0);
 });
 test('operation is completable through movement, jump, fire, special and interact',()=>{
- const w=new World();w.mode='playing';let lastX=w.player.x,blocked=0;
+ const w=new World(0,['shevchenko'],'shevchenko',()=>0);w.mode='playing';let lastX=w.player.x,blocked=0;
  for(let i=0;i<60*180&&(w.mode==='playing'||w.mode==='cinematic');i++){
   if(w.mode==='cinematic'){w.finishCinematic();continue;}
   const p=w.player;blocked=Math.abs(p.x-lastX)<.01?blocked+1:0;lastX=p.x;

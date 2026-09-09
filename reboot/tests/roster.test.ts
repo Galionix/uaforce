@@ -10,9 +10,9 @@ test('eleven named heroes have complete, distinct kits, icons and sound profiles
  assert.equal(new Set(HEROES.flatMap(h=>HERO_ICONS[h.id])).size,33);
  assert.equal(new Set(HEROES.map(h=>SFX_ASSETS[`${h.id}-special`].offset)).size,11);
 });
-test('rescue unlocks all eleven before rotating and clears previous hero state',()=>{
+test('rescue unlocks all eleven without repeats and clears previous hero state',()=>{
  let unlocked:HeroId[]=['shevchenko'],hero:HeroId='shevchenko';
- for(let i=1;i<=11;i++){const w=new World(0,unlocked,hero);w.mode='playing';w.enemies=[];w.player.x=w.allies[0].x;w.player.cloak=3;w.player.fireCount=2;w.step(1/60,{...IDLE,interact:true});assert.equal(w.heroId,HEROES[i%11].id);assert.equal(w.player.cloak,0);assert.equal(w.player.fireCount,0);unlocked=w.unlocked;hero=w.heroId;}
+ for(let i=1;i<=11;i++){const w=new World(0,unlocked,hero,()=>.999);w.mode='playing';w.enemies=[];w.player.x=w.allies[0].x;w.player.cloak=3;w.player.fireCount=2;w.step(1/60,{...IDLE,interact:true});assert.notEqual(w.heroId,hero);if(i<11){assert.ok(!unlocked.includes(w.heroId));assert.equal(w.unlocked.length,unlocked.length+1);}else{assert.equal(w.unlocked.length,11);assert.equal(w.cinematic,null);}assert.equal(w.player.cloak,0);assert.equal(w.player.fireCount,0);unlocked=w.unlocked;hero=w.heroId;}
  assert.equal(unlocked.length,11);
 });
 test('Bandera rapid fire outpaces sniper; the Molotov has a lob then persistent damage',()=>{

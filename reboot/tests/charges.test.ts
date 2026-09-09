@@ -12,7 +12,7 @@ test('two shields recover independently from their own activation times',()=>{
 });
 test('pause freezes both charge timers; rescue clears the previous hero charge pool',()=>{
  const w=fixture();w.step(1/60,{...IDLE,special:true});advance(w,1);w.step(1/60,{...IDLE,special:true});const timers=[...w.player.specialRecovery];w.mode='paused';advance(w,12);assert.deepEqual(w.player.specialRecovery,timers);
- w.mode='playing';w.player.x=w.allies[0].x;w.player.y=0;w.step(1/60,{...IDLE,interact:true});assert.equal(w.heroId,'bandera');assert.equal(w.specialCharges,2);assert.deepEqual(w.player.specialRecovery,[]);
+ w.mode='playing';w.player.x=w.allies[0].x;w.player.y=0;w.step(1/60,{...IDLE,interact:true});assert.notEqual(w.heroId,'franko');assert.equal(w.specialCharges,w.hero.specialCharges);assert.deepEqual(w.player.specialRecovery,[]);
 });
 test('HUD distinguishes a ready spare charge from a depleted ultimate and a cooling single charge',()=>{
  const w=fixture();w.step(1/60,{...IDLE,special:true,ultimate:true});const [weapon,special,ultimate]=abilityStates(w);assert.equal(weapon.charges.length,0);assert.equal(special.ready,true);assert.deepEqual(special.charges,[1,0]);assert.equal(ultimate.ready,false);assert.equal(ultimate.progress,0);

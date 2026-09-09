@@ -69,10 +69,12 @@ export class World {
   events: Event[] = [];
   time = 0; kills = 0; shots = 0; hits = 0; destroyed = 0;
   private serial = 1;
+  private heroRandom:()=>number;
   nextId(){return this.serial++;}
   emit(type:Event["type"],x:number,y:number){this.event(type,x,y);}
   emitSfx(sfx:string,x:number,y:number,hero:HeroId=this.heroId,soundOwner?:number){this.events.push({type:'sfx',sfx,x,y,hero,soundOwner});}
-  constructor(missionIndex=0,unlocked:HeroId[]=["shevchenko"],heroId:HeroId="shevchenko") {
+  constructor(missionIndex=0,unlocked:HeroId[]=["shevchenko"],heroId:HeroId="shevchenko",heroRandom:()=>number=Math.random) {
+    this.heroRandom=heroRandom;
     this.missionIndex=Math.max(0,Math.min(MISSIONS.length-1,missionIndex));this.mission=MISSIONS[this.missionIndex];this.unlocked=[...new Set(["shevchenko" as HeroId,...unlocked])];this.heroId=this.unlocked.includes(heroId)?heroId:"shevchenko";
     resetWeapon(this.player,WEAPONS[this.heroId]);
     this.ammoCrates=this.mission.ammo.map(x=>({x,y:0,used:false}));
@@ -123,12 +125,16 @@ export class World {
   }
   private changeHero(){
     this.motionFoley.reset();
-    const next=HEROES.find(h=>!this.unlocked.includes(h.id));
+    // The host draws once per rescue; snapshots carry the result to the guest.
+    const closed=HEROES.filter(h=>!this.unlocked.includes(h.id)).map(h=>h.id);
+    const newlyUnlocked=closed.length>0;
+    const pool=newlyUnlocked?closed:this.unlocked.filter(id=>id!==this.heroId);
+    const next=pool[Math.floor(this.heroRandom()*pool.length)]??this.heroId;
     this.clearOwned();if(this.players.length===1)this.bullets=this.bullets.filter(b=>!b.friendly);this.player.cloak=0;this.player.fireCount=0;this.player.cooldown=0;this.player.form=0;this.player.specialCooldown=0;this.player.specialRecovery=[];
-    this.heroId=next?.id??this.unlocked[(this.unlocked.indexOf(this.heroId)+1)%this.unlocked.length];
+    this.heroId=next;
     resetWeapon(this.player,WEAPONS[this.heroId]);
-    if(next){this.unlocked.push(next.id);this.beginCinematic('hero',next.id);}
-    this.events.push({type:'heroChanged',x:this.player.x,y:this.player.y+1,hero:this.heroId,unlocked:!!next});
+    if(newlyUnlocked){this.unlocked.push(next);this.beginCinematic('hero',next);}
+    this.events.push({type:'heroChanged',x:this.player.x,y:this.player.y+1,hero:this.heroId,unlocked:newlyUnlocked});
   }
   private stepEvac(dt:number){
     const e=this.evac,p=this.player,x=this.mission.exit;

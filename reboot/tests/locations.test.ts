@@ -6,7 +6,7 @@ function fixture(){const w=new World();w.mode='playing';w.enemies=[];w.boxes=w.b
 test('ultimate never recharges from time, kills, rescue, checkpoints, or respawn',()=>{
  const w=fixture();w.step(1/60,{...IDLE,ultimate:true});assert.equal(w.player.energy,0);run(w,40);assert.equal(w.player.energy,0);
  const e={id:w.nextId(),x:6,y:0,hp:10,maxHp:10,dir:1,cooldown:99,windup:0,anchor:6,heavy:false};w.enemies.push(e);w.damageEnemy(e,30);assert.equal(w.player.energy,0);
- w.player.x=w.allies[0].x;w.step(1/60,{...IDLE,interact:true});assert.equal(w.heroId,'lesya');assert.equal(w.player.energy,0);w.finishCinematic();
+ w.player.x=w.allies[0].x;w.step(1/60,{...IDLE,interact:true});assert.notEqual(w.heroId,'shevchenko');assert.equal(w.player.energy,0);w.finishCinematic();
  w.player.x=w.mission.checkpoints[1]+1;w.step(1/60,IDLE);assert.equal(w.player.energy,0);w.player.invulnerable=0;w.damagePlayer(100);assert.equal(w.player.energy,0);
  assert.match(abilityStates(w)[2].label,/ящик боєприпасів/);
 });
