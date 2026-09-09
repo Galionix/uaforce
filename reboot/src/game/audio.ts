@@ -20,7 +20,7 @@ export class Sound {
   private loops=new Map<string,{source:AudioBufferSourceNode;amp:GainNode;key:SfxId}>();
   private sampleSerial=0;private sampleLast=new Map<string,number>();
   private foleySerial=0;private foleyLast=new Map<string,number>();private lastCombat=-100;
-  private lastPanic=-100;
+  private lastPanic=-100;private lastReaction=-100;private lastReactionKind:Event['type']|undefined;
   private deathVariants=new Map<string,number>();private lastGore=-100;private variationState=0x51f15e;
   private lastVoice=-100;private wasPlaying=false;
   async enable(){
@@ -59,8 +59,8 @@ export class Sound {
     void this.deliver(stage?{...stage,key:'preview:'+id,voices:[id],priority:3}:{key:'preview:'+id,voices:[id],riff:'hero',priority:3});
   }
   stopAll(){this.score?.stop();this.lifecycle++;this.director?.stop();this.stopEffects();}
-  private stopEffects(){this.cries.clear();this.cryUntil=0;this.lastCry=-100;this.updateMix();this.foleyLast.clear();this.lastCombat=-100;this.lastPanic=-100;this.lastGore=-100;this.sampleLast.clear();for(const {source,amp} of this.loops.values()){try{source.stop();}catch{}source.disconnect();amp.disconnect();}this.loops.clear();for(const s of this.voices.keys())try{s.stop();}catch{}this.voices.clear();}
-  private stopKind(kind:string){for(const [s,k]of this.voices)if(k===kind){try{s.stop();}catch{}this.voices.delete(s);}}
+  private stopEffects(){this.cries.clear();this.cryUntil=0;this.lastCry=-100;this.updateMix();this.foleyLast.clear();this.lastCombat=-100;this.lastPanic=-100;this.lastReaction=-100;this.lastReactionKind=undefined;this.lastGore=-100;this.sampleLast.clear();for(const {source,amp} of this.loops.values()){try{source.stop();}catch{}source.disconnect();amp.disconnect();}this.loops.clear();for(const s of this.voices.keys())try{s.stop();}catch{}this.voices.clear();}
+  private stopKind(kind:string){for(const [s,k]of this.voices)if(k===kind){try{s.stop();}catch{}this.voices.delete(s);this.cries.delete(s);}}
   private play(kind:string,volume:number,duration:number,offset=0,scope=kind,cry=false,rate=1){
     const clip=SFX_ASSETS[kind as SfxId],ctx=this.context,buffer=this.buffers.get(clip?'combatBank':kind);
     if(!ctx||!this.gain||!buffer||ctx.state!=='running')return;
@@ -131,6 +131,7 @@ export class Sound {
     this.sample(`foley-${hero}-${kind}-${this.foleySerial++%3}`,level*(movement&&now-this.lastCombat<.4?.3:1));
   }
   event(e:Event,listenerX=e.x){
+    if(this.silent)return;
     // The finale sound accompanies the victory announcement; it must not be
     // swallowed by the announcer's early return or replace its approved voice.
     if(e.type==='bossDefeated'&&e.boss&&Math.abs(e.x-listenerX)<=20)
@@ -149,10 +150,20 @@ export class Sound {
     if(e.sfx){sample(e.sfx,e.sfx.includes('hit')?.3:.4,e.sfx.includes('hit')||['roots','ricochet'].includes(e.sfx)?.09:0);return;}
     const foleyKind=({footstep:'step',climbContact:'climb',jump:'jump',land:'land',abilityReady:'ready',wallJump:'jump',wallVault:'land'} as Partial<Record<Event['type'],FoleyKind>>)[e.type];
     if(foleyKind&&e.hero){this.foley(e.hero,foleyKind);return;}
+    if(e.type==='enemyAlert'||e.type==='enemySuspect'){
+      const now=this.context?.currentTime??0;
+      const escalates=e.type==='enemyAlert'&&this.lastReactionKind==='enemySuspect';
+      if(now-this.lastReaction<1.25&&!escalates||this.announcing)return;
+      if(escalates)this.stopKind('enemy-reaction');
+      if(this.cries.size>0)return;
+      this.lastReaction=now;this.lastReactionKind=e.type;
+      const key=this.deathVariant(e.type==='enemyAlert'?'enemy-aggro':'enemy-suspect'),clip=SFX_ASSETS[key as SfxId];
+      this.play(key,(e.type==='enemyAlert'?.64:.5)*level,clip.seconds,0,'enemy-reaction',true);return;
+    }
     if(e.type==='enemyPanic'||e.type==='enemyDeath'){
       const now=this.context?.currentTime??0,panic=e.type==='enemyPanic';
       if(now-this.lastCry<.4||panic&&now-this.lastPanic<.7)return;
-      this.lastCry=now;if(panic)this.lastPanic=now;
+      this.stopKind('enemy-reaction');this.lastCry=now;if(panic)this.lastPanic=now;
       // These are the generated human screams, not the old short defeat grunts.
       // Role-specific pitch keeps heavy voices lower and scouts more shrill.
       const rate=panic?1:({rifle:1,assault:1.04,gunner:.9,sniper:.96,scout:1.1,shield:.93,demolition:1.07}[e.deathRole??'rifle']);
@@ -189,7 +200,7 @@ export class Sound {
         mountJump:['tank-jump',.35],mountLand:['tank-land',.5],mountShot:['tank-shot',.65],tankShot:['tank-shot',.6],armorHit:['armor-hit',.4,.1],
         mountBroken:['explosion',.65],mountEnter:['hatch',.4],mountExit:['hatch',.4],tankAim:['turret-step',.25],bossWindup:['tank-jump',.4],
         rocketLaunch:['rocket',.4],droneDive:['drone-dive',.4],hostileBlast:['explosion',.65,.09],
-        enemyAlert:['enemy-alert',.3,.3],enemyFuse:['enemy-fuse',.35,.3],enemyShieldHit:['armor-hit',.3,.1],
+        enemyFuse:['enemy-fuse',.35,.3],enemyShieldHit:['armor-hit',.3,.1],
         followerDown:['follower-down',.3],followerHurt:['follower-hurt',.22,.12],
         railShot:['rail-shot',.7],thunder:[e.hero==='bayraktar'?'rocket':'thunder',.65],burst:['explosion',.55,.09],debris:['debris',.3,.12],
       };const entry=map[e.type];if(entry)sample(...entry);

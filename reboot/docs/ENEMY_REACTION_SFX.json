@@ -1,0 +1,71 @@
+{
+  "model": "Stable Audio 3 Small SFX",
+  "jobs": [
+    {
+      "id": "enemy-suspect-0",
+      "seconds": 0.95,
+      "loop": false,
+      "prompt": "TrackType: SFX, A man gasping in surprise, a sharp sudden inhalation of breath, high pitched astonished gasp. Cartoon guard noticing something unexpected. One short dry close microphone human vocal reaction. No words, no music, no growling, no pain.",
+      "seed": 910410,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "cfg": 3,
+      "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech"
+    },
+    {
+      "id": "enemy-suspect-1",
+      "seconds": 0.95,
+      "loop": false,
+      "prompt": "TrackType: SFX, One male guard mutters a skeptical nasal hmm then a surprised questioning grunt, comic suspicion. Isolated human nonverbal voice, dry close microphone, no intelligible words, no music.",
+      "seed": 910311,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "cfg": 3,
+      "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech"
+    },
+    {
+      "id": "enemy-suspect-2",
+      "seconds": 0.95,
+      "loop": false,
+      "prompt": "TrackType: SFX, A startled man makes two quick surprised gasps with rising pitch, breathing in sharply in astonishment. Comic bewilderment, isolated human voice, no spoken words, no growling, no pain, no music.",
+      "seed": 910412,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "cfg": 3,
+      "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech"
+    },
+    {
+      "id": "enemy-aggro-0",
+      "seconds": 1.1,
+      "loop": false,
+      "prompt": "TrackType: SFX, A man making a loud angry guttural grunt followed by a throaty human growl. Cartoon hostile guard. Dry isolated close microphone, nonverbal human vocalization, no words, no music.",
+      "seed": 910390,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "cfg": 3,
+      "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech"
+    },
+    {
+      "id": "enemy-aggro-1",
+      "seconds": 1.1,
+      "loop": false,
+      "prompt": "TrackType: SFX, One male guard angrily barks a short guttural nonverbal challenge then growls, ridiculous cartoon bully. Isolated human nonverbal voice, dry close microphone, no intelligible words, no music.",
+      "seed": 910314,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "cfg": 3,
+      "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech"
+    },
+    {
+      "id": "enemy-aggro-2",
+      "seconds": 1.1,
+      "loop": false,
+      "prompt": "TrackType: SFX, A man growling and grunting in anger, short furious rough human grunts. Comic villain voice, dry isolated close microphone, strictly nonverbal, no spoken words, no music.",
+      "seed": 910392,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "cfg": 3,
+      "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech"
+    }
+  ]
+}

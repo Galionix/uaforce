@@ -7,10 +7,12 @@ function button(name,fn){const b=document.createElement('button');b.textContent=
 for(const [kind,spec] of Object.entries(INFANTRY))button(spec.name,()=>reset(kind));
 button('Усі ролі',()=>{base();w.player.x=3;w.player.cloak=999;Object.keys(INFANTRY).forEach((k,i)=>addInfantry(w,k,8+i*4));frozen=true;view.reset(w);document.querySelector('#names').textContent='Мотострілець · ВДВ · Кулеметник · Снайпер · Зв’язківець · Щит · Підривник';});
 for(const [hero,label] of [['shevchenko','Паніка Шевченка'],['lesya','Зграя Лесі']])button(label,()=>{base();w.player.x=18;w.actor.heroId=hero;for(const [i,kind] of ['rifle','assault','gunner','demolition'].entries())addInfantry(w,kind,20+i);launchEffect(w,'special');step();frozen=true;view.reset(w);});
+button('Патруль',()=>{base();w.player.cloak=999;addInfantry(w,'rifle',24);frozen=false;view.reset(w);});
+button('Підозрілий шум',()=>{base();addInfantry(w,'rifle',25);w.boxes.push({id:w.nextId(),x:21,y:0,w:1,h:5,hp:200,maxHp:200,kind:'wall'});w.emit('shot',18,1);frozen=false;view.reset(w);});
 button('Крок 0.2 с',()=>{for(let i=0;i<12;i++)step();view.reset(w);});button('Рух / пауза',()=>frozen=!frozen);
 button('Відійти',()=>{w.player.x-=7;view.reset(w);});button('Підійти',()=>{w.player.x+=6;view.reset(w);});
 button('Укриття',()=>{w.boxes.push({id:w.nextId(),x:(w.player.x+w.enemies[0].x)/2,y:0,w:1,h:5,hp:150,maxHp:150,kind:'wall'});view.reset(w);});
 button('Здолати',()=>{w.damageEnemy(w.enemies[0],1000);view.reset(w);});
-function step(){w.step(1/60,IDLE);for(const e of w.events){view.event(e);sound.event(e,w.player.x);if(['enemyPanic','enemyAlert','enemyShot','enemySniperShot','enemyFuse','hostileBlast','enemyReload'].includes(e.type))log.push(e.type);}w.events=[];}
+function step(){w.step(1/60,IDLE);for(const e of w.events){view.event(e);sound.event(e,w.player.x);if(['enemySuspect','enemyPanic','enemyAlert','enemyShot','enemySniperShot','enemyFuse','hostileBlast','enemyReload'].includes(e.type))log.push(e.type);}w.events=[];}
 view.onFrame=dt=>{if(!frozen)step();view.render(w,dt,0);document.querySelector('output').textContent=JSON.stringify({silent:true,time:+w.time.toFixed(2),hp:w.player.hp,enemies:w.enemies.map(e=>({role:e.infantry.kind,state:e.infantry.state,x:+e.x.toFixed(2),y:+e.y.toFixed(2),hp:e.hp,ammo:e.infantry.ammo,reload:+e.infantry.reloading.toFixed(1),fuse:+e.infantry.fuse.toFixed(2)})),events:log.slice(-8)});};base();addInfantry(w,'rifle',31);await view.init();view.reset(w);
 </script></html>

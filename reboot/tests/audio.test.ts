@@ -64,7 +64,23 @@ test('recorded combat routes all heroes, exact phases, lifetimes, pause and dist
   const idle=starts.length;sound.step(10,false,true);assert.equal(starts.length,idle,'idle cannot invent a reload');
   for(const type of ['tankEngine','planeEngine','droneEngine','mountShot','enemyAlert','enemyFuse','burst']as const){context.currentTime++;sound.event({type,x:0,y:0});}
   const distant=starts.length;sound.event({type:'shot',hero:'bilozerska',x:100,y:0},0);assert.equal(starts.length,distant);
-  context.currentTime++;const alerts=starts.length;sound.event({type:'enemyAlert',x:0,y:0});sound.event({type:'enemyAlert',x:1,y:0});assert.equal(starts.length,alerts+1);
+  sound.stopAll();context.currentTime+=2;const alerts=starts.length;sound.event({type:'enemyAlert',x:0,y:0});sound.event({type:'enemyAlert',x:1,y:0});assert.equal(starts.length,alerts+1);
+  sound.stopAll();context.currentTime+=2;
+  let reactionStart=starts.length;sound.event({type:'enemySuspect',x:0,y:0});
+  assert.ok([0,1,2].some(v=>starts.at(-1)!.args[1]===SFX_ASSETS[`enemy-suspect-${v}` as SfxId].offset));
+  let question=starts.at(-1)!.source;
+  for(let i=0;i<8;i++)sound.event({type:'enemySuspect',x:0,y:0});
+  assert.equal(starts.length,reactionStart+1,'one questioning vocal for a whole squad');
+  context.currentTime+=.1;sound.event({type:'enemyAlert',x:0,y:0});
+  assert.ok(stops.includes(question),'confirmed contact immediately overrides a questioning reaction');
+  assert.ok([0,1,2].some(v=>starts.at(-1)!.args[1]===SFX_ASSETS[`enemy-aggro-${v}` as SfxId].offset));
+  question=starts.at(-1)!.source;
+  context.currentTime+=.1;sound.event({type:'enemyDeath',deathRole:'rifle',x:0,y:0});
+  assert.ok(stops.includes(question),'a death scream interrupts lower priority muttering');
+  reactionStart=starts.length;context.currentTime+=2;sound.event({type:'enemyAlert',x:0,y:0});
+  assert.equal(starts.length,reactionStart,'muttering cannot interrupt an active death vocal');
+  sound.stopAll();context.currentTime+=2;sound.event({type:'enemyAlert',x:0,y:0});
+  assert.ok([0,1,2].some(v=>starts.at(-1)!.args[1]===SFX_ASSETS[`enemy-aggro-${v}` as SfxId].offset));
   sound.stopAll();sound.step(.01,false,true);
   const w=new World(0,HEROES.map(h=>h.id),'lesya');w.mode='playing';w.enemies=[];w.step(1/60,{...IDLE,special:true});
   sound.syncWorld(w);const loop=starts.at(-1)!;assert.equal(loop.source.loop,true);assert.equal(loop.args[1],SFX_ASSETS['lesya-special-loop'].offset);

@@ -11146,13 +11146,175 @@
           "at": 0
         }
       ]
+    },
+    {
+      "id": "enemy-suspect-0",
+      "file": "public/assets/audio/sfx/enemy-suspect-0.wav",
+      "seconds": 0.95,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.07034714302034682,
+      "sha256": "65ded1cd8db6436c4645c173440a6184020385629712b339f90dae74fb81f114",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "enemy-suspect-0.wav",
+          "sourceSha256": "93aa7c27cf11133ef635aa898ef356aa9e77873e7d36e4052d82c631fa875ec0",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 910410,
+          "prompt": "TrackType: SFX, A man gasping in surprise, a sharp sudden inhalation of breath, high pitched astonished gasp. Cartoon guard noticing something unexpected. One short dry close microphone human vocal reaction. No words, no music, no growling, no pain.",
+          "cfg": 3,
+          "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech",
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 4.5,
+          "rate": 1,
+          "cut": 0.95,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "enemy-suspect-1",
+      "file": "public/assets/audio/sfx/enemy-suspect-1.wav",
+      "seconds": 0.95,
+      "loop": false,
+      "peak": 0.7127371381750205,
+      "rms": 0.14,
+      "sha256": "68cd1927b21aedcddc8ec4b64d4fed3e1ed38f5988172b9f349908c3dd211828",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "enemy-suspect-1.wav",
+          "sourceSha256": "5285a432dbd06a5dc592e6c208cd1cf2bfaa6da818d013f3ab9d69e0984949e7",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 910311,
+          "prompt": "TrackType: SFX, One male guard mutters a skeptical nasal hmm then a surprised questioning grunt, comic suspicion. Isolated human nonverbal voice, dry close microphone, no intelligible words, no music.",
+          "cfg": 3,
+          "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech",
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 1.582,
+          "rate": 1,
+          "cut": 0.95,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "enemy-suspect-2",
+      "file": "public/assets/audio/sfx/enemy-suspect-2.wav",
+      "seconds": 0.95,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.10380818664183226,
+      "sha256": "869136a0a3716a953df30633bd18a9c1b3e04642c08ac851caa9c9d558b18285",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "enemy-suspect-2.wav",
+          "sourceSha256": "7947a02a9636ae5b3f654c87c67567f30684b1339cee40472b13209619bf1b30",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 910412,
+          "prompt": "TrackType: SFX, A startled man makes two quick surprised gasps with rising pitch, breathing in sharply in astonishment. Comic bewilderment, isolated human voice, no spoken words, no growling, no pain, no music.",
+          "cfg": 3,
+          "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech",
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 0.6,
+          "rate": 1,
+          "cut": 0.95,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "enemy-aggro-0",
+      "file": "public/assets/audio/sfx/enemy-aggro-0.wav",
+      "seconds": 1.1,
+      "loop": false,
+      "peak": 0.6420344039314256,
+      "rms": 0.14,
+      "sha256": "b487b493d67201febe88840a6b30074c7af8fbd0ada803a273218e87ab76be7d",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "enemy-aggro-0.wav",
+          "sourceSha256": "c4bc5be5c839418a7eaa21663a0560f04b1d916e0f9c43bee2f841e389be4673",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 910390,
+          "prompt": "TrackType: SFX, A man making a loud angry guttural grunt followed by a throaty human growl. Cartoon hostile guard. Dry isolated close microphone, nonverbal human vocalization, no words, no music.",
+          "cfg": 3,
+          "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech",
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 2.092,
+          "rate": 1,
+          "cut": 1.1,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "enemy-aggro-1",
+      "file": "public/assets/audio/sfx/enemy-aggro-1.wav",
+      "seconds": 1.1,
+      "loop": false,
+      "peak": 0.7599999999999999,
+      "rms": 0.10522116338869897,
+      "sha256": "6d4e5ff9668bb277404c5465d86b765acbd876e7f36d7b720124ab8970751505",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "enemy-aggro-1.wav",
+          "sourceSha256": "827ce5c230b1d90363052ee1ecf4ab10b454db974b720cb1cbc8e47a4944a5c4",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 910314,
+          "prompt": "TrackType: SFX, One male guard angrily barks a short guttural nonverbal challenge then growls, ridiculous cartoon bully. Isolated human nonverbal voice, dry close microphone, no intelligible words, no music.",
+          "cfg": 3,
+          "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech",
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 4.8,
+          "rate": 1,
+          "cut": 1.1,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "enemy-aggro-2",
+      "file": "public/assets/audio/sfx/enemy-aggro-2.wav",
+      "seconds": 1.1,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.10630519671617411,
+      "sha256": "46567fda377e8cdceb137f2840a7617453ca071f703c1a108f12a096ba9d74df",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "enemy-aggro-2.wav",
+          "sourceSha256": "f88289da5b0ef2c7b348d0193f1d45cf61ce452c3be93ead49cb773f8fa1c1ff",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 910392,
+          "prompt": "TrackType: SFX, A man growling and grunting in anger, short furious rough human grunts. Comic villain voice, dry isolated close microphone, strictly nonverbal, no spoken words, no music.",
+          "cfg": 3,
+          "negativePrompt": "music, instruments, singing, electronic beep, static, background ambience, intelligible speech",
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 4.507,
+          "rate": 1,
+          "cut": 1.1,
+          "gain": 1,
+          "at": 0
+        }
+      ]
     }
   ],
   "missing": [],
   "bank": {
     "file": "public/assets/audio/sfx/combat-bank.wav",
-    "sha256": "8378b6d92a3dc21f5fc050bed60777b0a41dc19d583bad8fa397d9aec62b11da",
-    "seconds": 206.28575
+    "sha256": "bd9a31d2ab7e36337e3d65d0672b5b9cffb90036377ef415bc205ef0180aeeae",
+    "seconds": 212.67575
   },
   "review": {
     "status": "local-playtest-candidate",

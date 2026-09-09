@@ -1572,6 +1572,30 @@ export const SFX_ASSETS = {
   "enemy-panic-3": {
     "offset": 205.09575,
     "seconds": 1.15
+  },
+  "enemy-suspect-0": {
+    "offset": 206.28575,
+    "seconds": 0.95
+  },
+  "enemy-suspect-1": {
+    "offset": 207.27575,
+    "seconds": 0.95
+  },
+  "enemy-suspect-2": {
+    "offset": 208.26575,
+    "seconds": 0.95
+  },
+  "enemy-aggro-0": {
+    "offset": 209.25575,
+    "seconds": 1.1
+  },
+  "enemy-aggro-1": {
+    "offset": 210.39575,
+    "seconds": 1.1
+  },
+  "enemy-aggro-2": {
+    "offset": 211.53575,
+    "seconds": 1.1
   }
 } as const;
 export type SfxId=keyof typeof SFX_ASSETS;

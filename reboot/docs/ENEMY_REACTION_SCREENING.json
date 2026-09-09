@@ -1,0 +1,194 @@
+{
+  "enemy-suspect-0": {
+    "sha256": "65ded1cd8db6436c4645c173440a6184020385629712b339f90dae74fb81f114",
+    "model": "laion/clap-htsat-unfused",
+    "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+    "expected": "TrackType: SFX, A man gasping in surprise, a sharp sudden inhalation of breath, high pitched astonished gasp. Cartoon guard noticing something unexpected. One short dry close microphone human vocal reaction. No words, no music, no growling, no pain.",
+    "expectedScore": 0.4636819064617157,
+    "top": [
+      {
+        "description": "short rough breathy grunt, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.5358
+      },
+      {
+        "description": "TrackType: SFX, A man making a loud angry guttural grunt followed by a throaty human growl. Cartoon hostile guard. Dry isolated close microphone, nonverbal human vocalization, no words, no music.",
+        "similarity": 0.5253
+      },
+      {
+        "description": "muffled surprised grunt and radio click, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.5116
+      },
+      {
+        "description": "short sharp breathy gasp, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.5044
+      },
+      {
+        "description": "The sound of a man grunting in pain.",
+        "similarity": 0.4912
+      }
+    ],
+    "musicScore": -0.0272,
+    "playback": false,
+    "status": "screened-not-an-artistic-approval"
+  },
+  "enemy-suspect-1": {
+    "sha256": "68cd1927b21aedcddc8ec4b64d4fed3e1ed38f5988172b9f349908c3dd211828",
+    "model": "laion/clap-htsat-unfused",
+    "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+    "expected": "TrackType: SFX, One male guard mutters a skeptical nasal hmm then a surprised questioning grunt, comic suspicion. Isolated human nonverbal voice, dry close microphone, no intelligible words, no music.",
+    "expectedScore": 0.4752514958381653,
+    "top": [
+      {
+        "description": "deep heavy male grunt, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.5942
+      },
+      {
+        "description": "TrackType: SFX, A man growling and grunting in anger, short furious rough human grunts. Comic villain voice, dry isolated close microphone, strictly nonverbal, no spoken words, no music.",
+        "similarity": 0.5877
+      },
+      {
+        "description": "short rough breathy grunt, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.5813
+      },
+      {
+        "description": "muffled surprised grunt and radio click, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.5798
+      },
+      {
+        "description": "TrackType: SFX, A man making a loud angry guttural grunt followed by a throaty human growl. Cartoon hostile guard. Dry isolated close microphone, nonverbal human vocalization, no words, no music.",
+        "similarity": 0.5347
+      }
+    ],
+    "musicScore": -0.1658,
+    "playback": false,
+    "status": "screened-not-an-artistic-approval"
+  },
+  "enemy-suspect-2": {
+    "sha256": "869136a0a3716a953df30633bd18a9c1b3e04642c08ac851caa9c9d558b18285",
+    "model": "laion/clap-htsat-unfused",
+    "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+    "expected": "TrackType: SFX, A startled man makes two quick surprised gasps with rising pitch, breathing in sharply in astonishment. Comic bewilderment, isolated human voice, no spoken words, no growling, no pain, no music.",
+    "expectedScore": 0.4653279781341553,
+    "top": [
+      {
+        "description": "TrackType: SFX, A man making a loud angry guttural grunt followed by a throaty human growl. Cartoon hostile guard. Dry isolated close microphone, nonverbal human vocalization, no words, no music.",
+        "similarity": 0.6584
+      },
+      {
+        "description": "short rough breathy grunt, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.6117
+      },
+      {
+        "description": "TrackType: SFX, A man growling and grunting in anger, short furious rough human grunts. Comic villain voice, dry isolated close microphone, strictly nonverbal, no spoken words, no music.",
+        "similarity": 0.586
+      },
+      {
+        "description": "short nonverbal startled grunt, exaggerated cartoon character",
+        "similarity": 0.5736
+      },
+      {
+        "description": "The sound of a man grunting in pain.",
+        "similarity": 0.57
+      }
+    ],
+    "musicScore": -0.1807,
+    "playback": false,
+    "status": "screened-not-an-artistic-approval"
+  },
+  "enemy-aggro-0": {
+    "sha256": "b487b493d67201febe88840a6b30074c7af8fbd0ada803a273218e87ab76be7d",
+    "model": "laion/clap-htsat-unfused",
+    "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+    "expected": "TrackType: SFX, A man making a loud angry guttural grunt followed by a throaty human growl. Cartoon hostile guard. Dry isolated close microphone, nonverbal human vocalization, no words, no music.",
+    "expectedScore": 0.5493305325508118,
+    "top": [
+      {
+        "description": "TrackType: SFX, A man making a loud angry guttural grunt followed by a throaty human growl. Cartoon hostile guard. Dry isolated close microphone, nonverbal human vocalization, no words, no music.",
+        "similarity": 0.5493
+      },
+      {
+        "description": "TrackType: SFX, A man growling and grunting in anger, short furious rough human grunts. Comic villain voice, dry isolated close microphone, strictly nonverbal, no spoken words, no music.",
+        "similarity": 0.5324
+      },
+      {
+        "description": "deep heavy male grunt, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.4634
+      },
+      {
+        "description": "TrackType: SFX, One male guard angrily barks a short guttural nonverbal challenge then growls, ridiculous cartoon bully. Isolated human nonverbal voice, dry close microphone, no intelligible words, no music.",
+        "similarity": 0.4471
+      },
+      {
+        "description": "muffled surprised grunt and radio click, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.3634
+      }
+    ],
+    "musicScore": -0.1543,
+    "playback": false,
+    "status": "screened-not-an-artistic-approval"
+  },
+  "enemy-aggro-1": {
+    "sha256": "6d4e5ff9668bb277404c5465d86b765acbd876e7f36d7b720124ab8970751505",
+    "model": "laion/clap-htsat-unfused",
+    "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+    "expected": "TrackType: SFX, One male guard angrily barks a short guttural nonverbal challenge then growls, ridiculous cartoon bully. Isolated human nonverbal voice, dry close microphone, no intelligible words, no music.",
+    "expectedScore": 0.46481895446777344,
+    "top": [
+      {
+        "description": "TrackType: SFX, A man making a loud angry guttural grunt followed by a throaty human growl. Cartoon hostile guard. Dry isolated close microphone, nonverbal human vocalization, no words, no music.",
+        "similarity": 0.6472
+      },
+      {
+        "description": "TrackType: SFX, A man growling and grunting in anger, short furious rough human grunts. Comic villain voice, dry isolated close microphone, strictly nonverbal, no spoken words, no music.",
+        "similarity": 0.6343
+      },
+      {
+        "description": "TrackType: SFX, One male guard angrily barks a short guttural nonverbal challenge then growls, ridiculous cartoon bully. Isolated human nonverbal voice, dry close microphone, no intelligible words, no music.",
+        "similarity": 0.4648
+      },
+      {
+        "description": "deep heavy male grunt, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.4562
+      },
+      {
+        "description": "short rough breathy grunt, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.4125
+      }
+    ],
+    "musicScore": -0.2003,
+    "playback": false,
+    "status": "screened-not-an-artistic-approval"
+  },
+  "enemy-aggro-2": {
+    "sha256": "46567fda377e8cdceb137f2840a7617453ca071f703c1a108f12a096ba9d74df",
+    "model": "laion/clap-htsat-unfused",
+    "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+    "expected": "TrackType: SFX, A man growling and grunting in anger, short furious rough human grunts. Comic villain voice, dry isolated close microphone, strictly nonverbal, no spoken words, no music.",
+    "expectedScore": 0.517035961151123,
+    "top": [
+      {
+        "description": "TrackType: SFX, A man growling and grunting in anger, short furious rough human grunts. Comic villain voice, dry isolated close microphone, strictly nonverbal, no spoken words, no music.",
+        "similarity": 0.517
+      },
+      {
+        "description": "TrackType: SFX, A man making a loud angry guttural grunt followed by a throaty human growl. Cartoon hostile guard. Dry isolated close microphone, nonverbal human vocalization, no words, no music.",
+        "similarity": 0.5134
+      },
+      {
+        "description": "deep heavy male grunt, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.4351
+      },
+      {
+        "description": "short rough breathy grunt, nonverbal theatrical cartoon defeat.",
+        "similarity": 0.3477
+      },
+      {
+        "description": "TrackType: SFX, One male guard angrily barks a short guttural nonverbal challenge then growls, ridiculous cartoon bully. Isolated human nonverbal voice, dry close microphone, no intelligible words, no music.",
+        "similarity": 0.3359
+      }
+    ],
+    "musicScore": -0.2525,
+    "playback": false,
+    "status": "screened-not-an-artistic-approval"
+  }
+}

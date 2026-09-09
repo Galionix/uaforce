@@ -1768,5 +1768,47 @@
       "start": 0.3,
       "similarity": 0.7185266017913818
     }
+  },
+  "enemy-suspect-0": {
+    "sourceId": "enemy-suspect-0",
+    "masterSha256": "93aa7c27cf11133ef635aa898ef356aa9e77873e7d36e4052d82c631fa875ec0",
+    "start": 4.5,
+    "seconds": 0.95,
+    "selection": "Local CLAP window screening; no speaker playback"
+  },
+  "enemy-suspect-1": {
+    "sourceId": "enemy-suspect-1",
+    "masterSha256": "5285a432dbd06a5dc592e6c208cd1cf2bfaa6da818d013f3ab9d69e0984949e7",
+    "start": 1.582,
+    "seconds": 0.95,
+    "selection": "Local CLAP window screening; no speaker playback"
+  },
+  "enemy-suspect-2": {
+    "sourceId": "enemy-suspect-2",
+    "masterSha256": "7947a02a9636ae5b3f654c87c67567f30684b1339cee40472b13209619bf1b30",
+    "start": 0.6,
+    "seconds": 0.95,
+    "selection": "Local CLAP window screening; no speaker playback"
+  },
+  "enemy-aggro-0": {
+    "sourceId": "enemy-aggro-0",
+    "masterSha256": "c4bc5be5c839418a7eaa21663a0560f04b1d916e0f9c43bee2f841e389be4673",
+    "start": 2.092,
+    "seconds": 1.1,
+    "selection": "Local CLAP window screening; no speaker playback"
+  },
+  "enemy-aggro-1": {
+    "sourceId": "enemy-aggro-1",
+    "masterSha256": "827ce5c230b1d90363052ee1ecf4ab10b454db974b720cb1cbc8e47a4944a5c4",
+    "start": 4.8,
+    "seconds": 1.1,
+    "selection": "Local CLAP window screening; no speaker playback"
+  },
+  "enemy-aggro-2": {
+    "sourceId": "enemy-aggro-2",
+    "masterSha256": "f88289da5b0ef2c7b348d0193f1d45cf61ce452c3be93ead49cb773f8fa1c1ff",
+    "start": 4.507,
+    "seconds": 1.1,
+    "selection": "Local CLAP window screening; no speaker playback"
   }
 }

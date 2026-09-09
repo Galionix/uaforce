@@ -154,5 +154,41 @@
     "sourceId": "enemy-panic-3",
     "seconds": 1.15,
     "description": "The sound of a man screaming in fear."
+  },
+  {
+    "id": "enemy-suspect-0",
+    "sourceId": "enemy-suspect-0",
+    "seconds": 0.95,
+    "description": "The sound of a surprised man gasping in astonishment."
+  },
+  {
+    "id": "enemy-suspect-1",
+    "sourceId": "enemy-suspect-1",
+    "seconds": 0.95,
+    "description": "The sound of a man making a surprised questioning grunt."
+  },
+  {
+    "id": "enemy-suspect-2",
+    "sourceId": "enemy-suspect-2",
+    "seconds": 0.95,
+    "description": "The sound of a surprised man gasping in astonishment."
+  },
+  {
+    "id": "enemy-aggro-0",
+    "sourceId": "enemy-aggro-0",
+    "seconds": 1.1,
+    "description": "The sound of an angry man grunting and growling aggressively."
+  },
+  {
+    "id": "enemy-aggro-1",
+    "sourceId": "enemy-aggro-1",
+    "seconds": 1.1,
+    "description": "The sound of an angry man grunting and growling aggressively."
+  },
+  {
+    "id": "enemy-aggro-2",
+    "sourceId": "enemy-aggro-2",
+    "seconds": 1.1,
+    "description": "The sound of an angry man grunting and growling aggressively."
   }
 ]
