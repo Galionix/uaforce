@@ -7,7 +7,7 @@ assert not (out/'assets-review.html').exists()
 assert len(files)<1000
 for p in files:
  assert p.stat().st_size<25*1024**2,p
- assert p.suffix not in ['.glb','.mp4','.ts','.map','.json'],p
+ assert p.name=='_routes.json' or p.suffix not in ['.glb','.mp4','.ts','.map','.json'],p
  if p.suffix=='.wav':assert '/'+str(p.relative_to(out))==manifest['/assets/audio/sfx/combat-bank.wav'],p
 for url,path in manifest.items():assert (out/path.lstrip('/')).is_file(),url
 html=(out/'index.html').read_text();assert 'assets-review' not in html

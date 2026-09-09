@@ -2,19 +2,20 @@ import Peer,{type DataConnection} from 'peerjs';
 import {COOP_VERSION,RemoteInput,type Snapshot} from './coop-state.ts';
 import {HEROES,type HeroId} from './content.ts';
 import type {Actions} from './world.ts';
+import {STUN_SERVERS} from './ice.ts';
 export type RoomCommand='pause'|'resume'|'continue'|'next';
 type Callbacks={status:(text:string)=>void;created:(code:string)=>void;connected:(hero:HeroId)=>void;snapshot:(value:Snapshot)=>void;command:(value:RoomCommand)=>void;ended:(text:string)=>void};
 export const normalizeRoom=(value:string)=>value.trim().toUpperCase().replace(/[ -]/g,'');
 export const validRoom=(value:string)=>/^[A-HJ-NP-Z2-9]{8}$/.test(value);
 const prefix='uaforce-v1-';
-/** Signaling uses the shared free PeerServer. No media permission, account or TURN credential. */
+/** Signaling uses the shared free PeerServer. No media permission or player account; TURN credentials are short-lived. */
 export class OnlineRoom {
  readonly remote=new RemoteInput();
  private peer:Peer;private connection?:DataConnection;private joined=false;private closed=false;
- private sequence=0;private received=-1;private last=performance.now();private deadline=performance.now()+20000;
+ private sequence=0;private received=-1;private last=performance.now();private deadline=performance.now()+45000;
  private heartbeat:ReturnType<typeof setInterval>;
- constructor(readonly role:'host'|'guest',code:string,private hero:HeroId,private callbacks:Callbacks){
-  this.peer=role==='host'?new Peer(prefix+code,{debug:0}):new Peer({debug:0});
+ constructor(readonly role:'host'|'guest',code:string,private hero:HeroId,private callbacks:Callbacks,config:RTCConfiguration={iceServers:STUN_SERVERS}){
+  this.peer=role==='host'?new Peer(prefix+code,{debug:0,config}):new Peer({debug:0,config});
   this.peer.on('open',()=>{
    if(role==='host'){this.deadline=Infinity;callbacks.created(code);}
    else this.bind(this.peer.connect(prefix+code,{reliable:true,serialization:'binary'}));
@@ -30,15 +31,19 @@ export class OnlineRoom {
   this.heartbeat=setInterval(()=>{
    if(this.closed)return;
    const now=performance.now();
-   if(now>this.deadline||this.joined&&now-this.last>15000){this.fail('Час очікування минув. Спробуйте нову кімнату або іншу мережу.');return;}
+   if(now>this.deadline){const ice=this.connection?.peerConnection?.iceConnectionState??'no-peer';this.fail('Не вдалося встановити зв’язок із другом. Код діагностики: '+ice+'. Оновіть гру в обох і створіть нову кімнату.');return;}
+   if(this.joined&&now-this.last>45000){this.fail('Друг не відповідає понад 45 секунд. Перевірте, чи відкрита його вкладка гри.');return;}
    if(this.connection?.open)this.send({type:'ping'});
   },1000);
  }
  static code(){const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return [...crypto.getRandomValues(new Uint8Array(8))].map(n=>alphabet[n%32]).join('');}
  get connected(){return this.joined&&!this.closed;}
+ async route(){const pc=this.connection?.peerConnection;if(!pc)return 'pending';const stats=await pc.getStats();const types=new Map<string,string>();stats.forEach(s=>{if(s.candidateType)types.set(s.id,s.candidateType);});let result='unknown';stats.forEach(s=>{if(s.type==='candidate-pair'&&s.state==='succeeded'&&(s.nominated||s.selected)){const local=types.get(s.localCandidateId),remote=types.get(s.remoteCandidateId);result=local==='relay'||remote==='relay'?'relay':'direct';}});return result;}
  private bind(c:DataConnection){
-  this.connection=c;this.deadline=performance.now()+20000;
-  c.on('open',()=>{this.send({type:'hello',version:COOP_VERSION,hero:this.hero});});
+  this.connection=c;this.deadline=performance.now()+45000;this.callbacks.status('Друг знайдений. Встановлюємо захищене з’єднання…');
+  const pc=c.peerConnection;
+  if(pc)pc.addEventListener('iceconnectionstatechange',()=>{if(!this.joined&&!this.closed)this.callbacks.status('З’єднання з другом: '+pc.iceConnectionState+'…');});
+  c.on('open',()=>{this.last=performance.now();this.callbacks.status('Зв’язок встановлено. Узгоджуємо версію гри…');this.send({type:'hello',version:COOP_VERSION,hero:this.hero});});
   c.on('data',raw=>{
    if(!raw||typeof raw!=='object')return;
    const m=raw as Record<string,unknown>;this.last=performance.now();

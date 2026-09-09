@@ -39,3 +39,6 @@ for p in (out/'media').iterdir():
 # Explicit 404 disables Pages SPA fallback for missing/private files.
 (out/'404.html').write_text('<!doctype html><html lang="uk"><meta charset="utf-8"><title>UaForce — сторінку не знайдено</title><p>Сторінку не знайдено. <a href="/">До гри</a></p></html>')
 print('Public media:',len(manifest),'files,',round(sum(p.stat().st_size for p in out.rglob('*') if p.is_file())/1024**2,2),'MiB')
+
+shutil.copy2(root/'server/pages-worker.js',out/'_worker.js')
+(out/'_routes.json').write_text(json.dumps({'version':1,'include':['/api/*'],'exclude':[]}))

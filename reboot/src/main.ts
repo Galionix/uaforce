@@ -28,6 +28,7 @@ const roster=$<HTMLDialogElement>('roster'), operations=$<HTMLDialogElement>('op
 const menuFx=new PresentationFx($<HTMLCanvasElement>('menu-fx'));
 let menuClock=0;
 const onlineMenu=$<HTMLDialogElement>('online-menu'),about=$<HTMLDialogElement>('about-game');
+let onlineAttempt=0;
 let online:OnlineRoom|null=null,onlineLoading=false,roomCode='',writer:SnapshotWriter|null=null,netClock=0,netSequence=0,guestEpoch='';
 let outgoingEvents:typeof world.events=[];
 
@@ -250,12 +251,16 @@ function onlineCommand(command:RoomCommand){
 cinematic.onConfirm=()=>{if(online?.role==='guest'){online.command('continue');return false;}return true;};
 async function enterOnline(role:'host'|'guest'){
  if(!ready||onlineLoading)return;
- if(online)leaveOnline();onlineLoading=true;$('online-status').textContent='Підключення…';
+ if(online)leaveOnline();const attempt=++onlineAttempt;onlineLoading=true;$('online-status').textContent='Підключення…';
  try{
   const {OnlineRoom,normalizeRoom,validRoom}=await import('./game/online');
+  const {connectionConfig}=await import('./game/ice');
   roomCode=role==='host'?OnlineRoom.code():normalizeRoom($<HTMLInputElement>('online-code').value);
   if(!validRoom(roomCode)){$('online-status').textContent='Введіть 8 символів коду кімнати.';return;}
   const hero=$<HTMLSelectElement>('online-hero').value as typeof HEROES[number]['id'];
+  $('online-status').textContent='Готуємо пряме та резервне з’єднання…';
+  const config=await connectionConfig(new URLSearchParams(location.search).get('relay')==='1');
+  if(attempt!==onlineAttempt)return;
   online=new OnlineRoom(role,roomCode,hero,{
    status:text=>$('online-status').textContent=text,
    created:code=>{$('online-status').textContent='Код: '+code.slice(0,4)+' '+code.slice(4)+' · очікуємо друга';$('online-invite').hidden=false;},
@@ -276,13 +281,13 @@ async function enterOnline(role:'host'|'guest'){
    },
    command:onlineCommand,
    ended:message=>leaveOnline(message),
-  });
- }catch{$('online-status').textContent='Не вдалося підключити кімнати. Перевірте інтернет і спробуйте знову.';}
+  },config);
+ }catch{if(attempt!==onlineAttempt)return;$('online-status').textContent='Резервний сервіс з’єднання недоступний. Спробуйте ще раз за хвилину; одиночна гра працює.';}
  finally{onlineLoading=false;}
 }
 for(const hero of HEROES)$<HTMLSelectElement>('online-hero').add(new Option(hero.name,hero.id));
 $('online-open').onclick=()=>{input.clear();$('online-status').textContent='';$('online-invite').hidden=true;onlineMenu.showModal();$('online-create').focus();};
-function closeOnlineMenu(){if(online&&!online.connected){leaveOnline();return;}onlineMenu.close();input.clear();$('online-open').focus();}
+function closeOnlineMenu(){onlineAttempt++;if(online&&!online.connected){leaveOnline();return;}onlineMenu.close();input.clear();$('online-open').focus();}
 $('online-close').onclick=closeOnlineMenu;onlineMenu.addEventListener('cancel',e=>{e.preventDefault();closeOnlineMenu();});
 $('online-create').onclick=()=>void enterOnline('host');$('online-join').onclick=()=>void enterOnline('guest');
 async function copyLink(url:string){try{await navigator.clipboard.writeText(url);toast('Посилання скопійовано');return true;}catch{toast('Скопіюйте посилання з адресного рядка');return false;}}

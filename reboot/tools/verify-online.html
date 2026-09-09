@@ -1,19 +1,21 @@
 <!doctype html><html lang="uk"><meta charset="utf-8"><title>UA Force — тиха перевірка WebRTC</title><style>body{font:18px monospace;background:#14221c;color:#ffe395}pre{white-space:pre-wrap}button{font:inherit;padding:12px}</style><button id="run">Перевірити двох клієнтів</button><pre id="result">Без звуку. Справжній PeerServer Cloud і два RTCPeerConnection.</pre><script type="module">
-import {OnlineRoom} from '/src/game/online.ts';import {World,IDLE} from '/src/game/world.ts';import {SnapshotWriter,applySnapshot} from '/src/game/coop-state.ts';
+import {OnlineRoom} from '/src/game/online.ts';import {connectionConfig} from '/src/game/ice.ts';import {World,IDLE} from '/src/game/world.ts';import {SnapshotWriter,applySnapshot} from '/src/game/coop-state.ts';
 const out=document.querySelector('#result');let host,guest,timer,timeout;
-document.querySelector('#run').onclick=()=>{
+document.querySelector('#run').onclick=async()=>{
+ const forcedRelay=new URLSearchParams(location.search).get('relay')==='1';let config;try{config=await connectionConfig(forcedRelay);}catch{out.textContent='Relay endpoint unavailable';return;}
  host?.close();guest?.close();clearInterval(timer);clearTimeout(timeout);
  const w=new World();w.addPlayer('lesya');w.mode='playing';w.enemies=[];const writer=new SnapshotWriter(w),remote=new World();
- let sequence=0,packets=0,frame=0,sawMove=false,sawShot=false,sawDamage=false,sawPause=false,sawLeave=false,maxBytes=0;
- const report=()=>({packets,sawMove,sawShot,sawDamage,sawPause,sawLeave,maxBytes,silent:true});
- const done=()=>{clearInterval(timer);clearTimeout(timeout);out.textContent=JSON.stringify({...report(),passed:sawMove&&sawShot&&sawDamage&&sawPause&&sawLeave},null,2);};
+ let sequence=0,packets=0,frame=0,sawMove=false,sawShot=false,sawDamage=false,sawPause=false,sawLeave=false,maxBytes=0,route='pending';
+ const report=()=>({packets,sawMove,sawShot,sawDamage,sawPause,sawLeave,maxBytes,route,forcedRelay,silent:true});
+ const done=()=>{clearInterval(timer);clearTimeout(timeout);out.textContent=JSON.stringify({...report(),passed:sawMove&&sawShot&&sawDamage&&sawPause&&sawLeave&&(!forcedRelay||route==='relay')},null,2);};
  const callbacks={status:t=>out.textContent=t,created:()=>{},connected:()=>{},snapshot:()=>{},command:c=>{if(c==='pause')w.mode='paused';},ended:t=>{out.textContent=t;}};
  host=new OnlineRoom('host',OnlineRoom.code(),'shevchenko',{...callbacks,created:code=>{
-  guest=new OnlineRoom('guest',code,'lesya',{...callbacks,snapshot:s=>{
+  guest=new OnlineRoom('guest',code,'lesya',{...callbacks,snapshot:async s=>{
+   if(route==='pending')route=await guest.route();
    packets++;maxBytes=Math.max(maxBytes,JSON.stringify(s).length);applySnapshot(remote,s);sawMove ||= remote.player.x>4.1;sawShot ||= remote.bullets.some(b=>b.hero==='lesya');sawDamage ||= remote.player.hp<100;sawPause ||= remote.mode==='paused';
    out.textContent=JSON.stringify(report(),null,2);
    if(sawPause){clearInterval(timer);host.close();}
-  },ended:()=>{sawLeave=true;done();}});
+  },ended:()=>{sawLeave=true;done();}},config);
  },connected:()=>{
   timer=setInterval(()=>{
    frame++;guest.input({...IDLE,move:1,fire:true});w.stepPlayers(1/60,[IDLE,host.remote.take(performance.now()/1000)]);
@@ -23,8 +25,8 @@ document.querySelector('#run').onclick=()=>{
    if(frame===100)guest.command('pause');
    if(frame%3===0){host.state(writer.snapshot(++sequence,w.events));w.events=[];}
   },1000/60);
- }});
- timeout=setTimeout(()=>{host?.close();guest?.close();done();},25000);
+ }},config);
+ timeout=setTimeout(()=>{host?.close();guest?.close();done();},55000);
 };
 window.addEventListener('pagehide',()=>{host?.close();guest?.close();clearInterval(timer);clearTimeout(timeout);});
 </script></html>
