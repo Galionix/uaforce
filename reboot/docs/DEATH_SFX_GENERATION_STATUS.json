@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-09",
+  "provider": "Google Gemini Music / Lyria",
+  "generationPage": "https://gemini.google.com/app/3e9e9a8c3eb56290",
+  "auditPage": "https://gemini.google.com/app/217e54a52d3a00da",
+  "auditMethod": "Separate Gemini session analyzed attached WAV audio; no speaker playback. Model analysis, not human listening.",
+  "integrated": false,
+  "files": [
+    {
+      "file": "tools/audio-source/lyria-deaths/voices.mp4",
+      "sha256": "e161b7816924c2db83da7413c767d497ff55fb0f1dfff68b03f1ec252996e734",
+      "seconds": 59.533333,
+      "providerTitle": "Battlefield Blunders",
+      "status": "rejected-musical-underlay"
+    },
+    {
+      "file": "tools/audio-source/lyria-deaths/splatter.mp4",
+      "sha256": "17ba6077c1bb6561a6ad2bccae6f4fb3fbc2fc24d8caa7bbad1d0981b5a3aaca",
+      "seconds": 179.700333,
+      "providerTitle": "Iron and Root",
+      "status": "rejected-musical-underlay"
+    },
+    {
+      "file": "tools/audio-source/lyria-deaths/bosses.mp4",
+      "sha256": "47cd73396481c02ce6bf3a92cc0231bcbed1e49802547c136a582978401dd5cc",
+      "seconds": 35.200333,
+      "providerTitle": "The Villain’s Exit",
+      "status": "exported-not-audited"
+    }
+  ]
+}
