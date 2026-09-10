@@ -1,3 +1,4 @@
+import {TouchState} from './touch-state.ts';
 import type { Actions } from './world';
 export type Command = 'jump' | 'fire' | 'special' | 'ultimate' | 'interact' | 'pause';
 export type Pad = { index: number; id: string; mapping: string; connected: boolean; axes: readonly number[]; buttons: readonly { pressed: boolean; value: number }[] };
@@ -57,7 +58,8 @@ export class Input {
   pad: Pad | null = null;
   pads: Pad[] = [];
   selected = -1;
-  source: 'keyboard' | 'gamepad' = 'keyboard';
+  source: 'keyboard' | 'gamepad' | 'touch' = 'keyboard';
+  readonly touch=new TouchState();
   onDisconnect = () => {};
   onCapture = () => {};
   capture: { kind: 'key' | 'button'; action: keyof Bindings['keys'] } | null = null;
@@ -91,7 +93,7 @@ export class Input {
     window.addEventListener('blur', () => this.clear(), options);
   }
   save() { try { localStorage.setItem('uaforce.controls.v1', JSON.stringify(this.bindings)); } catch { /* Gameplay works without persistence. */ } }
-  clear() { for(const key of this.keys)this.blockedKeys.add(key);this.keys.clear();this.taps.clear();this.edges.clear(); this.released = false;this.releasedActions.clear();this.menuRepeat.clear(); }
+  clear() { this.touch.clear();for(const key of this.keys)this.blockedKeys.add(key);this.keys.clear();this.taps.clear();this.edges.clear(); this.released = false;this.releasedActions.clear();this.menuRepeat.clear(); }
   poll(dt=1/60) {
     try { this.pads = Array.from(navigator.getGamepads?.() ?? []).filter((pad): pad is Gamepad => !!pad?.connected); } catch { this.pads = []; }
     this.pad = this.pads.find(p => p.index === this.selected) ?? this.pads[0] ?? null;
@@ -110,15 +112,17 @@ export class Input {
     const key = (action: keyof Bindings['keys']) => this.keys.has(this.bindings.keys[action]) || this.taps.has(this.bindings.keys[action]);
     const uiTyping = document.activeElement instanceof HTMLElement && ['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName);
     const suppressed = !!this.capture || uiTyping || document.hidden || !document.hasFocus();
+    if(suppressed)this.touch.clear();
+    const touch=this.touch.sample();
     const keyboardMove = (key('right') || this.keys.has('ArrowRight') ? 1 : 0) - (key('left') || this.keys.has('ArrowLeft') ? 1 : 0);
-    const move = suppressed ? 0 : keyboardMove || p.move;
-    const down = (action: Command) => !suppressed && (key(action) || (this.releasedActions.has(action) && p[action]));
+    const move = suppressed ? 0 : keyboardMove || touch.move || p.move;
+    const down = (action: Command) => !suppressed && (key(action) || (action!=='pause'&&!!touch[action]) || (this.releasedActions.has(action) && p[action]));
     const jump = this.edges.take('jump', down('jump'));
     const special = this.edges.take('special', down('special'));
     const ultimate = this.edges.take('ultimate', down('ultimate'));
     const menuDirection=this.menuRepeat.step(!suppressed&&(p.up||this.keys.has('ArrowUp')||this.taps.has('ArrowUp')),!suppressed&&(p.down||this.keys.has('ArrowDown')||this.taps.has('ArrowDown')),dt);
     const result = {
-      action: { move, climb:suppressed?0:((this.keys.has('KeyW')||this.keys.has('ArrowUp')?1:0)-(this.keys.has('KeyS')||this.keys.has('ArrowDown')?1:0))||p.climb, jump, jumpHeld:down('jump'), special, ultimate, fire: down('fire'), interact: down('interact') } as Actions,
+      action: { move, climb:suppressed?0:((this.keys.has('KeyW')||this.keys.has('ArrowUp')?1:0)-(this.keys.has('KeyS')||this.keys.has('ArrowDown')?1:0))||touch.climb||p.climb, jump, jumpHeld:down('jump'), special, ultimate, fire: down('fire'), interact: down('interact') } as Actions,
       pause: this.edges.take('pause', down('pause')),
       up: menuDirection<0, down: menuDirection>0,
       confirm: this.edges.take('confirm', !suppressed && this.releasedActions.has('confirm') && p.confirm),

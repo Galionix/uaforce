@@ -1,3 +1,5 @@
+import {MobileControls} from './game/mobile-controls.ts';
+import {gameFullscreen} from './game/fullscreen.ts';
 import {Telemetry,RunMetrics,type MetricMode} from './game/telemetry.ts';
 import {PendingActions} from './game/pending-actions.ts';
 import {skipStory} from './game/story-scenes.ts';
@@ -15,6 +17,7 @@ import {BOSSES} from './game/bosses';
 import {weaponDescription,resetWeapon,WEAPONS} from './game/weapons';
 import {practiceWorld} from './game/practice';
 import './style.css';
+import './mobile.css';
 import { World } from './game/world';
 import { Input, freshBindings, padButtonLabel, type Bindings } from './game/input';
 import { View } from './game/view';
@@ -47,10 +50,11 @@ let world=new World(progress.mission,progress.unlocked,progress.hero), ready=fal
 let pendingJump=false,pendingSpecial=false,pendingUltimate=false,pendingFire=false,pendingInteract=false;
 const cinematic=new Cinematic(sound,()=>{input.clear();accumulator=0;pendingJump=pendingSpecial=pendingUltimate=pendingFire=pendingInteract=false;},w=>view.reset(w));
 const flags=new FlagTransition();
+const mobile=new MobileControls(input.touch,()=>{input.source='touch';},()=>{input.clear();guestActions.clear();pause('Поверни телефон горизонтально');});
 const storySkip=document.createElement('button');storySkip.className='story-skip';storySkip.textContent='Пропустити · Enter';storySkip.hidden=true;document.body.append(storySkip);
 storySkip.onclick=()=>{if(online?.role==='guest')online.command('continue');else skipStory(world);};
 let storyWasActive=false;
-const feedback=new Feedback(canvas,()=>({mission:world.mission.name,hero:world.hero.name,mode:world.mode,session:online?`кооп / ${online.role}`:practice?'випробування':'одиночна',controller:input.pad?.id??'клавіатура'}),()=>{pause();sound.stopAll();input.clear();},()=>input.clear());
+const feedback=new Feedback(canvas,()=>({mission:world.mission.name,hero:world.hero.name,mode:world.mode,session:online?`кооп / ${online.role}`:practice?'випробування':'одиночна',controller:input.source==='touch'?'сенсорне керування':input.pad?.id??'клавіатура'}),()=>{pause();sound.stopAll();input.clear();},()=>input.clear());
 for(const id of ['feedback-open','menu-feedback','pause-feedback','about-feedback'])$(id).onclick=()=>{telemetry.event('feedback_open',metricMode(),world.missionIndex);feedback.show();};
 const bossStatus=document.createElement('div');bossStatus.id='boss-status';bossStatus.hidden=true;bossStatus.innerHTML='<span></span><progress max=1></progress>';canvas.parentElement!.append(bossStatus);
 const formatTime=(seconds:number)=>`${Math.floor(seconds/60).toString().padStart(2,'0')}:${Math.floor(seconds%60).toString().padStart(2,'0')}`;
@@ -147,7 +151,7 @@ for(const [id,label] of [['mission-start','Початок операції'],['n
 $('voice-preview').onclick=()=>sound.preview(previewSelect.value);
 $('voice-stop').onclick=()=>sound.stopAll();
 $<HTMLSelectElement>('controller-select').onchange=()=>{input.selected=Number($<HTMLSelectElement>('controller-select').value);input.clear();};
-$('fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{toast('Повноекранний режим недоступний у цьому вікні.');}};
+$('fullscreen').onclick=async()=>{const message=await gameFullscreen(mobile.enabled);input.clear();$('fullscreen-note').textContent=message;if(message)toast(message);};
 
 const scaleInput=$<HTMLInputElement>('ui-scale');
 function setScale(value:number){const scale=Number.isFinite(value)?Math.max(100,Math.min(160,value)):100;document.documentElement.style.setProperty('--ui-scale',String(scale/100));scaleInput.value=String(scale);$('ui-scale-value').textContent=scale+'%';}
@@ -172,6 +176,7 @@ function diagnostics(){
 }
 function padLabel(action:keyof Bindings['buttons']){const n=input.bindings.buttons[action];return ({0:'A / ✕',2:'X / □',5:'RB / R1',6:'LT / L2',7:'RT / R2',9:'Start / Options'} as Record<number,string>)[n]??`Кнопка ${n}`;}
 function battleKey(action:keyof Bindings['buttons']){
+  if(input.source==='touch'||mobile.enabled&&!input.pad)return ({jump:'✕',interact:'□',fire:'●',special:'◆',ultimate:'★',pause:'Ⅱ'})[action];
   if(input.source!=='gamepad')return input.bindings.keys[action].replace('Key','').replace('Digit','').replace('Space','␣').replace('ArrowLeft','←').replace('ArrowRight','→');
   return padButtonLabel(input.bindings.buttons[action],input.pad?.id);
 }
@@ -215,7 +220,8 @@ view.onFrame=dt=>{
   syncStoryControls();
   sound.bossBattle=!!world.boss?.boss?.active;sound.scoreTheme=world.mission.score;
   view.interactKey=battleKey('interact');
-  const frame=input.poll(dt),wasMenu=!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||feedback.open||flags.active;
+  mobile.sync(world,!menu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||feedback.open||flags.active);
+  const frame=input.poll(dt),wasMenu=mobile.portrait||!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||feedback.open||flags.active;
   if(online?.role==='guest'&&online.connected){if(wasMenu||world.mode!=='playing'||world.story)guestActions.clear();else guestActions.add(frame.action);netClock+=dt;if(netClock>=1/30){online.input(wasMenu||world.mode!=='playing'||world.story?{move:0,jump:false,fire:false,special:false,interact:false}:guestActions.take(frame.action));netClock=0;}}
   if(world.mode==='cinematic'){cinematic.sync(world);cinematic.step(dt,frame.confirm||frame.action.jump);view.render(world,dt,0);sound.step(dt,false,false);publishOnline(dt);ui();return;}
   if(world.story&&world.mode==='playing'&&world.story.age>=.8&&frame.confirm)storySkip.click();

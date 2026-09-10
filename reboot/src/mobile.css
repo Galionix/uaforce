@@ -1,0 +1,49 @@
+/* Touch controls preserve the 640×360 world view; safe areas protect thumbs and HUD. */
+.touch-device{overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+.touch-device input,.touch-device textarea{user-select:text;-webkit-user-select:text}
+.touch-device #scene{width:min(100vw,177.7778dvh);height:min(100dvh,56.25vw);touch-action:none}
+#touch-controls{position:fixed;inset:0;z-index:6;pointer-events:none;--touch-size:clamp(48px,13dvh,62px)}
+#touch-controls button,#touch-stick{pointer-events:auto;touch-action:none;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
+#touch-stick{position:absolute;left:max(20px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));width:clamp(114px,34dvh,144px);aspect-ratio:1;border:3px solid #a6dce482;background:#0a1a27a8;border-radius:50%;display:grid;place-items:center}
+.stick-arrows{color:#d5ecea9c;text-align:center;font:700 25px/1.15 monospace;pointer-events:none}
+#touch-stick i{position:absolute;width:40%;height:40%;border:3px solid #ffdf76;background:#244e58c9;border-radius:50%;pointer-events:none;box-shadow:2px 3px #041016}
+.touch-buttons{position:absolute;right:max(18px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));width:calc(var(--touch-size)*3.45);height:calc(var(--touch-size)*2.3)}
+.touch-action{position:absolute;width:var(--touch-size);height:var(--touch-size);padding:5px;border:2px solid #b0d3dcaa;border-radius:25%;background:#071a27bd;color:#ffdf76;box-shadow:2px 3px #050f1899}
+.touch-action.fire{right:0;bottom:0;width:calc(var(--touch-size)*1.17);height:calc(var(--touch-size)*1.17)}
+.touch-action.jump{left:calc(var(--touch-size)*1.14);bottom:0;font:700 34px/1 monospace;color:#8bdfff}
+.touch-action.interact{left:0;bottom:0;font:700 34px/1 monospace;color:#e3c0ff}
+.touch-action.special{left:calc(var(--touch-size)*1.14);top:0;color:#80e6b1}
+.touch-action.ultimate{right:0;top:0;color:#ffdf76}
+.touch-art{position:absolute;inset:18%}.touch-art svg{width:100%;height:100%}
+.touch-ring{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;transform:rotate(-90deg);pointer-events:none}
+.touch-action small{position:absolute;right:-3px;bottom:-5px;min-width:18px;font:700 15px monospace;background:#112529;color:#fff0c6}.touch-action small:empty{display:none}
+.touch-action.unavailable .touch-art{opacity:.45}.touch-action.pressed{background:#456660;border-color:#fff1bd;transform:translateY(2px)}.touch-action.nearby{border-color:#ffe399;box-shadow:0 0 0 3px #ffe39944}
+#rotate-device{position:fixed;inset:0;z-index:12;background:#07151af7;display:grid;place-items:center;text-align:center;padding:30px 20px}#rotate-device p{line-height:1.5}.rotate-phone{display:block;color:#ffdc63;font:700 54px monospace;animation:phone-turn 2s steps(6) infinite}#rotate-device button{min-height:48px}
+@keyframes phone-turn{0%,100%{transform:rotate(0)}50%{transform:rotate(-8deg)}}
+.touch-device #mobile-tip{font-size:14px;line-height:1.4;color:#8ee1ec;max-width:38em}
+.touch-device #fullscreen{display:block}.touch-device .topbar{padding-top:max(6px,env(safe-area-inset-top));padding-right:max(8px,env(safe-area-inset-right));padding-left:max(8px,env(safe-area-inset-left))}
+.touch-device .top-actions button{width:42px;height:42px;min-width:42px;padding:6px}.touch-device .top-actions{gap:6px}
+.touch-device dialog{max-height:calc(100dvh - 20px);max-width:calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right) - 20px);overscroll-behavior:contain}
+.touch-device #pause-menu{padding:10px max(18px,env(safe-area-inset-right)) 10px max(18px,env(safe-area-inset-left));overflow:auto}
+.touch-device .pause-panel{max-height:calc(100dvh - 20px);overflow:auto;padding:14px;width:min(460px,92vw)}
+.touch-device .pause-panel h1{font-size:26px;margin:4px 0 10px}.touch-device .pause-panel nav{grid-template-columns:1fr 1fr!important;display:grid!important}.touch-device .pause-panel button{min-height:44px;padding:8px;font-size:16px}
+@media(orientation:landscape) and (max-height:600px){
+ .touch-device #menu{padding:12px max(76px,env(safe-area-inset-right)) 12px max(24px,env(safe-area-inset-left));display:block;min-height:100dvh}
+ .touch-device .brief{max-width:660px}.touch-device #menu h1{font-size:32px;margin:5px 0}.touch-device #menu .eyebrow{font-size:12px}.touch-device .brief>p{font-size:14px;margin:5px 0}
+ .touch-device #menu .menu-buttons{display:grid;max-width:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0}.touch-device #menu .menu-buttons button{grid-column:auto!important;min-height:44px;padding:7px;font-size:15px}
+ .touch-device #menu .menu-buttons #primary{grid-column:1/3!important}.touch-device .project-links{gap:12px;margin:5px 0}.touch-device .project-links button{font-size:14px;padding:5px;min-height:36px}.touch-device .menu-audio{position:static;margin-top:4px;font-size:14px;min-height:36px}
+ .touch-device .topbar{align-items:flex-start}.touch-device.menu-open .top-actions{flex-direction:column}.touch-device #hud{top:8px;left:50%;transform:translateX(-50%);right:auto}.touch-device #hud .objectives{gap:6px}.touch-device #hud .objective{height:30px;font-size:14px}.touch-device #hud .objective svg{width:24px;height:24px}.touch-device .mission-time{font-size:14px}
+ .touch-device #battle-footer{inset:8px auto auto max(8px,env(safe-area-inset-left));padding:0;display:block}.touch-device #hero-status{height:40px;gap:6px}.touch-device #hero-portrait{width:32px;height:40px}.touch-device .hero-vitals{min-width:48px}.touch-device .life-count{font-size:16px}.touch-device .life-count svg{width:16px;height:16px}.touch-device .health{height:6px;width:64px}.touch-device #ability-icons{display:none}
+ .touch-device #boss-status{top:52px;font-size:14px;padding:3px 8px;width:48vw}.touch-device #toast{top:52px;font-size:15px;max-width:64vw}.touch-device #interact-prompt{bottom:8px;font-size:14px}.touch-device .story-skip{right:max(10px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom));min-height:44px}
+ .touch-device .cinematic .reveal-copy{max-width:65vw}.touch-device .cinematic h1{font-size:30px}.touch-device .reveal-continue{min-height:44px;font-size:16px}
+}
+@media(orientation:portrait){.touch-device #menu{padding:64px 20px 28px}.touch-device #menu .menu-buttons{display:grid;max-width:none;grid-template-columns:1fr 1fr}.touch-device #menu .menu-buttons button{grid-column:auto!important;min-height:48px}.touch-device #menu .menu-buttons #primary{grid-column:1/-1!important}.touch-device .project-links{gap:8px}.touch-device .project-links button{font-size:15px}}
+
+/* Tablets also keep the status HUD away from the thumb zones. */
+@media(orientation:landscape){
+ .touch-device #battle-footer{inset:8px auto auto max(8px,env(safe-area-inset-left));padding:0;display:block}
+ .touch-device #ability-icons{display:none}
+ .touch-device #hud{top:8px;left:50%;transform:translateX(-50%);right:auto}
+}
+#rotate-device .rotate-menu{display:block;margin:14px auto 0;background:transparent;border:0;box-shadow:none;color:#b5cfd2}
+#fullscreen-note{font-size:15px;max-width:340px;color:#ffe2a0}#fullscreen-note:empty{display:none}
