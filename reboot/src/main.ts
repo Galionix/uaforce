@@ -1,3 +1,5 @@
+import {Telemetry,RunMetrics,type MetricMode} from './game/telemetry.ts';
+import {PendingActions} from './game/pending-actions.ts';
 import {skipStory} from './game/story-scenes.ts';
 import {SUPPORT_URL,supportUrl} from './game/support';
 import {Feedback} from './game/feedback';
@@ -36,6 +38,8 @@ let online:OnlineRoom|null=null,onlineLoading=false,roomCode='',writer:SnapshotW
 let outgoingEvents:typeof world.events=[];
 
 let practice=false;
+const telemetry=new Telemetry(),runMetrics=new RunMetrics((...args)=>telemetry.event(...args)),guestActions=new PendingActions();
+const metricMode=():MetricMode=>online?.role??(practice?'practice':'single');
 const input=new Input(canvas), view=new View(canvas), sound=new Sound(new URLSearchParams(location.search).get('silent')==='1');
 let progress=readProgress();
 let transition=0;
@@ -47,7 +51,7 @@ const storySkip=document.createElement('button');storySkip.className='story-skip
 storySkip.onclick=()=>{if(online?.role==='guest')online.command('continue');else skipStory(world);};
 let storyWasActive=false;
 const feedback=new Feedback(canvas,()=>({mission:world.mission.name,hero:world.hero.name,mode:world.mode,session:online?`кооп / ${online.role}`:practice?'випробування':'одиночна',controller:input.pad?.id??'клавіатура'}),()=>{pause();sound.stopAll();input.clear();},()=>input.clear());
-for(const id of ['feedback-open','menu-feedback','pause-feedback','about-feedback'])$(id).onclick=()=>feedback.show();
+for(const id of ['feedback-open','menu-feedback','pause-feedback','about-feedback'])$(id).onclick=()=>{telemetry.event('feedback_open',metricMode(),world.missionIndex);feedback.show();};
 const bossStatus=document.createElement('div');bossStatus.id='boss-status';bossStatus.hidden=true;bossStatus.innerHTML='<span></span><progress max=1></progress>';canvas.parentElement!.append(bossStatus);
 const formatTime=(seconds:number)=>`${Math.floor(seconds/60).toString().padStart(2,'0')}:${Math.floor(seconds%60).toString().padStart(2,'0')}`;
 function toast(message:string){$('toast').textContent=message;$('toast').classList.add('visible');toastTime=1.8;}
@@ -206,12 +210,13 @@ function syncStoryControls(){
   if(storyWasActive!==inStory){input.clear();pendingJump=pendingSpecial=pendingUltimate=pendingFire=pendingInteract=false;sound.stopAll();storyWasActive=inStory;}
 }
 view.onFrame=dt=>{
+  runMetrics.observe(world,world.mode,metricMode(),world.missionIndex,world.time);
   flags.step(dt);
   syncStoryControls();
   sound.bossBattle=!!world.boss?.boss?.active;sound.scoreTheme=world.mission.score;
   view.interactKey=battleKey('interact');
   const frame=input.poll(dt),wasMenu=!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||feedback.open||flags.active;
-  if(online?.role==='guest'&&online.connected){pendingJump ||= frame.action.jump;pendingSpecial ||= frame.action.special;pendingUltimate ||= !!frame.action.ultimate;netClock+=dt;if(netClock>=1/30){online.input(wasMenu?{move:0,jump:false,fire:false,special:false,interact:false}:{...frame.action,jump:pendingJump,special:pendingSpecial,ultimate:pendingUltimate});pendingJump=pendingSpecial=pendingUltimate=false;netClock=0;}}
+  if(online?.role==='guest'&&online.connected){if(wasMenu||world.mode!=='playing'||world.story)guestActions.clear();else guestActions.add(frame.action);netClock+=dt;if(netClock>=1/30){online.input(wasMenu||world.mode!=='playing'||world.story?{move:0,jump:false,fire:false,special:false,interact:false}:guestActions.take(frame.action));netClock=0;}}
   if(world.mode==='cinematic'){cinematic.sync(world);cinematic.step(dt,frame.confirm||frame.action.jump);view.render(world,dt,0);sound.step(dt,false,false);publishOnline(dt);ui();return;}
   if(world.story&&world.mode==='playing'&&world.story.age>=.8&&frame.confirm)storySkip.click();
   if(frame.pause){if(feedback.open)feedback.close();else if(onlineMenu.open)closeOnlineMenu();else if(about.open)closeAbout();else if(operations.open)closeOperations();else if(roster.open)closeRoster();else if(settings.open)closeSettings();else if(world.mode==='playing')pause();else if(world.mode==='paused')resume();}
@@ -251,6 +256,7 @@ view.onFrame=dt=>{
 
 function syncOnlineControls(){for(const id of ['pause-restart','pause-roster'])$(id).hidden=!!online;}
 function leaveOnline(message?:string){
+ if(online)telemetry.event(message?'coop_error':'coop_leave',online.role,world.missionIndex);guestActions.clear();
  const old=online;online=null;old?.close();writer=null;outgoingEvents=[];netClock=0;netSequence=0;guestEpoch='';
  sound.stopAll();cinematic.dismiss();onlineMenu.close();feedback.close();flags.stop();practice=false;transition=0;
  world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);syncOnlineControls();showMenu();
@@ -276,6 +282,7 @@ async function enterOnline(role:'host'|'guest'){
   const {connectionConfig}=await import('./game/ice');
   roomCode=role==='host'?OnlineRoom.code():normalizeRoom($<HTMLInputElement>('online-code').value);
   if(!validRoom(roomCode)){$('online-status').textContent='Введіть 8 символів коду кімнати.';return;}
+  telemetry.event('coop_attempt',role,world.missionIndex);
   const hero=$<HTMLSelectElement>('online-hero').value as typeof HEROES[number]['id'];
   $('online-status').textContent='Готуємо пряме та резервне з’єднання…';
   const config=await connectionConfig(new URLSearchParams(location.search).get('relay')==='1');
@@ -284,6 +291,7 @@ async function enterOnline(role:'host'|'guest'){
    status:text=>$('online-status').textContent=text,
    created:code=>{$('online-status').textContent='Код: '+code.slice(0,4)+' '+code.slice(4)+' · очікуємо друга';$('online-invite').hidden=false;},
    connected:guestHero=>{
+    telemetry.event('coop_connected',role,world.missionIndex);
     if(role==='host'){
      sound.stopAll();world=new World(world.missionIndex,HEROES.map(h=>h.id),hero);world.addPlayer(guestHero);world.mode='playing';writer=new SnapshotWriter(world);
      onlineMenu.close();menu.hidden=true;pauseMenu.hidden=true;view.reset(world);input.clear();accumulator=0;canvas.focus();flags.play();sound.announce('missionStart',hero);
@@ -301,7 +309,7 @@ async function enterOnline(role:'host'|'guest'){
    command:onlineCommand,
    ended:message=>leaveOnline(message),
   },config);
- }catch{if(attempt!==onlineAttempt)return;$('online-status').textContent='Резервний сервіс з’єднання недоступний. Спробуйте ще раз за хвилину; одиночна гра працює.';}
+ }catch{if(attempt!==onlineAttempt)return;telemetry.event('coop_error',role,world.missionIndex);$('online-status').textContent='Резервний сервіс з’єднання недоступний. Спробуйте ще раз за хвилину; одиночна гра працює.';}
  finally{onlineLoading=false;}
 }
 for(const hero of HEROES)$<HTMLSelectElement>('online-hero').add(new Option(hero.name,hero.id));
@@ -311,11 +319,11 @@ $('online-close').onclick=closeOnlineMenu;onlineMenu.addEventListener('cancel',e
 $('online-create').onclick=()=>void enterOnline('host');$('online-join').onclick=()=>void enterOnline('guest');
 async function copyLink(url:string){try{await navigator.clipboard.writeText(url);toast('Посилання скопійовано');return true;}catch{toast('Скопіюйте посилання з адресного рядка');return false;}}
 $('online-invite').onclick=()=>{const url=new URL(location.href);url.search='';url.searchParams.set('room',roomCode);void copyLink(url.href);};
-$('share-game').onclick=()=>void copyLink('https://uaforce.thedimas.com');
+$('share-game').onclick=async()=>{if(await copyLink('https://uaforce.thedimas.com/?utm_source=friend'))telemetry.event('link_copy');};
 const support=supportUrl(SUPPORT_URL);if(support){$('support-development').hidden=false;$<HTMLAnchorElement>('support-link').href=support;}
 $('about-open').onclick=()=>{input.clear();about.showModal();$('about-close').focus();};
 function closeAbout(){about.close();input.clear();$('about-open').focus();}
 $('about-close').onclick=closeAbout;about.addEventListener('cancel',e=>{e.preventDefault();closeAbout();});
 
-void view.init().then(()=>{ready=true;for(const node of Array.from(document.querySelectorAll<HTMLElement>('.roster-image'))){const im=document.createElement('img');im.src=view.portrait(node.dataset.hero!);im.alt='';node.append(im);}view.reset(world);$<HTMLButtonElement>('primary').disabled=false;showMenu();const invite=new URLSearchParams(location.search).get('room');if(invite){$<HTMLInputElement>('online-code').value=invite;$('online-open').click();}const record=readRecord(world.missionIndex);if(record)$('result').textContent=`Найкращий час: ${formatTime(record.seconds)}`;ui();}).catch(error=>{$('primary').textContent='Не вдалося завантажити гру';$('menu-copy').textContent='Оновіть сторінку та перевірте локальний сервер.';console.error(error);});
-window.addEventListener('pagehide',()=>{online?.close();input.destroy();sound.dispose();if(view.app)view.dispose();},{once:true});
+void view.init().then(()=>{telemetry.event('load_ready');ready=true;for(const node of Array.from(document.querySelectorAll<HTMLElement>('.roster-image'))){const im=document.createElement('img');im.src=view.portrait(node.dataset.hero!);im.alt='';node.append(im);}view.reset(world);$<HTMLButtonElement>('primary').disabled=false;showMenu();const invite=new URLSearchParams(location.search).get('room');if(invite){$<HTMLInputElement>('online-code').value=invite;$('online-open').click();}const record=readRecord(world.missionIndex);if(record)$('result').textContent=`Найкращий час: ${formatTime(record.seconds)}`;ui();}).catch(error=>{telemetry.event('load_error');telemetry.flush();$('primary').textContent='Не вдалося завантажити гру';$('menu-copy').textContent='Оновіть сторінку або повідомте про помилку кнопкою внизу.';console.error(error);});
+window.addEventListener('pagehide',()=>{runMetrics.leave();telemetry.flush();online?.close();input.destroy();sound.dispose();if(view.app)view.dispose();},{once:true});
