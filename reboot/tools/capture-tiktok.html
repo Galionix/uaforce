@@ -1,0 +1,49 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>UA Force — TikTok capture</title><style>body{background:#081b25;color:#ffdf65;font:18px monospace}canvas{max-height:78vh}#scene{display:none}button{padding:12px;font:inherit}pre{white-space:pre-wrap}</style><button id="record" disabled>Записати 3 моменти · звук у файл</button><p id="status">Готую бійців…</p><canvas id="scene"></canvas><canvas id="output" width="1080" height="1920"></canvas><pre id="proof"></pre><script type="module">
+import {World,IDLE} from '/src/game/world.ts';import {View} from '/src/game/view.ts';import {HEROES} from '/src/game/content.ts';import {Sound} from '/src/game/audio.ts';import {addInfantry} from '/src/game/infantry.ts';import {OnlineRoom} from '/src/game/online.ts';import {connectionConfig} from '/src/game/ice.ts';import {SnapshotWriter,applySnapshot} from '/src/game/coop-state.ts';
+const scene=document.querySelector('#scene'),out=document.querySelector('#output'),ctx=out.getContext('2d'),view=new View(scene),status=document.querySelector('#status'),button=document.querySelector('button');
+const small=document.createElement('canvas');small.width=360;small.height=640;const c=small.getContext('2d');
+let audioOut;const sound=new Sound(false,ac=>{audioOut=ac.createMediaStreamDestination();return audioOut;});sound.volume=.7;sound.musicVolume=.34;sound.voiceVolume=.65;
+let w,host,guest,remote,writer,recording=false,clock=0,prev=0,part=-1,net=0,seq=0,packets=0,recorder,route='pending';
+const evidence={scriptedInputs:true,stagedArena:true,sameMachine:true,speakerConnected:false,barrelLift:0,barrelThrow:0,highFive:0,ultimate:0,kills:[0,0,0],snapshots:0};
+const headlines=[['ДОСТАВКА','БЕЗ КУР’ЄРА.'],['ДАЙ П’ЯТЬ.','ВСТИГНЕМО ВСЕ.'],['КОРОТКО','І ПО СУТІ.']];
+const punch=[['ПІДНЯВ. КИНУВ.','АРГУМЕНТ ДОСТАВЛЕНО.'],['ВОРОГИ: ×0,3','ВИ З ДРУГОМ: ×1'],['КОЛИ БУЛАВИ','ВЖЕ НЕДОСТАТНЬО.']];
+function setup(i){part=i;prev=0;w=new World(0,HEROES.map(h=>h.id),'shevchenko');w.mode='playing';w.storyDone=['river-watch'];w.boxes=w.boxes.filter(b=>b.y<0);w.enemies=[];w.allies=[];w.mounts=[];w.ammoCrates=[];w.medkits=[];w.ladders=[];w.player.x=16;w.player.y=0;w.player.grounded=true;
+ if(i===0){w.boxes.push({id:w.nextId(),x:17,y:0,w:1,h:1,hp:25,maxHp:25,kind:'barrel'});for(const x of [27,30,33])addInfantry(w,'rifle',x);}
+ if(i===1){w.addPlayer('lesya');for(const x of [25,29,33])addInfantry(w,'rifle',x);writer=new SnapshotWriter(w);remote=new World();}
+ if(i===2)for(const x of [20,23,27,31])addInfantry(w,'rifle',x);
+ view.reset(w);view.interactKey='□';sound.stopAll();sound.scoreTheme='river';}
+function once(t,x){return prev<x&&t>=x;}
+function drawText(text,y,size=20,color='#fff2d3'){c.font=`bold ${size}px monospace`;c.fillStyle=color;c.textAlign='center';c.fillText(text,173,y);}
+view.onFrame=dt=>{
+ if(!w)return;if(recording)clock+=dt;const i=Math.min(2,Math.floor(clock/8));if(i!==part)setup(i);const t=clock-i*8;
+ if(recording){
+  for(const a of w.players)a.body.invulnerable=100;
+  const a={...IDLE},b={...IDLE};
+  if(i===0){a.interact=once(t,.6)||once(t,2.1);a.move=t>3.5&&t<6.3?1:0;a.fire=t>5;}
+  if(i===1){b.interact=t>.65&&t<.8;a.move=b.move=t>1.7&&t<4.2?1:0;a.fire=b.fire=t>1.8;a.ultimate=once(t,4.4);b.special=once(t,3.2);guest.input(b);w.stepPlayers(dt,[a,host.remote.take(performance.now()/1000)]);net+=dt;if(net>.05){host.state(writer.snapshot(++seq,w.events));net=0;}}
+  else{if(i===2){a.ultimate=once(t,1.6);a.special=once(t,4.1);a.move=t>3&&t<5?1:0;a.fire=t>3.2;}w.step(dt,a);}
+  for(const a of w.players)a.body.invulnerable=0;
+  for(const e of w.events){view.event(e);sound.event(e,w.player.x);if(e.type in evidence&&typeof evidence[e.type]==='number')evidence[e.type]++;}
+  evidence.kills[i]=w.kills;w.events=[];sound.syncWorld(w);sound.step(dt,t<8,true,t>2);prev=t;
+ }
+ view.render(w,dt,recording?1:0);c.imageSmoothingEnabled=false;c.fillStyle='#081c28';c.fillRect(0,0,360,640);
+ // All output uses a single 360px design grid, then nearest-neighbour ×3.
+ c.fillStyle='#1887ba';c.fillRect(0,25,360,7);c.fillStyle='#ffdc63';c.fillRect(0,32,360,5);
+ drawText('UA FORCE',73,30,'#ffdc63');headlines[i].forEach((s,n)=>drawText(s,116+n*27,24));
+ // Tight integer ×2 action crop; the barrel gets a short tracking pan.
+ const pan=i===0?Math.min(1,Math.max(0,(t-2.1)/.85))*Math.max(0,Math.min(1,(5-t)/.8))*85:0;
+ const cropX=Math.round(Math.max(0,Math.min(460,w.player.x*16-view.cameraX-50+pan)));
+ c.drawImage(scene,cropX,118,180,180,0,178,360,360);
+ c.fillStyle='#ffdc63';c.fillRect(0,539,360,3);
+ punch[i].forEach((s,n)=>drawText(s,568+n*23,17));
+ drawText('uaforce.thedimas.com/tiktok',166,14,'#8be0fa');drawText('БЕЗКОШТОВНО НА ПК · КЛАВІАТУРА / ГЕЙМПАД',610,10,'#b6d0d6');
+ c.fillStyle='#1c5468';c.fillRect(18,620,324,3);c.fillStyle='#ffdc63';c.fillRect(18,620,324*t/8,3);
+ ctx.imageSmoothingEnabled=false;ctx.drawImage(small,0,0,1080,1920);
+ if(recording)status.textContent=`Запис ${clock.toFixed(1)}/24 с · звук лише у файл · ${packets} пакетів`;
+ if(recording&&clock>=24){recording=false;sound.stopAll();recorder.stop();}
+};
+await view.init();setup(0);
+try{const config=await connectionConfig();await new Promise((resolve,reject)=>{const deadline=setTimeout(()=>reject(Error('Мережевий таймаут')),45000);const base={status:s=>status.textContent=s,created:()=>{},connected:()=>{},snapshot:()=>{},command:()=>{},ended:s=>{if(recording){recording=false;recorder?.stop();}reject(Error(s));}};host=new OnlineRoom('host',OnlineRoom.code(),'shevchenko',{...base,created:code=>{guest=new OnlineRoom('guest',code,'lesya',{...base,connected:()=>{clearTimeout(deadline);resolve();},snapshot:s=>{packets++;if(remote)applySnapshot(remote,s);}},config);}},config);});route=await guest.route();button.disabled=false;status.textContent='Готово. Справжні два WebRTC-клієнти. Динаміки не підключені.';}catch(e){status.textContent=String(e);}
+button.onclick=async()=>{button.disabled=true;await sound.enable();sound.step(.01,false,true);await new Promise(r=>setTimeout(r,2000));clock=0;part=-1;const stream=out.captureStream(30);audioOut.stream.getAudioTracks().forEach(t=>stream.addTrack(t));const chunks=[];recorder=new MediaRecorder(stream,{mimeType:'video/webm;codecs=vp9,opus',videoBitsPerSecond:8000000,audioBitsPerSecond:192000});recorder.ondataavailable=e=>chunks.push(e.data);recorder.onstop=async()=>{evidence.snapshots=packets;evidence.route=route;document.querySelector('#proof').textContent=JSON.stringify(evidence);if(clock<24||!evidence.barrelThrow||!evidence.highFive||!evidence.ultimate||packets<50){status.textContent='Не всі моменти підтверджено: не експортуємо';return;}const r=await fetch('http://127.0.0.1:5190/capture',{method:'POST',headers:{'Content-Type':'video/webm'},body:new Blob(chunks,{type:recorder.mimeType})});status.textContent=r.ok?'Готово. 24 секунди збережено, звук тільки у файлі.':'Помилка збереження';stream.getTracks().forEach(t=>t.stop());host.close();guest.close();};recording=true;recorder.start();};
+window.addEventListener('pagehide',()=>{sound.dispose();view.dispose();host?.close();guest?.close();});
+</script></html>
