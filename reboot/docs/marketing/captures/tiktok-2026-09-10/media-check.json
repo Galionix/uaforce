@@ -20,7 +20,8 @@
     "format": {
       "duration": "7.700000",
       "size": "2436296"
-    }
+    },
+    "sha256": "2d71902b07ba00148bd8ccdcd46e95360f8c8f61750b4d35289aaa736611170d"
   },
   {
     "file": "02-high-five.mp4",
@@ -43,7 +44,8 @@
     "format": {
       "duration": "7.700000",
       "size": "1800407"
-    }
+    },
+    "sha256": "57661df06b67c4823ccf6d70f120313486a820e8605a7ea746ade187d6d1a259"
   },
   {
     "file": "03-shevchenko.mp4",
@@ -66,6 +68,7 @@
     "format": {
       "duration": "7.700000",
       "size": "2836689"
-    }
+    },
+    "sha256": "a1cf36f79a6bbfa91bd64d23d18caff2a9b1021df0689f33090d3d897f0dd389"
   }
 ]
