@@ -1,0 +1,10 @@
+{
+  "voice": "Fenrir",
+  "take": "deep",
+  "model": "gemini-3.1-flash-tts-preview",
+  "text": "Перемо́га!\nНовий боєць! Тарас Шевче́нко!\nЛе́ся Украї́нка!\nДо бо́ю!",
+  "prompt": "Synthesize speech. A charismatic male action-game announcer with a natural low chest register, muscular dramatic arena projection and a dangerous playful grin. Use a distinctly LOWER vocal pitch and darker richer timbre than your usual bright speaking voice. Full chest resonance, powerful bass presence, dense warm harmonics. Keep NORMAL energetic game-announcer speaking speed, crisp short words and decisive accents. Do not slow the delivery or stretch syllables. Project strongly with clear consonants, no yelling, rasp, growling or whispering. Keep a natural human voice. Native standard Ukrainian. Crisp Ukrainian consonants, especially the voiced Ukrainian г in перемога; stress перемОга. Do not swallow consonants or change words. Dry clean studio voice, no music, no effects, no pitch processing. Brief 0.45 second pauses between the four lines. Keep the full take around 10 to 12 seconds. Speak ONLY the transcript once.\nTRANSCRIPT:\nПеремо́га!\nНовий боєць! Тарас Шевче́нко!\nЛе́ся Украї́нка!\nДо бо́ю!",
+  "seconds": 13.16,
+  "sha256": "c282e91f854a20120edb0060da0edbd3050284703e34a97966841539b252f203",
+  "playbackDuringGeneration": false
+}

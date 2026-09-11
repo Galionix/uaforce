@@ -1,0 +1,38 @@
+{
+  "method": "Approximate autocorrelation pitch estimate on 60ms voiced windows, bandpass 70-500Hz. Can include octave errors. Not a human timbre/quality assessment. Duration includes natural pauses; speech was not stretched or pitch-shifted.",
+  "voices": [
+    {
+      "voice": "orus",
+      "original": {
+        "seconds": 11.88,
+        "estimatedMedianVoicedHz": 213.3
+      },
+      "deep": {
+        "seconds": 12.48,
+        "estimatedMedianVoicedHz": 186.0
+      }
+    },
+    {
+      "voice": "kore",
+      "original": {
+        "seconds": 11.8,
+        "estimatedMedianVoicedHz": 260.9
+      },
+      "deep": {
+        "seconds": 11.16,
+        "estimatedMedianVoicedHz": 242.4
+      }
+    },
+    {
+      "voice": "fenrir",
+      "original": {
+        "seconds": 10.56,
+        "estimatedMedianVoicedHz": 214.3
+      },
+      "deep": {
+        "seconds": 13.16,
+        "estimatedMedianVoicedHz": 145.5
+      }
+    }
+  ]
+}

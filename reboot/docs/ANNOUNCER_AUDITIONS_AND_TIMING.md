@@ -17,3 +17,9 @@ Hero music has a 1.1s clear lead, lowers to 32% under the spoken lines, then ret
 Validation: mocked scheduling test covers the longest hero name, serial speech, restored gain and busy lifetime through the tail. No audio is played during tests.
 
 All 377 tests and the release build passed. Timing/music correction published to https://uaforce.thedimas.com: deployment `925b5c1e-73d9-4429-a2a5-403614a62cb4`, public bundle `game-Dk_6KZKp.js`. Voice auditions remain local until owner selection.
+
+## Owner correction: lower timbre, not slower tempo
+
+Owner clarified that the desired change is vocal timbre/pitch, not speaking speed. The initially started slow-take request was interrupted before a local result was saved. `--take deep` now asks for lower pitch, darker chest resonance and normal energetic delivery. Three new independent TTS performances are saved under `voice-auditions-2026-09-12/deep`; no time stretching, playback-rate or pitch-shift processing was applied. Natural take durations differ (11.16–13.16s including pauses).
+
+Blind automatic transcription recognized every intended Ukrainian line in all three deep takes. An approximate autocorrelation analysis also found lower median voiced pitch than each original take (see `deep/comparison.json`); these estimates can contain octave errors and do not replace the owner's listening judgment. Fenrir showed the largest change. Production voices remain pending selection; no game deployment for auditions.
