@@ -11362,13 +11362,94 @@
           "at": 0
         }
       ]
+    },
+    {
+      "id": "team-hand-raise",
+      "file": "public/assets/audio/sfx/team-hand-raise.wav",
+      "seconds": 0.32,
+      "loop": false,
+      "peak": 0.5731797858734737,
+      "rms": 0.14,
+      "sha256": "40ecc5457c021afb0bdc35250f53d12e2df61827a4c6314ff63e1f27a988ce52",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "team-hand-raise.wav",
+          "sourceSha256": "441045980206586a6f99917107c66ebe112b65091ef1670254baaf6f2ab04334",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 42812,
+          "prompt": "Clothes rustling softly.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 2.1220145833333333,
+          "rate": 1.03,
+          "cut": 0.32,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "team-hand-clap",
+      "file": "public/assets/audio/sfx/team-hand-clap.wav",
+      "seconds": 0.38,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.03068824576031504,
+      "sha256": "4429c2e0bc2adf815e250711c0d40a529dba5244c9ed8a0dc81759c9e9e3c72c",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "team-hand-clap.wav",
+          "sourceSha256": "51f00341b8cbee131d0cfc4c9b4e63d7a6a13534ad13b42f3f4b056395bc03de",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 42802,
+          "prompt": "One single crisp hand clap, palm slapping palm.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 1.377,
+          "rate": 1,
+          "cut": 0.38,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "team-hand-lower",
+      "file": "public/assets/audio/sfx/team-hand-lower.wav",
+      "seconds": 0.32,
+      "loop": false,
+      "peak": 0.5748237599567529,
+      "rms": 0.14,
+      "sha256": "96cd0d8961a069adfad27fd7fcdabb7ba8990c42269204ee620463935fbd694a",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "team-hand-lower.wav",
+          "sourceSha256": "441045980206586a6f99917107c66ebe112b65091ef1670254baaf6f2ab04334",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 42812,
+          "prompt": "Clothes rustling softly.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 2.122,
+          "rate": 1,
+          "cut": 0.32,
+          "gain": 1,
+          "at": 0
+        }
+      ]
     }
   ],
   "missing": [],
   "bank": {
     "file": "public/assets/audio/sfx/combat-bank.wav",
-    "sha256": "e2e03052be875aa708893de2570bf91ab1a619fa6b9344f437b2b90ffd5775bf",
-    "seconds": 215.60575
+    "sha256": "02a3bf2a7d9355057af0aa6e09612acb2671ab9c040886d73a25dcd406c8296a",
+    "seconds": 216.74575
   },
   "review": {
     "status": "local-playtest-candidate",

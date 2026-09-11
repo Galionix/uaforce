@@ -27,7 +27,11 @@ export function interactionTarget(w:World){
  return objectInteraction(w)??(highFivePartner(w)?{kind:'highFive' as const,x:(w.players[0].body.x+w.players[1].body.x)/2,y:Math.max(...w.players.map(a=>a.body.y))+4.2}:undefined);
 }
 /** The invitation is host state, not an automatic action on the other player. */
-export function cancelHighFiveOffer(w:World){w.highFive.offeredBy=-1;w.highFive.offerAge=0;}
+export function cancelHighFiveOffer(w:World,lower=true){
+ const actor=w.players.find(a=>a.id===w.highFive.offeredBy);
+ if(lower&&actor)w.emitSfx('team-hand-lower',actor.body.x,actor.body.y+1,actor.heroId);
+ w.highFive.offeredBy=-1;w.highFive.offerAge=0;
+}
 export function maintainHighFiveOffer(w:World,dt:number){
  const h=w.highFive;if(h.offeredBy<0)return;
  const a=w.players.find(a=>a.id===h.offeredBy),b=w.players.find(a=>a.id!==h.offeredBy);
@@ -41,12 +45,13 @@ export function doHighFive(w:World){
  if(w.highFive.offeredBy<0){
   a.facing=b.x>=a.x?1:-1;
   w.highFive.offeredBy=w.actor.id;w.highFive.offerAge=0;
+  w.emitSfx('team-hand-raise',a.x,a.y+1);
   return true;
  }
  // The responder must supply their own fresh interact edge, in contact range.
  if(w.highFive.offeredBy!==partner.id)return false;
  a.facing=b.x>=a.x?1:-1;b.facing=-a.facing;
  Object.assign(w.highFive,{left:TEAM_BOOST.seconds,cooldown:TEAM_BOOST.cooldown,age:0,x:(a.x+b.x)/2,y:Math.max(a.y,b.y)+1.4});
- cancelHighFiveOffer(w);
+ cancelHighFiveOffer(w,false);
  w.emit('highFive',w.highFive.x,w.highFive.y);return true;
 }

@@ -16,7 +16,7 @@ test('nearby hint follows interaction priority, vanishes with distance and exclu
 });
 test('either player offers first, waits, and needs a fresh press from the other player',()=>{
  for(const id of [0,1]){const w=stage(true),offer=[IDLE,IDLE].map((a,i)=>({...a,interact:i===id}));
-  tick(w,1,offer);assert.equal(w.highFive.offeredBy,id);assert.equal(w.highFive.left,0);assert.equal(w.highFive.cooldown,0);assert.equal(w.events.length,0);
+  tick(w,1,offer);assert.equal(w.highFive.offeredBy,id);assert.equal(w.highFive.left,0);assert.equal(w.highFive.cooldown,0);assert.deepEqual(w.events.map(e=>e.sfx),['team-hand-raise']);
   const positions=w.players.map(a=>a.body.x);tick(w,120,offer);assert.deepEqual(w.players.map(a=>a.body.x),positions);assert.equal(w.highFive.left,0);
   tick(w,1,[{...IDLE,interact:true},{...IDLE,interact:true}]);assert.equal(w.highFive.left,5);assert.equal(w.highFive.offeredBy,-1);assert.equal(w.events.filter(e=>e.type==='highFive').length,1);
   tick(w,1300,[{...IDLE,interact:true},{...IDLE,interact:true}]);assert.equal(w.events.filter(e=>e.type==='highFive').length,1);
@@ -52,3 +52,17 @@ test('enemy patrol and reaction clocks advance at 30 percent while the team boos
 test('pending raised hand is synchronized without a high-five event or boost',()=>{const w=stage(true);tick(w,1,[{...IDLE,interact:true},IDLE]);tick(w,15);w.mode='paused';const before=JSON.stringify(w.highFive);tick(w,60);assert.equal(JSON.stringify(w.highFive),before);const guest=new World();applySnapshot(guest,new SnapshotWriter(w).snapshot(1,w.events));assert.equal(guest.highFive.offeredBy,0);assert.equal(guest.highFive.left,0);assert.equal(guest.events.filter(e=>e.type==='highFive').length,0);});
 
 test('short guest confirmation between host ticks survives network input buffering',()=>{const w=stage(true),input=new RemoteInput();tick(w,1,[{...IDLE,interact:true},IDLE]);input.receive(1,{...IDLE,interact:true},0);input.receive(2,IDLE,.001);tick(w,1,[IDLE,input.take(.002)]);assert.equal(w.highFive.left,5);assert.equal(input.take(.003).interact,false);});
+
+
+test('hand phase sounds fire once, lower after recoil or cancellation, and pause freezes the cue',()=>{
+ const w=stage(true);const phases=()=>w.events.filter(e=>e.sfx?.startsWith('team-hand')).map(e=>e.sfx);
+ tick(w,1,[{...IDLE,interact:true},IDLE]);tick(w,120,[{...IDLE,interact:true},IDLE]);
+ assert.deepEqual(phases(),['team-hand-raise']);
+ tick(w,1,[IDLE,{...IDLE,interact:true}]);assert.deepEqual(phases(),['team-hand-raise'],'confirmation does not lower arms before the clap');
+ tick(w,10);w.mode='paused';tick(w,60);assert.deepEqual(phases(),['team-hand-raise']);w.mode='playing';tick(w,10);
+ assert.deepEqual(phases(),['team-hand-raise','team-hand-lower']);tick(w,120);assert.equal(phases().length,2);
+ const cancelled=stage(true);tick(cancelled,1,[{...IDLE,interact:true},IDLE]);tick(cancelled,1);tick(cancelled,1,[{...IDLE,interact:true},IDLE]);tick(cancelled,100);
+ assert.deepEqual(cancelled.events.filter(e=>e.sfx?.startsWith('team-hand')).map(e=>e.sfx),['team-hand-raise','team-hand-lower']);
+ assert.equal(cancelled.events.some(e=>e.type==='highFive'),false);
+ const guest=new World();applySnapshot(guest,new SnapshotWriter(w).snapshot(1,w.events));assert.deepEqual(guest.events.filter(e=>e.sfx?.startsWith('team-hand')).map(e=>e.sfx),phases());
+});

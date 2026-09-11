@@ -355,7 +355,10 @@ export class World {
       if(arena&&this.players.length>1)for(const a of this.players){a.body.x=Math.max(arena.left+1,Math.min(arena.right-1,a.body.x));a.checkpoint=arena.left+2;}
       return;
     }
+    const previousFiveAge=this.highFive.age;
     dt=Math.min(dt,1/30);maintainHighFiveOffer(this,dt);this.highFive.left=Math.max(0,this.highFive.left-dt);this.highFive.cooldown=Math.max(0,this.highFive.cooldown-dt);this.highFive.age+=dt;this.time+=dt;this.noises=this.noises.filter(n=>n.until>this.time);
+    // Arms recoil at .3s in View; emit once on that transition, never on a wall-clock timer.
+    if(previousFiveAge<.3&&this.highFive.age>=.3)this.emitSfx('team-hand-lower',this.highFive.x,this.highFive.y);
     this.withPlayer(this.nearestPlayer(this.mission.exit,0).id,()=>this.stepEvac(dt));
     if(this.evac.phase==='departing'||this.mode!=='playing'){
       if(this.evac.phase==='departing')for(const a of this.players){a.body.x=this.evac.x;a.body.y=this.evac.y-1;}

@@ -3633,6 +3633,36 @@
       "generateSeconds": 10,
       "dtype": "fp32",
       "cfg": 1
+    },
+    {
+      "id": "team-hand-raise",
+      "prompt": "Clothes rustling softly.",
+      "seconds": 0.36,
+      "generateSeconds": 8,
+      "seed": 42812,
+      "dtype": "fp32",
+      "cfg": 1,
+      "loop": false
+    },
+    {
+      "id": "team-hand-clap",
+      "prompt": "One single crisp hand clap, palm slapping palm.",
+      "seconds": 0.38,
+      "generateSeconds": 8,
+      "seed": 42802,
+      "dtype": "fp32",
+      "cfg": 1,
+      "loop": false
+    },
+    {
+      "id": "team-hand-lower",
+      "prompt": "Clothes rustling softly.",
+      "seconds": 0.32,
+      "generateSeconds": 8,
+      "seed": 42812,
+      "dtype": "fp32",
+      "cfg": 1,
+      "loop": false
     }
   ]
 }

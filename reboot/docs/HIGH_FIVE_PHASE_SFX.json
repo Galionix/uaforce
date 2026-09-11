@@ -1,0 +1,433 @@
+{
+  "model": "Stable Audio 3 Small SFX",
+  "runtime": "official MLX",
+  "serviceCostUSD": 0,
+  "humanAudition": false,
+  "jobs": [
+    {
+      "id": "team-hand-raise",
+      "prompt": "Clothes rustling softly.",
+      "seconds": 0.36,
+      "generateSeconds": 8,
+      "seed": 42812,
+      "dtype": "fp32",
+      "cfg": 1,
+      "loop": false
+    },
+    {
+      "id": "team-hand-clap",
+      "prompt": "One single crisp hand clap, palm slapping palm.",
+      "seconds": 0.38,
+      "generateSeconds": 8,
+      "seed": 42802,
+      "dtype": "fp32",
+      "cfg": 1,
+      "loop": false
+    },
+    {
+      "id": "team-hand-lower",
+      "prompt": "Clothes rustling softly.",
+      "seconds": 0.32,
+      "generateSeconds": 8,
+      "seed": 42812,
+      "dtype": "fp32",
+      "cfg": 1,
+      "loop": false
+    }
+  ],
+  "firstScreening": {
+    "team-hand-raise": {
+      "sha256": "565523d9f3190a8246086e022ea91e6c30c0aa190f054224e97bde4c3e48fcd3",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "A quick swish of a cloth sleeve moving upward. Clothing rustling.",
+      "expectedScore": 0.5092908143997192,
+      "top": [
+        {
+          "description": "one footstep on dry earth, compact mechanical joints",
+          "similarity": 0.5957
+        },
+        {
+          "description": "one footstep on dry earth, thick paper and leather coat",
+          "similarity": 0.5706
+        },
+        {
+          "description": "one footstep on dry earth, soft cloth and feathers",
+          "similarity": 0.5581
+        },
+        {
+          "description": "The sound of a fast swoosh of air.",
+          "similarity": 0.536
+        },
+        {
+          "description": "one footstep on dry earth, soft tactical fabric and quiet boots",
+          "similarity": 0.5348
+        }
+      ],
+      "musicScore": -0.117,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    "team-hand-clap": {
+      "sha256": "4429c2e0bc2adf815e250711c0d40a529dba5244c9ed8a0dc81759c9e9e3c72c",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "One single crisp hand clap, palm slapping palm.",
+      "expectedScore": 0.6955581903457642,
+      "top": [
+        {
+          "description": "One single crisp hand clap, palm slapping palm.",
+          "similarity": 0.6956
+        },
+        {
+          "description": "One crisp loud palm to palm high five hand clap, followed by a short powerful airy swoosh. Exaggerated cartoon action celebration, dry close sound effect, no speech, no music, no electronic tones.",
+          "similarity": 0.4921
+        },
+        {
+          "description": "one small crisp equipment latch click, thick paper and leather coat",
+          "similarity": 0.4401
+        },
+        {
+          "description": "a single crossbow string snapping and bolt releasing",
+          "similarity": 0.4396
+        },
+        {
+          "description": "The sound of a single gunshot.",
+          "similarity": 0.4271
+        }
+      ],
+      "musicScore": -0.039,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    "team-hand-lower": {
+      "sha256": "5bb5f8b4bb1b538abc00d7c892d8e9021dcf274d44671bba15fc59e8749d429c",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "A soft short rustle of clothing as an arm drops to the side.",
+      "expectedScore": 0.4045792818069458,
+      "top": [
+        {
+          "description": "one footstep on dry earth, soft tactical fabric and quiet boots",
+          "similarity": 0.572
+        },
+        {
+          "description": "one footstep on dry earth, thick paper and leather coat",
+          "similarity": 0.5715
+        },
+        {
+          "description": "one footstep on dry earth, cloth and light leather boots",
+          "similarity": 0.554
+        },
+        {
+          "description": "one footstep on dry earth, compact mechanical joints",
+          "similarity": 0.538
+        },
+        {
+          "description": "one footstep on dry earth, heavy boots and gritty stone",
+          "similarity": 0.525
+        }
+      ],
+      "musicScore": -0.2238,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    }
+  },
+  "rejectedReason": "Raise/lower candidates screened closer to footsteps; regenerate lighter fabric-only foley.",
+  "secondScreening": {
+    "team-hand-raise": {
+      "sha256": "20f4752705c4064add8372c833e3a3c4663de739a2713373578010d7bc19217a",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "Cloth rustling. A sleeve swishing quickly.",
+      "expectedScore": 0.4309341311454773,
+      "top": [
+        {
+          "description": "one body landing on earth with a dull thud, soft tactical fabric and quiet boots",
+          "similarity": 0.5268
+        },
+        {
+          "description": "one body landing on earth with a dull thud, soft cloth and feathers",
+          "similarity": 0.5017
+        },
+        {
+          "description": "one body landing on earth with a dull thud, thick paper and leather coat",
+          "similarity": 0.4998
+        },
+        {
+          "description": "one body landing on earth with a dull thud, cloth and light leather boots",
+          "similarity": 0.4908
+        },
+        {
+          "description": "one footstep on dry earth, thick paper and leather coat",
+          "similarity": 0.4741
+        }
+      ],
+      "musicScore": -0.0268,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    "team-hand-clap": {
+      "sha256": "4429c2e0bc2adf815e250711c0d40a529dba5244c9ed8a0dc81759c9e9e3c72c",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "One single crisp hand clap, palm slapping palm.",
+      "expectedScore": 0.6955581903457642,
+      "top": [
+        {
+          "description": "One single crisp hand clap, palm slapping palm.",
+          "similarity": 0.6956
+        },
+        {
+          "description": "One crisp loud palm to palm high five hand clap, followed by a short powerful airy swoosh. Exaggerated cartoon action celebration, dry close sound effect, no speech, no music, no electronic tones.",
+          "similarity": 0.4921
+        },
+        {
+          "description": "one small crisp equipment latch click, thick paper and leather coat",
+          "similarity": 0.4401
+        },
+        {
+          "description": "a single crossbow string snapping and bolt releasing",
+          "similarity": 0.4396
+        },
+        {
+          "description": "The sound of a single gunshot.",
+          "similarity": 0.4271
+        }
+      ],
+      "musicScore": -0.039,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    "team-hand-lower": {
+      "sha256": "96cd0d8961a069adfad27fd7fcdabb7ba8990c42269204ee620463935fbd694a",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "Clothes rustling softly.",
+      "expectedScore": 0.34376561641693115,
+      "top": [
+        {
+          "description": "Cloth rustling. A sleeve swishing quickly.",
+          "similarity": 0.496
+        },
+        {
+          "description": "The sound of a fast swoosh of air.",
+          "similarity": 0.486
+        },
+        {
+          "description": "one body landing on earth with a dull thud, thick paper and leather coat",
+          "similarity": 0.4044
+        },
+        {
+          "description": "quick takeoff scuff and cloth movement, thick paper and leather coat",
+          "similarity": 0.4005
+        },
+        {
+          "description": "one body landing on earth with a dull thud, soft tactical fabric and quiet boots",
+          "similarity": 0.3827
+        }
+      ],
+      "musicScore": 0.0908,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    }
+  },
+  "thirdScreening": {
+    "team-hand-raise": {
+      "sha256": "8ef7b184a62048e527212eff57113f7163ed56432a09c2d4bb92b28853c3ed07",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "Clothes rustling softly.",
+      "expectedScore": 0.2908683121204376,
+      "top": [
+        {
+          "description": "one body landing on earth with a dull thud, thick paper and leather coat",
+          "similarity": 0.5178
+        },
+        {
+          "description": "one body landing on earth with a dull thud, soft tactical fabric and quiet boots",
+          "similarity": 0.5141
+        },
+        {
+          "description": "one body landing on earth with a dull thud, cloth and light leather boots",
+          "similarity": 0.502
+        },
+        {
+          "description": "one body landing on earth with a dull thud, leather belt and military boots",
+          "similarity": 0.4871
+        },
+        {
+          "description": "one body landing on earth with a dull thud, soft cloth and feathers",
+          "similarity": 0.4836
+        }
+      ],
+      "musicScore": 0.0495,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    "team-hand-clap": {
+      "sha256": "4429c2e0bc2adf815e250711c0d40a529dba5244c9ed8a0dc81759c9e9e3c72c",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "One single crisp hand clap, palm slapping palm.",
+      "expectedScore": 0.6955581903457642,
+      "top": [
+        {
+          "description": "One single crisp hand clap, palm slapping palm.",
+          "similarity": 0.6956
+        },
+        {
+          "description": "One crisp loud palm to palm high five hand clap, followed by a short powerful airy swoosh. Exaggerated cartoon action celebration, dry close sound effect, no speech, no music, no electronic tones.",
+          "similarity": 0.4921
+        },
+        {
+          "description": "one small crisp equipment latch click, thick paper and leather coat",
+          "similarity": 0.4401
+        },
+        {
+          "description": "a single crossbow string snapping and bolt releasing",
+          "similarity": 0.4396
+        },
+        {
+          "description": "The sound of a single gunshot.",
+          "similarity": 0.4271
+        }
+      ],
+      "musicScore": -0.039,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    "team-hand-lower": {
+      "sha256": "96cd0d8961a069adfad27fd7fcdabb7ba8990c42269204ee620463935fbd694a",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "Clothes rustling softly.",
+      "expectedScore": 0.34376561641693115,
+      "top": [
+        {
+          "description": "The sound of a fast swoosh of air.",
+          "similarity": 0.486
+        },
+        {
+          "description": "one body landing on earth with a dull thud, thick paper and leather coat",
+          "similarity": 0.4044
+        },
+        {
+          "description": "quick takeoff scuff and cloth movement, thick paper and leather coat",
+          "similarity": 0.4005
+        },
+        {
+          "description": "one body landing on earth with a dull thud, soft tactical fabric and quiet boots",
+          "similarity": 0.3827
+        },
+        {
+          "description": "one body landing on earth with a dull thud, soft cloth and feathers",
+          "similarity": 0.3825
+        }
+      ],
+      "musicScore": 0.0908,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    }
+  },
+  "editingNote": "Raise and lower use the same locally generated fabric take for a consistent material, with separate pitch/length edits; clap is a separately generated take.",
+  "finalScreening": {
+    "team-hand-raise": {
+      "sha256": "40ecc5457c021afb0bdc35250f53d12e2df61827a4c6314ff63e1f27a988ce52",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "Clothes rustling softly.",
+      "expectedScore": 0.3489437401294708,
+      "top": [
+        {
+          "description": "The sound of a fast swoosh of air.",
+          "similarity": 0.4344
+        },
+        {
+          "description": "one body landing on earth with a dull thud, thick paper and leather coat",
+          "similarity": 0.3938
+        },
+        {
+          "description": "The sound of clothes rustling.",
+          "similarity": 0.3875
+        },
+        {
+          "description": "quick takeoff scuff and cloth movement, thick paper and leather coat",
+          "similarity": 0.3795
+        },
+        {
+          "description": "one body landing on earth with a dull thud, soft tactical fabric and quiet boots",
+          "similarity": 0.3736
+        }
+      ],
+      "musicScore": 0.0773,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    "team-hand-clap": {
+      "sha256": "4429c2e0bc2adf815e250711c0d40a529dba5244c9ed8a0dc81759c9e9e3c72c",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "One single crisp hand clap, palm slapping palm.",
+      "expectedScore": 0.6955581903457642,
+      "top": [
+        {
+          "description": "One single crisp hand clap, palm slapping palm.",
+          "similarity": 0.6956
+        },
+        {
+          "description": "One crisp loud palm to palm high five hand clap, followed by a short powerful airy swoosh. Exaggerated cartoon action celebration, dry close sound effect, no speech, no music, no electronic tones.",
+          "similarity": 0.4921
+        },
+        {
+          "description": "one small crisp equipment latch click, thick paper and leather coat",
+          "similarity": 0.4401
+        },
+        {
+          "description": "a single crossbow string snapping and bolt releasing",
+          "similarity": 0.4396
+        },
+        {
+          "description": "The sound of a single gunshot.",
+          "similarity": 0.4271
+        }
+      ],
+      "musicScore": -0.039,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    "team-hand-lower": {
+      "sha256": "96cd0d8961a069adfad27fd7fcdabb7ba8990c42269204ee620463935fbd694a",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "Clothes rustling softly.",
+      "expectedScore": 0.34376561641693115,
+      "top": [
+        {
+          "description": "The sound of a fast swoosh of air.",
+          "similarity": 0.486
+        },
+        {
+          "description": "one body landing on earth with a dull thud, thick paper and leather coat",
+          "similarity": 0.4044
+        },
+        {
+          "description": "quick takeoff scuff and cloth movement, thick paper and leather coat",
+          "similarity": 0.4005
+        },
+        {
+          "description": "one body landing on earth with a dull thud, soft tactical fabric and quiet boots",
+          "similarity": 0.3827
+        },
+        {
+          "description": "one body landing on earth with a dull thud, soft cloth and feathers",
+          "similarity": 0.3825
+        }
+      ],
+      "musicScore": 0.0908,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    }
+  },
+  "selection": "Hand movement clips screen as air swooshes; clap screens as a hand clap. Raise edit: same selected fabric interval, playback pitch +3 percent, .32s; lower .32s. No human audition or speaker playback."
+}

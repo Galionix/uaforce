@@ -1810,5 +1810,11 @@
     "start": 4.507,
     "seconds": 1.1,
     "selection": "Local CLAP window screening; no speaker playback"
+  },
+  "team-hand-raise": {
+    "masterSha256": "441045980206586a6f99917107c66ebe112b65091ef1670254baaf6f2ab04334",
+    "rate": 1.03,
+    "start": 2.122,
+    "seconds": 0.32
   }
 }

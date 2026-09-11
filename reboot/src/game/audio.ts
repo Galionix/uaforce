@@ -194,7 +194,7 @@ export class Sound {
     else if(e.type==='enemyReload')sample('legacy-reload',.08);
     else if(e.type==='supportShot')sample(e.variant==='turret'?'support-turret':'support-infantry',.24);
     else if(e.type==='rescue')sample('legacy-rescue',.4);
-    else if(e.type==='highFive'){sample('team-high-five',.8);sample('team-time-slow',.55);}
+    else if(e.type==='highFive'){sample('team-hand-clap',.8);sample('team-time-slow',.55);}
     else {
       const map:Partial<Record<Event['type'],[string,number,number?]>>={
         ammoPickup:['pickup',.4],barrelLift:['barrel-lift',.35],barrelThrow:['barrel-throw',.35],

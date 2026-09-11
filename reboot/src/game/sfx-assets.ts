@@ -1604,6 +1604,18 @@ export const SFX_ASSETS = {
   "team-time-slow": {
     "offset": 213.76575,
     "seconds": 1.8
+  },
+  "team-hand-raise": {
+    "offset": 215.60575,
+    "seconds": 0.32
+  },
+  "team-hand-clap": {
+    "offset": 215.96575,
+    "seconds": 0.38
+  },
+  "team-hand-lower": {
+    "offset": 216.38575,
+    "seconds": 0.32
   }
 } as const;
 export type SfxId=keyof typeof SFX_ASSETS;
