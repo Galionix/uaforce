@@ -1,3 +1,4 @@
+import {guardGameGestures} from './mobile-view.ts';
 import {TouchState,touchDevice,type TouchAction} from './touch-state.ts';
 import {abilityStates} from './hud.ts';
 import {icon,HERO_ICONS} from './hud-icons.ts';
@@ -6,6 +7,8 @@ export class MobileControls {
  readonly root=document.createElement('div');readonly rotate=document.createElement('section');
  enabled=false;portrait=false;private active=false;private skin='';private stickPointer:number|null=null;
  private stick:HTMLElement;private knob:HTMLElement;private buttons=new Map<TouchAction,HTMLButtonElement>();private requestedPause=false;
+ private zoom=1.35;
+ get sceneZoom(){return this.enabled&&!this.portrait?this.zoom:1;}
  private preference:HTMLSelectElement;private coarse=matchMedia('(any-pointer:coarse)');
  constructor(private state:TouchState,private touched:()=>void,private onPortrait:()=>void){
   this.root.id='touch-controls';this.root.hidden=true;this.root.setAttribute('aria-label','Сенсорне керування');
@@ -26,6 +29,9 @@ export class MobileControls {
   this.stick.addEventListener('pointermove',e=>this.moveStick(e));
   for(const type of ['pointerup','pointercancel','lostpointercapture'])this.stick.addEventListener(type,e=>{const p=e as PointerEvent;if(this.stickPointer!==p.pointerId)return;this.state.release(p.pointerId,true);this.stickPointer=null;this.knob.style.transform='translate(0px,0px)';});
   this.root.addEventListener('contextmenu',e=>e.preventDefault());
+  for(const surface of [this.root,document.getElementById('scene'),document.getElementById('hud'),document.getElementById('battle-footer')]){
+   if(surface)guardGameGestures(surface,()=>this.active);
+  }
   this.rotate.id='rotate-device';this.rotate.hidden=true;this.rotate.setAttribute('aria-label','Поверніть телефон');
   this.rotate.innerHTML='<div><span class="rotate-phone" aria-hidden="true">▯ ↻ ▭</span><h2>Поверни телефон</h2><p>Грати зручніше горизонтально.<br>Гру призупинено.</p><button type="button">На весь екран</button><p id="fullscreen-note" role="status"></p><button type="button" class="rotate-menu">До меню</button></div>';
   this.rotate.querySelector<HTMLButtonElement>('.rotate-menu')!.onclick=()=>document.getElementById('pause-main')!.click();
@@ -33,6 +39,11 @@ export class MobileControls {
   document.body.append(this.root,this.rotate);
   this.preference=document.getElementById('touch-mode') as HTMLSelectElement;
   try{const value=localStorage.getItem('uaforce.touch');if(value==='on'||value==='off')this.preference.value=value;}catch{}
+  const zoom=document.getElementById('mobile-zoom') as HTMLInputElement;
+  const zoomValue=document.getElementById('mobile-zoom-value')!;
+  try{const value=Number(localStorage.getItem('uaforce.mobileZoom'));if(value>=100&&value<=150)this.zoom=value/100;}catch{}
+  zoom.value=String(Math.round(this.zoom*100));zoomValue.textContent=zoom.value+'%';
+  zoom.oninput=()=>{this.zoom=Math.max(1,Math.min(1.5,Number(zoom.value)/100));zoomValue.textContent=zoom.value+'%';try{localStorage.setItem('uaforce.mobileZoom',zoom.value);}catch{}};
   this.preference.onchange=()=>{try{localStorage.setItem('uaforce.touch',this.preference.value);}catch{}this.resize();};
   this.coarse.addEventListener('change',()=>this.resize());window.addEventListener('resize',()=>this.resize());
   window.addEventListener('blur',()=>this.clear());document.addEventListener('visibilitychange',()=>{if(document.hidden)this.clear();});

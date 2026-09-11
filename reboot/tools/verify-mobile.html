@@ -1,0 +1,9 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>UA Force — тиха перевірка мобільної камери</title><style>body{margin:0;background:#071015;color:white;font:16px monospace}nav{display:flex;gap:8px;padding:8px}button{min-height:44px}canvas{display:block;width:min(100vw,177.7778vh);height:auto;image-rendering:pixelated}output{display:block;padding:8px}</style><nav><button data-gap="2">Поруч</button><button data-gap="30">Різні краї</button><button data-gap="30" data-height="12">Різна висота</button><button id="zoom">Масштаб 135%</button></nav><output id="state"></output><canvas id="scene"></canvas><script type="module">
+import {World} from '/src/game/world.ts';import {View} from '/src/game/view.ts';
+const world=new World(0);world.addPlayer();world.mode='playing';world.enemies=[];world.allies=[];world.mounts=[];world.boxes=world.boxes.filter(b=>b.y<0);world.ladders=[];
+const view=new View(document.querySelector('canvas'));let zoom=1.35,gap=2,height=0;view.setZoom(zoom);
+function set(){Object.assign(world.players[0].body,{x:40,y:0});Object.assign(world.players[1].body,{x:40+gap,y:height});view.reset(world);document.querySelector('output').textContent=`2 гравці · ${gap} клітин · перепад ${height} · запит ${Math.round(zoom*100)}%`;}
+for(const b of document.querySelectorAll('[data-gap]'))b.onclick=()=>{gap=Number(b.dataset.gap);height=Number(b.dataset.height||0);set();};
+document.getElementById('zoom').onclick=e=>{zoom=zoom===1?1.35:1;view.setZoom(zoom);e.target.textContent=`Масштаб ${Math.round(zoom*100)}%`;set();};
+set();await view.init();view.onFrame=dt=>view.render(world,dt,0);
+</script></html>

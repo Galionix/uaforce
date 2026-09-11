@@ -1,3 +1,4 @@
+import {mobileViewCrop,mobileCameraShift} from './mobile-view.ts';
 import {interactionTarget,TEAM_BOOST} from './interactions.ts';
 import {teamCamera} from './shared-screen.ts';
 import {drawFlagWipe} from './flag-wipe.ts';
@@ -23,17 +24,20 @@ const S=16,W=640,H=360;
 const hash=(x:number,y:number=0)=>{const n=Math.sin(x*127.1+y*311.7)*43758.5453;return n-Math.floor(n);};
 /** Pixel coordinates are the art grid; CSS scales the completed frame without smoothing. */
 export class View {
+  private requestedZoom=1;
+  setZoom(value:number){if(this.requestedZoom!==value){this.requestedZoom=value;this.needsDraw=true;}}
   interactKey='F'; private enemyClock=0;
 
   private abilityArt=new AbilityArt();private screenPulse=0;private cinematicBlasts:{x:number;y:number;age:number;size:number}[]=[];
   private gore=new Gore();private deathCaptions:{x:number;y:number;text:string;life:number}[]=[];private lastDeathCaption=-100;
   app=true;fps=60;onFrame:(dt:number)=>void=()=>{};onGoreImpact:(x:number,y:number)=>void=()=>{};
+  private frame=document.createElement('canvas');private frameContext:CanvasRenderingContext2D;private output:CanvasRenderingContext2D;
   private c:CanvasRenderingContext2D; private request=0;private last=0;private clock=0;
   private needsDraw=true;private cameraX=0;private cameraY=0;private shake=0;private particles:Particle[]=[];
   private backdrops=MISSIONS.map(()=>new Image());private heroImages=HEROES.map(()=>new Image());private mavka=new Image();private infantry=new Image();private theme="river";private frameBounds:number[][][]=[];private runFrames:HTMLCanvasElement[][]=[];
   private bossArt=new Map<BossId,BossArt>();
   private tiles=new Map<string,HTMLCanvasElement>();private flashes:{x:number;y:number;life:number;type:string}[]=[];
-  constructor(private canvas:HTMLCanvasElement){canvas.width=W;canvas.height=H;this.c=canvas.getContext('2d',{alpha:false})!;if(!this.c)throw Error('Canvas 2D недоступний');}
+  constructor(private canvas:HTMLCanvasElement){canvas.width=W;canvas.height=H;this.frame.width=W;this.frame.height=H;this.output=canvas.getContext('2d',{alpha:false})!;this.frameContext=this.frame.getContext('2d',{alpha:false})!;this.c=this.output;if(!this.c||!this.frameContext)throw Error('Canvas 2D недоступний');}
   async init(){
     const load=(im:HTMLImageElement,url:string)=>new Promise<void>((resolve,reject)=>{im.onload=()=>resolve();im.onerror=()=>reject(Error('Не завантажився '+url));im.src=assetUrl(url);});
     await this.abilityArt.load();
@@ -132,6 +136,9 @@ export class View {
     if(world.story){const camera=world.players.length>1?teamCamera(world,world.story.camera):world.story.camera;this.cameraX=Math.max(0,Math.min(world.mission.length*S-W,camera.x*S-W/2));this.cameraY=Math.max(0,camera.y*S-80);}
     else if(world.players.length>1){const camera=teamCamera(world);this.cameraX=camera.x*S-W/2;this.cameraY=Math.max(0,camera.y*S-80);}
     else {const targetX=Math.max(0,Math.min(world.mission.length*S-W,world.player.x*S-W*.32));this.cameraX+=Math.min(1,dt*6)*(targetX-this.cameraX);this.cameraY+=Math.min(1,dt*5)*(Math.max(0,world.player.y*S-94)-this.cameraY);}
+    if(this.requestedZoom>1&&!world.story)this.cameraX-=mobileCameraShift(world.players.map(a=>a.body.x*S-this.cameraX),W);
+    const crop=mobileViewCrop(world.story?1:this.requestedZoom,world.players.map(a=>({x:a.body.x*S-this.cameraX,y:266-a.body.y*S+this.cameraY,facing:a.body.facing,mounted:!!a.mounted})),W,H);
+    this.c=crop.zoom>1?this.frameContext:this.output;
     this.theme=world.mission.theme;this.c.imageSmoothingEnabled=false;this.background(world);
     this.c.save();if(playing&&!reducedPresentation()&&this.shake>.1)this.c.translate(Math.round((Math.random()-.5)*this.shake),Math.round((Math.random()-.5)*this.shake));if(playing)this.shake=Math.max(0,this.shake-dt*28);
     // Rooms are dark cutaways. Their floors and edges below are live destructible blocks.
@@ -236,6 +243,7 @@ export class View {
     if(playing)this.screenPulse=Math.max(0,this.screenPulse-dt);
     if(!reducedPresentation()&&this.screenPulse>0){this.c.save();this.c.globalAlpha=Math.min(.22,this.screenPulse*1.25);this.rect(0,0,W,H,'#d8f2ff');this.c.restore();}
     if(world.story){this.rect(0,0,W,30,'#071015');this.rect(0,H-58,W,58,'#071015');if(world.story.caption){this.c.font='bold 15px monospace';this.c.textAlign='center';this.c.fillStyle='#f6e9b6';this.c.fillText(world.story.caption,W/2,H-32,W-32);}if(world.story.exit!==null)drawFlagWipe(this.c,W,H,world.story.exit,false,reducedPresentation());}
+    if(crop.zoom>1){this.output.imageSmoothingEnabled=false;this.output.drawImage(this.frame,crop.x,crop.y,crop.width,crop.height,0,0,W,H);}
   }
   private label(text:string,x:number,y:number,color:string){this.c.font='bold 11px monospace';this.c.textAlign='center';this.c.fillStyle='#10201beb';this.c.fillRect(Math.round(x-this.c.measureText(text).width/2-3),Math.round(y-11),this.c.measureText(text).width+6,15);this.c.fillStyle='#11201b';this.c.fillText(text,Math.round(x)+1,Math.round(y)+1);this.c.fillStyle=color;this.c.fillText(text,Math.round(x),Math.round(y));}
   private flag(x:number,w:World){const xx=x*S-this.cameraX,yy=266+this.cameraY;this.rect(xx,yy-40,2,40,'#cdcba6');const active=x===3||(x===w.mission.exit?w.objectiveComplete:w.checkpoint>=x);this.rect(xx+2,yy-40,13,5,active?'#379bd7':'#686f61');this.rect(xx+2,yy-35,13,5,active?'#f7d252':'#565e50');}

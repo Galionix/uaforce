@@ -220,6 +220,7 @@ view.onFrame=dt=>{
   syncStoryControls();
   sound.bossBattle=!!world.boss?.boss?.active;sound.scoreTheme=world.mission.score;
   view.interactKey=battleKey('interact');
+  view.setZoom(mobile.sceneZoom);
   mobile.sync(world,!menu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||feedback.open||flags.active);
   const frame=input.poll(dt),wasMenu=mobile.portrait||!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||feedback.open||flags.active;
   if(online?.role==='guest'&&online.connected){if(wasMenu||world.mode!=='playing'||world.story)guestActions.clear();else guestActions.add(frame.action);netClock+=dt;if(netClock>=1/30){online.input(wasMenu||world.mode!=='playing'||world.story?{move:0,jump:false,fire:false,special:false,interact:false}:guestActions.take(frame.action));netClock=0;}}

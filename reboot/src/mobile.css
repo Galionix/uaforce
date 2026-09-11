@@ -1,10 +1,10 @@
-/* Touch controls preserve the 640×360 world view; safe areas protect thumbs and HUD. */
+/* The world keeps its 640×360 grid; the renderer can safely magnify the mobile view. */
 .touch-device{overscroll-behavior:none;-webkit-user-select:none;user-select:none}
 .touch-device input,.touch-device textarea{user-select:text;-webkit-user-select:text}
 .touch-device #scene{width:min(100vw,177.7778dvh);height:min(100dvh,56.25vw);touch-action:none}
-#touch-controls{position:fixed;inset:0;z-index:6;pointer-events:none;--touch-size:clamp(48px,13dvh,62px)}
+#touch-controls{position:fixed;inset:0;z-index:6;pointer-events:none;--touch-size:clamp(54px,15dvh,72px)}
 #touch-controls button,#touch-stick{pointer-events:auto;touch-action:none;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
-#touch-stick{position:absolute;left:max(20px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));width:clamp(114px,34dvh,144px);aspect-ratio:1;border:3px solid #a6dce482;background:#0a1a27a8;border-radius:50%;display:grid;place-items:center}
+#touch-stick{position:absolute;left:max(20px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));width:clamp(148px,44dvh,184px);aspect-ratio:1;border:3px solid #a6dce482;background:#0a1a27a8;border-radius:50%;display:grid;place-items:center}
 .stick-arrows{color:#d5ecea9c;text-align:center;font:700 25px/1.15 monospace;pointer-events:none}
 #touch-stick i{position:absolute;width:40%;height:40%;border:3px solid #ffdf76;background:#244e58c9;border-radius:50%;pointer-events:none;box-shadow:2px 3px #041016}
 .touch-buttons{position:absolute;right:max(18px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));width:calc(var(--touch-size)*3.45);height:calc(var(--touch-size)*2.3)}
@@ -47,3 +47,15 @@
 }
 #rotate-device .rotate-menu{display:block;margin:14px auto 0;background:transparent;border:0;box-shadow:none;color:#b5cfd2}
 #fullscreen-note{font-size:15px;max-width:340px;color:#ffe2a0}#fullscreen-note:empty{display:none}
+
+/* Reserve browser gestures for menus, not repeated combat taps. */
+.touch-device #game,.touch-device #hud,.touch-device #battle-footer{touch-action:none}
+.touch-device button{touch-action:manipulation}
+#touch-controls button,#touch-stick,#touch-stick *{touch-action:none}
+body:not(.touch-device) .mobile-setting{display:none}
+.mobile-setting{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:14px 0}
+#mobile-zoom{width:min(220px,45vw)}
+@media(orientation:landscape) and (max-height:340px){
+ #touch-stick{bottom:max(12px,env(safe-area-inset-bottom));left:max(12px,env(safe-area-inset-left))}
+ .touch-buttons{bottom:max(12px,env(safe-area-inset-bottom));right:max(12px,env(safe-area-inset-right))}
+}
