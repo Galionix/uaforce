@@ -194,9 +194,10 @@ export class Sound {
     else if(e.type==='enemyReload')sample('legacy-reload',.08);
     else if(e.type==='supportShot')sample(e.variant==='turret'?'support-turret':'support-infantry',.24);
     else if(e.type==='rescue')sample('legacy-rescue',.4);
+    else if(e.type==='highFive'){sample('team-high-five',.8);sample('team-time-slow',.55);}
     else {
       const map:Partial<Record<Event['type'],[string,number,number?]>>={
-        highFive:['team-high-five',.8],ammoPickup:['pickup',.4],barrelLift:['barrel-lift',.35],barrelThrow:['barrel-throw',.35],
+        ammoPickup:['pickup',.4],barrelLift:['barrel-lift',.35],barrelThrow:['barrel-throw',.35],
         mountJump:['tank-jump',.35],mountLand:['tank-land',.5],mountShot:['tank-shot',.65],tankShot:['tank-shot',.6],armorHit:['armor-hit',.4,.1],
         mountBroken:['explosion',.65],mountEnter:['hatch',.4],mountExit:['hatch',.4],tankAim:['turret-step',.25],bossWindup:['tank-jump',.4],
         rocketLaunch:['rocket',.4],droneDive:['drone-dive',.4],hostileBlast:['explosion',.65,.09],

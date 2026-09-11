@@ -1600,6 +1600,10 @@ export const SFX_ASSETS = {
   "team-high-five": {
     "offset": 212.67575,
     "seconds": 1.05
+  },
+  "team-time-slow": {
+    "offset": 213.76575,
+    "seconds": 1.8
   }
 } as const;
 export type SfxId=keyof typeof SFX_ASSETS;

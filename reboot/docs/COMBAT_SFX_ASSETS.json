@@ -11335,13 +11335,40 @@
           "at": 0
         }
       ]
+    },
+    {
+      "id": "team-time-slow",
+      "file": "public/assets/audio/sfx/team-time-slow.wav",
+      "seconds": 1.8,
+      "loop": false,
+      "peak": 0.6248731096255135,
+      "rms": 0.14,
+      "sha256": "e7e8be3939dfc6ed89d87815380437143241216349fa1733ac436c2ccc6c7b04",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "team-time-slow.wav",
+          "sourceSha256": "e35d2909c2db4580131c64fb3ee1ce88ff683436e96fd64adb3fa6bd23305e1e",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 42715,
+          "prompt": "Whoosh. A soft swishing swooshing wind sound.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 1.772,
+          "rate": 1,
+          "cut": 1.8,
+          "gain": 1,
+          "at": 0
+        }
+      ]
     }
   ],
   "missing": [],
   "bank": {
     "file": "public/assets/audio/sfx/combat-bank.wav",
-    "sha256": "1a495c88fcfd6a65584ea74bbe3d722952a85a35950810abcefbe77bd2cf826d",
-    "seconds": 213.76575
+    "sha256": "e2e03052be875aa708893de2570bf91ab1a619fa6b9344f437b2b90ffd5775bf",
+    "seconds": 215.60575
   },
   "review": {
     "status": "local-playtest-candidate",

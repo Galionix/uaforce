@@ -3623,6 +3623,16 @@
       "seed": 910501,
       "generateSeconds": 6,
       "dtype": "fp32"
+    },
+    {
+      "id": "team-time-slow",
+      "seconds": 1.8,
+      "loop": false,
+      "prompt": "Whoosh. A soft swishing swooshing wind sound.",
+      "seed": 42715,
+      "generateSeconds": 10,
+      "dtype": "fp32",
+      "cfg": 1
     }
   ]
 }

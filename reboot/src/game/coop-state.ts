@@ -1,7 +1,7 @@
 import {World,IDLE,type Actions,type Event,type Box} from './world.ts';
 import type {HeroId} from './content.ts';
 /** Versioned wire format. Only the host runs World.stepPlayers. No guest world edits. */
-export const COOP_VERSION='uaforce-coop-3';
+export const COOP_VERSION='uaforce-coop-4';
 export function cleanActions(value:unknown):Actions|null{
  if(!value||typeof value!=='object')return null;
  const v=value as Record<string,unknown>;
@@ -11,9 +11,10 @@ export function cleanActions(value:unknown):Actions|null{
 }
 /** Edge actions survive network arrival between simulation ticks; stale held fire expires. */
 export class RemoteInput {
+ private interactPending=false;private interactDown=false;
  private action:Actions={...IDLE};private last=-Infinity;private seq=-1;
- receive(seq:number,value:unknown,now:number){const a=cleanActions(value);if(!Number.isSafeInteger(seq)||seq<=this.seq||!a)return false;this.seq=seq;this.last=now;this.action={...a,jump:a.jump||this.action.jump,special:a.special||this.action.special,ultimate:a.ultimate||this.action.ultimate};return true;}
- take(now:number){if(now-this.last>.35){this.action={...IDLE};return {...IDLE};}const a={...this.action};this.action.jump=this.action.special=this.action.ultimate=false;return a;}
+ receive(seq:number,value:unknown,now:number){const a=cleanActions(value);if(!Number.isSafeInteger(seq)||seq<=this.seq||!a)return false;this.seq=seq;this.last=now;if(a.interact&&!this.interactDown)this.interactPending=true;this.interactDown=a.interact;this.action={...a,jump:a.jump||this.action.jump,special:a.special||this.action.special,ultimate:a.ultimate||this.action.ultimate};return true;}
+ take(now:number){if(now-this.last>.35){this.action={...IDLE};this.interactPending=this.interactDown=false;return {...IDLE};}const a={...this.action,interact:this.action.interact||this.interactPending};this.interactPending=false;this.action.jump=this.action.special=this.action.ultimate=false;return a;}
 }
 const fields=['mode','highFive','story','storyDone','cinematic','evac','enemies','bullets','followers','allies','ammoCrates','medkits','mounts','time','kills','shots','hits','destroyed','unlocked'] as const;
 type MutableBox=Pick<Box,'id'|'x'|'y'|'hp'|'vx'|'vy'>;

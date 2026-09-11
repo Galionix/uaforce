@@ -108,6 +108,7 @@ export class View {
     this.c.drawImage(enemy?this.infantry:mavka?this.mavka:this.heroImages[heroIndex],...bounds as [number,number,number,number],-Math.round(w*.47),-h,w,h);this.c.restore();
   }
   event(e:Event){
+    if(e.type==='highFive'){this.shake=Math.max(this.shake,2);this.screenPulse=.07;return;}
     if(e.type==='enemyDeath'){
       this.gore.burst(e.x,e.y);this.shake=Math.max(this.shake,1.4);
       if(e.text&&e.x*S>this.cameraX-30&&e.x*S<this.cameraX+W+30){
@@ -189,13 +190,24 @@ export class View {
       if(f.reloading>0){const duration=FOLLOWER_WEAPONS[f.kind].reloadTime;this.rect(x-8,y-27,16*(1-f.reloading/duration),1,'#f4b456');}
     }
     for(const actor of world.players){
-    const p=actor.body;this.c.globalAlpha=p.cloak>0?.38:1;if(!actor.mounted&&world.evac.phase!=='departing'&&(world.story||p.invulnerable<=0||Math.floor(this.clock*12)%2===0))this.sprite(p.x,p.y,p.facing,world.highFive.age<.45?0:heroFrame(p,this.clock,Math.abs(world.players.length===1&&!world.story?move:actor.move)>.1),false,false,HEROES.findIndex(h=>h.id===actor.heroId),actor.heroId==='lesya'&&p.form>0);this.c.globalAlpha=1;
+    const p=actor.body;this.c.globalAlpha=p.cloak>0?.38:1;if(!actor.mounted&&world.evac.phase!=='departing'&&(world.story||p.invulnerable<=0||Math.floor(this.clock*12)%2===0))this.sprite(p.x,p.y,p.facing,world.highFive.offeredBy===actor.id||world.highFive.age<.45?0:heroFrame(p,this.clock,Math.abs(world.players.length===1&&!world.story?move:actor.move)>.1),false,false,HEROES.findIndex(h=>h.id===actor.heroId),actor.heroId==='lesya'&&p.form>0);this.c.globalAlpha=1;
     if(actor.heroId==='mamai'&&p.attack>0&&!world.effects.some(f=>f.kind==='weapon')){const xx=p.x*S-this.cameraX,yy=266-(p.y+1)*S+this.cameraY;this.rect(xx+p.facing*4,yy,12*p.facing,3,'#c6ad7a');this.rect(xx+p.facing*5,yy+2,4*p.facing,4,'#845b38');}
       if(world.players.length>1){const x=p.x*S-this.cameraX,y=266-p.y*S+this.cameraY;this.label('P'+(actor.id+1),x,y-42,actor.id===0?'#ffdf6a':'#70d8ff');this.rect(x-10,y-36,20,2,'#172928');this.rect(x-10,y-36,20*p.hp/100,2,actor.id===0?'#ffdf6a':'#70d8ff');}
+    }
+    if(world.highFive.offeredBy>=0){
+      const a=world.players.find(a=>a.id===world.highFive.offeredBy);
+      if(a){const p=a.body,x=p.x*S-this.cameraX,y=266-(p.y+1)*S+this.cameraY,t=Math.min(1,world.highFive.offerAge/.18),d=p.facing,c=this.c;
+        const hx=Math.round(x+d*9),hy=Math.round(y-21*t);c.strokeStyle=a.id===0?'#f5d364':'#67cced';c.lineWidth=4;c.beginPath();c.moveTo(Math.round(x+d*3),Math.round(y-4));c.lineTo(Math.round(x+d*8),Math.round(y-7*t));c.lineTo(hx,hy);c.stroke();this.rect(hx-3,hy-5,6,7,'#edbd85');
+      }
     }
     if(world.highFive.age<.65){
       const t=world.highFive.age,c=this.c,flash=Math.max(0,1-Math.abs(t-.18)/.17);
       const x=world.highFive.x*S-this.cameraX,y=266-world.highFive.y*S+this.cameraY;
+      if(!reducedPresentation()){
+        c.save();c.globalAlpha=Math.max(0,1-t/.65)*.75;
+        for(let i=0;i<24;i++){const a=i*Math.PI/12,r=10+t*110;this.rect(Math.round((x+Math.cos(a)*r)/2)*2,Math.round((y-8+Math.sin(a)*r*.65)/2)*2,4,2,i%2?'#70d8ff':'#ffe783');}
+        c.restore();
+      }
       // Pixel forearms reach up, palms meet, then recoil. No static overlay card.
       for(const actor of world.players){const ax=actor.body.x*S-this.cameraX,ay=266-(actor.body.y+1)*S+this.cameraY,reach=Math.min(1,t/.15)*Math.max(0,1-(t-.3)/.35);const hx=ax+Math.max(-14,Math.min(14,x-ax))*reach,hy=ay-14*reach;c.strokeStyle=actor.id===0?'#f5d364':'#67cced';c.lineWidth=4;c.beginPath();c.moveTo(Math.round(ax),Math.round(ay));c.lineTo(Math.round((ax+hx)/2),Math.round(ay-3));c.lineTo(Math.round(hx),Math.round(hy));c.stroke();this.rect(Math.round(hx)-3,Math.round(hy)-4,6,7,'#edbd85');}
       if(flash>0)for(let i=0;i<8;i++){const a=i*Math.PI/4,r=8+t*35;this.rect(Math.round(x+Math.cos(a)*r),Math.round(y-8+Math.sin(a)*r),3,3,i%2?'#62d8ff':'#ffe783');}

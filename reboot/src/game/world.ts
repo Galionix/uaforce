@@ -1,4 +1,4 @@
-import {doHighFive,TEAM_BOOST} from './interactions.ts';
+import {doHighFive,maintainHighFiveOffer,cancelHighFiveOffer,TEAM_BOOST} from './interactions.ts';
 import {storyTrigger,stepStory,type StoryState} from './story-scenes.ts';
 import {constrainTeam,sharedRespawn} from './shared-screen.ts';
 import {missionInfantry,stepInfantry,frighten,type Infantry,type InfantryKind} from './infantry.ts';
@@ -52,7 +52,7 @@ export class World {
 
   private deathLines=new DeathLines();
   mode: Mode = 'ready';
-  highFive={left:0,cooldown:0,age:10,x:0,y:0};
+  highFive={offeredBy:-1,offerAge:0,left:0,cooldown:0,age:10,x:0,y:0};
   story:StoryState|null=null;storyDone:string[]=[];storyPending:string|null=null;
   mounts:Mount[]=[];
   cinematic:{kind:'hero'|'boss';id:string;serial:number}|null=null;
@@ -164,6 +164,7 @@ export class World {
     if(this.mode!=='playing')return;
     if(this.mounted){if(contact){if(this.mounted.contactCooldown>0)return;this.mounted.contactCooldown=.65;}damageMount(this,this.mounted,amount);return;}
     if (p.invulnerable > 0) return;
+    if(this.highFive.offeredBy===this.actor.id||p.hp<=amount)cancelHighFiveOffer(this);
     p.hp = Math.max(0, p.hp - amount); p.invulnerable = .65;
     this.event('hurt', p.x, p.y + .8);
     if (p.hp === 0) {
@@ -250,7 +251,11 @@ export class World {
     p.cloak=Math.max(0,p.cloak-dt);p.invulnerable = Math.max(0, p.invulnerable - dt); p.specialRecovery=p.specialRecovery.map(t=>Math.max(0,t-dt)).filter(t=>t>1e-8);p.specialCooldown=this.specialCharges>0?0:Math.min(...p.specialRecovery);p.form=Math.max(0,p.form-dt);p.cast=Math.max(0,p.cast-dt);p.attack=Math.max(0,p.attack-dt);
     if(p.specialRecovery.length<recovering)this.event('abilityReady',p.x,p.y+1);
     const interactEdge=action.interact&&!this.interactHeld;this.interactHeld=action.interact;
-    const highFiveAction=interactEdge&&doHighFive(this);
+    const movingAway=Math.abs(action.move)>.15||Math.abs(action.climb??0)>.15||action.jump||action.fire||action.special||action.ultimate;
+    const cancelledOffer=this.highFive.offeredBy===this.actor.id&&movingAway;
+    if(cancelledOffer)cancelHighFiveOffer(this);
+    const highFiveAction=!cancelledOffer&&interactEdge&&doHighFive(this);
+    if(this.highFive.offeredBy===this.actor.id){action={...IDLE,interact:action.interact};this.actor.move=0;}
     if(highFiveAction)action={...action,interact:false};
     const carried=this.heldBarrel!==null;
     const barrelAction=carried&&interactEdge&&interactBarrel(this,(action.climb??0)<-.3);
@@ -342,14 +347,15 @@ export class World {
   step(dt:number, action:Actions){this.stepPlayers(dt,[action]);}
   stepPlayers(dt:number,actions:Actions[]){
     if(this.mode!=='playing')return;
-    if(this.story){stepStory(this,Math.min(dt,1/30));return;}
+    if(this.story){cancelHighFiveOffer(this);stepStory(this,Math.min(dt,1/30));return;}
     const before=this.players.map(a=>({x:a.body.x,y:a.body.y}));
     for(const actor of this.players)if(this.withPlayer(actor.id,()=>triggerBoss(this))){
+      cancelHighFiveOffer(this);
       const arena=this.boss?.boss&&BOSSES[this.boss.boss.id];
       if(arena&&this.players.length>1)for(const a of this.players){a.body.x=Math.max(arena.left+1,Math.min(arena.right-1,a.body.x));a.checkpoint=arena.left+2;}
       return;
     }
-    dt=Math.min(dt,1/30);this.highFive.left=Math.max(0,this.highFive.left-dt);this.highFive.cooldown=Math.max(0,this.highFive.cooldown-dt);this.highFive.age+=dt;this.time+=dt;this.noises=this.noises.filter(n=>n.until>this.time);
+    dt=Math.min(dt,1/30);maintainHighFiveOffer(this,dt);this.highFive.left=Math.max(0,this.highFive.left-dt);this.highFive.cooldown=Math.max(0,this.highFive.cooldown-dt);this.highFive.age+=dt;this.time+=dt;this.noises=this.noises.filter(n=>n.until>this.time);
     this.withPlayer(this.nearestPlayer(this.mission.exit,0).id,()=>this.stepEvac(dt));
     if(this.evac.phase==='departing'||this.mode!=='playing'){
       if(this.evac.phase==='departing')for(const a of this.players){a.body.x=this.evac.x;a.body.y=this.evac.y-1;}
@@ -357,9 +363,10 @@ export class World {
     }
     for(const actor of this.players){this.withPlayer(actor.id,()=>this.stepPlayer(dt,actions[actor.id]??IDLE));if(this.cinematic)break;}
     constrainTeam(this,before);
-    storyTrigger(this,before);if(this.story)return;
+    storyTrigger(this,before);if(this.story){cancelHighFiveOffer(this);return;}
     if(this.players.length>1){this.stepEffects(dt);stepBarrels(this,dt);}
-    if(this.cinematic)return;
+    if(this.cinematic){cancelHighFiveOffer(this);return;}
+    maintainHighFiveOffer(this,0);
     stepFollowers(this,dt);
     const enemyDt=dt*(this.highFive.left>0?TEAM_BOOST.enemyRate:1);
     for (const enemy of this.enemies) {

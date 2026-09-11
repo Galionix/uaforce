@@ -25,6 +25,8 @@ test('recorded combat routes all heroes, exact phases, lifetimes, pause and dist
  try{
   const sound=new Sound();sound.music=false;await sound.enable();sound.step(.01,false,true);
   assert.equal(urls.filter(u=>u.includes('combat-bank')).length,1,'one bank request instead of hundreds');
+  const beforeFive=starts.length;sound.event({type:'highFive',x:0,y:0});
+  assert.deepEqual(starts.slice(beforeFive).map(s=>s.args[1]),[SFX_ASSETS['team-high-five'].offset,SFX_ASSETS['team-time-slow'].offset],'confirmed high five plays one clap and one generated air transition');
   assert.equal(urls.some(u=>['/audio/rifle.wav','/audio/pain1.wav','/audio/reload.wav','/audio/Menu Selection Click.wav'].some(old=>u.includes(old))),false,'legacy effects no longer bypass the generated bank');
   for(const role of ['rifle','assault','gunner','sniper','scout','shield','demolition'] as const){
    let previous=-1;

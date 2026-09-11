@@ -1,0 +1,150 @@
+{
+  "model": "Stable Audio 3 Small SFX",
+  "runtime": "official MLX",
+  "serviceCostUSD": 0,
+  "jobs": [
+    {
+      "id": "team-time-slow",
+      "seconds": 1.8,
+      "loop": false,
+      "prompt": "Whoosh. A soft swishing swooshing wind sound.",
+      "seed": 42715,
+      "generateSeconds": 10,
+      "dtype": "fp32",
+      "cfg": 1
+    }
+  ],
+  "humanAudition": false,
+  "rejectedReason": "PCM screening favored an explosion; regenerate an air-only transition.",
+  "rejectedTakes": [
+    {
+      "sha256": "80ee54d4102c4989fa596612363aa2b490a3f0d7a86d94911957cf957f5b438e",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "A single dramatic rush of air sucked inward, dropping rapidly into a deep stretched slowed-down whoosh, then fading into silence. Cinematic time slowing down sound effect after a hand clap. Organic air pressure and soft low rumble, dry isolated sound, no melody, no music, no speech, no electronic beeps.",
+      "expectedScore": 0.4697752892971039,
+      "top": [
+        {
+          "description": "The sound of a loud explosion.",
+          "similarity": 0.689
+        },
+        {
+          "description": "massive rock smashing with a deep earth-shaking crack",
+          "similarity": 0.5551
+        },
+        {
+          "description": "a compact mechanical collapse and armor falling onto dirt",
+          "similarity": 0.4831
+        },
+        {
+          "description": "A single dramatic rush of air sucked inward, dropping rapidly into a deep stretched slowed-down whoosh, then fading into silence. Cinematic time slowing down sound effect after a hand clap. Organic air pressure and soft low rumble, dry isolated sound, no melody, no music, no speech, no electronic beeps.",
+          "similarity": 0.4698
+        },
+        {
+          "description": "massive armor-piercing rifle shot with tearing air",
+          "similarity": 0.4662
+        }
+      ],
+      "musicScore": -0.1354,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    {
+      "sha256": "6bc8ca33ebc0f71163f00cf0881240b312e79d4b97a04acfb2ac46054db39b7d",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "Soft airy whoosh of wind sweeping past, descending in pitch and slowing into a long gentle breath of air. One smooth continuous decelerating air movement, a time slowing transition. Only wind and air friction. No impact, no explosion, no gunshot, no drums, no music, no voices, no beeps.",
+      "expectedScore": 0.3004372715950012,
+      "top": [
+        {
+          "description": "The sound of a loud explosion.",
+          "similarity": 0.6873
+        },
+        {
+          "description": "massive rock smashing with a deep earth-shaking crack",
+          "similarity": 0.5887
+        },
+        {
+          "description": "one powerful explosion with sharp crack, deep boom and falling rubble",
+          "similarity": 0.5157
+        },
+        {
+          "description": "The sound of thunder rumbling.",
+          "similarity": 0.4799
+        },
+        {
+          "description": "one massive tank cannon shot, concussive boom and short metal recoil",
+          "similarity": 0.4769
+        }
+      ],
+      "musicScore": 0.0307,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    {
+      "sha256": "a26a0e2c9639c3da85d2d9170a0751a63fdbbc073cfd5d563ce27721b3ee7585",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "A smooth swoosh of air, wind sweeping past the microphone, airy swishing descending in pitch and decelerating into silence, cinematic slow motion transition.",
+      "expectedScore": 0.26289239525794983,
+      "top": [
+        {
+          "description": "massive rock smashing with a deep earth-shaking crack",
+          "similarity": 0.4852
+        },
+        {
+          "description": "heavy tank suspension landing, deep metal clunk and dirt crunch",
+          "similarity": 0.4711
+        },
+        {
+          "description": "heavy armored vehicle collapsing with deep metal crunch, bolts falling and a final low thud",
+          "similarity": 0.4462
+        },
+        {
+          "description": "a compact mechanical collapse and armor falling onto dirt",
+          "similarity": 0.4377
+        },
+        {
+          "description": "one heavy robot footstep, metal joint clack",
+          "similarity": 0.406
+        }
+      ],
+      "musicScore": -0.0718,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    }
+  ],
+  "screening": {
+    "sha256": "e7e8be3939dfc6ed89d87815380437143241216349fa1733ac436c2ccc6c7b04",
+    "model": "laion/clap-htsat-unfused",
+    "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+    "expected": "Whoosh. A soft swishing swooshing wind sound.",
+    "expectedScore": 0.47547057271003723,
+    "top": [
+      {
+        "description": "The sound of wind blowing.",
+        "similarity": 0.5135
+      },
+      {
+        "description": "Whoosh. A soft swishing swooshing wind sound.",
+        "similarity": 0.4755
+      },
+      {
+        "description": "A jet airplane engine roaring.",
+        "similarity": 0.4689
+      },
+      {
+        "description": "The sound of a jet airplane engine.",
+        "similarity": 0.4344
+      },
+      {
+        "description": "fast rush of air vanishing into a soft gust",
+        "similarity": 0.4144
+      }
+    ],
+    "musicScore": 0.1196,
+    "playback": false,
+    "status": "screened-not-an-artistic-approval"
+  },
+  "selection": "Fourth take: wind/air transition rather than explosion. PCM classifier screening only; no speaker playback."
+}
