@@ -10,18 +10,39 @@ const ok=async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(4)})as any;
 test('score loops once per mood, crossfades and stops all sources on pause',async()=>{const old=fetch;globalThis.fetch=ok;try{const{ctx,nodes,score,ramps}=fixture();await score.play('river-explore');assert.equal(nodes.length,1);assert.equal(nodes[0].loop,true);await score.play('river-explore');assert.equal(nodes.length,1);ctx.currentTime=4;await score.play('river-combat');assert.equal(nodes.length,2);assert.equal(nodes[0].stops[0],7.05);assert.ok(ramps.some(([v,t])=>v===0&&t===7));score.stop();assert.ok(nodes.every(n=>n.stops.includes(0)));assert.equal(score.track,'');}finally{globalThis.fetch=old;}});
 test('pending file loads cannot start music after pause or supersede a newer theme',async()=>{const old=fetch;let release!:()=>void;const gate=new Promise<void>(r=>release=r);globalThis.fetch=(async()=>{await gate;return ok();})as any;try{const{score,nodes}=fixture();const pending=score.play('river-explore');score.stop();release();await pending;assert.equal(nodes.length,0);globalThis.fetch=ok;await score.play('rail-combat');assert.equal(score.track,'rail-combat');assert.equal(nodes.length,1);score.stop();}finally{globalThis.fetch=old;}});
 test('missing music retries at a bounded rate, keeping gameplay independent',async()=>{const old=fetch;let calls=0;globalThis.fetch=(async()=>{calls++;return{ok:false};})as any;try{const{score,ctx}=fixture();await score.play('marsh-explore');for(let i=0;i<50;i++)await score.play('marsh-explore');assert.equal(calls,1);ctx.currentTime=6;globalThis.fetch=ok;await score.play('marsh-explore');assert.equal(score.track,'marsh-explore');score.stop();}finally{globalThis.fetch=old;}});
-test('14 distinct Lyria loops exist, have audible RMS and matching original sources',()=>{const m=JSON.parse(readFileSync(new URL('../docs/BACKGROUND_MUSIC.json',import.meta.url),'utf8'));assert.equal(m.playbackDuringGeneration,false);assert.match(m.origin,/Lyria/);assert.equal(m.clips.length,14);assert.equal(new Set(m.clips.map((c:any)=>c.sha256)).size,14);for(const id of [...SCORE_THEMES.flatMap(t=>[t+'-explore',t+'-combat']),'boss','menu']){const c=m.clips.find((c:any)=>c.id===id);assert.ok(c);const b=readFileSync(new URL('../'+c.file,import.meta.url));assert.equal(b.toString('ascii',0,4),'RIFF');assert.equal(createHash('sha256').update(b).digest('hex'),c.sha256);assert.ok(c.seconds>=20&&c.seconds<=45);assert.ok(c.rms>.08&&c.peak<1);assert.match(c.origin,/Lyria/);assert.equal(createHash('sha256').update(readFileSync(new URL('../'+c.source,import.meta.url))).digest('hex'),c.sourceSha256);}});
+test('all 14 background tracks are independent Flow Music edits with verified asset hashes',()=>{
+ const m=JSON.parse(readFileSync(new URL('../docs/BACKGROUND_MUSIC.json',import.meta.url),'utf8'));
+ assert.equal(m.playbackDuringGeneration,false);assert.equal(m.origin,'Google Flow Music');
+ assert.equal(m.clips.length,14);assert.equal(new Set(m.clips.map((c:any)=>c.sha256)).size,14);
+ for(const id of [...SCORE_THEMES.flatMap(t=>[t+'-explore',t+'-combat']),'boss','menu']){
+  const c=m.clips.find((c:any)=>c.id===id);assert.ok(c,id);
+  const b=readFileSync(new URL('../'+c.file,import.meta.url));assert.equal(b.toString('ascii',0,4),'RIFF');
+  assert.equal(b.readUInt16LE(22),2);assert.equal(b.readUInt32LE(24),44100);
+  assert.equal(createHash('sha256').update(b).digest('hex'),c.sha256);
+  assert.ok(c.seconds>=50&&c.seconds<=100);assert.ok(c.rms>.055&&c.peak<.9);
+  assert.ok(c.seamStep<.04);assert.match(c.origin,/Google Flow Music/);
+  assert.match(c.songUrl,/^https:\/\/www\.flowmusic\.app\/song\//);
+ }
+});
 test('campaign adds distinct missions without replacing original operations and migrates old completion',()=>{assert.ok(MISSIONS.length>=6);assert.deepEqual(MISSIONS.slice(0,3).map(m=>m.name),['Тихий берег','Останній рубіж','Острів свободи']);assert.equal(new Set(MISSIONS.slice(0,6).map(m=>JSON.stringify(m.forts))).size,6);assert.equal(new Set(MISSIONS.map(m=>m.score)).size,6);const p=parseProgress(JSON.stringify({mission:2,completed:true,unlocked:['shevchenko','lesya'],hero:'lesya'}));assert.equal(p.mission,9);assert.equal(p.completed,false);assert.equal(p.hero,'lesya');const end=parseProgress(JSON.stringify({mission:5,completed:true,campaignSize:6}));assert.equal(end.completed,false);assert.equal(end.mission,9);});
 
 test('new missions use three distinct local pixel backgrounds, with exact generation prompts',()=>{const m=JSON.parse(readFileSync(new URL('../docs/NEW_MISSION_ART.json',import.meta.url),'utf8'));const hashes=new Set();for(const mission of MISSIONS.slice(3,6)){const b=readFileSync(new URL('../public'+mission.background,import.meta.url));assert.equal(b.toString('ascii',1,4),'PNG');assert.ok(m.assets.some((a:any)=>a.file==='public'+mission.background&&a.prompt.length>100));hashes.add(createHash('sha256').update(b).digest('hex'));}assert.equal(hashes.size,3);});
 
 test('menu score starts only with an unlocked audio context, respects music off, and stops when unfocused',()=>{const s=new Sound(true) as any;const tracks:string[]=[];let stopped=0;s.score={play:(id:string)=>tracks.push(id),stop:()=>stopped++};s.context={state:'suspended'};s.step(.1,false,false,false,true);assert.deepEqual(tracks,[]);s.context.state='running';s.step(.1,false,false,false,true);assert.deepEqual(tracks,['menu']);s.music=false;s.step(.1,false,false,false,true);assert.equal(tracks.length,1);s.music=true;s.step(.1,false,false,false,false);assert.ok(stopped>=3);});
-test('gameplay masters contain no inserted title refrain; the menu uses a later, quieter section',()=>{
- const m=JSON.parse(readFileSync(new URL('../docs/BACKGROUND_MUSIC.json',import.meta.url),'utf8'));
- const old=JSON.parse(readFileSync(new URL('../tools/audio-source/score-before-leitmotif/manifest.json',import.meta.url),'utf8'));
- for(const c of old.clips){const current=m.clips.find((x:any)=>x.id===c.id);assert.equal(current.sha256,c.sha256);assert.equal(current.refrain,undefined);}
- const menu=m.clips.find((c:any)=>c.id==='menu');assert.ok(menu.sourceStart>=15);assert.ok(menu.rms<.12);
- const policy=JSON.parse(readFileSync(new URL('../docs/LEITMOTIF.json',import.meta.url),'utf8'));assert.equal(policy.inAllBackgroundTracks,false);assert.deepEqual(policy.recurrenceSeconds,[]);
+test('the complete score replaces every old music file and never uses the menu master in gameplay',()=>{
+ const m=JSON.parse(readFileSync(new URL('../docs/FLOW_MUSIC_REPLACEMENT.json',import.meta.url),'utf8'));
+ assert.equal(m.previous_assets.length,23);assert.equal(m.installed_files.length,23);
+ for(const previous of m.previous_assets){
+  const current=m.installed_files.find((c:any)=>c.file===previous.file);assert.ok(current,previous.file);
+  assert.notEqual(current.sha256,previous.sha256);
+  assert.equal(createHash('sha256').update(readFileSync(new URL('../'+current.file,import.meta.url))).digest('hex'),current.sha256);
+ }
+ const menu=m.generated.find((c:any)=>c.id==='menu');assert.ok(menu.prepared.rms<.1);
+ for(const c of m.generated.filter((c:any)=>c.id!=='menu')){
+  assert.notEqual(c.source,menu.source);assert.notEqual(c.sourceSha256,menu.sourceSha256);
+ }
+ const policy=JSON.parse(readFileSync(new URL('../docs/LEITMOTIF.json',import.meta.url),'utf8'));
+ assert.equal(policy.inAllBackgroundTracks,false);assert.deepEqual(policy.recurrenceSeconds,[]);
 });
 test('pause and returning moods resume their own positions instead of repeating opening notes',async()=>{
  const old=fetch;globalThis.fetch=ok;

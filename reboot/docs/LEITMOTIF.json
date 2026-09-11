@@ -1,0 +1,11 @@
+{
+  "authority": "Owner 2026-09-12: cohesive Flow Music replacement, retaining separate menu melody",
+  "inAllBackgroundTracks": false,
+  "recurrenceSeconds": [],
+  "bossRecurrenceSeconds": [],
+  "menu": "menu",
+  "menuSourceStart": 10.90907029478458,
+  "gameplay": "Independent Flow Music masters from one project/session; Ukrainian instrumental and modal continuity, no menu audio spliced into gameplay.",
+  "unlock": "New Flow hero sting only for a first unlock, never familiar rescue, mission start or respawn.",
+  "playbackDuringWork": false
+}

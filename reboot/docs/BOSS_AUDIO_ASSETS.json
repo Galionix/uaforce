@@ -1,0 +1,81 @@
+{
+  "playbackDuringGeneration": false,
+  "clips": [
+    {
+      "file": "public/assets/audio/announcer/putin.wav",
+      "text": "Хуйло! Головний ворог! Здолайте агресора!",
+      "source": "Offline macOS Lesya Ukrainian TTS, lowered pitch, compressed with short echo; synthetic boss announcer",
+      "seconds": 4.19125,
+      "sha256": "985ff5adf120cf8285f39fb7e508456f6fa2a33b210af31aa513e9e7bf1dfaad"
+    },
+    {
+      "file": "public/assets/audio/announcer/iron-warden.wav",
+      "text": "Валерій Герасімов! Російський генерал! До бою!",
+      "source": "Offline macOS Lesya Ukrainian TTS, lowered pitch, compressed with short echo; synthetic boss announcer",
+      "seconds": 4.525833333333333,
+      "sha256": "0d8205cd6594f9db64ad2d091c0447a14e8c19cbfa485bb34d915db019d5aff5"
+    },
+    {
+      "file": "public/assets/audio/announcer/swarm-master.wav",
+      "text": "Сергій Суровікін! Російський генерал! Повітряна загроза!",
+      "source": "Offline macOS Lesya Ukrainian TTS, lowered pitch, compressed with short echo; synthetic boss announcer",
+      "seconds": 5.490916666666666,
+      "sha256": "2675e048e513ce204562df9b55bfb3e9705f3795a89e02a4fb6c9b856e470640"
+    },
+    {
+      "file": "public/assets/audio/announcer/putin-defeated.wav",
+      "text": "Хуйло переможено! Командний бункер знищено!",
+      "source": "Offline macOS Lesya Ukrainian TTS, lowered pitch, compressed with short echo; synthetic boss announcer",
+      "seconds": 4.0910416666666665,
+      "sha256": "41e5bd329000716902ec31d9df5058ab20bbf960c60f2377555d5af6ccaa205b"
+    },
+    {
+      "file": "public/assets/audio/cues/boss-iron.wav",
+      "sha256": "84f47b3d5ce9628b6b90973abc6253579e6ea3fe1f180a84b2eb7ec26302ce3c",
+      "seconds": 7.5,
+      "rms": 0.16016575694084167,
+      "peak": 0.8600000143051147,
+      "sourceStart": 0.0,
+      "sourceLength": 7.5,
+      "processing": "First sustained generated phrase (at least 55% active 10ms windows), 6ms attack and 250ms release; RMS/peak-limited gain",
+      "id": "boss-iron",
+      "origin": "Google Flow Music / UAForce Game Score",
+      "source": "tools/audio-source/flowmusic-2026-09-12/20-boss-iron.m4a",
+      "sourceSha256": "d5fbb44b1b68d0ee0626055b5d8b16ca69b8df7dfe59df7d85e8cc4985e42d59",
+      "songUrl": "https://www.flowmusic.app/song/c5a283e7-6e35-4596-98ff-f30db102b6aa",
+      "requestedBpm": 76.0
+    },
+    {
+      "file": "public/assets/audio/cues/boss-swarm.wav",
+      "sha256": "3b7f381caae40f28cd594d22baa6cb2c521e3c7b0f8d28f70f78f74960216129",
+      "seconds": 7.5,
+      "rms": 0.09916075319051743,
+      "peak": 0.85999995470047,
+      "sourceStart": 0.0,
+      "sourceLength": 7.5,
+      "processing": "First sustained generated phrase (at least 55% active 10ms windows), 6ms attack and 250ms release; RMS/peak-limited gain",
+      "id": "boss-swarm",
+      "origin": "Google Flow Music / UAForce Game Score",
+      "source": "tools/audio-source/flowmusic-2026-09-12/21-boss-swarm.m4a",
+      "sourceSha256": "a2c26e60e159c4e16b69e639149d3d3bc3b77e610deda62f7bcd52f2bba43636",
+      "songUrl": "https://www.flowmusic.app/song/8069d691-a805-418d-bf31-b3edd4dd37f4",
+      "requestedBpm": 108.0
+    },
+    {
+      "file": "public/assets/audio/cues/boss-putin.wav",
+      "sha256": "541419f0e61480e7245d017bb33949015ab3e38d881f63f2ff0c2588665fe27b",
+      "seconds": 7.5,
+      "rms": 0.1498773843050003,
+      "peak": 0.8600000143051147,
+      "sourceStart": 0.06,
+      "sourceLength": 7.5,
+      "processing": "First sustained generated phrase (at least 55% active 10ms windows), 6ms attack and 250ms release; RMS/peak-limited gain",
+      "id": "boss-putin",
+      "origin": "Google Flow Music / UAForce Game Score",
+      "source": "tools/audio-source/flowmusic-2026-09-12/22-boss-putin.m4a",
+      "sourceSha256": "0b213158773c36f588226190a15e75959e4737ef67d9ba68c184266591c4ff58",
+      "songUrl": "https://www.flowmusic.app/song/0da3d3e1-62fb-4db9-9a0e-9c67df0c07d2",
+      "requestedBpm": 66.0
+    }
+  ]
+}

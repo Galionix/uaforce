@@ -1,0 +1,2452 @@
+{
+  "project": "UAForce",
+  "provider": "Google Flow Music",
+  "project_url": "https://www.flowmusic.app/project/4e60ff62-7c86-4707-8ceb-778b161f1bd8",
+  "session_url": "https://www.flowmusic.app/session/09ea7517-7c18-4c06-9b7a-8fb69baf085a?t=true",
+  "status": "deployed",
+  "playbackDuringWork": false,
+  "scope": "Replace all background music and musical stingers; preserve spoken announcer and combat SFX",
+  "musical_direction": {
+    "palette": [
+      "bandura",
+      "tsymbaly",
+      "sopilka",
+      "hurdy-gurdy",
+      "trembita",
+      "live drums",
+      "bass",
+      "controlled gritty guitar"
+    ],
+    "unity": "Modal harmony and short varied heroic rhythmic phrases; distinct moods and melodies",
+    "menu": "Separate restrained melody, never inserted into gameplay",
+    "vocals": false
+  },
+  "previous_assets": [
+    {
+      "file": "public/assets/audio/cues/boss-iron.wav",
+      "sha256": "8a7b69c361154f399ea7765b5055d0d3ed7426507cced832e20198580282d01a"
+    },
+    {
+      "file": "public/assets/audio/cues/boss-putin.wav",
+      "sha256": "46c0a77807e53101de400a3f74d573bd2912707f8a1d888af1e6c9fc877bc484"
+    },
+    {
+      "file": "public/assets/audio/cues/boss-swarm.wav",
+      "sha256": "2fbfd32316c901772f6ed1c476b09366e429ea84fa86cf3c8649b75ec9e04aa0"
+    },
+    {
+      "file": "public/assets/audio/cues/checkpoint.wav",
+      "sha256": "b26e53ae717b3444cb9e63935e1d5c2c8c7597070f571a67ed8992f6016c6a8e"
+    },
+    {
+      "file": "public/assets/audio/cues/defeat.wav",
+      "sha256": "3dd9f0f8cd92ec6dff0667de9ee02c99a90fed67b4eca5a54c3fac205b2fd9c9"
+    },
+    {
+      "file": "public/assets/audio/cues/evac.wav",
+      "sha256": "ab50a3195260108f66ed3c056dcfd9d7314d53fb5604c82348e27d39ff833be0"
+    },
+    {
+      "file": "public/assets/audio/cues/hero.wav",
+      "sha256": "ce96e976033b28a6f125c0fd704b43971248b413f3e09d99744638d0137ceb05"
+    },
+    {
+      "file": "public/assets/audio/cues/short.wav",
+      "sha256": "42ddb0b74b49c36fc6e28a03f0306500b1fc7d24b77f55db8c3e061d3dda9eee"
+    },
+    {
+      "file": "public/assets/audio/cues/victory.wav",
+      "sha256": "75599cbc2ffa6fc4c32bd879c8a55385c54274945e20f5ae8e85ba85bce0d8bb"
+    },
+    {
+      "file": "public/assets/audio/music/boss.wav",
+      "sha256": "a3cecc6c137101fd6b43d81fa522ec0033491679b17af20e3db666adbcfc0705"
+    },
+    {
+      "file": "public/assets/audio/music/city-combat.wav",
+      "sha256": "cbb2ac93e15b191aa6c79db3121fc19cd87254a76e05ee0f23563bd42754d019"
+    },
+    {
+      "file": "public/assets/audio/music/city-explore.wav",
+      "sha256": "f3cf35ed00cf6ccad997cc8f452c9282edbc7427bd95464212d5568245732b3b"
+    },
+    {
+      "file": "public/assets/audio/music/coast-combat.wav",
+      "sha256": "f340a48758db4c243f705b04596b09d5f9c0ac1851cd94b1949f49e715dad93e"
+    },
+    {
+      "file": "public/assets/audio/music/coast-explore.wav",
+      "sha256": "b98bdb3a2e9ef7a4a1bc3a0f8ba9e581df8a36b28051e785770cf80f24c15fb0"
+    },
+    {
+      "file": "public/assets/audio/music/marsh-combat.wav",
+      "sha256": "834c966f06d6e12414b62c4cd652069f701956037472e451e3f883dcf566d26c"
+    },
+    {
+      "file": "public/assets/audio/music/marsh-explore.wav",
+      "sha256": "184751d3d6d347894ff7d4e50e47e78ac45570ad073f8212d32adec6a61bb490"
+    },
+    {
+      "file": "public/assets/audio/music/menu.wav",
+      "sha256": "0c09fd237deaf78a332a6b4a7180a723aa604adfa409d18e0e2be04d280e5672"
+    },
+    {
+      "file": "public/assets/audio/music/mountain-combat.wav",
+      "sha256": "d097f74dea3d0f96ad5ed7c7cfc1d564d5838ff6533a32f9ad3516fe7cb2092f"
+    },
+    {
+      "file": "public/assets/audio/music/mountain-explore.wav",
+      "sha256": "36c7ea8b9c6e93ba63df3c2efdeb9d37819c550142548af4fbb6fc81b52d502c"
+    },
+    {
+      "file": "public/assets/audio/music/rail-combat.wav",
+      "sha256": "77cc13da6d467ba4a56678950735a2699fa9d560042577f2968f771c70a8c43b"
+    },
+    {
+      "file": "public/assets/audio/music/rail-explore.wav",
+      "sha256": "4cf91c702d8762fd37ceb027267a81c5137addfb0b77a1ff89d673c7b7e47cab"
+    },
+    {
+      "file": "public/assets/audio/music/river-combat.wav",
+      "sha256": "4a1f0d57c903b292768fe3125b9cf04e41e236a624fdda7d7dd431d7cea967e9"
+    },
+    {
+      "file": "public/assets/audio/music/river-explore.wav",
+      "sha256": "d184bb491102b0e2664fa9c4fdc001f0a1f749ccf84d6f29efac047e0f29cc7b"
+    }
+  ],
+  "generated": [
+    {
+      "id": "menu",
+      "song_url": "https://www.flowmusic.app/song/d9c4543c-3e2c-4952-84b7-ec9745529d75",
+      "source": "tools/audio-source/flowmusic-2026-09-12/01-menu.m4a",
+      "requestedBpm": 88,
+      "destination": "public/assets/audio/music/menu.wav",
+      "downloaded": true,
+      "sourceSha256": "2de12c0f8a5ae8e1db6661be07d1d1c0a5814940dbbc8ed9ceb6529c5195cb86",
+      "sourceSeconds": 151.7653514739229,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/menu.wav",
+        "sha256": "8bbbacfb3c6d7eeb7b3ce2491f657c2cd23ba00bac81f328dbce7eb41ce6a738",
+        "seconds": 87.27274376417233,
+        "rms": 0.07999999076128006,
+        "peak": 0.4261445999145508,
+        "sourceStart": 10.90907029478458,
+        "sourceLength": 90.0,
+        "overlapSeconds": 2.727256235827664,
+        "seamStep": 0.009761117398738861,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "river-explore",
+      "song_url": "https://www.flowmusic.app/song/117e5ac2-addb-46ea-85b9-0dc0d6130ef3",
+      "source": "tools/audio-source/flowmusic-2026-09-12/02-river-explore.m4a",
+      "requestedBpm": 112,
+      "destination": "public/assets/audio/music/river-explore.wav",
+      "downloaded": true,
+      "sourceSha256": "6e85f3d27f9c36acaafe1c6baff3c72f3ba8a0f59a0fb88c515287e7ab30fb1a",
+      "sourceSeconds": 163.69068027210884,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/river-explore.wav",
+        "sha256": "b7a34a203d631d3146ef5c21b9e48532a8a53c874d9f0240e1c656e0702a1d82",
+        "seconds": 68.57140589569161,
+        "rms": 0.0949999988079071,
+        "peak": 0.759247362613678,
+        "sourceStart": 8.571428571428571,
+        "sourceLength": 70.71426303854875,
+        "overlapSeconds": 2.142857142857143,
+        "seamStep": 0.0012483112514019012,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "river-combat",
+      "song_url": "https://www.flowmusic.app/song/03183ec6-8000-4344-8101-1310da2b8acd",
+      "source": "tools/audio-source/flowmusic-2026-09-12/03-river-combat.m4a",
+      "requestedBpm": 112,
+      "destination": "public/assets/audio/music/river-combat.wav",
+      "downloaded": true,
+      "sourceSha256": "d52f628d541a649ee04c9f99660fdce2bb5ac0c79b8ccfec7415e63e7964dcc6",
+      "sourceSeconds": 179.9680045351474,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/river-combat.wav",
+        "sha256": "477ca807a69e1e9c00d7c75fde63a0d94535b353c0bb8497f647ca04138f77ca",
+        "seconds": 68.57140589569161,
+        "rms": 0.12414857745170593,
+        "peak": 0.8399999737739563,
+        "sourceStart": 8.571428571428571,
+        "sourceLength": 70.71426303854875,
+        "overlapSeconds": 2.142857142857143,
+        "seamStep": 0.008092716336250305,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "city-explore",
+      "song_url": "https://www.flowmusic.app/song/58bc93ba-d6af-4c26-be72-c78e87510d44",
+      "source": "tools/audio-source/flowmusic-2026-09-12/04-city-explore.m4a",
+      "requestedBpm": 124,
+      "destination": "public/assets/audio/music/city-explore.wav",
+      "downloaded": true,
+      "sourceSha256": "143e8f3e84182c258cc40592cecb10e9631820eb956e9280beaa32a57503ac0a",
+      "sourceSeconds": 178.02666666666667,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/city-explore.wav",
+        "sha256": "7f59208b8ae7ac62b09c78e26bd4c23e7dcab3e402d08cd29e7b250bd83905e4",
+        "seconds": 61.93548752834467,
+        "rms": 0.0950000062584877,
+        "peak": 0.605810821056366,
+        "sourceStart": 7.741927437641723,
+        "sourceLength": 63.87095238095238,
+        "overlapSeconds": 1.9354648526077098,
+        "seamStep": 0.0021345028653740883,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "city-combat",
+      "song_url": "https://www.flowmusic.app/song/a1722df4-7c45-44df-a818-40e879d90df5",
+      "source": "tools/audio-source/flowmusic-2026-09-12/05-city-combat.m4a",
+      "requestedBpm": 124,
+      "destination": "public/assets/audio/music/city-combat.wav",
+      "downloaded": true,
+      "sourceSha256": "c536977c7789bf8a5a04b489ac1d949f19f292d5136d58570968e470ba679ba4",
+      "sourceSeconds": 169.45068027210885,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/city-combat.wav",
+        "sha256": "16478a8995448b59c108ee1872b3ccdc4c72b259e494095e516dd22fefa336db",
+        "seconds": 61.93548752834467,
+        "rms": 0.12488974630832672,
+        "peak": 0.8400000333786011,
+        "sourceStart": 7.741927437641723,
+        "sourceLength": 63.87095238095238,
+        "overlapSeconds": 1.9354648526077098,
+        "seamStep": 0.02066287398338318,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "coast-explore",
+      "song_url": "https://www.flowmusic.app/song/0fefcc82-7748-42b4-9417-765ec2ca1483",
+      "source": "tools/audio-source/flowmusic-2026-09-12/06-coast-explore.m4a",
+      "requestedBpm": 116,
+      "destination": "public/assets/audio/music/coast-explore.wav",
+      "downloaded": true,
+      "sourceSha256": "f335955bee018686336d3f05f6bd999ad88658042c95875043dc70eae49fe766",
+      "sourceSeconds": 176.04265306122448,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/coast-explore.wav",
+        "sha256": "435900621b32a80bb450269f72cb22170358ff70bd8b92dc06753a3c343b7449",
+        "seconds": 66.20689342403628,
+        "rms": 0.0949999988079071,
+        "peak": 0.6615625619888306,
+        "sourceStart": 8.275850340136055,
+        "sourceLength": 68.27585034013606,
+        "overlapSeconds": 2.0689569160997734,
+        "seamStep": 0.0022996943444013596,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "coast-combat",
+      "song_url": "https://www.flowmusic.app/song/8277e198-10e8-4704-8189-ab919d610233",
+      "source": "tools/audio-source/flowmusic-2026-09-12/07-coast-combat.m4a",
+      "requestedBpm": 116,
+      "destination": "public/assets/audio/music/coast-combat.wav",
+      "downloaded": true,
+      "sourceSha256": "e2f9cafb6fca1cfdae9560ee05e8a6a49781f08e05b956f2bacbb4aa3407961f",
+      "sourceSeconds": 180.69333333333333,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/coast-combat.wav",
+        "sha256": "eab0d61b22b8d815bd0b12c7259b8624a1513bfa697eab59a105da46ff02f0d8",
+        "seconds": 66.20689342403628,
+        "rms": 0.1249999850988388,
+        "peak": 0.8069062829017639,
+        "sourceStart": 8.275850340136055,
+        "sourceLength": 68.27585034013606,
+        "overlapSeconds": 2.0689569160997734,
+        "seamStep": 0.013949692249298096,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "mountain-explore",
+      "song_url": "https://www.flowmusic.app/song/95648da6-0b8b-4ddd-921a-0c00af6867cb",
+      "source": "tools/audio-source/flowmusic-2026-09-12/08-mountain-explore.m4a",
+      "requestedBpm": 104,
+      "destination": "public/assets/audio/music/mountain-explore.wav",
+      "downloaded": true,
+      "sourceSha256": "45b44e859c886011b1afb1995ab423a1a63522096a0055b7059c9b57569effea",
+      "sourceSeconds": 163.66931972789115,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/mountain-explore.wav",
+        "sha256": "55853052d3d62f76d3c289f16c8be58a74fcb7a74b1bd23ff234d50b6776d33b",
+        "seconds": 73.84614512471656,
+        "rms": 0.0949999988079071,
+        "peak": 0.5509130358695984,
+        "sourceStart": 9.230748299319728,
+        "sourceLength": 76.15383219954649,
+        "overlapSeconds": 2.307687074829932,
+        "seamStep": 0.0017179511487483978,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "mountain-combat",
+      "song_url": "https://www.flowmusic.app/song/69ff873d-a2d2-40c6-8f86-d1df496a9b6f",
+      "source": "tools/audio-source/flowmusic-2026-09-12/09-mountain-combat.m4a",
+      "requestedBpm": 104,
+      "destination": "public/assets/audio/music/mountain-combat.wav",
+      "downloaded": true,
+      "sourceSha256": "4d616d93570e5828dac7d39260492db73245ea6d0c5673b6751734ef32eaac09",
+      "sourceSeconds": 178.85868480725622,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/mountain-combat.wav",
+        "sha256": "53f249fc870c524518f95146955a2e2979bd337243c03916d0e04b924e5e1128",
+        "seconds": 73.84614512471656,
+        "rms": 0.11882807314395905,
+        "peak": 0.8399999737739563,
+        "sourceStart": 9.230748299319728,
+        "sourceLength": 76.15383219954649,
+        "overlapSeconds": 2.307687074829932,
+        "seamStep": 0.004824056290090084,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "rail-explore",
+      "song_url": "https://www.flowmusic.app/song/3d95f11e-24aa-455d-b94c-17fbac3867ab",
+      "source": "tools/audio-source/flowmusic-2026-09-12/10-rail-explore.m4a",
+      "requestedBpm": 128.0,
+      "destination": "public/assets/audio/music/rail-explore.wav",
+      "downloaded": true,
+      "sourceSha256": "bf0729eacc2e4915326ac06e6578d2f28d27456744abd072fd08301ac4f64153",
+      "sourceSeconds": 149.69598639455782,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/rail-explore.wav",
+        "sha256": "a5cc2347287000813792a6e5eb01650253a88331fd0e89c4bf557a5edcc2e3dd",
+        "seconds": 60.0,
+        "rms": 0.0949999988079071,
+        "peak": 0.7786940336227417,
+        "sourceStart": 7.5,
+        "sourceLength": 61.87498866213152,
+        "overlapSeconds": 1.8749886621315193,
+        "seamStep": 0.0009484067559242249,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "rail-combat",
+      "song_url": "https://www.flowmusic.app/song/c15fd6fb-0c48-42b5-8b38-0449fe524fcc",
+      "source": "tools/audio-source/flowmusic-2026-09-12/11-rail-combat.m4a",
+      "requestedBpm": 128.0,
+      "destination": "public/assets/audio/music/rail-combat.wav",
+      "downloaded": true,
+      "sourceSha256": "eb80426d71835b067d998d6df4d540eb45bb3550b831f2749db2c3ed38b0bf5b",
+      "sourceSeconds": 182.0373469387755,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/rail-combat.wav",
+        "sha256": "4a87e1dad15a8fa4c950e224fbbb631361d6f465ee8180111a6072df0dbd2645",
+        "seconds": 60.0,
+        "rms": 0.12204020470380783,
+        "peak": 0.8399999737739563,
+        "sourceStart": 7.5,
+        "sourceLength": 61.87498866213152,
+        "overlapSeconds": 1.8749886621315193,
+        "seamStep": 0.037896208465099335,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "marsh-explore",
+      "song_url": "https://www.flowmusic.app/song/ab22a530-103f-4aec-a849-93cf4a231102",
+      "source": "tools/audio-source/flowmusic-2026-09-12/12-marsh-explore.m4a",
+      "requestedBpm": 96.0,
+      "destination": "public/assets/audio/music/marsh-explore.wav",
+      "downloaded": true,
+      "sourceSha256": "4c344061888997d7ad6967d3862a6a70af3b03999f4720326dd8c19a5096b1f1",
+      "sourceSeconds": 179.6053514739229,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/marsh-explore.wav",
+        "sha256": "39fd38c03b0dd7b0e25b89cb1d780050a7dfd94bbae068b1d4442214b3bb544d",
+        "seconds": 80.0,
+        "rms": 0.0949999988079071,
+        "peak": 0.7973688244819641,
+        "sourceStart": 10.0,
+        "sourceLength": 82.5,
+        "overlapSeconds": 2.5,
+        "seamStep": 0.0006141681224107742,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "marsh-combat",
+      "song_url": "https://www.flowmusic.app/song/bc026bad-c17c-4114-9385-e3d08064232e",
+      "source": "tools/audio-source/flowmusic-2026-09-12/13-marsh-combat.m4a",
+      "requestedBpm": 96.0,
+      "destination": "public/assets/audio/music/marsh-combat.wav",
+      "downloaded": true,
+      "sourceSha256": "475f1548c5b6c01ffe5f9fb1b96aa6b6eb98c54ca8db7eb6fbe1947fca7c7631",
+      "sourceSeconds": 180.33068027210885,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/marsh-combat.wav",
+        "sha256": "fd065a7268d2f8eb64c4d980465e5efa3182820bf6469e71ae5096cfaf32b6ad",
+        "seconds": 80.0,
+        "rms": 0.12157075852155685,
+        "peak": 0.8399999737739563,
+        "sourceStart": 10.0,
+        "sourceLength": 82.5,
+        "overlapSeconds": 2.5,
+        "seamStep": 0.012482032179832458,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "boss",
+      "song_url": "https://www.flowmusic.app/song/50428417-b949-4adc-b828-b6133ea3d06e",
+      "source": "tools/audio-source/flowmusic-2026-09-12/14-boss.m4a",
+      "requestedBpm": 132.0,
+      "destination": "public/assets/audio/music/boss.wav",
+      "downloaded": true,
+      "sourceSha256": "960ee223c77fae70381b389334462eae112eedb40476785f2e4b57332aa00e6e",
+      "sourceSeconds": 177.9626530612245,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/music/boss.wav",
+        "sha256": "592afa6ecf9605177a30aa8e18cac25d169538742d67cf748a3f4d939b321971",
+        "seconds": 58.181836734693874,
+        "rms": 0.13499999046325684,
+        "peak": 0.8150258660316467,
+        "sourceStart": 7.272721088435374,
+        "sourceLength": 60.0,
+        "overlapSeconds": 1.8181632653061224,
+        "seamStep": 0.010442565195262432,
+        "processing": "Stereo PCM 44.1kHz, one-bar circular linear overlap, constant RMS/peak-limited gain; no synthesis or inserted melody"
+      }
+    },
+    {
+      "id": "hero",
+      "song_url": "https://www.flowmusic.app/song/cdc7853c-1dbc-413a-b14d-6e0c5dd8e975",
+      "source": "tools/audio-source/flowmusic-2026-09-12/15-hero.m4a",
+      "requestedBpm": 160.0,
+      "destination": "public/assets/audio/cues/hero.wav",
+      "downloaded": true,
+      "sourceSha256": "5c2a1df2353e9ea729cd34d2d31909a57993b10c00c06bdee195ad4fddd75cdb",
+      "sourceSeconds": 65.47201814058957,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/cues/hero.wav",
+        "sha256": "7fda3084ed4da2c64daf88a21e6815185baf59aabe35f99e0e0c489e01981cb9",
+        "seconds": 3.15,
+        "rms": 0.14361371099948883,
+        "peak": 0.8600000143051147,
+        "sourceStart": 0.17,
+        "sourceLength": 3.15,
+        "processing": "First sustained generated phrase (at least 55% active 10ms windows), 6ms attack and 250ms release; RMS/peak-limited gain"
+      },
+      "short": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/cues/short.wav",
+        "sha256": "c2d5ffc00f7e62b8dbbfc19ea1e83794119589a0f8a4934d111d5652e301485f",
+        "seconds": 0.85,
+        "rms": 0.19995614886283875,
+        "peak": 0.8341494798660278,
+        "sourceStart": 0.17,
+        "sourceLength": 0.85,
+        "processing": "Short variant of the new hero cue; 180ms release"
+      }
+    },
+    {
+      "id": "victory",
+      "song_url": "https://www.flowmusic.app/song/99fa37d8-7a8c-4d72-bdfb-efc0d1a31dcf",
+      "source": "tools/audio-source/flowmusic-2026-09-12/16-victory.m4a",
+      "requestedBpm": 144.0,
+      "destination": "public/assets/audio/cues/victory.wav",
+      "downloaded": true,
+      "sourceSha256": "35f8294185d1baf5d4715d0816991d6526ea7dde91cd67d4d89ea5dc2e85aebe",
+      "sourceSeconds": 60.714671201814056,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/cues/victory.wav",
+        "sha256": "b7684fb4c830b8b2d97c699ffbd9558ea5f3578e7f522b08eead201c9a5007de",
+        "seconds": 3.4,
+        "rms": 0.17000001668930054,
+        "peak": 0.7292492389678955,
+        "sourceStart": 0.56,
+        "sourceLength": 3.4,
+        "processing": "First sustained generated phrase (at least 55% active 10ms windows), 6ms attack and 250ms release; RMS/peak-limited gain"
+      }
+    },
+    {
+      "id": "defeat",
+      "song_url": "https://www.flowmusic.app/song/a19ca7e2-5d96-44f3-908f-f885f199d543",
+      "source": "tools/audio-source/flowmusic-2026-09-12/17-defeat.m4a",
+      "requestedBpm": 84.0,
+      "destination": "public/assets/audio/cues/defeat.wav",
+      "downloaded": true,
+      "sourceSha256": "f6f5568164b9cefaad6f9dce44a151a10af3ad141ebe1232dd8ce301c85d4120",
+      "sourceSeconds": 66.32535147392291,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/cues/defeat.wav",
+        "sha256": "8d0dfa19fa1ae5d9230069ad63396091b18ee40d5e676ec9680599ff71754ed8",
+        "seconds": 2.5,
+        "rms": 0.1415347456932068,
+        "peak": 0.8600000143051147,
+        "sourceStart": 5.67,
+        "sourceLength": 2.5,
+        "processing": "First sustained generated phrase (at least 55% active 10ms windows), 6ms attack and 250ms release; RMS/peak-limited gain"
+      }
+    },
+    {
+      "id": "checkpoint",
+      "song_url": "https://www.flowmusic.app/song/31e32918-4dad-46e7-b023-50c1a234f687",
+      "source": "tools/audio-source/flowmusic-2026-09-12/18-checkpoint.m4a",
+      "requestedBpm": 120.0,
+      "destination": "public/assets/audio/cues/checkpoint.wav",
+      "downloaded": true,
+      "sourceSha256": "9dd607f7daefa20a11f70c939cc33aa65a5e41778a7073aefdba72ad88d10928",
+      "sourceSeconds": 60.501337868480725,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/cues/checkpoint.wav",
+        "sha256": "98e21c7b1f2b6b8cdf0366d45231338195b9ba4d0d53d5a0cd71c71c83ed0c4e",
+        "seconds": 1.3,
+        "rms": 0.14216580986976624,
+        "peak": 0.8600000143051147,
+        "sourceStart": 1.25,
+        "sourceLength": 1.3,
+        "processing": "First sustained generated phrase (at least 55% active 10ms windows), 6ms attack and 250ms release; RMS/peak-limited gain"
+      }
+    },
+    {
+      "id": "evac",
+      "song_url": "https://www.flowmusic.app/song/356f1ba6-fdfa-4ecf-bf82-2b561bf6af6c",
+      "source": "tools/audio-source/flowmusic-2026-09-12/19-evac.m4a",
+      "requestedBpm": 140.0,
+      "destination": "public/assets/audio/cues/evac.wav",
+      "downloaded": true,
+      "sourceSha256": "b233f51acd7abe9712f7ffc34f9f5137ae942a4b9706dd53aed18797e5bd067c",
+      "sourceSeconds": 62.67734693877551,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/cues/evac.wav",
+        "sha256": "251ff7b33b6a4c92e54644c674e381b022df73ec9b00b24ef8e1db4a2644db67",
+        "seconds": 1.8,
+        "rms": 0.12474385648965836,
+        "peak": 0.8600000143051147,
+        "sourceStart": 0.09,
+        "sourceLength": 1.8,
+        "processing": "First sustained generated phrase (at least 55% active 10ms windows), 6ms attack and 250ms release; RMS/peak-limited gain"
+      }
+    },
+    {
+      "id": "boss-iron",
+      "song_url": "https://www.flowmusic.app/song/c5a283e7-6e35-4596-98ff-f30db102b6aa",
+      "source": "tools/audio-source/flowmusic-2026-09-12/20-boss-iron.m4a",
+      "requestedBpm": 76.0,
+      "destination": "public/assets/audio/cues/boss-iron.wav",
+      "downloaded": true,
+      "sourceSha256": "d5fbb44b1b68d0ee0626055b5d8b16ca69b8df7dfe59df7d85e8cc4985e42d59",
+      "sourceSeconds": 77.2053514739229,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/cues/boss-iron.wav",
+        "sha256": "84f47b3d5ce9628b6b90973abc6253579e6ea3fe1f180a84b2eb7ec26302ce3c",
+        "seconds": 7.5,
+        "rms": 0.16016575694084167,
+        "peak": 0.8600000143051147,
+        "sourceStart": 0.0,
+        "sourceLength": 7.5,
+        "processing": "First sustained generated phrase (at least 55% active 10ms windows), 6ms attack and 250ms release; RMS/peak-limited gain"
+      }
+    },
+    {
+      "id": "boss-swarm",
+      "song_url": "https://www.flowmusic.app/song/8069d691-a805-418d-bf31-b3edd4dd37f4",
+      "source": "tools/audio-source/flowmusic-2026-09-12/21-boss-swarm.m4a",
+      "requestedBpm": 108.0,
+      "destination": "public/assets/audio/cues/boss-swarm.wav",
+      "downloaded": true,
+      "sourceSha256": "a2c26e60e159c4e16b69e639149d3d3bc3b77e610deda62f7bcd52f2bba43636",
+      "sourceSeconds": 65.4080045351474,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/cues/boss-swarm.wav",
+        "sha256": "3b7f381caae40f28cd594d22baa6cb2c521e3c7b0f8d28f70f78f74960216129",
+        "seconds": 7.5,
+        "rms": 0.09916075319051743,
+        "peak": 0.85999995470047,
+        "sourceStart": 0.0,
+        "sourceLength": 7.5,
+        "processing": "First sustained generated phrase (at least 55% active 10ms windows), 6ms attack and 250ms release; RMS/peak-limited gain"
+      }
+    },
+    {
+      "id": "boss-putin",
+      "song_url": "https://www.flowmusic.app/song/0da3d3e1-62fb-4db9-9a0e-9c67df0c07d2",
+      "source": "tools/audio-source/flowmusic-2026-09-12/22-boss-putin.m4a",
+      "requestedBpm": 66.0,
+      "destination": "public/assets/audio/cues/boss-putin.wav",
+      "downloaded": true,
+      "sourceSha256": "0b213158773c36f588226190a15e75959e4737ef67d9ba68c184266591c4ff58",
+      "sourceSeconds": 104.49068027210885,
+      "prepared": {
+        "file": "tools/audio-source/flowmusic-2026-09-12/prepared/cues/boss-putin.wav",
+        "sha256": "541419f0e61480e7245d017bb33949015ab3e38d881f63f2ff0c2588665fe27b",
+        "seconds": 7.5,
+        "rms": 0.1498773843050003,
+        "peak": 0.8600000143051147,
+        "sourceStart": 0.06,
+        "sourceLength": 7.5,
+        "processing": "First sustained generated phrase (at least 55% active 10ms windows), 6ms attack and 250ms release; RMS/peak-limited gain"
+      }
+    }
+  ],
+  "queue_policy": "One track request at a time. Wait for no Creating/Generating indicator, download complete audio and verify decode before requesting the next track. An error does not imply generation stopped: inspect persisted results first; never automatically resend.",
+  "preserved_audio": [
+    {
+      "file": "public/assets/audio/announcer/bandera-bro.wav",
+      "sha256": "97ef455b67eea8fa923837a968393f628535816267ecf61c2822b1724b9dd792"
+    },
+    {
+      "file": "public/assets/audio/announcer/bandera.wav",
+      "sha256": "fe7f4bf659141b00e44ec2ecd90a939239784ebbd898b309dadcc21df1a53fff"
+    },
+    {
+      "file": "public/assets/audio/announcer/bayraktar.wav",
+      "sha256": "8badd5ccf36b5dbdc004870a858fbad738b0be1acbddb313002f0e47991fd60a"
+    },
+    {
+      "file": "public/assets/audio/announcer/bilozerska.wav",
+      "sha256": "e8e54831f6d8f94b26fb6a43ef78e163a0420d205d305d6d493fea606f63b721"
+    },
+    {
+      "file": "public/assets/audio/announcer/boarded.wav",
+      "sha256": "d37fe3fb425be704b967a3c9fcd742d1ddf1b585b0ec96ad8b97ad64273e716b"
+    },
+    {
+      "file": "public/assets/audio/announcer/checkpoint.wav",
+      "sha256": "92ec7270afc00b657d71bc3b8305760a3416830b9b7a1cf3b95356207c618e65"
+    },
+    {
+      "file": "public/assets/audio/announcer/defeat.wav",
+      "sha256": "0cbc85f92b671e3b6d471910f5af93f223622bbaa33fa3e66f13ebb4c8215ca4"
+    },
+    {
+      "file": "public/assets/audio/announcer/drone-alert.wav",
+      "sha256": "d8b4efb9db4311c62f20ba43f7c524933671e8d365e10cf51cdee112212a3ba5"
+    },
+    {
+      "file": "public/assets/audio/announcer/evac-called.wav",
+      "sha256": "d869fee13cdcf06ef198d9f805232d0306567f904b171cf0918bb4eabd65d417"
+    },
+    {
+      "file": "public/assets/audio/announcer/franko.wav",
+      "sha256": "832bd248698be14ea3e0451ac9bf07a442f9708aef38498238399145af71739d"
+    },
+    {
+      "file": "public/assets/audio/announcer/ghost.wav",
+      "sha256": "23cab8be329e9d2053fa5fdd0d1deb3435e11690f27cd8fe37d52dc6e73d7fb9"
+    },
+    {
+      "file": "public/assets/audio/announcer/iron-warden.wav",
+      "sha256": "0d8205cd6594f9db64ad2d091c0447a14e8c19cbfa485bb34d915db019d5aff5"
+    },
+    {
+      "file": "public/assets/audio/announcer/it-army.wav",
+      "sha256": "79b2dcc591ff32e8382a9ad57b99ee74c14d658a05716df7ed1d5ee1e21e7eb9"
+    },
+    {
+      "file": "public/assets/audio/announcer/lesya.wav",
+      "sha256": "068bc82c318a1db36ea6025bc264fa4d87f09191430971bdfc548753bf26047e"
+    },
+    {
+      "file": "public/assets/audio/announcer/mamai.wav",
+      "sha256": "df9e23a5a763ec2ad6e1b822d298a6490cba21d2b423caa63d878167435e03ad"
+    },
+    {
+      "file": "public/assets/audio/announcer/mission-start.wav",
+      "sha256": "8fca990feb2a9e20278e7b2cbc1a267312ba43b9fe6ff3d863b66c4ba71b6025"
+    },
+    {
+      "file": "public/assets/audio/announcer/new-hero.wav",
+      "sha256": "b30d1a3625d4707b9a85197f55bef695f3ba9ad60ea57a8cba809d48496043dc"
+    },
+    {
+      "file": "public/assets/audio/announcer/plane-alert.wav",
+      "sha256": "9cbf8bf0bfe76f07340093fd52e939d53cfaa0f126cedf0b59465359d6120b47"
+    },
+    {
+      "file": "public/assets/audio/announcer/putin-defeated.wav",
+      "sha256": "41e5bd329000716902ec31d9df5058ab20bbf960c60f2377555d5af6ccaa205b"
+    },
+    {
+      "file": "public/assets/audio/announcer/putin.wav",
+      "sha256": "985ff5adf120cf8285f39fb7e508456f6fa2a33b210af31aa513e9e7bf1dfaad"
+    },
+    {
+      "file": "public/assets/audio/announcer/respawn.wav",
+      "sha256": "6badce764abf20172ebac4acba33699fd72e730d7c1fb9f66e097a517eab7925"
+    },
+    {
+      "file": "public/assets/audio/announcer/shevchenko.wav",
+      "sha256": "7b6f4da0c613d01621b1c2eb4de838946d7e5e08a8872b05ff704402c4cf77e1"
+    },
+    {
+      "file": "public/assets/audio/announcer/sirko.wav",
+      "sha256": "9e9ab8786e1ed6f76e34a5be3253bb4c5c55b052c7290d02fc3d71a82aac13bd"
+    },
+    {
+      "file": "public/assets/audio/announcer/skovoroda.wav",
+      "sha256": "289df38062647892d8f5d2beb7822e6903e9bd4667fde70454b8b9713f9cdc01"
+    },
+    {
+      "file": "public/assets/audio/announcer/swarm-master.wav",
+      "sha256": "2675e048e513ce204562df9b55bfb3e9705f3795a89e02a4fb6c9b856e470640"
+    },
+    {
+      "file": "public/assets/audio/announcer/tank-alert.wav",
+      "sha256": "b266cbf16a63909e141015a5ad3c753de2a8190085c66db86cae5b589ac85d9a"
+    },
+    {
+      "file": "public/assets/audio/announcer/victory.wav",
+      "sha256": "16162adaf3c28356cb19652075692db718fc2e56ae7a8886241a0d814ea0fd8b"
+    },
+    {
+      "file": "public/assets/audio/announcer/zelensky-shout.wav",
+      "sha256": "710b9623b7cc941fde4e1a332e4b6de0b32f8c8110655ba0c1bd755a78188959"
+    },
+    {
+      "file": "public/assets/audio/announcer/zelensky.wav",
+      "sha256": "7985fdd163c50bf7fc7c3e4739bbde69c308053b5da0c8579e8c7d25303ee61f"
+    },
+    {
+      "file": "public/assets/audio/sfx/armor-hit.wav",
+      "sha256": "113df760ecf484f6371dee26bb05f81da64a201dd2a75c7d2bf82094a3aaed4e"
+    },
+    {
+      "file": "public/assets/audio/sfx/bandera-hit.wav",
+      "sha256": "f1852496600c44e9db5f7255d1df59c737ef7f2c835f2f4cd48010b41f940a70"
+    },
+    {
+      "file": "public/assets/audio/sfx/bandera-reload-end.wav",
+      "sha256": "d29327f171864f499f6613919b961c3a4e5d8f0b9b13993afe5363356a3c8a06"
+    },
+    {
+      "file": "public/assets/audio/sfx/bandera-reload.wav",
+      "sha256": "0f887acfeedd19b9dd03763a81d7a7ebd159d9d89ffe0527d21c9c0e56d52cd5"
+    },
+    {
+      "file": "public/assets/audio/sfx/bandera-special-end.wav",
+      "sha256": "324acb559667190a4aa6fcc32d9cba12a9e5277ac6b8095eb468d5110c8f3067"
+    },
+    {
+      "file": "public/assets/audio/sfx/bandera-special-loop.wav",
+      "sha256": "549d9c85292ca450ae67eadb89d25f8f8104b5791b187e89e93248d4c22d1247"
+    },
+    {
+      "file": "public/assets/audio/sfx/bandera-special.wav",
+      "sha256": "9ad9871fa2f703acb3bc31afc1e29cbededa25c600d42c68feb7ec73096fe776"
+    },
+    {
+      "file": "public/assets/audio/sfx/bandera-ultimate-end.wav",
+      "sha256": "324acb559667190a4aa6fcc32d9cba12a9e5277ac6b8095eb468d5110c8f3067"
+    },
+    {
+      "file": "public/assets/audio/sfx/bandera-ultimate-loop.wav",
+      "sha256": "86ee23d75596f1d59634196f21d56ae17ede0af0ad3119dd42ea9dbcc946937d"
+    },
+    {
+      "file": "public/assets/audio/sfx/bandera-ultimate.wav",
+      "sha256": "cf13c61a038c3e77ce71a3d8138a8a39bff3c19aecce4e9f1ef4085c92b9a4ba"
+    },
+    {
+      "file": "public/assets/audio/sfx/bandera-weapon-0.wav",
+      "sha256": "87edc8f9ec10ce6590efbf197dea54b9d2e1a441e6943ecbac7dc06bc95632df"
+    },
+    {
+      "file": "public/assets/audio/sfx/bandera-weapon-1.wav",
+      "sha256": "591a1508f6da39d8142f67f862d3e1da4dcd3b5055dae294784663b392a5da0f"
+    },
+    {
+      "file": "public/assets/audio/sfx/bandera-weapon-2.wav",
+      "sha256": "45b572062dda06f455c992b6308fcdd3484da74fe3dc89b7731f3296daf60dc3"
+    },
+    {
+      "file": "public/assets/audio/sfx/barrel-lift.wav",
+      "sha256": "7d330e814bf0061597308533319f752d28eeade61b46310759a6d8e1e4d29b7c"
+    },
+    {
+      "file": "public/assets/audio/sfx/barrel-throw.wav",
+      "sha256": "8b5e7dd5ddd4188891aaeeff179eff6485d9720aa4c402c95376f0db45c3cde1"
+    },
+    {
+      "file": "public/assets/audio/sfx/bayraktar-hit.wav",
+      "sha256": "e1d4662a60ff5769210a998f1619fbf0f649f5fe7a14575cfc94fd7ccc837547"
+    },
+    {
+      "file": "public/assets/audio/sfx/bayraktar-reload-end.wav",
+      "sha256": "d29327f171864f499f6613919b961c3a4e5d8f0b9b13993afe5363356a3c8a06"
+    },
+    {
+      "file": "public/assets/audio/sfx/bayraktar-reload.wav",
+      "sha256": "8d98409fa37fc269d66c903bfe85edf4a062631b9baddea544dadfc1566050de"
+    },
+    {
+      "file": "public/assets/audio/sfx/bayraktar-special-end.wav",
+      "sha256": "0ea173136b30ccb185bb586da7651a26505e2c26b700a04bbf6eafec84b66cdb"
+    },
+    {
+      "file": "public/assets/audio/sfx/bayraktar-special-loop.wav",
+      "sha256": "d9f6b7ffce6133edda86cdf17e1bd4ca0457c1a69d5a82a142c20129d33e5a35"
+    },
+    {
+      "file": "public/assets/audio/sfx/bayraktar-special.wav",
+      "sha256": "4772f2da32366fd75014135731728b3a2c1a1a851c3b63568a83718fd1a2f6c4"
+    },
+    {
+      "file": "public/assets/audio/sfx/bayraktar-ultimate-end.wav",
+      "sha256": "0ea173136b30ccb185bb586da7651a26505e2c26b700a04bbf6eafec84b66cdb"
+    },
+    {
+      "file": "public/assets/audio/sfx/bayraktar-ultimate-loop.wav",
+      "sha256": "cde3b34739c50337f71a0c6c1d80b1c9445fa081b2fae084c6641b4926a2837f"
+    },
+    {
+      "file": "public/assets/audio/sfx/bayraktar-ultimate.wav",
+      "sha256": "fe0397e5900c4cee98235b085ba7615778e1f98f61933bf69b0db65a386902fe"
+    },
+    {
+      "file": "public/assets/audio/sfx/bayraktar-weapon-0.wav",
+      "sha256": "2657f40bfd886334bec77f647aa4b8f7a3359eadacc9c86d6b3ab3cb7f04c807"
+    },
+    {
+      "file": "public/assets/audio/sfx/bayraktar-weapon-1.wav",
+      "sha256": "c9b5038257fd20ba61ce07e0d5d0728293eec83faa1ee18ec30d1d8684ec1a40"
+    },
+    {
+      "file": "public/assets/audio/sfx/bayraktar-weapon-2.wav",
+      "sha256": "3957bfac31636bd3f879463beaca7bf142bb6c27acac48e123401a05a93c22eb"
+    },
+    {
+      "file": "public/assets/audio/sfx/bilozerska-hit.wav",
+      "sha256": "2ddb6873765a9303f4566f2bcbd36ac3432901ba3b41ea0fb3f57b1138f1a2ab"
+    },
+    {
+      "file": "public/assets/audio/sfx/bilozerska-reload-end.wav",
+      "sha256": "d20334ad83d044ed3bf352dd0b3782099bb30bac762ef6a169e7493ce4526d66"
+    },
+    {
+      "file": "public/assets/audio/sfx/bilozerska-reload.wav",
+      "sha256": "6a8325c07aed13346b2f649f0ff941bfdfe8f9b793e7ae8e5ffb99e305012a75"
+    },
+    {
+      "file": "public/assets/audio/sfx/bilozerska-special-end.wav",
+      "sha256": "964530a8d4b5f93c246eae67a0fddf0c09ba97f05a799aa48d13a2f63eaa1d20"
+    },
+    {
+      "file": "public/assets/audio/sfx/bilozerska-special.wav",
+      "sha256": "d06ca113d6c7bab813206d0e694115b5828ce3a747efee569f2f51992a7ed478"
+    },
+    {
+      "file": "public/assets/audio/sfx/bilozerska-ultimate-end.wav",
+      "sha256": "964530a8d4b5f93c246eae67a0fddf0c09ba97f05a799aa48d13a2f63eaa1d20"
+    },
+    {
+      "file": "public/assets/audio/sfx/bilozerska-ultimate.wav",
+      "sha256": "d073142287d44f4d8a36211a4f592d6f8005e51a28533c1164b7ab69d5aa237f"
+    },
+    {
+      "file": "public/assets/audio/sfx/bilozerska-weapon-0.wav",
+      "sha256": "f0a50d56b1a7751e20b539c385f375a18d3741172e13f63bf3d61ab26a441174"
+    },
+    {
+      "file": "public/assets/audio/sfx/bilozerska-weapon-1.wav",
+      "sha256": "f2436b998b5133f833561843a43fb90711d13504f63e15208f8f1fd945e93107"
+    },
+    {
+      "file": "public/assets/audio/sfx/bilozerska-weapon-2.wav",
+      "sha256": "8de64e365c5325d1ea22a4c0ac41a14d69caedf044b95f796e0d32bf6ab95081"
+    },
+    {
+      "file": "public/assets/audio/sfx/bolt.wav",
+      "sha256": "17b9bb0846190e0a5fa6c731103b52f9c7ef199d792d61685053e7d8936f7791"
+    },
+    {
+      "file": "public/assets/audio/sfx/combat-bank.wav",
+      "sha256": "02a3bf2a7d9355057af0aa6e09612acb2671ab9c040886d73a25dcd406c8296a"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-assault-0.wav",
+      "sha256": "53d8d6c455518a2041372b5842b37e24aebb88b47eb1a464b2bd59176706c5ef"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-assault-1.wav",
+      "sha256": "edd25609b87d44571da034fa7a0fa9b4670e133f563e14470795d0b35521337e"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-assault-2.wav",
+      "sha256": "9334f382b86edf28772d3cca472bec7bd13fa2ff4b8b3ea4d57b30eaf22e3ee6"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-boss-iron-warden.wav",
+      "sha256": "ab7c8945f5f87009361794acaaf2f3ff271d2cce51e0d6eb8f1146608d28dd27"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-boss-putin.wav",
+      "sha256": "9c233118cf7e1cb8eb0eac94adf930a114185a4be00762f5dff0e8eb4d1bb8a3"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-boss-swarm-master.wav",
+      "sha256": "c2b2a9a2ff7dc8b995c7291bd1bc9f97a8b34b117d78685368bcf5a2b902eee8"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-demolition-0.wav",
+      "sha256": "d9ef7176a42ad673b132ce084c57fc93a76bc4e694bbc8f96bb35c84c3fbf3b4"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-demolition-1.wav",
+      "sha256": "451da61d15e8cb0d30e1c7eca576efee184d0cc40b0b0110b819b58b66142e5f"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-demolition-2.wav",
+      "sha256": "58636f321e46caf874abeb4e197e1c8ca1405eb277fdb582450694c05c0275fe"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-gunner-0.wav",
+      "sha256": "ff85ab645fdfd265e9fe72f882137493725d4774f3f6b5a5785a3656acbf0931"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-gunner-1.wav",
+      "sha256": "0355fb877dcbafaf5a6f304b52cd2fcc658a28aa2c4aad9cb30bb3ed25cf5fe8"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-gunner-2.wav",
+      "sha256": "3770d79a182e936c2a07f999fe9c4af36c1481ae1baa5d58765dacee7e7ff491"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-rifle-0.wav",
+      "sha256": "9888c74b124873f7d3dff9bbbe61fddaab526f680de036863eb39c0a29638020"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-rifle-1.wav",
+      "sha256": "7f850045d3ba635ef5911442562a39deb9949b729d08ec54f48331bb2d6fbf3d"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-rifle-2.wav",
+      "sha256": "eb720fee6038bdb8acc509bca4aca933c16f36a46992b94372b9b8e0f4a4b117"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-scout-0.wav",
+      "sha256": "271e8c3a689d32b29f732be6b29fcca8fb1282a79b43336bfff5e6a7778d8a85"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-scout-1.wav",
+      "sha256": "f5ab45e8e73e301a39765393924e88579a4818e70a1788065d97920efa217997"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-scout-2.wav",
+      "sha256": "f0aa16640ad98d67f0a6694e9adca6ca64e9c4e68297b932f20eaff44bf34600"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-shield-0.wav",
+      "sha256": "cc803aa7027ef0644054f2e81b2f0f8a2fc4e0c4ad76cb23ba186479d0c5968f"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-shield-1.wav",
+      "sha256": "f669b4a531d8a876ba3351dce4243d5e3581280570ccc4d1eebc61c0465c224f"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-shield-2.wav",
+      "sha256": "a2d6918a11e76a98c5ddbdb013e2df912b56fb8f42ce4ba530baff4ef87035b1"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-sniper-0.wav",
+      "sha256": "65be6cad7c08fe007a39c4b74c79c5fde7139a0ca75b61bc282371869dcae623"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-sniper-1.wav",
+      "sha256": "d4fc57985c4b2a91a1a0de63fb890c1a3dd0838fc8149ec143643255a0f9c8cd"
+    },
+    {
+      "file": "public/assets/audio/sfx/death-sniper-2.wav",
+      "sha256": "c8c437f3a093eeaf0e4171877070b36789f5b0dd009b1cfc97d6362b0f46f27c"
+    },
+    {
+      "file": "public/assets/audio/sfx/debris.wav",
+      "sha256": "a63793d3a9452919c40408bf534b9d1ef060862533ecb0622c3d1c0d5236b47c"
+    },
+    {
+      "file": "public/assets/audio/sfx/drone-dive.wav",
+      "sha256": "e2a9ecc630113b6ac2797a7d4c522f6caae801189775139c6762cbad11cedb7c"
+    },
+    {
+      "file": "public/assets/audio/sfx/drone-engine.wav",
+      "sha256": "9b2d964a151191200c98ea9c04533cd0ab41d62c110e8bdf670c94fce062dfb1"
+    },
+    {
+      "file": "public/assets/audio/sfx/enemy-aggro-0.wav",
+      "sha256": "b487b493d67201febe88840a6b30074c7af8fbd0ada803a273218e87ab76be7d"
+    },
+    {
+      "file": "public/assets/audio/sfx/enemy-aggro-1.wav",
+      "sha256": "6d4e5ff9668bb277404c5465d86b765acbd876e7f36d7b720124ab8970751505"
+    },
+    {
+      "file": "public/assets/audio/sfx/enemy-aggro-2.wav",
+      "sha256": "46567fda377e8cdceb137f2840a7617453ca071f703c1a108f12a096ba9d74df"
+    },
+    {
+      "file": "public/assets/audio/sfx/enemy-alert.wav",
+      "sha256": "8429817a1641e09c75534e5e2922f813538ec4c519b4cae6e9bdf622678e5f92"
+    },
+    {
+      "file": "public/assets/audio/sfx/enemy-fuse.wav",
+      "sha256": "f0a3592cf06a5b882d7be47ff6c0d03f85f3701fa1162f238ed19c40b9ad4c9d"
+    },
+    {
+      "file": "public/assets/audio/sfx/enemy-panic-0.wav",
+      "sha256": "e9a14bc3e1b737db3a85d2781c4f05985dc1292f8053d11fee83dbbacbdeb6ac"
+    },
+    {
+      "file": "public/assets/audio/sfx/enemy-panic-1.wav",
+      "sha256": "17519c1439b3f0d3a8983cba5fa4122a9676e737248bd1cd452395fef5184c7d"
+    },
+    {
+      "file": "public/assets/audio/sfx/enemy-panic-2.wav",
+      "sha256": "d787f0dcefd2d081b9f21902eab639eca74db0d60c8c7f936e004bc0214f891a"
+    },
+    {
+      "file": "public/assets/audio/sfx/enemy-panic-3.wav",
+      "sha256": "9eb2d7eab59478c19426bdb030ef7191a3962edb2b3d248dafd2872f1815c182"
+    },
+    {
+      "file": "public/assets/audio/sfx/enemy-suspect-0.wav",
+      "sha256": "65ded1cd8db6436c4645c173440a6184020385629712b339f90dae74fb81f114"
+    },
+    {
+      "file": "public/assets/audio/sfx/enemy-suspect-1.wav",
+      "sha256": "68cd1927b21aedcddc8ec4b64d4fed3e1ed38f5988172b9f349908c3dd211828"
+    },
+    {
+      "file": "public/assets/audio/sfx/enemy-suspect-2.wav",
+      "sha256": "869136a0a3716a953df30633bd18a9c1b3e04642c08ac851caa9c9d558b18285"
+    },
+    {
+      "file": "public/assets/audio/sfx/explosion.wav",
+      "sha256": "fa14cb76ed89073ea2d9d5193442d35330841350931a0aa780a88610995c7050"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-climb-0.wav",
+      "sha256": "3e4119fd71f41c798932705de71701afc398747a9db2ba131a3c7cbd835d8dc7"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-climb-1.wav",
+      "sha256": "89e78f806de21a287d5455cc0b6483adeb01c59d2f62a28cc653016b6f3a08e3"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-climb-2.wav",
+      "sha256": "45873f6d7035db6ffb51f1e0adf8c50c1a8c1bae782f54bd95f8c7c183f0a0cd"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-hurt-0.wav",
+      "sha256": "8519749d5c89abedbd70f44e023a20451ad4f14e6ec7bd8b617919f239614adf"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-hurt-1.wav",
+      "sha256": "67d066410711df8c8ddfa5fe4e59bde03f46b31a2a70dc6c2707e1d104c17f60"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-hurt-2.wav",
+      "sha256": "4b720d369f2f3f5e298b28c9c7b2e20351b0cc4ed4f41014e4744b003bf49f78"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-jump-0.wav",
+      "sha256": "2c286cb1096b71351b5d75336cee8ff75001462eae09f7430a95caf3400b9111"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-jump-1.wav",
+      "sha256": "531c8905216cdef843de5b67b33ef703567964831eea71eabf9f1c922295ab6f"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-jump-2.wav",
+      "sha256": "303c43feaa691fac25c2f5430bfb8a6a55c5180f08467bbfe5fe6d8afdc7fb2d"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-land-0.wav",
+      "sha256": "073eaed0158b18dbb5a9904a1b6d6494a95937d3849c4b82faa9fc84e3904473"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-land-1.wav",
+      "sha256": "a784997e3950d3da3463aa91be91f3bcd662c692f9d348f554c0322ca8bd687a"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-land-2.wav",
+      "sha256": "0db6c22d05a667cdbdc57aa89dca8d8829e3f4d6c325eae8bb738aa364dd3592"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-ready-0.wav",
+      "sha256": "8ed4dc8d43ac456d7a6bb360047dff4703f3efa476c91949876da4ce53bd9435"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-ready-1.wav",
+      "sha256": "d6a8604a16130a1e6356302108b3b8efdda3815cf08a7fcee3e5d2dbdc5ee5bb"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-ready-2.wav",
+      "sha256": "d140c7e55e3bb423eb240807796ca4e2831d35ae5740d6424fbd8878d5faa21c"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-step-0.wav",
+      "sha256": "16091161caccf18aa696a694a7721d66b6acc1662c8c02ba79997d99cf3297db"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-step-1.wav",
+      "sha256": "4dc3cd1dda7ee795ae3099e90a89dc86a977df79e3aedd805284af9331f48d51"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bandera-step-2.wav",
+      "sha256": "18b856698b536112a21748fcc9a0524a3f1d65f86e6986d1fc5b1cb523595857"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-climb-0.wav",
+      "sha256": "3be9c83fc74b8f25ba06127ade17333a8e12e5f12192423e704082f3c066c1b6"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-climb-1.wav",
+      "sha256": "31ae350c81b4c8de50c5d6fc52a6b082da3120311e9fa7e08864ff37a20af2ef"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-climb-2.wav",
+      "sha256": "f3b197ea8e52bffa7e9e6b710b2ef0ed226b26324cee1494a2a3a0ea6b6da066"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-hurt-0.wav",
+      "sha256": "2bd792f528f6b3c16e6863d5e655f9c06f0bf6e630426dccf90d0a00eecb34c9"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-hurt-1.wav",
+      "sha256": "ea550cf85058316879570587008ff3492de824d657477d90a6dd0ce57781c19e"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-hurt-2.wav",
+      "sha256": "51cdbee6d05527dece4a3797d232db782a2d4b7d56820b228c47f066962a6923"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-jump-0.wav",
+      "sha256": "019c425057ea1d68171c6a7a7116b62ce437fdddcb2ca1a768b8a4d8cb0faa0c"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-jump-1.wav",
+      "sha256": "01f97905e7cc27ace3e4241bf57e173d3db966fa21f4d7aa95c1f9ffa5f14d0e"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-jump-2.wav",
+      "sha256": "b537d8cd02c1e0a1c120aea12482fbcd8563e8d2abfcfece27e8c56448635db7"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-land-0.wav",
+      "sha256": "82c0a89d8909c4d1ec67da06eb65be1fe56756550202134561a84a4c9fe07c8f"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-land-1.wav",
+      "sha256": "1b515d938a4fdf93fdbf361fd5126090865574bd850c9774f42dbb7713b9964b"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-land-2.wav",
+      "sha256": "0e11de1e01474c2d2cd06a1170ceb75de50c3f69d619225157e5f2cbab394944"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-ready-0.wav",
+      "sha256": "b1b185cb8d4dd6df8f227cdd2d81d1ce982af2de64cde95062f0b133062ed44c"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-ready-1.wav",
+      "sha256": "cc9718c93216a6b269c0867413492e7fe231730aadfdad7ee33b41d186a54860"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-ready-2.wav",
+      "sha256": "d1afa3e53292eb2dc9635469f5794ecdf4e6f804c781d7b8ab118365545f1af5"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-step-0.wav",
+      "sha256": "e68c2c10bdc942178d195872e9a7c6e8d40f70d53214c8eb7e618f83754196b4"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-step-1.wav",
+      "sha256": "ce809b12d93b8fea2cd62be242a2346798961a3427e58b554f66bf1638bb07ab"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bayraktar-step-2.wav",
+      "sha256": "2065e032ac271ec8ab4097ee024c2fd0ba0573a17fcc738b07c57bd4e25fe079"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-climb-0.wav",
+      "sha256": "d63b4c4df79792f1485e0ac304726efcff901a4c1cead25093c6ca47c6bd696e"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-climb-1.wav",
+      "sha256": "0e595e020e61ea80ff109cc6de79cea81669986fef11a357fe337c4e0bee7da0"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-climb-2.wav",
+      "sha256": "e1b9675b86d150d97012f9106cac7c6d894abef9c5772d948ca643b37a01115a"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-hurt-0.wav",
+      "sha256": "cff2e52ff4ffe841dcbb912fb2ff15069d868f04203c760775fa374b537e7e30"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-hurt-1.wav",
+      "sha256": "cf9553cd94eddfe6e0c1a439a5c1cf590b90a08cd797d540334d9ae4d718b033"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-hurt-2.wav",
+      "sha256": "0d32ce28ac5592fe05719404782337471eedd5bc07670b6ed046cf0d22d867a1"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-jump-0.wav",
+      "sha256": "688b88f2fad9bdf2be46308415a6afbd168d282233869f3821d6d0ad62d60462"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-jump-1.wav",
+      "sha256": "b666f766c488cec262bc7f5f5fe9d43454e922d12147afc7c64f50c02ecc76bf"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-jump-2.wav",
+      "sha256": "6fcc749f0bb4ec2eb5a38e5d6358a69489a8838c240880f4dd284e34f0c0c186"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-land-0.wav",
+      "sha256": "2bb21784400c14c6b8c293b07c66b0d2db6d3278c632b57bd98d3b99e124d581"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-land-1.wav",
+      "sha256": "d2406c4389c8b79eb6e44f1af3bfc2df3900b35e389df52aaf9127f5331bf652"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-land-2.wav",
+      "sha256": "7f9f03509dda72aaaba2525d385830f219595a5b44680e4d22a948e6b6b56c99"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-ready-0.wav",
+      "sha256": "80467750299e7fae3e7c13964362904881a8a8999dd4f1b6dd4aff0f6487151e"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-ready-1.wav",
+      "sha256": "2db5ace275ac88b409aded26766eb37e2cb36448b1a7943c2566a70851eec7b7"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-ready-2.wav",
+      "sha256": "a77989ece92e4cd0dd48c18e5f89fb90ebda7df12fde930e1469ef2f8fe406e4"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-step-0.wav",
+      "sha256": "ac9946145587072b0e00d62230f519131da10c4194619a5917bc9878fc0f3d06"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-step-1.wav",
+      "sha256": "5256a1fb7e38cac3a1f6882cfeb8ab0650945a246158df4c120f232840af0a17"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-bilozerska-step-2.wav",
+      "sha256": "37b8b4011a19589b6402f1c9bb8ae065261e48a7cc19134c31029d8b1f3c424a"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-climb-0.wav",
+      "sha256": "05c105e99ea063c9ea89b57ce025c25bb12c0d0c4ae33cbd00b12d961a134e3d"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-climb-1.wav",
+      "sha256": "16e178b6c5603256744708267c4dafe16a15dcf8fe54a7bf6231c5af9aa01b51"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-climb-2.wav",
+      "sha256": "277b3e62f277a9ad019f82552ee61ef25e01443ae56fed6bf2bfdb702cbb2750"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-hurt-0.wav",
+      "sha256": "23c7e8cae0382e4496d8bdc40b581cb3b4e993d96d0d4eb3c6fb4488f2527387"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-hurt-1.wav",
+      "sha256": "d6ce72434349eeff4771b76a621e6f001e359c41d4178b4dc2bb57d514c68399"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-hurt-2.wav",
+      "sha256": "e4becb6adf1a36852e6e0e46ef8d34d32981b083e9c547ac272f8e8bd6eafd83"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-jump-0.wav",
+      "sha256": "1afcbf5ff27863af0f604dddc1ae82caa8d64c562e513b22d2494b2d7610b32f"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-jump-1.wav",
+      "sha256": "c19d5fb68f2bd3efa8454797d14ded266503f4be106e5474b8432f70f7de2882"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-jump-2.wav",
+      "sha256": "eb00bea047048c3be12e6a5f9c22ad471849b87251bca1a40f989cad46e961f0"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-land-0.wav",
+      "sha256": "c95d4d4efe7acd21be99b8de1960eb9221c75fa3f064497c430aae376990eb90"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-land-1.wav",
+      "sha256": "90c055d9f22d239b37c9b39c72d6077809dcca8f6ce939f5ae840ed12ba3eb0c"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-land-2.wav",
+      "sha256": "6baa807364f3ad86548a9a68b8477053a81611578e10ded166eefccef3cf6ad9"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-ready-0.wav",
+      "sha256": "a47aafdab52475dc09f79a55b5423905ce6657573a57728a3b7b9ce8397ae049"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-ready-1.wav",
+      "sha256": "8c26928d2b0e3f9b1b045a1d1590d65415f79e56b343d856bc4127d010d100e3"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-ready-2.wav",
+      "sha256": "1c48b3b578dc666c7e1f2c0821d7a431fa5c1fd5ede721bf20b639517890d435"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-step-0.wav",
+      "sha256": "02532b195df8cded357918b6cb539cdc6c256e8c2dc295deaca4947dd0d249a4"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-step-1.wav",
+      "sha256": "a2dcc89979edc3e8ed7488748a0ade2dcc03a5ca92775a8bcde95f35a1d2c558"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-franko-step-2.wav",
+      "sha256": "94a77d31894a468d49592056bef43cb46baeb01a4b7807c05a039dfdbee5963a"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-climb-0.wav",
+      "sha256": "a043ed43a6cf91a87532cf659dbc6ece158be70930991984b8e974a0ddc60872"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-climb-1.wav",
+      "sha256": "ff91447e715717bbb5e832ab7f17697b8ac59b5c1d9a6767c7c5a42ee77f86c0"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-climb-2.wav",
+      "sha256": "93612cc08a3768786e644e82d21d1473b1aefed730e9d00b1c22755d180c1a49"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-hurt-0.wav",
+      "sha256": "fa1d82b1d3a818e37cf2ad031bf21716f5e9fa94b2a27ee6bbb55fbd244c67ee"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-hurt-1.wav",
+      "sha256": "4fad1dbb0db28108c87cd1b7f1d4603b5bb953fb33b935cee7ff29722ee48a6d"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-hurt-2.wav",
+      "sha256": "6f19a3fabfdaee8611de6c03dcc9d86bb572fbc0b1a67ba4e2848b3b37b5adae"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-jump-0.wav",
+      "sha256": "65b59944bb35863ea4ba91c6236ea675194f8b353019ed76db192618ee98525c"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-jump-1.wav",
+      "sha256": "a0856f69d0fd1f4093353f34cd2c3be43d86a68ab0d68cfa7336a579c5c395e2"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-jump-2.wav",
+      "sha256": "ffab8d5f3256ed9d607368bf2efe018dbf10b6cbf764a95312e1a1ee55a787c4"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-land-0.wav",
+      "sha256": "e4c4313833227a36d4164bab47670999c46a298c741babd49459b03a3d42625a"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-land-1.wav",
+      "sha256": "55296aed8875e60bac065a407db6ce83688cf6dcaa9a8b67aad5d6f8bf6d7ea2"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-land-2.wav",
+      "sha256": "8306cd3ecabd5b0cdfecaf6a3ed244ec6e8316fc6e2bb1feedaa0ead75bff70e"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-ready-0.wav",
+      "sha256": "74f7a58fe3c22dfd39f4d568b163b1637f2140ab1c91742de032b9b40e86b8eb"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-ready-1.wav",
+      "sha256": "5aacf21afc52e86e9b937a65ad56d0668b8bd457857bbf636721e05ead122950"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-ready-2.wav",
+      "sha256": "0daeeb4c02672b3df525864a8704c193580b412f173a4cbfd0a5ff6cf2bf830b"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-step-0.wav",
+      "sha256": "7f896888b258dd4d1b2ab72ef5fd63ee6abb2b23d43a987f2e1889bb57db2bd9"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-step-1.wav",
+      "sha256": "9020b61ed5b08ff8a43f03fb8367522395add39d3f7fc919a2088d99a6aa3eed"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-ghost-step-2.wav",
+      "sha256": "c09029d17536f23ffd9e8fa70d60285374bdf288387b80af1b311d08f80e4d59"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-climb-0.wav",
+      "sha256": "c2ccf1c94ef70a48ccb70ff898b227c34fb17a18a24e0669f7f786eed33d8123"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-climb-1.wav",
+      "sha256": "b04af20371e63cbfb11366cc237a187b74478e5fe948a8c48251ab9dc3615bb4"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-climb-2.wav",
+      "sha256": "fec779d411220102b4b96cae2ac77b1eea51e54ebd057b0cbbab7f98bafe0b64"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-hurt-0.wav",
+      "sha256": "3fcd8951d25fdf75da030642d7363186ac7f522053050d7171c48697b25b2ccc"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-hurt-1.wav",
+      "sha256": "9900ee3d6360e39b0d25d2f6df5f3135b02ee88bbfd61873d9e74df8e42cf3e4"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-hurt-2.wav",
+      "sha256": "db6cf353b3cfaf0933f3003c6c1783f809ba1d34ff449fe13463582062ebbbe3"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-jump-0.wav",
+      "sha256": "19b51852321230d3ab4bb4a5fcec74a590fa3f786a28b3a2db6c179e677f7020"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-jump-1.wav",
+      "sha256": "10098234309321cc45ec1d79baaec236c640b22ab2c8887163146d03e422eb5e"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-jump-2.wav",
+      "sha256": "821818f34cf6067fa74477ced686240c75ff7b7fff19c714735759bb555e0280"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-land-0.wav",
+      "sha256": "3f65b0abfc7b0eb4a973aac60d560dddb3cef3fab1ca798deab03989e52c91b2"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-land-1.wav",
+      "sha256": "5845723b1ef7c9a149fbb522e404eb21608c94289ee97a538713de2fa8476c50"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-land-2.wav",
+      "sha256": "7beeaf62833a22cf40775618c72f02242412bbfe1dcdccf75584f58575f68986"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-ready-0.wav",
+      "sha256": "9b4e4620d9c2cc597d34a4bdbee907ba61b16b9262ba5de8877d3988024aaff5"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-ready-1.wav",
+      "sha256": "a21807e3c8595e0818d3b8f06cd9bc8140e492e5893141a2e4e8a1af66fbed71"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-ready-2.wav",
+      "sha256": "8c6bb7d0bc3f4296b95b0b6512836a1e1f2a63149fce0de05cfa43390dc736f4"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-step-0.wav",
+      "sha256": "6c8f42763fa44123b16516c6d05019c2d50f7136cdc55a7160ecbd14315d5ab0"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-step-1.wav",
+      "sha256": "86ee0c5cc32785d0a662dc0a92921e482b123f800c8a9c48915e271c55e0eb9d"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-it-army-step-2.wav",
+      "sha256": "9a908e41f2f68d0dbe4c102c4e89080c2b3505acfb9ef03fb5c5d66f93b79e44"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-climb-0.wav",
+      "sha256": "652f10ffb5dfd9a2f651a84d4a82253cb762eab1e334c972a7a5c062226ea35c"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-climb-1.wav",
+      "sha256": "348e1a1f74b8209dc0af6b7e46e5f16103ea54a03f8764fd8da7fe699ff8838f"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-climb-2.wav",
+      "sha256": "26742c6b5d6fcf0a9667b0044aa38205669cb49bdfe3108c6fe14660b6921dbc"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-hurt-0.wav",
+      "sha256": "dc8bc80113e5e096bee9cfb2b4dcdb22fd91a1549c43ad4454fef781c83ef827"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-hurt-1.wav",
+      "sha256": "18f0c3b03f3e256ff3f25e3f27574d20f604af7144bb64b7bd7aef4eecbc9bcb"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-hurt-2.wav",
+      "sha256": "6ac6329b4242b797db00151fb0dbdc96ab6d937cbf67c6590699717e1ba12864"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-jump-0.wav",
+      "sha256": "9f835227f36892783c0f198306bc280769589517696954fbbbaef9f40ef59b7a"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-jump-1.wav",
+      "sha256": "eceaef86c0f6d6fbd78d46b0c3a2068f2149366319d1fbff9fb8d09f30a34a75"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-jump-2.wav",
+      "sha256": "82ac05361d3c16636d7f5bee6c996743eadacf33458eaf48684243fc7c369ce5"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-land-0.wav",
+      "sha256": "0f5ec9b340bcc3f201f030a91bf3eadea49ff13ec2f67e174b1f0039207863e5"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-land-1.wav",
+      "sha256": "f15d208da4a2044bb5a2d217bf17ced56eb52194f54eb8b889fa31c65fe53b5a"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-land-2.wav",
+      "sha256": "1f8e4e8b89d3467191bc53390a417d1b3d49d07e78af742239b2cb22daadb4d1"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-ready-0.wav",
+      "sha256": "ba54e84ce369bf7dab40302feb6867078c471d622f8c17613850884261669bbb"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-ready-1.wav",
+      "sha256": "5199cf89646ffc00aa8d6412ede9705af80c3308fbc96eadeaec1c046f149ae3"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-ready-2.wav",
+      "sha256": "94c44705ed2be4da02c5f548722fa2e36bec7427ff46b6379faf1ce173b86965"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-step-0.wav",
+      "sha256": "cdd0d3f997dab990359ceb1401c618f893b74edc0b8a7836bbf3b6eed3d9243d"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-step-1.wav",
+      "sha256": "aaf1c61db989aaa7a77aeb29176ff9ab7bd6d0fa7c30f13649eee757bd55cb8a"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-lesya-step-2.wav",
+      "sha256": "6081e193ed10b2aa51ae903bc0ab11c7b40c94bb7836203d021ce9b789db112d"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-climb-0.wav",
+      "sha256": "dd17fb5bf31d5034c5c4495c1cd78340616c07942a944c15df5b6387cd61f357"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-climb-1.wav",
+      "sha256": "03ee6d91d3c9e45a1034156fdc1c26b4c25f722c45a3929b97436878861005a9"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-climb-2.wav",
+      "sha256": "1e20254fb68a26ac1447e3bc5477144fa36b400bf8b206db993d7c50ea9d23b7"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-hurt-0.wav",
+      "sha256": "3a135330dee4239a5894e93bc8a7043598a448a1478044c4e97b2ae5cefd3395"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-hurt-1.wav",
+      "sha256": "a66940590d073163b70235b36fc641fd9a7c910307fe29f980fc06033db00068"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-hurt-2.wav",
+      "sha256": "40967574c80d7bd0afae784a85bfed10cbd8a2fea8ce2a67593d64e93f7203b5"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-jump-0.wav",
+      "sha256": "ac3dd4cf7ce967cd5576537ba073447db11d325e30d260a6f4d76a8dba5624df"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-jump-1.wav",
+      "sha256": "ba9d361da7324ba06388874928458533767410392ebb9485e646c9598ac626a5"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-jump-2.wav",
+      "sha256": "dd124f78f4ac589aee2fbbb904ca9b2b863a2a6a9910335e3e32a699d05a94a0"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-land-0.wav",
+      "sha256": "0bfe9f0f135f93661b931dcdabce041e1bdba0457ff8d8f18c2ceb847adff7be"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-land-1.wav",
+      "sha256": "1194a5d6238bd4f1a1adeda992f6190e32d29c64b5ec675fb4eee97000d524ef"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-land-2.wav",
+      "sha256": "78ad1706c487e31c93755d1c039660bf8be8b7bacf897fc301e0f9f83980e917"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-ready-0.wav",
+      "sha256": "0e1ef2584b683a7980893f6c27e2079569a8505ba7ea9adc35d5fdafc594392f"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-ready-1.wav",
+      "sha256": "a4860bd96ed4ef0779baec0366caecc8ca07663be5ebf256441bcb4a6a67ab7a"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-ready-2.wav",
+      "sha256": "78fe94827e20f6dbff2c6eb7cfedae239134120fa0645ebaede15400346e34a1"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-step-0.wav",
+      "sha256": "942526a1a57021b1efb1656f1aecab237bbc6da91a39420878e063dae016469c"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-step-1.wav",
+      "sha256": "3f1bf57b991d2f4fbc0ba30f13f18aa1e692b57649fe3a8b9abdc13592d89138"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-mamai-step-2.wav",
+      "sha256": "24af2b68abf61f0a6e6745f44a3c724344d24f0bd655914cd721de0f01cf8a6a"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-climb-0.wav",
+      "sha256": "af1e6ebe292714848e5185ced3f0e42ba5246ac8747cde1a8c271fd9658e99e7"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-climb-1.wav",
+      "sha256": "586b5c92df1b4112a5d1bc6576e94ce683ff1ee3636dc2d823f370fab4753827"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-climb-2.wav",
+      "sha256": "d4673634034366cc7d43fec04b258cef56be8d0a6d471eda1a186d09e0208439"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-hurt-0.wav",
+      "sha256": "85165caf6425a703d41932e86a14b5b9c31bc4566d241cd9587a0755f16a7cbe"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-hurt-1.wav",
+      "sha256": "c55b6f400a5c35b29c1635432b83f0290521f96153c51f238464b89ee6e3ce82"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-hurt-2.wav",
+      "sha256": "441a16fab650beaf50fd4fbfba3f92449cd11ba43d84a8e2b67f780ec744d121"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-jump-0.wav",
+      "sha256": "c3b99f3f1ef0573d984a6dba035d5021ff7aecdc25d050c95482224c06f9d754"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-jump-1.wav",
+      "sha256": "7fc9dcc249cbaf405dd1dd299315de7dc20502e007bd37be704de1c7a70daa53"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-jump-2.wav",
+      "sha256": "bfc357d2cee4c25b71e32f85c13d0f56b4b8e2468a8fa2578ebbceea48283adc"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-land-0.wav",
+      "sha256": "3d38d19b3a395cd41d85c195916d7fe7b5e73a5118b34685ae360f793e9378b5"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-land-1.wav",
+      "sha256": "5dad52932ad5be610e74f64294977e708e72a11ac2dbb8f237349b2f0d915e2d"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-land-2.wav",
+      "sha256": "4175fc51d8445b2fc1ad274103f3770f0ffa21442b8b1d05ee65a9993c5d2366"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-ready-0.wav",
+      "sha256": "33f3cf1e0a118129c991de238b2e928ebf8221baa582068cc0c824a8ec1309a7"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-ready-1.wav",
+      "sha256": "44e70028add1026206fc13d37407626757e36856adc730de72b5ad1663955145"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-ready-2.wav",
+      "sha256": "6bb097c02c09bbc60f753b89123efe96bfc0efc5b2cd211a94bbf0a99df8faeb"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-step-0.wav",
+      "sha256": "3cd442a807533d1ade6aec1ad6a25a56d6112b2cb0154d2e463c2d0269d9f89e"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-step-1.wav",
+      "sha256": "a5761ede3dd5fa58bdbdd97bb12e29e3e96e57d52a9784db82fded8463fc9a1f"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-shevchenko-step-2.wav",
+      "sha256": "912b7ee6e8dc2d8acf13e4bf9b04dc8cfc5025ffbed5b81c6b1f49823bae7dc0"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-climb-0.wav",
+      "sha256": "7e06ecafc72df6cb1c623970bee54992b98dfb4ef11f3b9dc9ab524b4fe20726"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-climb-1.wav",
+      "sha256": "a155d987eeb26069f6bdeeb1a2274651d5e78143971c5ff4dfcba9397b1b0bdd"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-climb-2.wav",
+      "sha256": "7dfedc7f860378b6cd5440707f343ec1c9e0e5371c9310449ae028e462f17154"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-hurt-0.wav",
+      "sha256": "aef3c38039c9daec66f55e4a4d4789cd8f20ea1877d64c4c1a9a1fcd7e6c90e2"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-hurt-1.wav",
+      "sha256": "e803445fa48d9cc591ea085a1bf6a376859c5288946afa9eece562c1e2559991"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-hurt-2.wav",
+      "sha256": "555ddfc3928e35f1ce401d802d30f8eb4d705a4cca033155812bde8b06b87ab7"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-jump-0.wav",
+      "sha256": "be8ed8bb537b4a51165df0a9411ddc3eafe5815d48947ddb65e6d83893aa8ca0"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-jump-1.wav",
+      "sha256": "e49f8e547106d02f57487642d407c2da0ad0124b8a4e70a7a5c0c40e71463a44"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-jump-2.wav",
+      "sha256": "c9cfee813dada484ac86e77db27fca077f2730b4ae75d6260028c3dcbf1a591d"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-land-0.wav",
+      "sha256": "58b6a24cdc87a2b88134820a4c80750a571f9536c192573511ca42b5803fda48"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-land-1.wav",
+      "sha256": "b7cf5c007b5b896fda37667d559cac306d87e64164aece02e83156b4fdb69f7d"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-land-2.wav",
+      "sha256": "43ddee105be663cb6cd6d51cb7916427ab4ace8289176661e699c82ba83a8f9c"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-ready-0.wav",
+      "sha256": "3525e4ccb743a4507c0379387505f6d2102c9a9e2fae5783e2db7df094ed40c4"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-ready-1.wav",
+      "sha256": "dc2670edc6879834f8371715bfa80baf593a9a9654bde38953c83b713e9d1541"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-ready-2.wav",
+      "sha256": "14d4df4b5a607b8863d35d165c0047f1785e809a53064f168d648ffee57ee1fb"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-step-0.wav",
+      "sha256": "b439da4473fe58191be43078f1eb46ef90c2f267bd0a39364ff3875517c623ec"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-step-1.wav",
+      "sha256": "0395746524375c9b719b21aaf515d5572e4cf124aece0e9803787e3eb980c66a"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-skovoroda-step-2.wav",
+      "sha256": "89c80b8fe426e3b56a101d597cab47bc4a324350bb59b6ad4acee2361b486eea"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-climb-0.wav",
+      "sha256": "04c243b03c87c41dadda7fd7139290f92d7074fc9f66bba51b9aba45802f745d"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-climb-1.wav",
+      "sha256": "f2e06b138c9043ab00df1ea31c4995b8bc1d87ede3d35a19b39d1ab234d037c2"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-climb-2.wav",
+      "sha256": "d07d3658da846312eb0032a395494a8b15cf18848ae405d6ce06b68ae090c0c8"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-hurt-0.wav",
+      "sha256": "b5bce6ab79184198f3b783c658bfeadf9dbfdc04b544cfdd856c9eeccbc034c5"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-hurt-1.wav",
+      "sha256": "7e6c985435c44accd0f7bbf30cead0cd7d4c141a51b1808199865ca094cf5676"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-hurt-2.wav",
+      "sha256": "7bc3ed5e4642e234ce9dc663b017de6b604ab3254d3593f47735d1c3fb235498"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-jump-0.wav",
+      "sha256": "c541e5073142b152450ebe02f25f8d7f9855e84e91ee90caca2368c886d5fd92"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-jump-1.wav",
+      "sha256": "ecb31529e0e5f7f39b5623dc5e100c98f03a9e26dffa4c01f8e5863f57d9b78a"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-jump-2.wav",
+      "sha256": "0aba411e7bff2adfafc5702b438210df3479f46d693d4b3ec2bc88d67b1451e8"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-land-0.wav",
+      "sha256": "ca29bee3c69ceecc52d7da918b4de3be6e6e28b3b746a841f24a3585b474ba32"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-land-1.wav",
+      "sha256": "1615b7ab61415c11ff6004c6fa4d18a474a1a985abb274a6da390a3c5b4a40cd"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-land-2.wav",
+      "sha256": "841a66c8394444cd37c4902d7d828653572cad906c1721d69c3c257429d4323c"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-ready-0.wav",
+      "sha256": "1386272818eebae68ff4fbbc3610cb4a68885ed73f974844ecb911d38398f572"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-ready-1.wav",
+      "sha256": "d5f8d0704a2394eb89a0daed9064b1f8a20103f1476ff30792ded02da2be0bea"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-ready-2.wav",
+      "sha256": "0287a31c7373b9ff6674d6560587ee1323bacb27adf1248f57c1bee7eadbebf7"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-step-0.wav",
+      "sha256": "937302a9a92c189cc4b2213c4a80462ea0a91a1ac9f48f54fb4f1ab107561de6"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-step-1.wav",
+      "sha256": "2dec9b2e43b8bfc90d4f4cda0f57cfee8f04e8e413a3b6837ee87d6f42d0fc5b"
+    },
+    {
+      "file": "public/assets/audio/sfx/foley-zelensky-step-2.wav",
+      "sha256": "cf68cbc011f71f01520c494aea64021fa4f583d05144fda7f85b30c5a0c3cb40"
+    },
+    {
+      "file": "public/assets/audio/sfx/follower-down.wav",
+      "sha256": "cb0f4a1c9225bf0649c27ee9b960ff90eb8dfcf92e2c46590f20b39b3f0540e9"
+    },
+    {
+      "file": "public/assets/audio/sfx/follower-hurt.wav",
+      "sha256": "bc82395b4c18ef9cac41dd8e2b63f275bca32a37584ffbab45b67f00822fff54"
+    },
+    {
+      "file": "public/assets/audio/sfx/franko-hit.wav",
+      "sha256": "571774757e89cb761a5190280f9d583621ebde6db73f382ab34c05bc721ba6e6"
+    },
+    {
+      "file": "public/assets/audio/sfx/franko-special-end.wav",
+      "sha256": "12e5bcf0185fa7341dc7472ab98fa44bcfc11b66f4d2f563e883832c21306146"
+    },
+    {
+      "file": "public/assets/audio/sfx/franko-special-loop.wav",
+      "sha256": "c96516fed08ba58c6d0cddef6601327e08b8066d333ae6835e3f38aa8473cf66"
+    },
+    {
+      "file": "public/assets/audio/sfx/franko-special.wav",
+      "sha256": "bbf13839ac9850847563f43a4e9ac41c00b46df4b0f159c238ed9617a95bfd2a"
+    },
+    {
+      "file": "public/assets/audio/sfx/franko-ultimate-end.wav",
+      "sha256": "12e5bcf0185fa7341dc7472ab98fa44bcfc11b66f4d2f563e883832c21306146"
+    },
+    {
+      "file": "public/assets/audio/sfx/franko-ultimate.wav",
+      "sha256": "f38a5981fdcad1cdf0d21454f58ce8ea2f1c6c5091a08f8bbb8c6f5659cdfbad"
+    },
+    {
+      "file": "public/assets/audio/sfx/franko-weapon-0.wav",
+      "sha256": "40d9b4ce8c196f897e5cb00f51df99f8d451cb7d972b919003620dd16c257b88"
+    },
+    {
+      "file": "public/assets/audio/sfx/franko-weapon-1.wav",
+      "sha256": "19de9429dd1c731bd0e3bce48e3de737e5e5f1bef5754edd6be983b4ca3a8db1"
+    },
+    {
+      "file": "public/assets/audio/sfx/franko-weapon-2.wav",
+      "sha256": "df6cb43762d2437293d08a5b9dd29f19d9eb7bf05a2545e33f5b7950e17cded9"
+    },
+    {
+      "file": "public/assets/audio/sfx/ghost-hit.wav",
+      "sha256": "b054cbf3b8a983f4a7d3d552172732a7cc4b5146334ea1e7d3454289b713ba64"
+    },
+    {
+      "file": "public/assets/audio/sfx/ghost-reload-end.wav",
+      "sha256": "d29327f171864f499f6613919b961c3a4e5d8f0b9b13993afe5363356a3c8a06"
+    },
+    {
+      "file": "public/assets/audio/sfx/ghost-reload.wav",
+      "sha256": "b556abcba353e1aadcd879b85c814875206d57a7cd94ab716b3ed1a9803d114d"
+    },
+    {
+      "file": "public/assets/audio/sfx/ghost-special-end.wav",
+      "sha256": "570a04e72e52ef035613e256ec75291a2095734f12dd8c37b10dfc1f35847861"
+    },
+    {
+      "file": "public/assets/audio/sfx/ghost-special.wav",
+      "sha256": "01ef533b25a92f8f149308e5119670442d46203fdc821ccc1876b36595e9e02b"
+    },
+    {
+      "file": "public/assets/audio/sfx/ghost-ultimate-end.wav",
+      "sha256": "570a04e72e52ef035613e256ec75291a2095734f12dd8c37b10dfc1f35847861"
+    },
+    {
+      "file": "public/assets/audio/sfx/ghost-ultimate-loop.wav",
+      "sha256": "cde3b34739c50337f71a0c6c1d80b1c9445fa081b2fae084c6641b4926a2837f"
+    },
+    {
+      "file": "public/assets/audio/sfx/ghost-ultimate.wav",
+      "sha256": "79d09fc5a4a7aa9e723806e947fac1978c8263aa0fe07bdfd98b4346d8a68a5c"
+    },
+    {
+      "file": "public/assets/audio/sfx/ghost-weapon-0.wav",
+      "sha256": "758b1acfb149365ed3c4ba20f158dc18ab3aae5b048d358db2dfac0d72e7594b"
+    },
+    {
+      "file": "public/assets/audio/sfx/ghost-weapon-1.wav",
+      "sha256": "bacfeb613c6149057a372943c7ae28eb4f8073a3e6128a8c875d5e7ce26509a4"
+    },
+    {
+      "file": "public/assets/audio/sfx/ghost-weapon-2.wav",
+      "sha256": "a7b089bb14d729e96ab86f8d7eb0b48c26a741ea19cdc20db954d2c78ec50299"
+    },
+    {
+      "file": "public/assets/audio/sfx/glass-fire.wav",
+      "sha256": "d3d3e856d5c2f6c97c1325d734f3f189bed3fb2d872267098b2d52d6374d02a3"
+    },
+    {
+      "file": "public/assets/audio/sfx/gore-blood-burst-0.wav",
+      "sha256": "4f02a2fe89c5fb0aee57ceee8c6d9ae2ab030bac0597d781ed4517743d45078a"
+    },
+    {
+      "file": "public/assets/audio/sfx/gore-blood-burst-1.wav",
+      "sha256": "f897d929e24e8d85b118571f960cafa7fdfee0436ece078c97fcb85baeb71191"
+    },
+    {
+      "file": "public/assets/audio/sfx/gore-blood-burst-2.wav",
+      "sha256": "4e5f240922c436739c46d4033b86f57f96041ba6584cc0e4916ece3bcf48da60"
+    },
+    {
+      "file": "public/assets/audio/sfx/gore-croak-0.wav",
+      "sha256": "3b1b64c36c69c4227cc0bd2f1168c8abb1107fb81fe3c847811eff2e64676d66"
+    },
+    {
+      "file": "public/assets/audio/sfx/gore-croak-1.wav",
+      "sha256": "fdc6482c8f194cd92d4d1d89338b617afbdeb5b05f1576b24c7a9cf9f2fd4325"
+    },
+    {
+      "file": "public/assets/audio/sfx/gore-croak-2.wav",
+      "sha256": "7f24a5d62fe62402027c5f2cf7729fa9d158cf132cfbeb3058490b5fd9c0cd53"
+    },
+    {
+      "file": "public/assets/audio/sfx/gore-gib-land-0.wav",
+      "sha256": "915942d7e08d2a97c98f152549bfa8466a6ee59a6da56ce6c00e5619109fbe6e"
+    },
+    {
+      "file": "public/assets/audio/sfx/gore-gib-land-1.wav",
+      "sha256": "9380d9023f1fa09871db6a3be51c187a3f835b171aa998e128775e2883543cd5"
+    },
+    {
+      "file": "public/assets/audio/sfx/gore-gib-land-2.wav",
+      "sha256": "9ff77ecf5d04a2139c8d76a63d39311101d51c1ac4e4244e31b9ec85aa7c2227"
+    },
+    {
+      "file": "public/assets/audio/sfx/gore-splat-0.wav",
+      "sha256": "915942d7e08d2a97c98f152549bfa8466a6ee59a6da56ce6c00e5619109fbe6e"
+    },
+    {
+      "file": "public/assets/audio/sfx/gore-splat-1.wav",
+      "sha256": "9380d9023f1fa09871db6a3be51c187a3f835b171aa998e128775e2883543cd5"
+    },
+    {
+      "file": "public/assets/audio/sfx/gore-splat-2.wav",
+      "sha256": "9ff77ecf5d04a2139c8d76a63d39311101d51c1ac4e4244e31b9ec85aa7c2227"
+    },
+    {
+      "file": "public/assets/audio/sfx/hatch.wav",
+      "sha256": "c097cabd3b10e79735df9553b9dc4a929f2d3467ce8190f11afe654ed75a26cb"
+    },
+    {
+      "file": "public/assets/audio/sfx/it-army-hit.wav",
+      "sha256": "9cf199875c5140055a44a5b5121fe95a2520348e4bda59c563e732a378421c13"
+    },
+    {
+      "file": "public/assets/audio/sfx/it-army-reload-end.wav",
+      "sha256": "d29327f171864f499f6613919b961c3a4e5d8f0b9b13993afe5363356a3c8a06"
+    },
+    {
+      "file": "public/assets/audio/sfx/it-army-reload.wav",
+      "sha256": "77170e594b3cee6263e70b767f84a2dc773e9f1eabbe6144eaf2ba43926813b2"
+    },
+    {
+      "file": "public/assets/audio/sfx/it-army-special-end.wav",
+      "sha256": "964530a8d4b5f93c246eae67a0fddf0c09ba97f05a799aa48d13a2f63eaa1d20"
+    },
+    {
+      "file": "public/assets/audio/sfx/it-army-special.wav",
+      "sha256": "d9228447c56dfc9c047fa0c2ca18be0178360120c861aa3ffedffdbd97fa8727"
+    },
+    {
+      "file": "public/assets/audio/sfx/it-army-ultimate-end.wav",
+      "sha256": "964530a8d4b5f93c246eae67a0fddf0c09ba97f05a799aa48d13a2f63eaa1d20"
+    },
+    {
+      "file": "public/assets/audio/sfx/it-army-ultimate-loop.wav",
+      "sha256": "a257ed67a17390ec6cd3a74a19abd13467a8f8f3863382b981ecc741f20aac20"
+    },
+    {
+      "file": "public/assets/audio/sfx/it-army-ultimate.wav",
+      "sha256": "d0502fdef70abbb8778079c8b3ce247ccbe1627c07c7749018b20e1a554fa444"
+    },
+    {
+      "file": "public/assets/audio/sfx/it-army-weapon-0.wav",
+      "sha256": "d6364e2573816375872721e881121d41eb32275e1883633a1ad03611664390d8"
+    },
+    {
+      "file": "public/assets/audio/sfx/it-army-weapon-1.wav",
+      "sha256": "68a93a4b64b0b1d1c6aec97db920e79985a5add2a5a0a7de9b1af3c3307da50f"
+    },
+    {
+      "file": "public/assets/audio/sfx/it-army-weapon-2.wav",
+      "sha256": "7752428620a2153a60389f978b0a470d2d60863b0ba39040923c16a506c0166e"
+    },
+    {
+      "file": "public/assets/audio/sfx/legacy-hurt.wav",
+      "sha256": "19e616bef811d00950e0cfe323542b9da90c01730627272b1ca8126725e49efe"
+    },
+    {
+      "file": "public/assets/audio/sfx/legacy-reload.wav",
+      "sha256": "b7127ff6c68c0e190cf2cefe5068be72423f92f30bd57ad425f0bbc5796f8146"
+    },
+    {
+      "file": "public/assets/audio/sfx/legacy-rescue.wav",
+      "sha256": "4a38ec5e63f4b129b00b2f8ca6b50b8d035459fdd841141e139b2aac9899b927"
+    },
+    {
+      "file": "public/assets/audio/sfx/legacy-shot.wav",
+      "sha256": "9cb5a83d311e88a8b48e3976a02ff98422ff0d4eb036b487ed3d813ca8b8e470"
+    },
+    {
+      "file": "public/assets/audio/sfx/lesya-hit.wav",
+      "sha256": "763e5bac891174075a6fe79d7fd42d4a6438627739667ec4be6827d0964b888b"
+    },
+    {
+      "file": "public/assets/audio/sfx/lesya-reload-end.wav",
+      "sha256": "d29327f171864f499f6613919b961c3a4e5d8f0b9b13993afe5363356a3c8a06"
+    },
+    {
+      "file": "public/assets/audio/sfx/lesya-reload.wav",
+      "sha256": "d0fcccc39b909bb1a20701b92df1277ba22e3d1449f9cdb2a6687971ef1f971a"
+    },
+    {
+      "file": "public/assets/audio/sfx/lesya-special-end.wav",
+      "sha256": "23482c9e361666b3ebef741d877c6641cae58951e5e33ffd01612f03c02fc18b"
+    },
+    {
+      "file": "public/assets/audio/sfx/lesya-special-loop.wav",
+      "sha256": "1313165d5528c182c0cf169a8e44bc0e5afe7b222bf47a175952d6e0bd21a0ee"
+    },
+    {
+      "file": "public/assets/audio/sfx/lesya-special.wav",
+      "sha256": "d79c2fce972433a22cf1c6e20c9b4eebcc260db8360989229ea3688c03725f85"
+    },
+    {
+      "file": "public/assets/audio/sfx/lesya-ultimate-end.wav",
+      "sha256": "23482c9e361666b3ebef741d877c6641cae58951e5e33ffd01612f03c02fc18b"
+    },
+    {
+      "file": "public/assets/audio/sfx/lesya-ultimate-loop.wav",
+      "sha256": "233ac335d865da6cd2f63dbd04520242ed393559570b0d1c9d81d8995c177501"
+    },
+    {
+      "file": "public/assets/audio/sfx/lesya-ultimate.wav",
+      "sha256": "e8b9390e85cd1d5d3a97939e20eda903f33f1d2eb901422bfd1d9a7e578689fc"
+    },
+    {
+      "file": "public/assets/audio/sfx/lesya-weapon-0.wav",
+      "sha256": "1655c2c004ed3b4032a2a82c6b3ffe05e6c66107a041a9506f169df5c0e8ba0d"
+    },
+    {
+      "file": "public/assets/audio/sfx/lesya-weapon-1.wav",
+      "sha256": "39d264b475f209abd3b61121fc8aefac2340d16d19e21101c063a90ddc5b5443"
+    },
+    {
+      "file": "public/assets/audio/sfx/lesya-weapon-2.wav",
+      "sha256": "e99bf1d8f4ad28280cf2dde5f083977af1211ac687b4168d2799a8977d111fdd"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-hit.wav",
+      "sha256": "c07ff52d2b74e150bed3cff78b5852284f6f3dfdc4380af127c659d505c0da28"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-melee-weapon-0.wav",
+      "sha256": "016d7f937ddec91094ec91afb23b269ee1a4b957c3df8f833ebb08c35f9888ad"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-melee-weapon-1.wav",
+      "sha256": "1191d69e1edcf3d8c9d58d252c0e9287d3d5e9c740ee0c477616db9da79a7f17"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-melee-weapon-2.wav",
+      "sha256": "1ff66b52b28c151177809a25ca965fe541f64705d770caa4052b5fd959d72888"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-reload-end.wav",
+      "sha256": "d20334ad83d044ed3bf352dd0b3782099bb30bac762ef6a169e7493ce4526d66"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-reload.wav",
+      "sha256": "f961912e08566360297286de10abde188574b4b481d6daa13f7c64bd61511ca0"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-special-end.wav",
+      "sha256": "324acb559667190a4aa6fcc32d9cba12a9e5277ac6b8095eb468d5110c8f3067"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-special-loop.wav",
+      "sha256": "92054d4dba5e0ea45d8b4900175a7af48c080cfa0abdc0f6e0936195611caf5b"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-special.wav",
+      "sha256": "b4a3ff5a56df97dd7951218a97268d2ffa25ddfe44941bfb6f9d41accb964fd1"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-ultimate-end.wav",
+      "sha256": "324acb559667190a4aa6fcc32d9cba12a9e5277ac6b8095eb468d5110c8f3067"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-ultimate-loop.wav",
+      "sha256": "ba8545782ce753f6bae01b4a0c58c885c0858f3257fb476f68b41a493e2424a9"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-ultimate.wav",
+      "sha256": "0d7de21a1fc8da8357bfd309facd032881c3a1ab2308938b0a5b8d249e78cf1d"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-weapon-0.wav",
+      "sha256": "5bb6363ad35c4a09590cd4d7aa53cdef0b8f23ac63e2b96d5db356e6e5f7f355"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-weapon-1.wav",
+      "sha256": "d8468a21a73d51f4594b4de32f57d8e49ac61bc126ae20cab9e26f61cb82e33e"
+    },
+    {
+      "file": "public/assets/audio/sfx/mamai-weapon-2.wav",
+      "sha256": "4a52efa0a952ee1aa0580d2827c59c301a8347ac86ea2a84d015289fa6465a46"
+    },
+    {
+      "file": "public/assets/audio/sfx/mine-arm.wav",
+      "sha256": "ec708820c7a0e34bac7f533a13358ab372476d209fc5e20f97646ff1f53bb58a"
+    },
+    {
+      "file": "public/assets/audio/sfx/pickup.wav",
+      "sha256": "fb46d8eca09c08b5f880113f9853319a8f3aac57c121b0e79cd6ff3b34fe8d0c"
+    },
+    {
+      "file": "public/assets/audio/sfx/plane-engine.wav",
+      "sha256": "5d5a81754cbc7d21e8f79ca362082295f522cc6be7858df3d22470066bc0f5be"
+    },
+    {
+      "file": "public/assets/audio/sfx/rail-shot.wav",
+      "sha256": "f464e94cef74eb2e58d0a40300a2293977627366435a0488dd85935197864774"
+    },
+    {
+      "file": "public/assets/audio/sfx/ricochet.wav",
+      "sha256": "3c078dcd0f4b471357456138daa57c863800e6aa17fad136e7cabf29f906bd60"
+    },
+    {
+      "file": "public/assets/audio/sfx/rocket.wav",
+      "sha256": "c385cee6fa8bc05929eeeef080abbc84d1255f453acdc415ba8c08fbbea85e7c"
+    },
+    {
+      "file": "public/assets/audio/sfx/roots.wav",
+      "sha256": "a306d0be76495236a8fcfd70059f53e0df5f9f29ec428d3ed6c2b497c8c15f8e"
+    },
+    {
+      "file": "public/assets/audio/sfx/shevchenko-hit.wav",
+      "sha256": "5b73aad1173996552feb32bf4674a02d1b03a0a7df8dca9467c9c72aaee2c21b"
+    },
+    {
+      "file": "public/assets/audio/sfx/shevchenko-special-end.wav",
+      "sha256": "16f123149c9a011741d1881ffe4f959cc3a2da1fec92b152598f47921ae37d97"
+    },
+    {
+      "file": "public/assets/audio/sfx/shevchenko-special.wav",
+      "sha256": "7106cd8265c75613bd54ad585b79b189d4941f14df91b271fbfb5e6ddce907b5"
+    },
+    {
+      "file": "public/assets/audio/sfx/shevchenko-ultimate-end.wav",
+      "sha256": "16f123149c9a011741d1881ffe4f959cc3a2da1fec92b152598f47921ae37d97"
+    },
+    {
+      "file": "public/assets/audio/sfx/shevchenko-ultimate.wav",
+      "sha256": "bd805828d7ab27b52f969abf80791aa00ff159ec23e67ef88d9fd72c9b1ccb2e"
+    },
+    {
+      "file": "public/assets/audio/sfx/shevchenko-weapon-0.wav",
+      "sha256": "a74ccf090f6ee54bfb32413bd8901c1bbad3bacdec18620103e566580498a15f"
+    },
+    {
+      "file": "public/assets/audio/sfx/shevchenko-weapon-1.wav",
+      "sha256": "8f4881a4280ecee9c9f7df480db20ff8f59f740940cde78e34581ba3f4719ef5"
+    },
+    {
+      "file": "public/assets/audio/sfx/shevchenko-weapon-2.wav",
+      "sha256": "d98c854c3b95883b8f3deee72555d60dbbae41717bc35e2075d30c897374996d"
+    },
+    {
+      "file": "public/assets/audio/sfx/skovoroda-hit.wav",
+      "sha256": "7f37a93b23faf52ddbda697c29cbe5c4836636943b4c58197611905ad4417074"
+    },
+    {
+      "file": "public/assets/audio/sfx/skovoroda-special-end.wav",
+      "sha256": "16f123149c9a011741d1881ffe4f959cc3a2da1fec92b152598f47921ae37d97"
+    },
+    {
+      "file": "public/assets/audio/sfx/skovoroda-special-loop.wav",
+      "sha256": "1be3715f18a2dc6333a06db8dbf92b13d3b273d7372d0e76e577cce9245055ab"
+    },
+    {
+      "file": "public/assets/audio/sfx/skovoroda-special.wav",
+      "sha256": "4420e36c95322581d6342b9618d44fb1b1ef2c876ec494c6ad263987246807c5"
+    },
+    {
+      "file": "public/assets/audio/sfx/skovoroda-ultimate-end.wav",
+      "sha256": "16f123149c9a011741d1881ffe4f959cc3a2da1fec92b152598f47921ae37d97"
+    },
+    {
+      "file": "public/assets/audio/sfx/skovoroda-ultimate-loop.wav",
+      "sha256": "398c772684d6fd7a397c6d2553b08ac30fe406517327bd41aa9ee36c8bd38933"
+    },
+    {
+      "file": "public/assets/audio/sfx/skovoroda-ultimate.wav",
+      "sha256": "76a9815aa9e5ae2f624eb32e0f2f54fca648a66accdb4fec1af1428142fb7b92"
+    },
+    {
+      "file": "public/assets/audio/sfx/skovoroda-weapon-0.wav",
+      "sha256": "4f033bd77d051bf8e4c039f5d433150a95a8724012645a4df0f9d7c286d89e5d"
+    },
+    {
+      "file": "public/assets/audio/sfx/skovoroda-weapon-1.wav",
+      "sha256": "c064baaaafd7b76fb51f71e32f415b012b6e617517110df0fcf74a4c637a83a4"
+    },
+    {
+      "file": "public/assets/audio/sfx/skovoroda-weapon-2.wav",
+      "sha256": "e7a0cd51437e6b89296ab6b2f2aa208a896b691b7eb981700562f377df75b05f"
+    },
+    {
+      "file": "public/assets/audio/sfx/stone-hit.wav",
+      "sha256": "99427a1adfdb053e2fd8d2f97d4335b652c4225bdefa34fe6a77b56a3aee6a86"
+    },
+    {
+      "file": "public/assets/audio/sfx/support-infantry.wav",
+      "sha256": "f963fa761c21e0ec05efc9e45d9a0a259fbd92732af199d9886a757a117d70dc"
+    },
+    {
+      "file": "public/assets/audio/sfx/support-turret.wav",
+      "sha256": "e3f5d55bbfcdb207785b54a2df047f1299f6213f9d9b5bec0460d72b89c8e591"
+    },
+    {
+      "file": "public/assets/audio/sfx/tank-engine.wav",
+      "sha256": "3aab8b03cc3cbc3297bb888b567778409d62a0f6b7e58b5606563c45dbb9de40"
+    },
+    {
+      "file": "public/assets/audio/sfx/tank-jump.wav",
+      "sha256": "11e6c1034323a0437545c8db061ed4dc6c24d6f7395991e3c84f5923b5915ac3"
+    },
+    {
+      "file": "public/assets/audio/sfx/tank-land.wav",
+      "sha256": "d1281cda99029c97dca14e01b56ac2f2542ed42ae38ab174066d76250587fdc5"
+    },
+    {
+      "file": "public/assets/audio/sfx/tank-shot.wav",
+      "sha256": "4dc52e219d3a97340ac8d3ddfeb643e68d87af4159178151fc7ed06bcffc83c9"
+    },
+    {
+      "file": "public/assets/audio/sfx/team-hand-clap.wav",
+      "sha256": "4429c2e0bc2adf815e250711c0d40a529dba5244c9ed8a0dc81759c9e9e3c72c"
+    },
+    {
+      "file": "public/assets/audio/sfx/team-hand-lower.wav",
+      "sha256": "96cd0d8961a069adfad27fd7fcdabb7ba8990c42269204ee620463935fbd694a"
+    },
+    {
+      "file": "public/assets/audio/sfx/team-hand-raise.wav",
+      "sha256": "40ecc5457c021afb0bdc35250f53d12e2df61827a4c6314ff63e1f27a988ce52"
+    },
+    {
+      "file": "public/assets/audio/sfx/team-high-five.wav",
+      "sha256": "aabcde6b2c902aa77c4cf3993d3adc283492e6377ac923ca6f895d2590602515"
+    },
+    {
+      "file": "public/assets/audio/sfx/team-time-slow.wav",
+      "sha256": "e7e8be3939dfc6ed89d87815380437143241216349fa1733ac436c2ccc6c7b04"
+    },
+    {
+      "file": "public/assets/audio/sfx/thunder.wav",
+      "sha256": "e4739aad5e0b8c02ebb9014a9968e886773cc968afb1cd9aa2cda67db6af2167"
+    },
+    {
+      "file": "public/assets/audio/sfx/turret-step.wav",
+      "sha256": "282a211fb2051cf4a02f3f755a7731e0b1f27b8ee0013d2a4995f56b5b6e3905"
+    },
+    {
+      "file": "public/assets/audio/sfx/zelensky-hit.wav",
+      "sha256": "9839156e5ff8798d9c36ec87a9f57a132163d0d5e6c22225b4086bbb0190b4db"
+    },
+    {
+      "file": "public/assets/audio/sfx/zelensky-reload-end.wav",
+      "sha256": "d29327f171864f499f6613919b961c3a4e5d8f0b9b13993afe5363356a3c8a06"
+    },
+    {
+      "file": "public/assets/audio/sfx/zelensky-reload.wav",
+      "sha256": "587d9d4cbc473089b65c9e1f99a64f16a605e8741f668ee437dd23780aed7f3c"
+    },
+    {
+      "file": "public/assets/audio/sfx/zelensky-special-end.wav",
+      "sha256": "16f123149c9a011741d1881ffe4f959cc3a2da1fec92b152598f47921ae37d97"
+    },
+    {
+      "file": "public/assets/audio/sfx/zelensky-special.wav",
+      "sha256": "e81928eda80d216669729ff8d07ada9d189690b1b4f0df8570a70488743f3689"
+    },
+    {
+      "file": "public/assets/audio/sfx/zelensky-ultimate-end.wav",
+      "sha256": "16f123149c9a011741d1881ffe4f959cc3a2da1fec92b152598f47921ae37d97"
+    },
+    {
+      "file": "public/assets/audio/sfx/zelensky-ultimate-loop.wav",
+      "sha256": "d9f6b7ffce6133edda86cdf17e1bd4ca0457c1a69d5a82a142c20129d33e5a35"
+    },
+    {
+      "file": "public/assets/audio/sfx/zelensky-ultimate.wav",
+      "sha256": "43734dd339f57bdb90f5a2faad0ae6468e95974ae46fbddd41e4e18b22ffddc1"
+    },
+    {
+      "file": "public/assets/audio/sfx/zelensky-weapon-0.wav",
+      "sha256": "3e2059f301062ac450b2dcbdba5623bdd37da3798ec6db2a5a37d9ad12f4e661"
+    },
+    {
+      "file": "public/assets/audio/sfx/zelensky-weapon-1.wav",
+      "sha256": "f786ec74591e71a41bc227bbe330f8726ab67835c110f136db7c4ed7b0241c3e"
+    },
+    {
+      "file": "public/assets/audio/sfx/zelensky-weapon-2.wav",
+      "sha256": "87ed97dee8aa3104cd163ca6e68cab5eded2e0b95dfe8ee6844281b268365e31"
+    }
+  ],
+  "installed_files": [
+    {
+      "file": "public/assets/audio/music/menu.wav",
+      "sha256": "8bbbacfb3c6d7eeb7b3ce2491f657c2cd23ba00bac81f328dbce7eb41ce6a738"
+    },
+    {
+      "file": "public/assets/audio/music/river-explore.wav",
+      "sha256": "b7a34a203d631d3146ef5c21b9e48532a8a53c874d9f0240e1c656e0702a1d82"
+    },
+    {
+      "file": "public/assets/audio/music/river-combat.wav",
+      "sha256": "477ca807a69e1e9c00d7c75fde63a0d94535b353c0bb8497f647ca04138f77ca"
+    },
+    {
+      "file": "public/assets/audio/music/city-explore.wav",
+      "sha256": "7f59208b8ae7ac62b09c78e26bd4c23e7dcab3e402d08cd29e7b250bd83905e4"
+    },
+    {
+      "file": "public/assets/audio/music/city-combat.wav",
+      "sha256": "16478a8995448b59c108ee1872b3ccdc4c72b259e494095e516dd22fefa336db"
+    },
+    {
+      "file": "public/assets/audio/music/coast-explore.wav",
+      "sha256": "435900621b32a80bb450269f72cb22170358ff70bd8b92dc06753a3c343b7449"
+    },
+    {
+      "file": "public/assets/audio/music/coast-combat.wav",
+      "sha256": "eab0d61b22b8d815bd0b12c7259b8624a1513bfa697eab59a105da46ff02f0d8"
+    },
+    {
+      "file": "public/assets/audio/music/mountain-explore.wav",
+      "sha256": "55853052d3d62f76d3c289f16c8be58a74fcb7a74b1bd23ff234d50b6776d33b"
+    },
+    {
+      "file": "public/assets/audio/music/mountain-combat.wav",
+      "sha256": "53f249fc870c524518f95146955a2e2979bd337243c03916d0e04b924e5e1128"
+    },
+    {
+      "file": "public/assets/audio/music/rail-explore.wav",
+      "sha256": "a5cc2347287000813792a6e5eb01650253a88331fd0e89c4bf557a5edcc2e3dd"
+    },
+    {
+      "file": "public/assets/audio/music/rail-combat.wav",
+      "sha256": "4a87e1dad15a8fa4c950e224fbbb631361d6f465ee8180111a6072df0dbd2645"
+    },
+    {
+      "file": "public/assets/audio/music/marsh-explore.wav",
+      "sha256": "39fd38c03b0dd7b0e25b89cb1d780050a7dfd94bbae068b1d4442214b3bb544d"
+    },
+    {
+      "file": "public/assets/audio/music/marsh-combat.wav",
+      "sha256": "fd065a7268d2f8eb64c4d980465e5efa3182820bf6469e71ae5096cfaf32b6ad"
+    },
+    {
+      "file": "public/assets/audio/music/boss.wav",
+      "sha256": "592afa6ecf9605177a30aa8e18cac25d169538742d67cf748a3f4d939b321971"
+    },
+    {
+      "file": "public/assets/audio/cues/hero.wav",
+      "sha256": "7fda3084ed4da2c64daf88a21e6815185baf59aabe35f99e0e0c489e01981cb9"
+    },
+    {
+      "file": "public/assets/audio/cues/short.wav",
+      "sha256": "c2d5ffc00f7e62b8dbbfc19ea1e83794119589a0f8a4934d111d5652e301485f"
+    },
+    {
+      "file": "public/assets/audio/cues/victory.wav",
+      "sha256": "b7684fb4c830b8b2d97c699ffbd9558ea5f3578e7f522b08eead201c9a5007de"
+    },
+    {
+      "file": "public/assets/audio/cues/defeat.wav",
+      "sha256": "8d0dfa19fa1ae5d9230069ad63396091b18ee40d5e676ec9680599ff71754ed8"
+    },
+    {
+      "file": "public/assets/audio/cues/checkpoint.wav",
+      "sha256": "98e21c7b1f2b6b8cdf0366d45231338195b9ba4d0d53d5a0cd71c71c83ed0c4e"
+    },
+    {
+      "file": "public/assets/audio/cues/evac.wav",
+      "sha256": "251ff7b33b6a4c92e54644c674e381b022df73ec9b00b24ef8e1db4a2644db67"
+    },
+    {
+      "file": "public/assets/audio/cues/boss-iron.wav",
+      "sha256": "84f47b3d5ce9628b6b90973abc6253579e6ea3fe1f180a84b2eb7ec26302ce3c"
+    },
+    {
+      "file": "public/assets/audio/cues/boss-swarm.wav",
+      "sha256": "3b7f381caae40f28cd594d22baa6cb2c521e3c7b0f8d28f70f78f74960216129"
+    },
+    {
+      "file": "public/assets/audio/cues/boss-putin.wav",
+      "sha256": "541419f0e61480e7245d017bb33949015ab3e38d881f63f2ff0c2588665fe27b"
+    }
+  ],
+  "validation": {
+    "testsPassed": 368,
+    "testsFailed": 0,
+    "releaseFiles": 112,
+    "releaseMiB": 87.05,
+    "all23CompressedClipsDecoded": true,
+    "localBrowser": "http://127.0.0.1:5182/?silent=1",
+    "browserFlow": "Main menu -> single player -> pause (timer stays at 00:05) -> settings -> pause -> main menu; no console errors or warnings",
+    "audiblePlayback": false,
+    "listeningReview": "Not performed; all checks silent as requested",
+    "gameBundle": "game-CepLZmTZ.js"
+  },
+  "deployment": {
+    "provider": "Cloudflare Pages",
+    "id": "e091ceee-7b2c-49a4-a1e7-433f113b323a",
+    "url": "https://uaforce.thedimas.com",
+    "preview": "https://e091ceee.uaforce.pages.dev",
+    "publicBundle": "game-CepLZmTZ.js",
+    "verifiedAt": "2026-09-11T22:04:20.365556+00:00",
+    "publicCheck": "Main menu loaded silently; DOM script matches release bundle; no console errors or warnings"
+  }
+}

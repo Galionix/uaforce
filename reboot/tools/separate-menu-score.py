@@ -2,6 +2,9 @@
 from pathlib import Path
 import subprocess,json,hashlib,shutil,array,math,wave
 root=Path(__file__).resolve().parents[1]
+flow=root/'docs/FLOW_MUSIC_REPLACEMENT.json'
+if flow.exists():
+ raise SystemExit('Flow Music replacement is the current owner direction. Use prepare-flow-score.py; legacy Lyria restoration is disabled.')
 backup=root/'tools/audio-source/score-before-leitmotif'
 m=json.loads((backup/'manifest.json').read_text())
 for clip in m['clips']:
