@@ -6,6 +6,19 @@ export type StoryBeat={seconds:number;camera:'team'|'guard'|{x:number;y:number};
 export type StoryScene={id:string;mission:number;triggerX:number;guardPost:number;extraGuards?:number[];beats:StoryBeat[]};
 /** Authoring surface: explicit shots, not hard-coded branches in the gameplay loop. */
 export const STORY_SCENES:StoryScene[]=[
+ {id:'depot-raid',mission:9,triggerX:8,guardPost:16,beats:[
+  {seconds:1.6,camera:'guard',guard:{face:1},caption:'Склади, що живили наступ. Пора припинити постачання.'},
+  {seconds:1.8,camera:'team',player:{face:1,pose:'aim'},caption:'Три арсенали. Потім — аеродром.'},
+ ]},
+ {id:'airbase-raid',mission:10,triggerX:8,guardPost:16,beats:[
+  {seconds:1.5,camera:'guard',guard:{face:-1,pose:'aim'},sound:'enemySuspect',caption:'Сьогодні ці літаки нікуди не полетять.'},
+  {seconds:1.8,camera:'team',player:{face:1,pose:'aim'},caption:'Знищуємо стоянки. Відкриваємо шлях на Москву.'},
+ ]},
+ {id:'kremlin-final',mission:11,triggerX:8,guardPost:17,beats:[
+  {seconds:1.6,camera:'guard',guard:{face:1},caption:'Кремль. Тут закінчується ланцюг наказів.'},
+  {seconds:1.8,camera:'team',player:{face:1,pose:'aim'},caption:'Остання ціль — Хуйло. Доведемо справу до кінця.'},
+ ]},
+
  {id:'river-watch',mission:0,triggerX:8,guardPost:15,beats:[
   {seconds:1.3,camera:'guard',cameraOffsetX:8,guard:{dx:1.5,face:1},caption:'Ворожий патруль. Не дамо підняти тривогу.'},
   {seconds:1.1,camera:'guard',cameraOffsetX:8,guard:{face:-1,pose:'aim'},sound:'enemySuspect'},

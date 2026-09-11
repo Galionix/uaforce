@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-12",
+  "tool": "built-in imagegen",
+  "assets": [
+    {
+      "file": "public/assets/raids/depot-pixel-background.png",
+      "prompt": "Create a game background for UA Force, a fictional satirical 2D side-scrolling action game. Strict pixel art with crisp square pixel clusters, limited 32-color palette, hard edges, no antialiasing, no painterly or smooth shading. Wide landscape 16:9 composition. A Russian military ammunition depot and airbase in the distance: low utilitarian hangars, rail ammunition warehouses, cylindrical fuel tanks, airfield control tower, distant parked military jets, cold industrial dusk sky. Layers of muted blue gray silhouettes, rusty ochre details, tiny amber warning lights, ominous smoke. Eye-level side-view, structures mostly in lower half, lots of clear sky in upper half. No foreground ground/platforms or playable characters, no text or typography, no flags or logos. Must look like deliberately hand-authored low-resolution 16-bit sprite background, chunky pixels visible everywhere. This is a background layer; not a photograph, not a gameplay screenshot.",
+      "sha256": "cff017bd06ff88afd0719b7a7e0a8ecee033eab9e13ffc2641aa1c690b8e6b3d"
+    },
+    {
+      "file": "public/assets/raids/kremlin-pixel-background.png",
+      "prompt": "Create a background image for UA Force, a satirical fictional 2D side-scrolling action game, final boss level at the Moscow Kremlin. Strict chunky 16-bit pixel art, hard square pixel clusters, limited 32 color palette, no gradients, no antialiasing, no photorealistic or painterly textures. Wide landscape 16:9. Recognizable red Kremlin brick walls and a clock tower with dark green tent roof, silhouetted fortified buildings in layers behind them, ominous burgundy night sky and angular smoke clouds, orange fires far in the distance. Side-on game backdrop, lower half dark brick fortress, tower nearer right, upper half open gloomy sky. No foreground playable floor, no people, no text, no interface, no logos or flags. Keep scene readable and restrained enough for bright explosions and tiny game characters in front. Deliberately hand-crafted low resolution pixel background. Flat stepped color bands only. This is in-game scenery, not concept art poster.",
+      "sha256": "f6f77cd882c75b4dc00c499ec249430acc039b14e31692c3d182ef60429f6fe3"
+    }
+  ]
+}

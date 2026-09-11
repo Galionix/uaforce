@@ -1,3 +1,4 @@
+import {CAMPAIGN_ROUTE,SIDE_OPERATIONS,FINAL_MISSION,nextCampaignMission,campaignChapter} from './game/campaign.ts';
 import {getLocale,setLocale,onLocaleChange} from './game/i18n.ts';
 import {localizeDocument} from './game/localized-dom.ts';
 import {MobileControls} from './game/mobile-controls.ts';
@@ -62,6 +63,7 @@ storySkip.onclick=()=>{if(online?.role==='guest')online.command('continue');else
 let storyWasActive=false;
 const feedback=new Feedback(canvas,()=>({mission:world.mission.name,hero:world.hero.name,mode:world.mode,session:online?`кооп / ${online.role}`:practice?'випробування':'одиночна',controller:input.source==='touch'?'сенсорне керування':input.pad?.id??'клавіатура'}),()=>{pause();sound.stopAll();input.clear();},()=>input.clear());
 for(const id of ['feedback-open','menu-feedback','pause-feedback','about-feedback'])$(id).onclick=()=>{telemetry.event('feedback_open',metricMode(),world.missionIndex);feedback.show();};
+const sabotageStatus=document.createElement('span');sabotageStatus.className='objective';sabotageStatus.setAttribute('role','img');sabotageStatus.innerHTML=icon('barrel')+'<b></b>';document.querySelector('.objectives')!.prepend(sabotageStatus);
 const bossStatus=document.createElement('div');bossStatus.id='boss-status';bossStatus.hidden=true;bossStatus.innerHTML='<span></span><progress max=1></progress>';canvas.parentElement!.append(bossStatus);
 const formatTime=(seconds:number)=>`${Math.floor(seconds/60).toString().padStart(2,'0')}:${Math.floor(seconds%60).toString().padStart(2,'0')}`;
 function toast(message:string){$('toast').textContent=message;$('toast').classList.add('visible');toastTime=1.8;}
@@ -71,15 +73,15 @@ function startMission(index:number){
   if(!online){progress.mission=index;progress.completed=false;saveProgress(progress);}view.reset(world);input.clear();accumulator=0;menu.hidden=true;pauseMenu.hidden=true;canvas.focus();sound.announce('missionStart',world.heroId);
   flags.play(index%2===1);toast(world.mission.name);
 }
-function begin(){if(practice){startPractice(world.heroId);return;}startMission(world.mode==='won'?(world.missionIndex+1)%MISSIONS.length:world.missionIndex);}
+function begin(){if(practice){startPractice(world.heroId);return;}startMission(world.mode==='won'?(nextCampaignMission(world.missionIndex)??CAMPAIGN_ROUTE[0]):world.missionIndex);}
 function resume(focusCanvas=true){if(world.mode!=='paused')return;if(online?.role==='guest'){online.command('resume');return;}world.mode='playing';menu.hidden=true;pauseMenu.hidden=true;input.clear();if(focusCanvas)canvas.focus();void sound.enable();}
 function showMenu(){
   pauseMenu.hidden=true;menu.hidden=false;menuIndex=0;
-  const won=world.mode==='won',lost=world.mode==='lost',paused=world.mode==='paused',last=world.missionIndex===MISSIONS.length-1;
+  const won=world.mode==='won',lost=world.mode==='lost',paused=world.mode==='paused',last=world.missionIndex===FINAL_MISSION,side=campaignChapter(world.missionIndex)===0,next=nextCampaignMission(world.missionIndex);
   $('menu-kicker').textContent=won?(last?'КАМПАНІЮ ЗАВЕРШЕНО':'ЕВАКУАЦІЯ УСПІШНА'):lost?'ЗАГІН ВТРАЧЕНО':paused?'ОПЕРАЦІЮ ПРИЗУПИНЕНО':'ЗА СВОЇХ. ДО КІНЦЯ.';
-  $('menu-title').textContent=won?(last?'Хуйло переможено.':'Летимо далі.'):lost?'Ще одна спроба.':paused?'Тримаємо позицію.':'UA FORCE';
-  $('menu-copy').textContent=won?(last?'Усі доступні операції завершено. Далі буде.':'Наступна операція — '+MISSIONS[world.missionIndex+1].name+'.'):lost?'Підкріплення вичерпано. Спробуйте інший маршрут, стрибайте з драбин і використовуйте здібність героя.':paused?'Гра на паузі. Продовжуйте, коли будете готові.':world.mission.name+' · '+world.mission.region;
-  $('primary').textContent=paused?'Продовжити':won?(last?'Грати знову':'Наступна операція →'):lost?'Спробувати знову':'Одиночна гра';
+  $('menu-title').textContent=won?(last?'Хуйло переможено.':side?'Операцію завершено.':'Летимо далі.'):lost?'Ще одна спроба.':paused?'Тримаємо позицію.':'UA FORCE';
+  $('menu-copy').textContent=won?(last?'Від звільненого берега до Кремля. Джерело наказів знищено. Загін повертається додому.':side?'Додаткову операцію завершено. Повертаємося до основної кампанії.':'Наступна операція — '+MISSIONS[next!].name+'.'):lost?'Підкріплення вичерпано. Спробуйте інший маршрут, стрибайте з драбин і використовуйте здібність героя.':paused?'Гра на паузі. Продовжуйте, коли будете готові.':world.mission.name+' · '+world.mission.region;
+  $('primary').textContent=paused?'Продовжити':won?(last?'Грати знову':side?'До кампанії':'Наступна операція →'):lost?'Спробувати знову':'Одиночна гра';
   if(practice){$('menu-kicker').textContent='ВИПРОБУВАННЯ БІЙЦЯ';$('menu-title').textContent=world.hero.name;$('menu-copy').textContent='J / RT — зброя · E / RB — спецприйом · Q / LT — ульта. Обери іншого бійця або повтори випробування.';if(!paused)$('primary').textContent='Повторити випробування';}
   $('campaign-return').hidden=!practice;
   for(const id of ['online-open','roster-open','operations-open'])$(id).hidden=!!online;
@@ -94,7 +96,7 @@ function showMenu(){
 function startPractice(id:typeof HEROES[number]['id']){if(!ready||online)return;transition=0;practice=true;sound.stopAll();world=practiceWorld(id);view.reset(world);roster.close();menu.hidden=true;pauseMenu.hidden=true;input.clear();accumulator=0;canvas.focus();flags.play();sound.announce('missionStart',id);toast(world.hero.name);}
 for(const hero of HEROES){const button=document.createElement('button');button.className='roster-hero';button.innerHTML=`<span class="roster-image" data-hero="${hero.id}"></span><strong>${hero.name}</strong><span>${hero.weapon}</span>`;button.title=hero.description;button.onclick=()=>startPractice(hero.id);$('roster-grid').append(button);}
 $('roster-open').onclick=()=>{pause();input.clear();roster.showModal();menuIndex=0;$('roster-grid').querySelector('button')?.focus();};
-for(const [i,mission] of MISSIONS.entries()){const button=document.createElement('button');button.className='operation-card';button.innerHTML=`<b>${String(i+1).padStart(2,'0')}</b><span><strong>${mission.name}</strong><small>${mission.region}</small></span>`;button.title=mission.brief;button.onclick=()=>{operations.close();transition=0;world=new World(i,progress.unlocked,progress.hero);view.reset(world);showMenu();};$('operations-grid').append(button);}
+for(const [label,ids] of [['На Москву',CAMPAIGN_ROUTE],['Додаткові операції',SIDE_OPERATIONS]] as const){const heading=document.createElement('h3');heading.textContent=label;heading.style.gridColumn='1 / -1';$('operations-grid').append(heading);for(const [order,i] of ids.entries()){const mission=MISSIONS[i];const button=document.createElement('button');button.className='operation-card';button.innerHTML=`<b>${String(order+1).padStart(2,'0')}</b><span><strong>${mission.name}</strong><small>${mission.region}</small></span>`;button.title=mission.brief;button.onclick=()=>{operations.close();transition=0;world=new World(i,progress.unlocked,progress.hero);view.reset(world);showMenu();};$('operations-grid').append(button);}}
 $('operations-open').onclick=()=>{input.clear();operations.showModal();operations.querySelector('button')?.focus();};
 function closeOperations(){operations.close();input.clear();$('operations-open').focus();}
 $('operations-close').onclick=closeOperations;operations.addEventListener('cancel',e=>{e.preventDefault();closeOperations();});
@@ -205,13 +207,14 @@ function ui(){
     ['objective-radio',world.radioDestroyed,`Радіовузол: ${world.radioDestroyed?'знищено':'додаткова ціль'}`],
     ['objective-heavy',world.evac.phase!=='waiting',world.objectiveComplete?'До прапора евакуації':world.mission.boss?BOSSES[world.mission.boss].objective:'Здолайте командира'],
   ] as const){$(id).classList.toggle('complete',done);$(id).title=label;$(id).setAttribute('aria-label',label);}
+  const objectives=world.boxes.filter(b=>b.required);sabotageStatus.hidden=!objectives.length;sabotageStatus.querySelector('b')!.textContent=`${objectives.filter(b=>b.hp<=0).length}/${objectives.length}`;sabotageStatus.setAttribute('aria-label','Знищені військові цілі');
   const target=world.objectiveComplete?'helicopter':'skull';
   if($('target-icon').dataset.icon!==target){$('target-icon').dataset.icon=target;$('target-icon').innerHTML=icon(target);}
   $('time').textContent=formatTime(world.time);$('fps').textContent=`${Math.round(view.fps)} кадр/с`;
   const prompt=world.mode==='playing'?world.prompt:'';
-  const post=prompt==='До наступного поста',nextPost=world.nextPost,postArrow=nextPost?Math.abs(nextPost.x-world.player.x)<8&&Math.abs(nextPost.y-world.player.y)>3?(nextPost.y>world.player.y?'↑':'↓'):(nextPost.x>world.player.x?'→':'←'):'→';
+  const sabotage=prompt==='Знищіть військові цілі',post=prompt==='До наступного поста',nextPost=sabotage?world.boxes.filter(b=>b.required&&b.hp>0).sort((a,b)=>Math.abs(a.x-world.player.x)-Math.abs(b.x-world.player.x))[0]:world.nextPost,postArrow=nextPost?Math.abs(nextPost.x-world.player.x)<8&&Math.abs(nextPost.y-world.player.y)>3?(nextPost.y>world.player.y?'↑':'↓'):(nextPost.x>world.player.x?'→':'←'):'→';
   const rescue=prompt==='Звільнити полоненого',vehicle=prompt==='Сісти в танк'||prompt==='Вийти з танка',barrel=prompt==='Підняти бочку'||prompt==='Кинути бочку';
-  const promptHtml=prompt&&!rescue&&!vehicle&&!barrel?`${rescue||vehicle||barrel?'<kbd>'+battleKey('interact')+'</kbd>':''}${icon(post?'post':barrel?'barrel':vehicle?(world.mounted?'exit':'tank'):rescue?'captive':'helicopter')}${!rescue&&!vehicle&&!barrel&&world.evac.phase==='waiting'?'<b>'+(post?postArrow:'→')+'</b>':''}`:'';
+  const promptHtml=prompt&&!rescue&&!vehicle&&!barrel?`${rescue||vehicle||barrel?'<kbd>'+battleKey('interact')+'</kbd>':''}${icon(sabotage?'barrel':post?'post':barrel?'barrel':vehicle?(world.mounted?'exit':'tank'):rescue?'captive':'helicopter')}${!rescue&&!vehicle&&!barrel&&world.evac.phase==='waiting'?'<b>'+(post||sabotage?postArrow:'→')+'</b>':''}`:'';
   if(promptSignature!==promptHtml){promptSignature=promptHtml;$('interact-prompt').innerHTML=promptHtml;}
   if($('interact-prompt').title!==prompt){$('interact-prompt').setAttribute('aria-label',prompt);$('interact-prompt').title=prompt;}
   diagnostics();
@@ -257,14 +260,14 @@ view.onFrame=dt=>{
     if(event.type==='won'||event.type==='lost'){
       if(event.type==='won'&&!practice&&!online){
         saveRecord({seconds:world.time,rescued:world.rescued,kills:world.kills,shots:world.shots,hits:world.hits},world.missionIndex);
-        remember();progress.mission=Math.min(MISSIONS.length-1,world.missionIndex+1);progress.completed=world.missionIndex===MISSIONS.length-1;saveProgress(progress);
-        if(!progress.completed)transition=1.2;
+        remember();progress.mission=nextCampaignMission(world.missionIndex)??(world.missionIndex===FINAL_MISSION?FINAL_MISSION:CAMPAIGN_ROUTE[0]);progress.completed=world.missionIndex===FINAL_MISSION;saveProgress(progress);
+        if(nextCampaignMission(world.missionIndex)!==null)transition=1.2;
       }showMenu();
     }
   }
   publishOnline(dt);world.events=[];cinematic.sync(world);view.render(world,dt,frame.action.move);if(!world.story)sound.syncWorld(world);sound.step(dt,!!world.story?false:musicDanger(world,frame.action.fire),world.mode==='playing',frame.action.fire,world.mode==='ready'&&!menu.hidden&&document.hasFocus()&&!document.hidden&&!settings.open);
   if(toastTime>0){toastTime-=dt;if(toastTime<=0)$('toast').classList.remove('visible');}
-  if(transition>0&&!sound.announcing&&!settings.open&&!feedback.open&&document.hasFocus()&&!document.hidden){transition-=dt;if(transition<=0)startMission(world.missionIndex+1);}
+  if(transition>0&&!sound.announcing&&!settings.open&&!feedback.open&&document.hasFocus()&&!document.hidden){transition-=dt;if(transition<=0)startMission(nextCampaignMission(world.missionIndex)??CAMPAIGN_ROUTE[0]);}
   uiTime+=dt;if(uiTime>.08){ui();uiTime=0;}
 };
 

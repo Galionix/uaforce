@@ -1,6 +1,7 @@
 import type {InfantryKind} from './infantry.ts';
 export type Point={x:number;y:number};
 export type OperationLayout={
+ targets?:{x:number;y:number;skin:'ammo'|'fuel'|'jet';required:boolean}[];
  spawn:Point;exitY:number;radioY:number;
  checkpoints:Point[];allies:Point[];ammo:Point[];medkits:Point[];
  ladders:{x:number;bottom:number;top:number}[];

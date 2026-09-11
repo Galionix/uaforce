@@ -17,7 +17,7 @@ import { HEROES, MISSIONS, heroById, type HeroId, type Mission } from './content
 export type Effect={playerId?:number;kind:'weapon'|'special'|'ultimate';hero:HeroId;x:number;y:number;dir:number;life:number;age:number;hit:Set<number>;originX?:number;originY?:number;target?:number;audioMarks?:Set<string>};
 export type Mode = 'ready' | 'playing' | 'paused' | 'lost' | 'won' | 'cinematic';
 export type Actions = { move: number; jump: boolean; jumpHeld?:boolean; fire: boolean; special: boolean; ultimate?: boolean; interact: boolean; climb?: number };
-export type Box = { id: number; x: number; y: number; w: number; h: number; hp: number; maxHp: number; vx?:number;vy?:number; kind: 'crate' | 'barrel' | 'wall' | 'radio' | 'platform' | 'earth' | 'stone' };
+export type Box = { id: number; x: number; y: number; w: number; h: number; hp: number; maxHp: number; sabotage?:'ammo'|'fuel'|'jet';required?:boolean;fuse?:number; vx?:number;vy?:number; kind: 'crate' | 'barrel' | 'wall' | 'radio' | 'platform' | 'earth' | 'stone' };
 export type Enemy = { id: number; x: number; y: number; hp: number; maxHp: number; dir: number; cooldown: number; windup: number; anchor: number; heavy: boolean; vehicle?:Vehicle;infantry?:Infantry;boss?:BossActor; panic?:{remaining:number;playerId:number;hero:HeroId;kind:Effect['kind'];voiceIn:number}; rooted?:number; poison?:number; distracted?:number };
 export type Bullet = { id: number; x: number; y: number; vx: number; vy: number; life: number; friendly: boolean; damage: number; hero?:HeroId;ordnance?:'shell'|'rocket';blastRadius?:number };
 export type Event = { type: 'highFive' | 'enemySuspect' | 'enemyPanic' | 'goreLand' | 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; deathRole?:InfantryKind;deathCause?:DeathCause;soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
@@ -64,6 +64,7 @@ export class World {
   beginCinematic(kind:'hero'|'boss',id:string){this.cinematic={kind,id,serial:++this.cinematicSerial};this.mode='cinematic';}
   finishCinematic(){if(this.mode!=='cinematic'||!this.cinematic)return;this.cinematic=null;this.mode='playing';this.player.invulnerable=Math.max(this.player.invulnerable,.8);}
   mission: Mission; missionIndex:number; unlocked:HeroId[];
+  finale=0;
   evac={phase:"waiting" as "waiting"|"arriving"|"boarding"|"departing"|"done",time:0,x:112,y:8};
   boxes: Box[] = [];
   ladders = [{x:18,bottom:0,top:8.5},{x:34,bottom:0,top:8.5},{x:51,bottom:0,top:8.5},{x:65,bottom:0,top:8.5},{x:79,bottom:0,top:8.5}];
@@ -121,7 +122,7 @@ export class World {
   get rescued() { return this.allies.filter(a => a.rescued).length; }
   get radioDestroyed() { return this.boxes.some(b => b.kind === 'radio' && b.hp <= 0); }
   get nextPost(){return this.mission.layout?.checkpoints[this.routeProgress+1];}
-  get objectiveComplete() { return this.enemies.every(e => !e.heavy || e.hp <= 0); }
+  get objectiveComplete() { return this.boxes.every(b=>!b.required||b.hp<=0)&&this.enemies.every(e => !e.heavy || e.hp <= 0); }
   get prompt() {
     const p=this.player;
     if(this.mounted)return 'Вийти з танка';
@@ -133,6 +134,7 @@ export class World {
     if(this.evac.phase==='arriving')return 'Гелікоптер наближається — тримайте точку';
     if(this.evac.phase==='boarding')return 'Підійдіть до троса біля прапора';
     if(this.nextPost)return 'До наступного поста';
+    if(this.boxes.some(b=>b.required&&b.hp>0))return 'Знищіть військові цілі';
     if(this.objectiveComplete)return 'До прапора евакуації →';
     return '';
   }
@@ -195,7 +197,8 @@ export class World {
     }
   }
   damageBox(box: Box, damage: number) {
-    if (box.hp <= 0 || box.kind === 'platform') return;
+    if (box.hp <= 0 || box.kind === 'platform' || box.fuse!==undefined) return;
+    if(box.sabotage&&damage>=box.hp){box.hp=1;box.fuse=.35+(box.id%3)*.1;this.emit('enemyFuse',box.x,box.y+1);return;}
     box.hp -= damage;
     if (box.hp <= 0) {
       this.destroyed++; this.event(box.kind==='barrel'?'burst':'debris', box.x, box.y + box.h / 2);
@@ -385,6 +388,8 @@ export class World {
     if(this.players.length>1){this.stepEffects(dt);stepBarrels(this,dt);}
     if(this.cinematic){cancelHighFiveOffer(this);return;}
     maintainHighFiveOffer(this,0);
+    for(const b of this.boxes)if(b.fuse!==undefined&&b.hp>0){b.fuse-=dt;if(b.fuse<=0){b.hp=0;this.destroyed++;this.explode(b.x,b.y+1,b.sabotage==='jet'||b.sabotage==='fuel'?7:6,220,true);for(const dx of [-2,0,2])this.emit('burst',b.x+dx,b.y+1);}}
+    if(this.finale>0){const before=Math.ceil(this.finale/.2);this.finale=Math.max(0,this.finale-dt);if(Math.ceil(this.finale/.2)<before){const x=237+(18-before)*1.8;this.emit('burst',x,3+before%4);this.emit('debris',x,8);for(const b of this.boxes)if(b.hp>0&&Number.isFinite(b.hp)&&b.y>3&&Math.abs(b.x-x)<4)this.damageBox(b,200);}}
     stepFollowers(this,dt);
     const enemyDt=dt*(this.highFive.left>0?TEAM_BOOST.enemyRate:1);
     for (const enemy of this.enemies) {

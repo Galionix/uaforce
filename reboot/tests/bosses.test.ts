@@ -1,14 +1,14 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
 import {World,IDLE} from '../src/game/world.ts';import {BOSSES,stepBoss} from '../src/game/bosses.ts';import {HEROES} from '../src/game/content.ts';import {enemyActive,enemySize} from '../src/game/enemies.ts';import {announcement} from '../src/game/announcer.ts';
 const tick=(w:World,n=60)=>{for(let i=0;i<n;i++)w.step(1/60,IDLE);};
-function encounter(m=1){const w=new World(m);w.mode='playing';const e=w.boss!;w.player.x=BOSSES[e.boss!.id].left;w.step(1/60,IDLE);return w;}
+function encounter(m=1){const w=new World(m);w.mode='playing';const e=w.boss!;if(w.mission.layout){w.routeProgress=w.mission.layout.checkpoints.length-1;for(const b of w.boxes)if(b.required)b.hp=0;}w.player.x=BOSSES[e.boss!.id].left;w.step(1/60,IDLE);return w;}
 test('first unlock freezes the entire simulation until acknowledged; familiar rescue does not',()=>{
  const w=new World();w.mode='playing';w.player.x=w.allies[0].x;w.step(1/60,{...IDLE,interact:true});assert.notEqual(w.heroId,'shevchenko');assert.deepEqual(w.cinematic,{kind:'hero',id:w.heroId,serial:1});
  const before=JSON.stringify(w);for(let i=0;i<600;i++)w.step(1/60,{move:1,jump:true,fire:true,special:true,ultimate:true,interact:true});assert.equal(JSON.stringify(w),before);
  w.finishCinematic();assert.equal(w.mode,'playing');const t=w.time;w.step(1/60,IDLE);assert.ok(w.time>t);
  const known=new World(0,HEROES.map(h=>h.id));known.mode='playing';known.player.x=known.allies[0].x;known.step(1/60,{...IDLE,interact:true});assert.equal(known.cinematic,null);assert.equal(known.mode,'playing');
 });
-for(const m of [1,2,5]){
+for(const m of [1,2,11]){
  test(`boss ${m}: supplies stay inside the arena, regenerate as pickups and reset on retry`,()=>{
   const w=encounter(m),boss=w.boss!,spec=BOSSES[boss.boss!.id];w.finishCinematic();
   w.enemies=[boss];boss.rooted=999;w.player.invulnerable=999;
@@ -35,7 +35,7 @@ for(const m of [1,2,5]){
  });
  test(`boss ${m}: dormant cannot take damage, entry freezes time, retry does not repeat title`,()=>{
   const w=new World(m),e=w.boss!;assert.equal(enemyActive(e),false);w.damageEnemy(e,99999);assert.equal(e.hp,e.maxHp);assert.ok(enemySize(e).w>2);assert.equal(w.objectiveComplete,false);
-  w.mode='playing';w.player.x=BOSSES[e.boss!.id].left;w.step(1/60,IDLE);assert.equal(w.mode,'cinematic');assert.equal(w.events.filter(v=>v.type==='bossEncounter').length,1);
+  w.mode='playing';if(w.mission.layout){w.routeProgress=w.mission.layout.checkpoints.length-1;for(const b of w.boxes)if(b.required)b.hp=0;}w.player.x=BOSSES[e.boss!.id].left;w.step(1/60,IDLE);assert.equal(w.mode,'cinematic');assert.equal(w.events.filter(v=>v.type==='bossEncounter').length,1);
   const frozen=JSON.stringify(w);tick(w,600);assert.equal(JSON.stringify(w),frozen);w.finishCinematic();w.damageEnemy(e,200);w.player.energy=0;w.player.invulnerable=0;w.damagePlayer(100);
   assert.equal(e.hp,e.maxHp);assert.equal(w.player.energy,0);assert.equal(w.cinematic,null);assert.equal(w.mode,'playing');assert.equal(w.checkpoint,BOSSES[e.boss!.id].left+1);
  });
@@ -69,7 +69,7 @@ test('real named commanders replace the anonymous bosses and the final victory n
  for(const [id,spec] of Object.entries(BOSSES))assert.ok(manifest.clips.find((c:any)=>c.file.endsWith(`/announcer/${id}.wav`)).text.includes(spec.name));
 });
 test('Putin blocks extraction alive, attacks the player, and leaves an inert wreck only after defeat',()=>{
- const w=encounter(5),e=w.boss!,b=e.boss!;w.finishCinematic();w.enemies=w.enemies.filter(x=>x===e);w.player.invulnerable=0;
+ const w=encounter(11),e=w.boss!,b=e.boss!;w.finishCinematic();w.enemies=w.enemies.filter(x=>x===e);w.player.invulnerable=0;
  w.player.x=w.mission.exit;tick(w,1);assert.equal(w.evac.phase,'waiting');assert.equal(w.objectiveComplete,false);
  const hp=w.player.hp,lives=w.lives;tick(w,280);assert.ok(w.player.hp<hp||w.lives<lives,'the final antagonist actively damages an idle player');
  w.damageEnemy(e,e.maxHp);assert.equal(b.defeatedAt,w.time);assert.equal(w.objectiveComplete,true);assert.equal(b.active,false);

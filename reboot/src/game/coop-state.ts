@@ -1,7 +1,7 @@
 import {World,IDLE,type Actions,type Event,type Box} from './world.ts';
 import type {HeroId} from './content.ts';
 /** Versioned wire format. Only the host runs World.stepPlayers. No guest world edits. */
-export const COOP_VERSION='uaforce-coop-5';
+export const COOP_VERSION='uaforce-coop-6';
 export function cleanActions(value:unknown):Actions|null{
  if(!value||typeof value!=='object')return null;
  const v=value as Record<string,unknown>;
@@ -16,14 +16,14 @@ export class RemoteInput {
  receive(seq:number,value:unknown,now:number){const a=cleanActions(value);if(!Number.isSafeInteger(seq)||seq<=this.seq||!a)return false;this.seq=seq;this.last=now;if(a.interact&&!this.interactDown)this.interactPending=true;this.interactDown=a.interact;this.action={...a,jump:a.jump||this.action.jump,special:a.special||this.action.special,ultimate:a.ultimate||this.action.ultimate};return true;}
  take(now:number){if(now-this.last>.35){this.action={...IDLE};this.interactPending=this.interactDown=false;return {...IDLE};}const a={...this.action,interact:this.action.interact||this.interactPending};this.interactPending=false;this.action.jump=this.action.special=this.action.ultimate=false;return a;}
 }
-const fields=['routeProgress','mode','highFive','story','storyDone','cinematic','evac','enemies','bullets','followers','allies','ammoCrates','medkits','mounts','time','kills','shots','hits','destroyed','unlocked'] as const;
-type MutableBox=Pick<Box,'id'|'x'|'y'|'hp'|'vx'|'vy'>;
+const fields=['finale','routeProgress','mode','highFive','story','storyDone','cinematic','evac','enemies','bullets','followers','allies','ammoCrates','medkits','mounts','time','kills','shots','hits','destroyed','unlocked'] as const;
+type MutableBox=Pick<Box,'id'|'x'|'y'|'hp'|'vx'|'vy'|'fuse'>;
 export class SnapshotWriter {
  private base=new Map<number,string>();
  readonly epoch=crypto.randomUUID();
  private world:World;
  constructor(world:World){this.world=world;for(const b of world.boxes)this.base.set(b.id,JSON.stringify(this.box(b)));}
- private box(b:Box):MutableBox{return {id:b.id,x:b.x,y:b.y,hp:Number.isFinite(b.hp)?b.hp:1e30,vx:b.vx,vy:b.vy};}
+ private box(b:Box):MutableBox{return {id:b.id,x:b.x,y:b.y,hp:Number.isFinite(b.hp)?b.hp:1e30,vx:b.vx,vy:b.vy,fuse:b.fuse};}
  snapshot(sequence:number,events:Event[]=[]){const w=this.world;return {version:COOP_VERSION,epoch:this.epoch,sequence,mission:w.missionIndex,players:w.players.map(a=>({id:a.id,body:{...a.body},heroId:a.heroId,lives:a.lives,checkpoint:a.checkpoint,checkpointY:a.checkpointY,heldBarrel:a.heldBarrel,mounted:a.mounted?.id??null,move:a.move})),state:Object.fromEntries(fields.map(k=>[k,w[k]])),boxes:w.boxes.map(b=>this.box(b)).filter(b=>JSON.stringify(b)!==this.base.get(b.id)),effects:w.effects.map(f=>({...f,hit:[...f.hit],audioMarks:[...(f.audioMarks??[])]})),events};}
 }
 export type Snapshot=ReturnType<SnapshotWriter['snapshot']>;

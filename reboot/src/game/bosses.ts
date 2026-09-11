@@ -24,7 +24,8 @@ export function attachBoss(w:World){
 export function triggerBoss(w:World){
  const e=w.boss,b=e?.boss;if(!e||!b||!w.enemies.includes(e)||e.hp<=0||b.active)return false;
  const spec=BOSSES[b.id];if(w.player.x<spec.left)return false;
- b.active=true;w.checkpoint=spec.left+1;w.player.x=Math.max(spec.left+1,Math.min(spec.right-2,w.player.x));
+ if(w.mission.layout&&(w.nextPost||w.boxes.some(a=>a.required&&a.hp>0)))return false;
+ b.active=true;for(const a of w.players){a.checkpoint=spec.left+1;a.checkpointY=0;}w.checkpoint=spec.left+1;w.player.x=Math.max(spec.left+1,Math.min(spec.right-2,w.player.x));
  // Old projectiles cannot ambush the player at the end of the title card.
  w.bullets=[];
  if(!b.introduced){b.introduced=true;w.beginCinematic('boss',b.id);w.events.push({type:'bossEncounter',boss:b.id,x:e.x,y:e.y});return true;}
@@ -39,6 +40,7 @@ export function resetBoss(w:World){
  for(const k of w.medkits)if(k.arena===b.id)k.used=false;
 }
 export function bossDefeated(w:World,e:Enemy){
+ if(e.boss!.id==='putin')w.finale=3.6;
  const b=e.boss!;b.defeatedAt=w.time;b.active=false;w.bullets=w.bullets.filter(p=>p.friendly);
  for(const id of b.minions){const m=w.enemies.find(a=>a.id===id);if(m)m.hp=0;}
  w.events.push({type:'bossDefeated',boss:b.id,x:e.x,y:e.y+1});

@@ -3,7 +3,7 @@ import {World,IDLE} from '../src/game/world.ts';
 import {MISSIONS,HEROES} from '../src/game/content.ts';
 import {SnapshotWriter,applySnapshot} from '../src/game/coop-state.ts';
 import {interactionTarget} from '../src/game/interactions.ts';
-const cases=MISSIONS.map((m,i)=>({m,i})).filter(({m})=>m.layout);
+const cases=MISSIONS.map((m,i)=>({m,i})).filter(({m,i})=>m.layout&&i<9);
 const frame=(w:World,n=1)=>{for(let i=0;i<n;i++)w.step(1/60,IDLE);};
 function quiet(i:number){const w=new World(i,HEROES.map(h=>h.id));w.mode='playing';w.enemies=[];w.player.invulnerable=1e6;return w;}
 test('three new authored operations preserve the original six and reuse existing media',()=>{
@@ -27,7 +27,7 @@ test('extraction requires route posts and correct elevation, then completes norm
  for(const {m,i} of cases){const w=quiet(i),l=m.layout!;w.player.x=m.exit;w.player.y=l.exitY;frame(w);assert.equal(w.evac.phase,'waiting');w.routeProgress=l.checkpoints.length-1;w.player.y=0;frame(w);assert.equal(w.evac.phase,'waiting');w.player.y=l.exitY;w.player.vy=0;frame(w,320);assert.equal(w.mode,'won');}
 });
 
-for(const coop of [false,true])for(const ruined of [false,true])for(const {m,i} of cases)test(`${m.name}: ${coop?'coop':'solo'} ${ruined?'destroyed':'intact'} route using normal input`,()=>{
+for(const coop of [false,true])for(const ruined of [false,true])for(const {m,i} of MISSIONS.map((m,i)=>({m,i})).filter(({m})=>m.layout))test(`${m.name}: ${coop?'coop':'solo'} ${ruined?'destroyed':'intact'} route using normal input`,()=>{
  const w=quiet(i);if(coop)w.addPlayer('lesya');w.boxes=w.boxes.filter(b=>!['barrel','crate','wall','radio'].includes(b.kind));w.mounts=[];if(ruined)for(const b of w.boxes)if(Number.isFinite(b.hp))b.hp=0;
  for(const [index,target] of m.layout!.route.entries()){
   let ticks=0;const last=w.players.map(a=>a.body.x),stuck=w.players.map(()=>0);

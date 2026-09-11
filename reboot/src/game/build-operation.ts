@@ -1,4 +1,5 @@
 import type {World,Box} from './world.ts';
+import {attachBoss} from './bosses.ts';
 import {addInfantry} from './infantry.ts';
 import {missionVehicles} from './enemies.ts';
 import {missionMounts} from './mounts.ts';
@@ -28,5 +29,6 @@ export function buildOperation(w:World){
  for(const p of l.props)box(p.x,p.y,p.kind==='wall'?1.4:1,p.kind==='wall'?1.6:1,p.kind==='barrel'?25:50,p.kind);
  box(w.mission.radio,l.radioY,1.6,2.2,150,'radio');
  for(const g of l.guards){const e=addInfantry(w,g.role,g.x,g.y);if(g.commander){e.heavy=true;e.hp=e.maxHp=240;}}
- missionVehicles(w);missionMounts(w);
+ for(const t of l.targets??[]){const hp=t.skin==='jet'?180:70;w.boxes.push({id:w.nextId(),x:t.x,y:t.y,w:t.skin==='jet'?7:2,h:t.skin==='jet'?2:2.4,hp,maxHp:hp,kind:'crate',sabotage:t.skin,required:t.required});box(t.x,t.y-.25,t.skin==='jet'?9:4,.25,Infinity,'platform');}
+ missionVehicles(w);missionMounts(w);attachBoss(w);
 }

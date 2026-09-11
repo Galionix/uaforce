@@ -7,6 +7,7 @@ export function drawDistrictScenery(c:CanvasRenderingContext2D,w:World,cameraX:n
   const x=wx*16-cameraX;if(x<-170||x>800)continue;
   const y=ground-(w.mission.layout?Math.max(0,...w.mission.layout.surfaces.filter(s=>wx>=s.left&&wx<=s.right).map(s=>s.top))*16:0);
   switch(d.look){
+   case 'kremlin': break; // Generated Kremlin architecture stays on the shared pixel grid.
    case 'pines':
     for(let k=0;k<3;k++){const xx=x+k*35;r(xx,y-88,5,88,'#455956');for(let j=0;j<6;j++)r(xx-8-j*3,y-104+j*13,20+j*6,14,'#3c625d');r(xx-7,y-103,19,3,'#9bb6ad');}break;
    case 'ridge':
