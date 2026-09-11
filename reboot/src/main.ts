@@ -78,7 +78,7 @@ function showMenu(){
   const won=world.mode==='won',lost=world.mode==='lost',paused=world.mode==='paused',last=world.missionIndex===MISSIONS.length-1;
   $('menu-kicker').textContent=won?(last?'КАМПАНІЮ ЗАВЕРШЕНО':'ЕВАКУАЦІЯ УСПІШНА'):lost?'ЗАГІН ВТРАЧЕНО':paused?'ОПЕРАЦІЮ ПРИЗУПИНЕНО':'ЗА СВОЇХ. ДО КІНЦЯ.';
   $('menu-title').textContent=won?(last?'Хуйло переможено.':'Летимо далі.'):lost?'Ще одна спроба.':paused?'Тримаємо позицію.':'UA FORCE';
-  $('menu-copy').textContent=won?(last?'Командний бункер знищено. Російський наступ зупинено. Усі операції завершено.':'Наступна операція — '+MISSIONS[world.missionIndex+1].name+'.'):lost?'Підкріплення вичерпано. Спробуйте інший маршрут, стрибайте з драбин і використовуйте здібність героя.':paused?'Гра на паузі. Продовжуйте, коли будете готові.':world.mission.name+' · '+world.mission.region;
+  $('menu-copy').textContent=won?(last?'Усі доступні операції завершено. Далі буде.':'Наступна операція — '+MISSIONS[world.missionIndex+1].name+'.'):lost?'Підкріплення вичерпано. Спробуйте інший маршрут, стрибайте з драбин і використовуйте здібність героя.':paused?'Гра на паузі. Продовжуйте, коли будете готові.':world.mission.name+' · '+world.mission.region;
   $('primary').textContent=paused?'Продовжити':won?(last?'Грати знову':'Наступна операція →'):lost?'Спробувати знову':'Одиночна гра';
   if(practice){$('menu-kicker').textContent='ВИПРОБУВАННЯ БІЙЦЯ';$('menu-title').textContent=world.hero.name;$('menu-copy').textContent='J / RT — зброя · E / RB — спецприйом · Q / LT — ульта. Обери іншого бійця або повтори випробування.';if(!paused)$('primary').textContent='Повторити випробування';}
   $('campaign-return').hidden=!practice;
@@ -209,8 +209,9 @@ function ui(){
   if($('target-icon').dataset.icon!==target){$('target-icon').dataset.icon=target;$('target-icon').innerHTML=icon(target);}
   $('time').textContent=formatTime(world.time);$('fps').textContent=`${Math.round(view.fps)} кадр/с`;
   const prompt=world.mode==='playing'?world.prompt:'';
+  const post=prompt==='До наступного поста',nextPost=world.nextPost,postArrow=nextPost?Math.abs(nextPost.x-world.player.x)<8&&Math.abs(nextPost.y-world.player.y)>3?(nextPost.y>world.player.y?'↑':'↓'):(nextPost.x>world.player.x?'→':'←'):'→';
   const rescue=prompt==='Звільнити полоненого',vehicle=prompt==='Сісти в танк'||prompt==='Вийти з танка',barrel=prompt==='Підняти бочку'||prompt==='Кинути бочку';
-  const promptHtml=prompt&&!rescue&&!vehicle&&!barrel?`${rescue||vehicle||barrel?'<kbd>'+battleKey('interact')+'</kbd>':''}${icon(barrel?'barrel':vehicle?(world.mounted?'exit':'tank'):rescue?'captive':'helicopter')}${!rescue&&!vehicle&&!barrel&&world.evac.phase==='waiting'?'<b>→</b>':''}`:'';
+  const promptHtml=prompt&&!rescue&&!vehicle&&!barrel?`${rescue||vehicle||barrel?'<kbd>'+battleKey('interact')+'</kbd>':''}${icon(post?'post':barrel?'barrel':vehicle?(world.mounted?'exit':'tank'):rescue?'captive':'helicopter')}${!rescue&&!vehicle&&!barrel&&world.evac.phase==='waiting'?'<b>'+(post?postArrow:'→')+'</b>':''}`:'';
   if(promptSignature!==promptHtml){promptSignature=promptHtml;$('interact-prompt').innerHTML=promptHtml;}
   if($('interact-prompt').title!==prompt){$('interact-prompt').setAttribute('aria-label',prompt);$('interact-prompt').title=prompt;}
   diagnostics();

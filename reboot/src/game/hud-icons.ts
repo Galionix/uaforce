@@ -30,6 +30,7 @@ const art:Record<string,string>={
  jet:path('#adc3db','M15 1h3v10l12 8v3H19v5h5v3H8v-3h5v-5H2v-3l12-8z')+path('#6ebccd','M15 8h2v8h-2z'),
  microphone:path(stone,'M17 3h9v3h3v7h-3v3h-6v4h-4v5h-4v5H7v-5h4v-5h4v-6h-3V6h5z')+path(light,'M18 5h6v2h-6z')+path(gold,'M1 5h5v2H1zM3 12h5v2H3z'),
  squad:path('#bad891','M3 6h6v6H3zM2 14h9v9H8v6H5v-6H2zM22 6h6v6h-6zM20 14h10v9h-3v6h-4v-6h-3z')+path(gold,'M13 4h6v3h-6zM15 2h2v7h-2z'),
+ post:path(stone,'M6 2h3v28H6z')+path('#469edb','M9 3h18v7H9z')+path('#ffd95f','M9 10h18v7H9z'),
  flagdrone:path(stone,'M1 4h11v2H1zM20 4h11v2H20zM6 7h20v4H6zM14 11h2v18h-2z')+path('#469edb','M16 14h14v6H16z')+path('#ffd95f','M16 20h14v6H16z'),
  sniper:path(stone,'M2 13h29v3H13v4H8v-3H2zM14 8h9v3h-9zM17 11h2v2h-2z')+path('#bc8b5b','M2 16h6v5H2zM11 16h8v3h-8z'),
  mine:path('#8ea992','M5 16h22v4h3v7H2v-7h3zM11 12h10v4H11z')+path('#ef8d68','M14 7h4v5h-4z')+path(gold,'M3 5h3v4H3zM26 5h3v4h-3z'),

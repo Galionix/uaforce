@@ -3,7 +3,7 @@ const allowed=new Set(['https://uaforce.thedimas.com','https://uaforce.pages.dev
 const recent=new Map();
 const eventNames=new Set(['landing_view','play_click','link_copy','load_ready','load_error','mission_start','mission_win','mission_loss','mission_leave','coop_attempt','coop_connected','coop_error','coop_leave','feedback_open','playtest_open']);
 function cleanEvent(v){
- if(!v||typeof v!=='object'||!eventNames.has(v.event)||!['site','single','practice','host','guest'].includes(v.mode)||!['direct','tiktok','youtube','reddit','threads','friend','playtest','qa'].includes(v.source)||!/^[0-9a-f-]{36}$/.test(v.session)||v.build!=='growth-20260910'||typeof v.qa!=='boolean'||!Number.isInteger(v.mission)||v.mission< -1||v.mission>5||!Number.isFinite(v.seconds)||v.seconds<0||v.seconds>86400)return null;
+ if(!v||typeof v!=='object'||!eventNames.has(v.event)||!['site','single','practice','host','guest'].includes(v.mode)||!['direct','tiktok','youtube','reddit','threads','friend','playtest','qa'].includes(v.source)||!/^[0-9a-f-]{36}$/.test(v.session)||v.build!=='growth-20260910'||typeof v.qa!=='boolean'||!Number.isInteger(v.mission)||v.mission< -1||v.mission>8||!Number.isFinite(v.seconds)||v.seconds<0||v.seconds>86400)return null;
  return {blobs:[v.event,v.source,v.mode,v.build,v.session,v.qa?'qa':'public'],doubles:[v.mission,Math.round(v.seconds)],indexes:['uaforce']};
 }
 async function eventRequest(request,env){

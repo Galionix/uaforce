@@ -1,5 +1,23 @@
 // English UI catalog. Ukrainian source phrases remain stable simulation data.
 export const EN:Record<string,string>={
+  "До наступного поста": "To the next post",
+  "Вище за наказ": "Above Orders",
+  "Перевал нескорених": "Pass of the Unbroken",
+  "Сталева зміна": "Steel Shift",
+  "Заводський двір": "Factory Yard",
+  "Вертикальний цех": "Factory Ascent",
+  "Над містом": "Above the City",
+  "Підніжжя": "Foothills",
+  "Високі уступи": "High Ledges",
+  "Верхня станція": "Upper Station",
+  "Вантажний двір": "Freight Yard",
+  "Дахи ешелонів": "Wagon Rooftops",
+  "Висотна диспетчерська": "Elevated Control Room",
+  "Усі доступні операції завершено. Далі буде.": "All available operations complete. More to come.",
+  "Обійдіть заводський двір, підніміться крізь цех і вийдіть на дахи. Захопіть позначені пости та здолайте командира біля евакуації.": "Flank the factory yard, climb through the workshop and reach the rooftops. Capture the marked posts and defeat the commander at extraction.",
+  "Підніміться уступами до канатної станції. Перетинайте мости, обходьте вогневі точки згори й утримуйте висотні пости.": "Climb the ledges to the cable station. Cross bridges, flank firing positions from above and capture the high posts.",
+  "Рухайтеся танком уздовж колій або обійдіть оборону дахами вагонів. Займіть пости, підніміться до диспетчерської та відкрийте шлях евакуації.": "Drive a tank along the tracks or flank the defenses over wagon rooftops. Capture the posts, climb to the control room and open the extraction route.",
+
   "Рух і драбини": "Movement and ladders",
   "Не завантажилися ефекти:": "Effects failed to load:",
   "Тарас Шевченко": "Taras Shevchenko",

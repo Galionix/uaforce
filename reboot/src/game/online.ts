@@ -1,3 +1,4 @@
+import {MISSIONS} from './missions.ts';
 import Peer,{type DataConnection} from 'peerjs';
 import {COOP_VERSION,RemoteInput,type Snapshot} from './coop-state.ts';
 import {HEROES,type HeroId} from './content.ts';
@@ -61,7 +62,7 @@ export class OnlineRoom {
     if(m.type==='command'&&['pause','resume','continue','next'].includes(m.value as string))this.callbacks.command(m.value as RoomCommand);
    }else if(m.type==='state'){
     const s=m.value as Snapshot;
-    if(!s||s.version!==COOP_VERSION||!Number.isSafeInteger(s.sequence)||s.sequence<=this.received||!Number.isInteger(s.mission)||s.mission<0||s.mission>5||!Array.isArray(s.players)||s.players.length!==2||!s.state||!Array.isArray(s.boxes)||!Array.isArray(s.effects)||!Array.isArray(s.events))return;
+    if(!s||s.version!==COOP_VERSION||!Number.isSafeInteger(s.sequence)||s.sequence<=this.received||!Number.isInteger(s.mission)||s.mission<0||s.mission>=MISSIONS.length||!Array.isArray(s.players)||s.players.length!==2||!s.state||!Array.isArray(s.boxes)||!Array.isArray(s.effects)||!Array.isArray(s.events))return;
     if(s.players.some((a,i)=>a.id!==i||!a.body||!Number.isFinite(a.body.x)||!Number.isFinite(a.body.y)||!HEROES.some(h=>h.id===a.heroId)))return;
     this.received=s.sequence;this.callbacks.snapshot(s);
    }

@@ -1,7 +1,9 @@
+import {NEW_OPERATIONS} from './new-operations.ts';
+import type {OperationLayout} from './operation-layout.ts';
 import type {ScoreTheme} from './music.ts';
 import type {BossId} from './bosses.ts';
-export type District={name:string;start:number;end:number;look:'reeds'|'village'|'depot'|'boulevard'|'factory'|'rooftops'|'shore'|'bunkers'|'harbor'|'pines'|'ridge'|'cableway'|'station'|'wagons'|'signals'|'wetland'|'watchtowers'|'radar'};
-export type Mission={score:ScoreTheme;mounts:number[];boss?:BossId;name:string;region:string;brief:string;theme:string;background:string;length:number;bridges:number[][];forts:number[][];floorPlans:number[][];floors:number[];ladders:number[];allies:number[];medkits:number[];enemies:number[];radio:number;checkpoint:number;checkpoints:number[];exit:number;ammo:number[];districts:District[];vehicles:['tank'|'plane'|'shahed',number,number,number][]};
+export type District={minY?:number;name:string;start:number;end:number;look:'reeds'|'village'|'depot'|'boulevard'|'factory'|'rooftops'|'shore'|'bunkers'|'harbor'|'pines'|'ridge'|'cableway'|'station'|'wagons'|'signals'|'wetland'|'watchtowers'|'radar'};
+export type Mission={layout?:OperationLayout;score:ScoreTheme;mounts:number[];boss?:BossId;name:string;region:string;brief:string;theme:string;background:string;length:number;bridges:number[][];forts:number[][];floorPlans:number[][];floors:number[];ladders:number[];allies:number[];medkits:number[];enemies:number[];radio:number;checkpoint:number;checkpoints:number[];exit:number;ammo:number[];districts:District[];vehicles:['tank'|'plane'|'shahed',number,number,number][]};
 export const MISSIONS:Mission[]=[
  {name:'Тихий берег',region:'Херсонщина',brief:'Пройдіть очеретяний берег, звільніть село й прорвіться до ворожого складу. Бережіть ульту: ящики боєприпасів відновлюють її.',theme:'river',score:'river',mounts:[37,150],background:'/assets/river-pixel-background.png',length:216,exit:208,bridges:[[74,93,6.5],[144,167,6.5]],
  forts:[[20,34],[60,75],[91,108],[129,145],[166,180],[191,204]],floorPlans:[[4],[3,6],[4,8],[3,6],[4,8],[4,8]],floors:[4,8],ladders:[18,34,59,75,90,108,128,145,165,180,190,204],allies:[29,73,139,197],medkits:[36,84,148,183],enemies:[15,24,32,49,64,71,92,101,118,134,143,156,169,176,188,196,201],radio:161,checkpoint:44,checkpoints:[44,112,182],ammo:[38,85,121,151,184],
@@ -25,4 +27,5 @@ export const MISSIONS:Mission[]=[
  {name:'Нічна варта',region:'Полісся',brief:'Знайдіть полонених на болотяних заставах і виведіть з ладу радіопост. За радіопостом — командний бункер Хуйла. Здолайте диктатора й зупиніть російський наступ.',theme:'marsh',score:'marsh',mounts:[37,152],background:'/assets/marsh-pixel-background.png',boss:'putin',length:274,exit:264,
  forts:[[18,32],[51,68],[87,103],[126,143],[173,189],[204,220]],floorPlans:[[3],[4,8],[3,6],[4,8],[3,6,9],[3,6]],floors:[3,6,9],ladders:[17,32,50,68,86,103,125,143,172,189,203,220],bridges:[[67,88,8.5],[142,174,8.5]],allies:[28,98,137,216],medkits:[37,77,155,196],enemies:[13,22,30,54,64,74,90,100,113,130,141,159,176,187,199,208,215,218],radio:161,checkpoint:42,checkpoints:[42,108,194],ammo:[38,78,109,156,196],
  districts:[{name:'Туманні плавні',start:0,end:80,look:'wetland'},{name:'Сторожові вежі',start:80,end:165,look:'watchtowers'},{name:'Командний бункер Хуйла',start:165,end:274,look:'radar'}],vehicles:[['shahed',75,7,61],['tank',115,0,102],['shahed',149,8,131],['plane',187,12,166],['tank',197,0,186],['shahed',220,7,206]]},
+ ...NEW_OPERATIONS,
 ];

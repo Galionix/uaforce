@@ -1,3 +1,4 @@
+import {buildOperation} from './build-operation.ts';
 import {doHighFive,maintainHighFiveOffer,cancelHighFiveOffer,TEAM_BOOST} from './interactions.ts';
 import {storyTrigger,stepStory,type StoryState} from './story-scenes.ts';
 import {constrainTeam,sharedRespawn} from './shared-screen.ts';
@@ -22,9 +23,9 @@ export type Bullet = { id: number; x: number; y: number; vx: number; vy: number;
 export type Event = { type: 'highFive' | 'enemySuspect' | 'enemyPanic' | 'goreLand' | 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; deathRole?:InfantryKind;deathCause?:DeathCause;soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
 export const IDLE: Actions = { move: 0, jump: false, fire: false, special: false, interact: false };
 
-export function createPlayerBody(){return { x: 3, y: 0, vy: 0, hp: 100, facing: 1, grounded: true, invulnerable: 0, cooldown: 0, energy: 100, coyote: 0.12, wallSide:0,wallLock:0,wallVx:0,wallClimbing:false,ladder: -1, ladderLock: 0, detachVx: 0, ladderNeedsRelease:false, cast:0, attack:0, specialCooldown:0, specialRecovery:[] as number[], form:0, cloak:0, fireCount:0, ammo:0, reloading:0, burstShots:0, weaponTrigger:false };}
-export type PlayerActor={id:number;body:ReturnType<typeof createPlayerBody>;heroId:HeroId;lives:number;checkpoint:number;mounted:Mount|null;heldBarrel:number|null;interactHeld:boolean;motionFoley:MotionFoley;move:number};
-function createActor(id:number,heroId:HeroId):PlayerActor {return {id,body:createPlayerBody(),heroId,lives:3,checkpoint:3,mounted:null,heldBarrel:null,interactHeld:false,motionFoley:new MotionFoley(),move:0};}
+export function createPlayerBody(){return { x: 3, y: 0, vy: 0, hp: 100, facing: 1, grounded: true, invulnerable: 0, cooldown: 0, energy: 100, coyote: 0.12, wallSide:0,wallLock:0,wallVx:0,wallClimbing:false,platformDrop:0,platformDropY:0,ladder: -1, ladderLock: 0, detachVx: 0, ladderNeedsRelease:false, cast:0, attack:0, specialCooldown:0, specialRecovery:[] as number[], form:0, cloak:0, fireCount:0, ammo:0, reloading:0, burstShots:0, weaponTrigger:false };}
+export type PlayerActor={id:number;body:ReturnType<typeof createPlayerBody>;heroId:HeroId;lives:number;checkpoint:number;checkpointY:number;mounted:Mount|null;heldBarrel:number|null;interactHeld:boolean;motionFoley:MotionFoley;move:number};
+function createActor(id:number,heroId:HeroId):PlayerActor {return {id,body:createPlayerBody(),heroId,lives:3,checkpoint:3,checkpointY:0,mounted:null,heldBarrel:null,interactHeld:false,motionFoley:new MotionFoley(),move:0};}
 
 export class World {
   players:PlayerActor[]=[createActor(0,"shevchenko")];
@@ -52,6 +53,8 @@ export class World {
 
   private deathLines=new DeathLines();
   mode: Mode = 'ready';
+  ceiling=20;
+  routeProgress=-1;
   highFive={offeredBy:-1,offerAge:0,left:0,cooldown:0,age:10,x:0,y:0};
   story:StoryState|null=null;storyDone:string[]=[];storyPending:string|null=null;
   mounts:Mount[]=[];
@@ -67,9 +70,9 @@ export class World {
   enemies: Enemy[] = [];
   bullets: Bullet[] = [];
   followers: Follower[] = [];
-  allies = [{ x: 29, rescued: false }, { x: 66, rescued: false }];
+  allies:{x:number;y?:number;rescued:boolean}[] = [{ x: 29, rescued: false }, { x: 66, rescued: false }];
   ammoCrates:{x:number;y:number;used:boolean;arena?:BossId;restock?:number}[]=[];
-  medkits:{x:number;used:boolean;arena?:BossId}[] = [{ x: 36, used: false }, { x: 71, used: false }];
+  medkits:{x:number;y?:number;used:boolean;arena?:BossId}[] = [{ x: 36, used: false }, { x: 71, used: false }];
   effects:Effect[]=[];
   events: Event[] = [];
   // Host-only short-lived hearing stimuli, independent of presentation event draining.
@@ -84,6 +87,7 @@ export class World {
     this.heroRandom=heroRandom;
     this.missionIndex=Math.max(0,Math.min(MISSIONS.length-1,missionIndex));this.mission=MISSIONS[this.missionIndex];this.unlocked=[...new Set(["shevchenko" as HeroId,...unlocked])];this.heroId=this.unlocked.includes(heroId)?heroId:"shevchenko";
     resetWeapon(this.player,WEAPONS[this.heroId]);
+    if(this.mission.layout){buildOperation(this);return;}
     this.ammoCrates=this.mission.ammo.map(x=>({x,y:0,used:false}));
     this.evac.x=this.mission.exit+22;
     this.allies=this.mission.allies.map(x=>({x,rescued:false}));this.medkits=this.mission.medkits.map(x=>({x,used:false}));
@@ -116,17 +120,19 @@ export class World {
   get specialCharges(){return this.hero.specialCharges-this.player.specialRecovery.length;}
   get rescued() { return this.allies.filter(a => a.rescued).length; }
   get radioDestroyed() { return this.boxes.some(b => b.kind === 'radio' && b.hp <= 0); }
+  get nextPost(){return this.mission.layout?.checkpoints[this.routeProgress+1];}
   get objectiveComplete() { return this.enemies.every(e => !e.heavy || e.hp <= 0); }
   get prompt() {
     const p=this.player;
     if(this.mounted)return 'Вийти з танка';
     if(this.heldBarrel!==null)return 'Кинути бочку';
     if(this.evac.phase==='departing')return 'Евакуація…';
-    if(this.allies.some(a=>!a.rescued&&Math.abs(a.x-p.x)<2.2&&p.y<2))return 'Звільнити полоненого';
+    if(this.allies.some(a=>!a.rescued&&Math.abs(a.x-p.x)<2.2&&(a.y===undefined?p.y<2:Math.abs(p.y-a.y)<2)))return 'Звільнити полоненого';
     if(nearbyMount(this))return 'Сісти в танк';
     if(nearbyBarrel(this))return 'Підняти бочку';
     if(this.evac.phase==='arriving')return 'Гелікоптер наближається — тримайте точку';
     if(this.evac.phase==='boarding')return 'Підійдіть до троса біля прапора';
+    if(this.nextPost)return 'До наступного поста';
     if(this.objectiveComplete)return 'До прапора евакуації →';
     return '';
   }
@@ -144,15 +150,15 @@ export class World {
     this.events.push({type:'heroChanged',x:this.player.x,y:this.player.y+1,hero:this.heroId,unlocked:newlyUnlocked});
   }
   private stepEvac(dt:number){
-    const e=this.evac,p=this.player,x=this.mission.exit;
-    if(e.phase==='waiting'&&this.objectiveComplete&&p.x>=x-4){e.phase='arriving';e.time=0;this.event('evacCalled',x,1);}
+    const e=this.evac,p=this.player,x=this.mission.exit,y=this.mission.layout?.exitY??0;
+    if(e.phase==='waiting'&&this.objectiveComplete&&p.x>=x-4&&(!this.mission.layout||Math.abs(p.y-y)<4)&&(!this.mission.layout||this.routeProgress===this.mission.layout.checkpoints.length-1)){e.phase='arriving';e.time=0;this.event('evacCalled',x,y+1);}
     if(e.phase==='arriving'){
-      e.time+=dt;const t=Math.min(1,e.time/2.6),ease=t*t*(3-2*t);e.x=x+22*(1-ease);e.y=3+5*(1-ease);
+      e.time+=dt;const t=Math.min(1,e.time/2.6),ease=t*t*(3-2*t);e.x=x+22*(1-ease);e.y=y+3+5*(1-ease);
       if(t===1){e.phase='boarding';e.time=0;}
-    }else if(e.phase==='boarding'&&Math.abs(p.x-x)<7&&p.y<4){
-      exitMount(this);e.phase='departing';e.time=0;p.ladder=-1;this.bullets=[];this.event('boarded',x,1);
+    }else if(e.phase==='boarding'&&Math.abs(p.x-x)<7&&Math.abs(p.y-y)<4){
+      exitMount(this);e.phase='departing';e.time=0;p.ladder=-1;this.bullets=[];this.event('boarded',x,y+1);
     }else if(e.phase==='departing'){
-      e.time+=dt;e.x=x+e.time*5;e.y=3+e.time*3;p.x=e.x;p.y=e.y-1;p.vy=0;
+      e.time+=dt;e.x=x+e.time*5;e.y=y+3+e.time*3;p.x=e.x;p.y=e.y-1;p.vy=0;
       if(e.time>=2.2){e.phase='done';this.mode='won';this.event('won',p.x,p.y);}
     }
   }
@@ -171,7 +177,7 @@ export class World {
       this.lives--;this.clearOwned();dropBarrel(this);if(this.players.length===1)resetBoss(this);
       if(this.players.length>1&&this.lives<=0)this.lives=1;
       if (this.lives <= 0) { this.mode = 'lost'; this.event('lost', p.x, p.y); }
-      else { this.motionFoley.reset();p.x = this.checkpoint; p.y = 0; p.ladder=-1;p.ladderLock=0;p.detachVx=0;p.wallSide=0;p.wallLock=0;p.wallVx=0;p.wallClimbing=false;p.ladderNeedsRelease=false; p.vy = 0; p.hp = 100; p.invulnerable = 2.5; if(this.players.length===1)this.bullets = []; this.clearOwned();p.form=0;p.cloak=0;p.fireCount=0;resetWeapon(p,WEAPONS[this.heroId]);sharedRespawn(this);this.event('respawn',p.x,p.y); }
+      else { this.motionFoley.reset();p.x = this.checkpoint; p.y = this.actor.checkpointY; p.ladder=-1;p.ladderLock=0;p.detachVx=0;p.wallSide=0;p.wallLock=0;p.wallVx=0;p.wallClimbing=false;p.platformDrop=0;p.ladderNeedsRelease=false; p.vy = 0; p.hp = 100; p.invulnerable = 2.5; if(this.players.length===1)this.bullets = []; this.clearOwned();p.form=0;p.cloak=0;p.fireCount=0;resetWeapon(p,WEAPONS[this.heroId]);sharedRespawn(this);this.event('respawn',p.x,p.y); }
     }
   }
   damageFollower(f:Follower,damage:number){
@@ -260,12 +266,17 @@ export class World {
     const carried=this.heldBarrel!==null;
     const barrelAction=carried&&interactEdge&&interactBarrel(this,(action.climb??0)<-.3);
     const vehicleControl=stepMounts(this,dt,action,interactEdge&&!carried&&!highFiveAction);
-    if(!vehicleControl&&!carried&&interactEdge&&!highFiveAction&&!this.allies.some(a=>!a.rescued&&Math.abs(a.x-p.x)<2.2&&p.y<2))interactBarrel(this);
+    if(!vehicleControl&&!carried&&interactEdge&&!highFiveAction&&!this.allies.some(a=>!a.rescued&&Math.abs(a.x-p.x)<2.2&&(a.y===undefined?p.y<2:Math.abs(p.y-a.y)<2)))interactBarrel(this);
     if(!vehicleControl){
     const move = Math.max(-1, Math.min(1, action.move));
     if (move) p.facing = Math.sign(move);
     p.wallLock=Math.max(0,p.wallLock-dt);p.wallClimbing=false;
     p.ladderLock=Math.max(0,p.ladderLock-dt);
+    p.platformDrop=Math.max(0,p.platformDrop-dt);
+    if(this.mission.layout&&action.jump&&(action.climb??0)<-.5&&p.grounded){
+      const under=this.boxes.filter(b=>b.hp>0&&Math.abs(p.x-b.x)<b.w/2+.25&&Math.abs(b.y+b.h-p.y)<.08);
+      if(under.length&&under.every(b=>b.kind==='platform')){p.platformDrop=.25;p.platformDropY=p.y;p.y-=.1;p.vy=-2;p.grounded=false;p.coyote=0;p.ladder=-1;p.ladderLock=.3;action={...action,jump:false};}
+    }
     const climb=Math.abs(action.climb??0)>.15?(action.climb??0):0;
     if(!climb)p.ladderNeedsRelease=false;
     const nearby=this.ladders.findIndex(l=>Math.abs(l.x-p.x)<.65&&p.y>=l.bottom-.15&&p.y<=l.top+.15);
@@ -299,7 +310,7 @@ export class World {
     if(climbing){p.x=ladder!.x;p.y=Math.max(ladder!.bottom,Math.min(ladder!.top,previousY+climb*5*dt));p.vy=0;p.coyote=.12;}
     if (p.y <= -2) { p.y = -2; p.vy = 0; p.grounded = true; }
     for (const b of this.boxes) {
-      if (b.hp <= 0 || b.id===this.heldBarrel || Math.abs(p.x - b.x) > b.w / 2 + .25) continue;
+      if (b.hp <= 0 || b.kind==='platform'&&p.platformDrop>0&&b.y+b.h>=p.platformDropY-.1 || b.id===this.heldBarrel || Math.abs(p.x - b.x) > b.w / 2 + .25) continue;
       const top = b.y + b.h;
       if(p.wallClimbing&&b.kind!=='platform'&&p.vy>0&&previousY+1.55<=b.y+.03&&p.y+1.55>=b.y){p.y=b.y-1.55;p.vy=0;}
 
@@ -326,6 +337,10 @@ export class World {
     }
     if(vehicleControl)this.motionFoley.reset();
     if(this.players.length===1)this.stepEffects(dt);
+    const route=this.mission.layout?.checkpoints;
+    if(route){const next=route[this.routeProgress+1];if(next&&Math.abs(p.x-next.x)<2&&Math.abs(p.y-next.y)<1){
+      this.routeProgress++;for(const a of this.players){a.checkpoint=next.x;a.checkpointY=next.y;}p.hp=100;this.event('checkpoint',next.x,next.y+1);
+    }}
     const reached=this.mission.checkpoints.filter(x=>p.x>x&&x>this.checkpoint).at(-1);
     if(reached!==undefined){this.checkpoint=reached;p.hp=100;this.event('checkpoint',reached,1);}
     for(const crate of this.ammoCrates){
@@ -338,10 +353,10 @@ export class World {
       crate.y=Math.max(floor,crate.y-8*dt/this.players.length);
       if(p.energy<100&&Math.abs(p.x-crate.x)<.9&&Math.abs(p.y-crate.y)<1.2){crate.used=true;if(crate.arena)crate.restock=ARENA_RESTOCK_SECONDS;p.energy=100;this.event('ammoPickup',crate.x,crate.y+1);}
     }
-    for (const kit of this.medkits) if (!kit.used && p.hp<100 && Math.abs(kit.x - p.x) < .8 && p.y < 1) { kit.used = true; p.hp = Math.min(100, p.hp + 35); }
+    for (const kit of this.medkits) if (!kit.used && p.hp<100 && Math.abs(kit.x - p.x) < .8 && (kit.y===undefined?p.y<1:Math.abs(p.y-kit.y)<1)) { kit.used = true; p.hp = Math.min(100, p.hp + 35); }
     if(this.players.length===1)stepBarrels(this,dt);
     if (action.interact&&!vehicleControl&&!barrelAction&&!carried) {
-      for (const ally of this.allies) if (!ally.rescued && Math.abs(ally.x - p.x) < 2.2 && p.y < 2) { ally.rescued = true; p.hp = Math.min(100, p.hp + 25); this.event('rescue', ally.x, 1);this.changeHero();p.invulnerable=Math.max(p.invulnerable,1); }
+      for (const ally of this.allies) if (!ally.rescued && Math.abs(ally.x - p.x) < 2.2 && (ally.y===undefined?p.y<2:Math.abs(p.y-ally.y)<2)) { ally.rescued = true; p.hp = Math.min(100, p.hp + 25); this.event('rescue', ally.x, (ally.y??0)+1);this.changeHero();p.invulnerable=Math.max(p.invulnerable,1); }
     }
   }
   step(dt:number, action:Actions){this.stepPlayers(dt,[action]);}
@@ -359,7 +374,7 @@ export class World {
     dt=Math.min(dt,1/30);maintainHighFiveOffer(this,dt);this.highFive.left=Math.max(0,this.highFive.left-dt);this.highFive.cooldown=Math.max(0,this.highFive.cooldown-dt);this.highFive.age+=dt;this.time+=dt;this.noises=this.noises.filter(n=>n.until>this.time);
     // Arms recoil at .3s in View; emit once on that transition, never on a wall-clock timer.
     if(previousFiveAge<.3&&this.highFive.age>=.3)this.emitSfx('team-hand-lower',this.highFive.x,this.highFive.y);
-    this.withPlayer(this.nearestPlayer(this.mission.exit,0).id,()=>this.stepEvac(dt));
+    this.withPlayer(this.nearestPlayer(this.mission.exit,this.mission.layout?.exitY??0).id,()=>this.stepEvac(dt));
     if(this.evac.phase==='departing'||this.mode!=='playing'){
       if(this.evac.phase==='departing')for(const a of this.players){a.body.x=this.evac.x;a.body.y=this.evac.y-1;}
       return;
@@ -409,7 +424,7 @@ export class World {
       if(!target&&bullet.ordnance&&bullet.life<=bulletDt)this.ordnanceBlast(bullet,nextX,nextY);
       bullet.x = nextX; bullet.y = nextY; bullet.life -= bulletDt;
     }
-    this.bullets = this.bullets.filter(b => b.life > 0 && b.y > -3 && b.y < 20);
+    this.bullets = this.bullets.filter(b => b.life > 0 && b.y > -3 && b.y < this.ceiling);
   }
 }
 

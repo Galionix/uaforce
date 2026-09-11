@@ -39,7 +39,7 @@ export function launchHostile(w:World,e:Enemy,kind:'shell'|'rocket',tx:number,ty
 export function stepVehicle(w:World,e:Enemy,dt:number){
  const v=e.vehicle!;if(e.hp<=0)return;
  if(!v.active){
-  if(w.player.x<v.trigger||w.evac.phase!=='waiting')return;
+  if(w.player.x<v.trigger||w.evac.phase!=='waiting'||w.mission.layout&&Math.abs(w.player.y-e.y)>10)return;
   v.active=true;v.phase='warning';v.age=0;w.emit(v.kind==='tank'?'tankAlert':v.kind==='plane'?'planeAlert':'droneAlert',w.player.x,w.player.y+2);
  }
  v.engine-=dt;if(v.engine<=0){w.emit(v.kind==='tank'?'tankEngine':v.kind==='plane'?'planeEngine':'droneEngine',e.x,e.y);v.engine=.65;}

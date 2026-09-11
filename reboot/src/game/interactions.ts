@@ -9,8 +9,8 @@ export function objectInteraction(w:World):Interaction|undefined{
  const p=w.player;
  if(w.mounted)return {kind:'exit',x:w.mounted.x,y:w.mounted.y+3.8};
  if(w.heldBarrel!==null)return {kind:'throw',x:p.x,y:p.y+4.2};
- const captive=w.allies.find(a=>!a.rescued&&Math.abs(a.x-p.x)<2.2&&p.y<2);
- if(captive)return {kind:'rescue',x:captive.x,y:2.5};
+ const captive=w.allies.find(a=>!a.rescued&&Math.abs(a.x-p.x)<2.2&&(a.y===undefined?p.y<2:Math.abs(p.y-a.y)<2));
+ if(captive)return {kind:'rescue',x:captive.x,y:(captive.y??0)+2.5};
  const tank=nearbyMount(w);if(tank)return {kind:'tank',x:tank.x,y:tank.y+3.8};
  const barrel=nearbyBarrel(w);if(barrel)return {kind:'barrel',x:barrel.x,y:barrel.y+barrel.h+.9};
 }

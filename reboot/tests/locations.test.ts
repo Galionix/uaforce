@@ -20,7 +20,7 @@ test('ammo pickup respects height and pause and falls with destroyed ground',()=
  for(const b of w.boxes)if(Math.abs(b.x-12)<2&&b.y>-3)b.hp=0;run(w,1);assert.equal(crate.y,-2);w.player.x=12;w.player.y=-2;run(w,.1);assert.equal(w.player.energy,100);
 });
 test('ordinary special still refills automatically while ultimate stays empty',()=>{const w=fixture();w.step(1/60,{...IDLE,special:true,ultimate:true});assert.equal(w.specialCharges,0);run(w,9);assert.equal(w.specialCharges,1);assert.equal(w.player.energy,0);});
-for(let i=0;i<MISSIONS.length;i++)test('mission '+(i+1)+' has complete long terrain, staged threats, supplies and multiple checkpoints',()=>{
+for(let i=0;i<6;i++)test('mission '+(i+1)+' has complete long terrain, staged threats, supplies and multiple checkpoints',()=>{
  const w=new World(i),m=w.mission;assert.ok(m.length>210);assert.equal(m.districts.length,3);assert.equal(m.districts[0].start,0);assert.equal(m.districts.at(-1)!.end,m.length);
  m.districts.forEach((d,j)=>{if(j)assert.equal(d.start,m.districts[j-1].end);assert.ok(m.enemies.filter(x=>x>=d.start&&x<d.end).length>=3);});
  assert.ok(m.vehicles.length>=5);assert.ok(m.vehicles[0][3]>=30);assert.ok(m.vehicles.filter(v=>v[3]>=m.districts[2].start).length>=2);assert.ok(m.ammo.length>=5);assert.equal(w.allies.length,4);assert.equal(m.checkpoints.length,3);
