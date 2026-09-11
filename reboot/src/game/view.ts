@@ -1,3 +1,4 @@
+import {SceneFx,ATMOSPHERES,stormLight} from './scene-fx.ts';
 import {translate} from './i18n.ts';
 import {mobileViewCrop,mobileCameraShift} from './mobile-view.ts';
 import {interactionTarget,TEAM_BOOST} from './interactions.ts';
@@ -25,6 +26,7 @@ const S=16,W=640,H=360;
 const hash=(x:number,y:number=0)=>{const n=Math.sin(x*127.1+y*311.7)*43758.5453;return n-Math.floor(n);};
 /** Pixel coordinates are the art grid; CSS scales the completed frame without smoothing. */
 export class View {
+  readonly sceneFx=new SceneFx();
   invalidate(){this.needsDraw=true;}
   private requestedZoom=1;
   setZoom(value:number){if(this.requestedZoom!==value){this.requestedZoom=value;this.needsDraw=true;}}
@@ -58,7 +60,7 @@ export class View {
     const index=HEROES.findIndex(h=>h.id===id),bounds=this.frameBounds[index]?.[0];if(!bounds)return '';
     const cv=document.createElement('canvas');cv.width=bounds[2];cv.height=bounds[3];cv.getContext('2d')!.drawImage(this.heroImages[index],...bounds as [number,number,number,number],0,0,cv.width,cv.height);return cv.toDataURL();
   }
-  reset(w:World){this.needsDraw=true;this.cameraX=Math.max(0,Math.min(w.mission.length*S-W,w.player.x*S-170));this.cameraY=0;this.particles=[];this.flashes=[];this.cinematicBlasts=[];this.screenPulse=0;this.shake=0;this.gore.clear();this.deathCaptions=[];this.lastDeathCaption=-100;}
+  reset(w:World){this.sceneFx.reset();this.needsDraw=true;this.cameraX=Math.max(0,Math.min(w.mission.length*S-W,w.player.x*S-170));this.cameraY=0;this.particles=[];this.flashes=[];this.cinematicBlasts=[];this.screenPulse=0;this.shake=0;this.gore.clear();this.deathCaptions=[];this.lastDeathCaption=-100;}
   private rect(x:number,y:number,w:number,h:number,color:string){this.c.fillStyle=color;this.c.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));}
   private tree(x:number,y:number,scale:number,far=false){
     const colors=far?['#285d6d','#357386','#418b98']:['#294b38','#426a40','#698744'];
@@ -117,6 +119,8 @@ export class View {
     this.c.drawImage(enemy?this.infantry:mavka?this.mavka:this.heroImages[heroIndex],...bounds as [number,number,number,number],-Math.round(w*.47),-h,w,h);this.c.restore();
   }
   event(e:Event){
+    this.sceneFx.emit(e,this.cameraX,this.cameraY);
+    if(this.particles.length>360)this.particles.splice(0,this.particles.length-360);if(this.flashes.length>60)this.flashes.splice(0,this.flashes.length-60);
     if(e.type==='highFive'){this.shake=Math.max(this.shake,2);this.screenPulse=.07;return;}
     if(e.type==='enemyDeath'){
       this.gore.burst(e.x,e.y);this.shake=Math.max(this.shake,1.4);
@@ -151,8 +155,9 @@ export class View {
     if(this.requestedZoom>1&&!world.story)this.cameraX-=mobileCameraShift(world.players.map(a=>a.body.x*S-this.cameraX),W);
     const crop=mobileViewCrop(world.story?1:this.requestedZoom,world.players.map(a=>({x:a.body.x*S-this.cameraX,y:266-a.body.y*S+this.cameraY,facing:a.body.facing,mounted:!!a.mounted})),W,H);
     this.c=crop.zoom>1?this.frameContext:this.output;
-    this.theme=world.mission.theme;this.c.imageSmoothingEnabled=false;this.background(world);
+    this.theme=world.mission.theme;this.c.imageSmoothingEnabled=false;if(playing)this.sceneFx.step(world,dt,this.cameraX,this.cameraY);this.background(world);this.sceneFx.sky(this.c,world,reducedPresentation());
     this.c.save();if(playing&&!reducedPresentation()&&this.shake>.1)this.c.translate(Math.round((Math.random()-.5)*this.shake),Math.round((Math.random()-.5)*this.shake));if(playing)this.shake=Math.max(0,this.shake-dt*28);
+    if(playing&&!reducedPresentation()&&this.sceneFx.level>0&&ATMOSPHERES[world.mission.atmosphere??'sunlit'].storm){const kick=stormLight(this.sceneFx.time);this.c.translate(Math.round(Math.sin(this.clock*67)*kick*1.5),0);}
     // Rooms are dark cutaways. Their floors and edges below are live destructible blocks.
     for(const [index,[l,r]]of world.mission.forts.entries()){
       const height=world.mission.floorPlans[index].at(-1)!*S;const x=l*S-this.cameraX,y=266-height+this.cameraY,w=(r-l)*S;
@@ -269,6 +274,7 @@ export class View {
     if(playing){for(const b of this.cinematicBlasts)b.age+=dt;this.cinematicBlasts=this.cinematicBlasts.filter(b=>b.age<.65);}
     for(const b of this.cinematicBlasts)this.abilityArt.draw(this.c,'blast',Math.floor(b.age/.65*8),b.x*S-this.cameraX,266-b.y*S+this.cameraY-12,b.size,b.size);
     for(const p of this.particles)this.rect(p.x*S-this.cameraX,266-p.y*S+this.cameraY,p.size,p.size,p.color);
+    this.sceneFx.draw(this.c,world,this.cameraX,this.cameraY,reducedPresentation());
     for(const p of this.gore.bits){const x=p.x*S-this.cameraX,y=266-p.y*S+this.cameraY;this.rect(x,y,p.size,p.chunk?p.size*.65:p.size,p.color);if(p.chunk)this.rect(x+1,y,2,1,'#f07669');}
     if(playing){for(const c of this.deathCaptions){c.life-=dt;c.y+=dt*.18;}this.deathCaptions=this.deathCaptions.filter(c=>c.life>0);}
     for(const c of this.deathCaptions){const x=c.x*S-this.cameraX;if(x<-30||x>W+30)continue;this.c.font='bold 11px monospace';const lines=wrapDeathLine(translate(c.text)),half=Math.max(...lines.map(line=>this.c.measureText(line).width))/2+5,y=Math.max(40,266-c.y*S+this.cameraY);for(const [i,line]of lines.entries())this.label(line,Math.max(half,Math.min(W-half,x)),y+(i-lines.length+1)*15,'#ffe6be');}
@@ -279,7 +285,7 @@ export class View {
     if(crop.zoom>1){this.output.imageSmoothingEnabled=false;this.output.drawImage(this.frame,crop.x,crop.y,crop.width,crop.height,0,0,W,H);}
   }
   private label(text:string,x:number,y:number,color:string){text=translate(text);this.c.font='bold 11px monospace';this.c.textAlign='center';this.c.fillStyle='#10201beb';this.c.fillRect(Math.round(x-this.c.measureText(text).width/2-3),Math.round(y-11),this.c.measureText(text).width+6,15);this.c.fillStyle='#11201b';this.c.fillText(text,Math.round(x)+1,Math.round(y)+1);this.c.fillStyle=color;this.c.fillText(text,Math.round(x),Math.round(y));}
-  private flag(x:number,w:World,y=0,reached?:boolean,next=false){const xx=x*S-this.cameraX,yy=266-y*S+this.cameraY;if(next)this.label('▼',xx+7,yy-49-Math.round(Math.sin(this.clock*4)*2),'#ffdc67');this.rect(xx,yy-40,2,40,'#cdcba6');const active=reached??(x===3||(x===w.mission.exit?w.objectiveComplete:w.checkpoint>=x));this.rect(xx+2,yy-40,13,5,active?'#379bd7':'#686f61');this.rect(xx+2,yy-35,13,5,active?'#f7d252':'#565e50');}
+  private flag(x:number,w:World,y=0,reached?:boolean,next=false){const xx=x*S-this.cameraX,yy=266-y*S+this.cameraY;if(next)this.label('▼',xx+7,yy-49-Math.round(Math.sin(this.clock*4)*2),'#ffdc67');this.rect(xx,yy-40,2,40,'#cdcba6');const active=reached??(x===3||(x===w.mission.exit?w.objectiveComplete:w.checkpoint>=x));for(let strip=0;strip<7;strip++){const sway=Math.round(Math.sin(this.clock*3-strip*.65)*strip*.22);this.rect(xx+2+strip*2,yy-40+sway,2,5,active?'#379bd7':'#686f61');this.rect(xx+2+strip*2,yy-35+sway,2,5,active?'#f7d252':'#565e50');}}
   private helicopter(w:World){
     const e=w.evac;if(e.phase==='waiting'||e.phase==='done')return;
     const x=e.x*S-this.cameraX,y=266-e.y*S+this.cameraY;

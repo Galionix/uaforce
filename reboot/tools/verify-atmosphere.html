@@ -1,0 +1,21 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>Atmosphere benchmark — silent</title><style>body{margin:0;background:#132027;color:#eee;font:14px monospace}canvas{width:min(100vw,1280px);image-rendering:pixelated}button{padding:12px}pre{white-space:pre-wrap}</style><button id="run">Заміряти</button><button id="storm">Гроза</button><button id="blast">Вибухи</button><button id="night">Ніч</button><button id="lightning">Блискавка</button><button id="snow">Сніг</button><button id="pause">Пауза</button><output>Завантаження</output><canvas></canvas><pre id="result"></pre><script type="module">
+import {World} from '/src/game/world.ts';
+import {HEROES} from '/src/game/content.ts';
+import {stormLight} from '/src/game/scene-fx.ts';import {reducedPresentation} from '/src/game/motion-settings.ts';
+
+const baseline=new URLSearchParams(location.search).has('baseline');
+const {View}=await import(baseline?'/docs/evidence/atmosphere/view-baseline.ts':'/src/game/view.ts');
+const view=new View(document.querySelector('canvas'));await view.init();
+let randomSeed=123;Math.random=()=>{randomSeed=(Math.imul(randomSeed,1664525)+1013904223)>>>0;return randomSeed/4294967296;};
+let w,frame=0,active=null,last=0,times=[],intervals=[],results=[],scene=0,preview=true;
+const scenes=[{name:'river',mission:0,bursts:0},{name:'storm',mission:10,bursts:0},{name:'chain-explosions',mission:9,bursts:6}];
+function select(m){randomSeed=123;w=new World(m,HEROES.map(h=>h.id));w.mode='playing';w.player.x=40;w.player.y=0;w.player.invulnerable=999;view.reset(w);if(view.sceneFx)view.sceneFx.time=4;frame=0;}
+function blasts(n){for(let j=0;j<n;j++)view.event({type:'hostileBlast',x:w.player.x+3+j*3,y:1+j%3});}
+const percentile=(a,p)=>[...a].sort((a,b)=>a-b)[Math.floor((a.length-1)*p)];
+function next(){if(scene>=scenes.length){active=null;preview=false;document.querySelector('#result').textContent=JSON.stringify({baseline,silent:true,userAgent:navigator.userAgent,viewport:[innerWidth,innerHeight],results},null,2);document.querySelector('output').textContent='Готово';return;}active=scenes[scene++];select(active.mission);times=[];intervals=[];last=0;}
+document.querySelector('#run').onclick=()=>{results=[];scene=0;document.querySelector('#result').textContent='';next();};
+document.querySelector('#night').onclick=()=>{active=null;preview=true;select(5);};document.querySelector('#storm').onclick=()=>{active=null;preview=true;select(10);};document.querySelector('#snow').onclick=()=>{active=null;preview=true;select(3);};
+document.querySelector('#blast').onclick=()=>{active=null;preview=true;select(9);blasts(4);};document.querySelector('#pause').onclick=()=>{preview=!preview;w.mode=preview?'playing':'paused';view.invalidate();view.render(w,0,0);};document.querySelector('#lightning').onclick=()=>{active=null;preview=false;select(10);if(view.sceneFx)view.sceneFx.time=5;view.invalidate();view.render(w,0,0);document.querySelector('output').textContent=JSON.stringify({profile:w.mission.atmosphere,time:view.sceneFx?.time,light:stormLight(view.sceneFx?.time??0),reduced:reducedPresentation()});};
+select(10);document.querySelector('output').textContent='Готово до заміру';
+view.onFrame=()=>{if(!active&&!preview)return;let now=performance.now();const interval=last?now-last:0;last=now;const begin=performance.now();if(active?.bursts&&frame%12===0)blasts(active.bursts);view.render(w,1/60,1);const elapsed=performance.now()-begin;if(active&&frame>=45){times.push(elapsed);intervals.push(interval);}frame++;if(active)document.querySelector('output').textContent=active.name+' '+frame+'/225';if(active&&frame>=225){results.push({scene:active.name,renderMedianMs:percentile(times,.5),renderP95Ms:percentile(times,.95),frameP95Ms:percentile(intervals,.95),fps:1000/(intervals.reduce((a,b)=>a+b,0)/intervals.length),slowFrames:intervals.filter(x=>x>25).length});next();}};
+</script></html>
