@@ -1,0 +1,234 @@
+{
+  "date": "2026-09-12",
+  "installed": false,
+  "model": "gemini-2.5-flash-preview-tts",
+  "voice": "Fenrir",
+  "status": "daily_free_quota_exhausted",
+  "clips": {
+    "zelensky": {
+      "sha256": "de324dd927ed06153f364e690c7a0638fa57beba9ae0c7b45642653037367ef5",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/zelensky.wav",
+      "seconds": 2.1649583333333333,
+      "mood": "hero"
+    },
+    "defeat": {
+      "sha256": "a2977e768f61242ec0a16fcec60384ba2d119fd9f3cd2716dbafe692d1ea1df4",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/defeat.wav",
+      "seconds": 1.538625,
+      "mood": "resolve"
+    },
+    "checkpoint": {
+      "sha256": "23d47900378fbe3f0fd49d13919a754cf89064bcc251ddadf8bf14a4e733d800",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/checkpoint.wav",
+      "seconds": 1.306875,
+      "mood": "routine"
+    },
+    "franko": {
+      "sha256": "bba1e5a86b22be0c11750dbd5087c57ce8e4ad100cd866962125505247b293ce",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/franko.wav",
+      "seconds": 1.6164166666666666,
+      "mood": "hero"
+    },
+    "swarm-master": {
+      "sha256": "2ad405fdcb22a22401cf7791aea0d92198f44e3adc72259bf53a6efa6569e2dd",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/swarm-master.wav",
+      "seconds": 6.345208333333333,
+      "mood": "boss"
+    },
+    "putin": {
+      "sha256": "8acad0e818c787550fb1a8a9b3d7bd5ee7ff49303f61458999658a850a837f33",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/putin.wav",
+      "seconds": 5.3959166666666665,
+      "mood": "boss"
+    },
+    "drone-alert": {
+      "sha256": "b68cd6a7c782f4e7eacff2440d704d1ad025e16b013eb2a0743160bd85b5cf57",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/drone-alert.wav",
+      "seconds": 1.438125,
+      "mood": "warning"
+    },
+    "skovoroda": {
+      "sha256": "c5950c8700226f5d0332f84dd6e6f322f00d38ab0e673ce629ac99da90da928d",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/skovoroda.wav",
+      "seconds": 1.878625,
+      "mood": "hero"
+    },
+    "boarded": {
+      "sha256": "0a9f03400d26b803b3dcf065d696fab54f1e3f68c2c8d2cea6d3dffd96d0cdff",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/boarded.wav",
+      "seconds": 0.8350416666666667,
+      "mood": "routine"
+    },
+    "shevchenko": {
+      "sha256": "2a8ad0d95bd89dd3288a0b2ad520848c1fcd07bc1afad998d3b58f66e50010ca",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/shevchenko.wav",
+      "seconds": 1.961875,
+      "mood": "hero"
+    },
+    "evac-called": {
+      "sha256": "0c79500737100af282de65462dd9ab6b219a4a0776f1018642dc17fb14101fe0",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/evac-called.wav",
+      "seconds": 2.5855,
+      "mood": "routine"
+    },
+    "bayraktar": {
+      "sha256": "569b4243d5e4fbffecd35b9a9cc6e8426c46fa621028a0fe762fa4a68fe209bf",
+      "status": "needs_revision",
+      "note": "Corrected suffix ЧИК is present, but reviewer describes higher pitch/playful delivery; regenerate deeper heroic take.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/bayraktar.wav",
+      "seconds": 1.6195833333333334,
+      "mood": "hero"
+    },
+    "victory": {
+      "sha256": "a22916741a50c3eeab7cbdb778af40bb67e1195bc0f104ac62145168dbcadc0b",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/victory.wav",
+      "seconds": 1.327,
+      "mood": "victory"
+    },
+    "zelensky-shout": {
+      "sha256": "032ec9fa5981cf21a2f124dfcd24e291ad7973a15c35b6cbf57487f289ae6528",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/zelensky-shout.wav",
+      "seconds": 1.9963333333333333,
+      "mood": "hero"
+    },
+    "bilozerska": {
+      "sha256": "ebda17ed470216c6f85b528fb2073e10e953205a67d7e6212af850e4101f8e72",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/bilozerska.wav",
+      "seconds": 1.9359583333333332,
+      "mood": "hero"
+    },
+    "lesya": {
+      "sha256": "145428af5dffe38746f26b85c8b8555168423ea043a5354181292b279a7a1a4f",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/lesya.wav",
+      "seconds": 1.9756666666666667,
+      "mood": "hero"
+    },
+    "plane-alert": {
+      "sha256": "56ea3fea1c904f37a52b4f03a7433224db4bcbe4ca24b8834939f779e0e7fb2d",
+      "status": "needs_revision",
+      "note": "Split-clip transcription omits В укриття; raw transcript disagrees. Require a clean complete new take or independent phonetic review.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/plane-alert.wav",
+      "seconds": 1.822,
+      "mood": "warning"
+    },
+    "bandera-bro": {
+      "sha256": "fa22b09083a5da51a87107167a83cd58180573b4c1de03caf21115c3f1b731bf",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/bandera-bro.wav",
+      "seconds": 1.4155416666666667,
+      "mood": "hero"
+    },
+    "ghost": {
+      "sha256": "63536f7362dc5b57325cf669e4e008a11de7513f96e99fddfbb0060b33a6f0e4",
+      "status": "needs_revision",
+      "note": "Both takes read as Привіт instead of Привид; must regenerate exact name.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/ghost.wav",
+      "seconds": 1.5478333333333334,
+      "mood": "hero"
+    },
+    "putin-defeated": {
+      "sha256": "89392bd2d62545c3bf8d8cf9c46ac7076a414396b9c20973afc72bd4314bd747",
+      "status": "needs_revision",
+      "note": "Words correct, but delivery still grim/somber rather than congratulatory; regenerate separately.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/putin-defeated.wav",
+      "seconds": 4.197708333333333,
+      "mood": "victory"
+    },
+    "iron-warden": {
+      "sha256": "87d0aecfba4c6527d08764ae2b8b70801bb7190deeb3dd5926c312be369c730b",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/iron-warden.wav",
+      "seconds": 6.143375,
+      "mood": "boss"
+    },
+    "it-army": {
+      "sha256": "aff0ad76e390d25e1126cae6cae5a7df42035b10d89b717caa4a68965ff11371",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/it-army.wav",
+      "seconds": 1.6322916666666667,
+      "mood": "hero"
+    },
+    "mamai": {
+      "sha256": "ef2271575019f479fce8b66c158dafb8041002616bb6bb6a8ffecda265efb992",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/mamai.wav",
+      "seconds": 1.633875,
+      "mood": "hero"
+    },
+    "tank-alert": {
+      "sha256": "3c68b40f8ab901fb8bc441693a73b2acf9aa1ea8c92ef228d12381985d381a2e",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/tank-alert.wav",
+      "seconds": 1.4549166666666666,
+      "mood": "warning"
+    },
+    "respawn": {
+      "sha256": "4834444fffc049791965b332a9a242dfa9316fa81f45e557b780542260b222e3",
+      "status": "needs_revision",
+      "note": "Blind transcription omits у; needs an independently confirmed complete line.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/respawn.wav",
+      "seconds": 1.274375,
+      "mood": "routine"
+    },
+    "mission-start": {
+      "sha256": "8d32d08c939cba4261eff905362b64e1a783c20bfb82cffbb66e6a130d75d0d8",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/mission-start.wav",
+      "seconds": 0.8329583333333334,
+      "mood": "routine"
+    },
+    "new-hero": {
+      "sha256": "5d99658efc200c66aec1081dc93ffe79d1ce7d62e8322b15e41c00eb2acd941e",
+      "status": "needs_revision",
+      "note": "Corrected боєць is legible; delivery is too neutral for heroic entrance. Stronger deep projection needed.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/new-hero.wav",
+      "seconds": 1.4170416666666668,
+      "mood": "hero"
+    },
+    "bandera": {
+      "sha256": "030f4b61a8642b3fc32a2cec757fdda993839f42f19ec67915bac433bc1ba664",
+      "status": "provisionally_checked",
+      "note": "Transcribed correctly; final batch checks must bind to exact installed hashes.",
+      "file": "tools/audio-source/fenrir25-2026-09-12/bandera.wav",
+      "seconds": 1.8442916666666667,
+      "mood": "hero"
+    }
+  },
+  "note": "Do not install until every exact file passes reviewed text/timbre/mood and hash-bound transcription. Existing game voices unchanged."
+}

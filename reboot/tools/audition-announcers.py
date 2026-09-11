@@ -2,9 +2,9 @@
 import argparse,base64,json,os,urllib.request,urllib.error,wave,subprocess,time,hashlib
 from pathlib import Path
 from dotenv import dotenv_values
-p=argparse.ArgumentParser();p.add_argument('--env-file',required=True);p.add_argument('--voice',required=True,choices=['Kore','Orus','Fenrir']);p.add_argument('--take',choices=['original','deep'],default='original');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--env-file',required=True);p.add_argument('--voice',required=True,choices=['Kore','Orus','Fenrir']);p.add_argument('--take',choices=['original','deep'],default='original');p.add_argument('--model',choices=['gemini-3.1-flash-tts-preview','gemini-2.5-flash-preview-tts'],default='gemini-3.1-flash-tts-preview');a=p.parse_args()
 key=dotenv_values(a.env_file).get('GOOGLE_API_KEY');assert key,'Missing configured Google key'
-root=Path(__file__).resolve().parents[1];out=root/'docs/voice-auditions-2026-09-12';out=out if a.take=='original' else out/a.take;out.mkdir(parents=True,exist_ok=True)
+root=Path(__file__).resolve().parents[1];out=root/'docs/voice-auditions-2026-09-12';out=out if a.take=='original' else out/a.take;out=out if a.model=='gemini-3.1-flash-tts-preview' else out/'gemini-2.5';out.mkdir(parents=True,exist_ok=True)
 styles={'Kore':'A confident, charismatic female arena announcer. Brilliant projection, a triumphant smile, firm articulate attack and lively theatrical energy.', 'Orus':'A charismatic male commander and arena announcer. Resonant chest voice, authoritative and victorious, clear powerful delivery, a confident smile.', 'Fenrir':'An exuberant charismatic male action-game announcer. Athletic arena energy, playful heroic swagger, a punchy rising crescendo, clearly spoken rather than screamed.'}
 transcript='Перемо́га!\nНовий боєць! Тарас Шевче́нко!\nЛе́ся Украї́нка!\nДо бо́ю!'
 delivery=styles[a.voice]
@@ -14,7 +14,11 @@ if a.take=='deep':
  delivery+=' Use a distinctly LOWER vocal pitch and darker richer timbre than your usual bright speaking voice. Full chest resonance, powerful bass presence, dense warm harmonics. Keep NORMAL energetic game-announcer speaking speed, crisp short words and decisive accents. Do not slow the delivery or stretch syllables. Project strongly with clear consonants, no yelling, rasp, growling or whispering. Keep a natural human voice.'
  pauses='Brief 0.45 second pauses between the four lines. Keep the full take around 10 to 12 seconds.'
 prompt='Synthesize speech. '+delivery+' Native standard Ukrainian. Crisp Ukrainian consonants, especially the voiced Ukrainian г in перемога; stress перемОга. Do not swallow consonants or change words. Dry clean studio voice, no music, no effects, no pitch processing. '+pauses+' Speak ONLY the transcript once.\nTRANSCRIPT:\n'+transcript
-model='gemini-3.1-flash-tts-preview';payload={'contents':[{'parts':[{'text':prompt}]}],'generationConfig':{'responseModalities':['AUDIO'],'speechConfig':{'voiceConfig':{'prebuiltVoiceConfig':{'voiceName':a.voice}}}}}
+
+if a.model=='gemini-2.5-flash-preview-tts':
+ transcript='Перемо́га!\nНовий боєць! Тарас Шевче́нко!\nУвага! Ворожий танк!\nВалерій Герасімов! Російський генерал! До бою!'
+ prompt='Synthesize speech. '+delivery+' Native standard Ukrainian. Dry studio voice, no music or effects. Keep the same deep chest timbre throughout. First line triumphant and congratulatory, second line proud heroic entrance, third line restrained tactical warning, fourth line sinister and ominous announcing a dangerous ENEMY. Normal energetic speaking speed, no stretching. Clearly articulate the voiced Ukrainian г in перемога; stress перемОга. Brief pauses between lines. Speak ONLY the transcript once.\nTRANSCRIPT:\n'+transcript
+model=a.model;payload={'contents':[{'parts':[{'text':prompt}]}],'generationConfig':{'responseModalities':['AUDIO'],'speechConfig':{'voiceConfig':{'prebuiltVoiceConfig':{'voiceName':a.voice}}}}}
 req=urllib.request.Request('https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent',data=json.dumps(payload).encode(),headers={'x-goog-api-key':key,'Content-Type':'application/json'})
 try:
  with urllib.request.urlopen(req,timeout=180) as r:data=json.load(r)

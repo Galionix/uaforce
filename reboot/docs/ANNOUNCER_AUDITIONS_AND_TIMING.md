@@ -23,3 +23,7 @@ All 377 tests and the release build passed. Timing/music correction published to
 Owner clarified that the desired change is vocal timbre/pitch, not speaking speed. The initially started slow-take request was interrupted before a local result was saved. `--take deep` now asks for lower pitch, darker chest resonance and normal energetic delivery. Three new independent TTS performances are saved under `voice-auditions-2026-09-12/deep`; no time stretching, playback-rate or pitch-shift processing was applied. Natural take durations differ (11.16–13.16s including pauses).
 
 Blind automatic transcription recognized every intended Ukrainian line in all three deep takes. An approximate autocorrelation analysis also found lower median voiced pitch than each original take (see `deep/comparison.json`); these estimates can contain octave errors and do not replace the owner's listening judgment. Fenrir showed the largest change. Production voices remain pending selection; no game deployment for auditions.
+
+## Full replacement in progress
+
+Owner selected deep Fenrir. Current generation status, daily-quota limitation and resume procedure: `FENRIR_REPLACEMENT.md`. Six 3.1 clips are staged; none installed. Owner also authorized a 2.5 Fenrir trial after the 3.1 daily free quota was exhausted; see the linked progress document.

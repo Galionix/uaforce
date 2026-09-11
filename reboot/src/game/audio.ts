@@ -187,7 +187,7 @@ export class Sound {
       sample(`${e.hero}-${e.type}`,e.type==='ultimate'?.65:.5);
     }else if(e.type==='reloadStart'&&e.hero){this.stopKind(e.hero+'-reload');sample(e.hero+'-reload',.28);}
     else if(e.type==='reloadEnd'&&e.hero){this.stopKind(e.hero+'-reload');sample(e.hero+'-reload-end',.25);}
-    else if(e.type==='voiceWave'){const now=this.context?.currentTime??0;if(now-this.lastVoice>3){this.lastVoice=now;this.play('voiceWave',.55*level,2);}sample('zelensky-hit',.3);}
+    else if(e.type==='voiceWave'){const now=this.context?.currentTime??0;if(now-this.lastVoice>3){this.lastVoice=now;this.play('voiceWave',.55*level,this.buffers.get('voiceWave')?.duration??0);}sample('zelensky-hit',.3);}
     else if(e.type==='hurt'){if(e.hero)this.foley(e.hero,'hurt');else sample('legacy-hurt',.4);}
     else if(e.type==='enemyShot')sample('support-infantry',.18,.055);
     else if(e.type==='enemySniperShot')sample('bilozerska-weapon-0',.27,.2);

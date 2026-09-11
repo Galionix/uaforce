@@ -1,0 +1,16 @@
+{
+  "order": [
+    "shevchenko",
+    "evac-called",
+    "iron-warden",
+    "victory"
+  ],
+  "sourceFolder": "tools/audio-source/fenrir25-2026-09-12",
+  "editing": "Unchanged normalized clips, 1s digital silence between clips; no pitch or speed changes",
+  "sourceHashes": {
+    "shevchenko": "2a8ad0d95bd89dd3288a0b2ad520848c1fcd07bc1afad998d3b58f66e50010ca",
+    "evac-called": "0c79500737100af282de65462dd9ab6b219a4a0776f1018642dc17fb14101fe0",
+    "iron-warden": "87d0aecfba4c6527d08764ae2b8b70801bb7190deeb3dd5926c312be369c730b",
+    "victory": "a22916741a50c3eeab7cbdb778af40bb67e1195bc0f104ac62145168dbcadc0b"
+  }
+}

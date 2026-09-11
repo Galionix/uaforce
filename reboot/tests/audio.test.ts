@@ -25,6 +25,8 @@ test('recorded combat routes all heroes, exact phases, lifetimes, pause and dist
  try{
   const sound=new Sound();sound.music=false;await sound.enable();sound.step(.01,false,true);
   assert.equal(urls.filter(u=>u.includes('combat-bank')).length,1,'one bank request instead of hundreds');
+  context.currentTime=4;const beforeShout=starts.length;sound.event({type:'voiceWave',x:0,y:0});
+  assert.equal(starts[beforeShout].args[2],starts[beforeShout].source.buffer.duration,'microphone voice plays its complete recording, without a two-second cutoff');
   const beforeFive=starts.length;sound.event({type:'highFive',x:0,y:0});
   assert.deepEqual(starts.slice(beforeFive).map(s=>s.args[1]),[SFX_ASSETS['team-hand-clap'].offset,SFX_ASSETS['team-time-slow'].offset],'confirmed high five plays one clap and one generated air transition');
   for(const key of ['team-hand-raise','team-hand-lower']){const before=starts.length;sound.event({type:'sfx',sfx:key,x:0,y:0});assert.equal(starts.length,before+1);expectClip(key);}

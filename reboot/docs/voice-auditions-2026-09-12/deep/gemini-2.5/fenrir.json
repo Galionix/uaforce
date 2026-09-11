@@ -1,0 +1,10 @@
+{
+  "voice": "Fenrir",
+  "take": "deep",
+  "model": "gemini-2.5-flash-preview-tts",
+  "text": "Перемо́га!\nНовий боєць! Тарас Шевче́нко!\nУвага! Ворожий танк!\nВалерій Герасімов! Російський генерал! До бою!",
+  "prompt": "Synthesize speech. A charismatic male action-game announcer with a natural low chest register, muscular dramatic arena projection and a dangerous playful grin. Use a distinctly LOWER vocal pitch and darker richer timbre than your usual bright speaking voice. Full chest resonance, powerful bass presence, dense warm harmonics. Keep NORMAL energetic game-announcer speaking speed, crisp short words and decisive accents. Do not slow the delivery or stretch syllables. Project strongly with clear consonants, no yelling, rasp, growling or whispering. Keep a natural human voice. Native standard Ukrainian. Dry studio voice, no music or effects. Keep the same deep chest timbre throughout. First line triumphant and congratulatory, second line proud heroic entrance, third line restrained tactical warning, fourth line sinister and ominous announcing a dangerous ENEMY. Normal energetic speaking speed, no stretching. Clearly articulate the voiced Ukrainian г in перемога; stress перемОга. Brief pauses between lines. Speak ONLY the transcript once.\nTRANSCRIPT:\nПеремо́га!\nНовий боєць! Тарас Шевче́нко!\nУвага! Ворожий танк!\nВалерій Герасімов! Російський генерал! До бою!",
+  "seconds": 12.370958333333334,
+  "sha256": "02de8932c0f12cf1cd016460dab8d24ae15f8c098a245a4ecf2731a849fa23c0",
+  "playbackDuringGeneration": false
+}
