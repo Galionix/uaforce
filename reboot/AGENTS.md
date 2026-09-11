@@ -3,8 +3,11 @@
 - Announcer authority (owner, 2026-09-12): replace every shipped announcer with Google
   Fenrir, using the approved deep-timbre audition at normal speaking speed. Hero names
   are powerful, routine callouts restrained, boss introductions sinister, victories
-  congratulatory. Generation progress: `docs/FENRIR_REPLACEMENT.md`. Until the whole pack passes
-  validation, existing shipped voices remain active; generated clips stay in staging.
+  congratulatory. Latest owner correction: publish only the six reviewed Gemini 3.1 Fenrir names
+  (Shevchenko, Lesya, Franko, Bandera, Bander-Bro, Mamai), preserving other existing
+  voices. Gemini 2.5 Fenrir generations were rejected and MUST NOT be installed.
+  This supersedes the complete-pack-only gate. Receipt: `docs/FENRIR_PARTIAL_RELEASE.json`.
+  Generation history: `docs/FENRIR_REPLACEMENT.md`.
   This supersedes earlier instructions to preserve Algenib or macOS Lesya announcements.
   Use `tools/generate-fenrir-pack.py` for staged, sequential, resumable generation.
   Preserve music and combat SFX; never run legacy announcer generators over this pack.

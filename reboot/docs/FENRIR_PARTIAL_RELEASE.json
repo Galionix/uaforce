@@ -1,0 +1,178 @@
+{
+  "date": "2026-09-12",
+  "voice": "Fenrir",
+  "model": "gemini-3.1-flash-tts-preview",
+  "scope": "Only reviewed first-model recordings, per latest owner instruction",
+  "installed": [
+    {
+      "id": "shevchenko",
+      "file": "public/assets/audio/announcer/shevchenko.wav",
+      "text": "Тарас Шевченко!",
+      "mood": "hero",
+      "voice": "Fenrir",
+      "model": "gemini-3.1-flash-tts-preview",
+      "prompt": "Synthesize speech. A charismatic male action-game announcer with a natural low chest register, muscular dramatic arena projection and a dangerous playful grin. Use a distinctly LOWER vocal pitch and darker richer timbre than your usual bright speaking voice. Full chest resonance, powerful bass presence, dense warm harmonics. Keep NORMAL energetic game-announcer speaking speed, crisp short words and decisive accents. Do not slow the delivery or stretch syllables. Project strongly with clear consonants, no yelling, rasp, growling or whispering. Keep a natural human voice. Native standard Ukrainian. Crisp Ukrainian consonants, especially the voiced Ukrainian г in перемога; stress перемОга. Do not swallow consonants or change words. Dry clean studio voice, no music, no effects, no pitch processing. Announce a heroic entrance with proud muscular arena projection and charismatic swagger. Punchy, exciting, concise. A short single game callout. No leading or trailing pause. Speak ONLY the following transcript once.\nTRANSCRIPT:\nТарас Шевченко!",
+      "processing": "silenceremove=start_periods=1:start_duration=0.015:start_threshold=-48dB:start_silence=0.06,areverse,silenceremove=start_periods=1:start_duration=0.015:start_threshold=-48dB:start_silence=0.06,areverse,highpass=f=60,loudnorm=I=-16:TP=-1.5:LRA=9,apad=pad_dur=0.1",
+      "seconds": 2.0452083333333335,
+      "sha256": "0f95caf2f9b3655f74d5cdc9b03be38c73f98e5d490f25297395c6b41864d75c",
+      "previousSha256": "7b6f4da0c613d01621b1c2eb4de838946d7e5e08a8872b05ff704402c4cf77e1",
+      "rawSha256": "3e831eee995365317d15b997d81b574741b79d397e634082d80803c920b2409a",
+      "playbackDuringGeneration": false
+    },
+    {
+      "id": "lesya",
+      "file": "public/assets/audio/announcer/lesya.wav",
+      "text": "Леся Українка!",
+      "mood": "hero",
+      "voice": "Fenrir",
+      "model": "gemini-3.1-flash-tts-preview",
+      "prompt": "Synthesize speech. A charismatic male action-game announcer with a natural low chest register, muscular dramatic arena projection and a dangerous playful grin. Use a distinctly LOWER vocal pitch and darker richer timbre than your usual bright speaking voice. Full chest resonance, powerful bass presence, dense warm harmonics. Keep NORMAL energetic game-announcer speaking speed, crisp short words and decisive accents. Do not slow the delivery or stretch syllables. Project strongly with clear consonants, no yelling, rasp, growling or whispering. Keep a natural human voice. Native standard Ukrainian. Crisp Ukrainian consonants, especially the voiced Ukrainian г in перемога; stress перемОга. Do not swallow consonants or change words. Dry clean studio voice, no music, no effects, no pitch processing. Announce a heroic entrance with proud muscular arena projection and charismatic swagger. Punchy, exciting, concise. A short single game callout. No leading or trailing pause. Speak ONLY the following transcript once.\nTRANSCRIPT:\nЛеся Українка!",
+      "processing": "silenceremove=start_periods=1:start_duration=0.015:start_threshold=-48dB:start_silence=0.06,areverse,silenceremove=start_periods=1:start_duration=0.015:start_threshold=-48dB:start_silence=0.06,areverse,highpass=f=60,loudnorm=I=-16:TP=-1.5:LRA=9,apad=pad_dur=0.1",
+      "seconds": 2.717041666666667,
+      "sha256": "28795988604419774b36a8e2d8cd676e3dca1e13df3afc7b59518e47aefcef29",
+      "previousSha256": "068bc82c318a1db36ea6025bc264fa4d87f09191430971bdfc548753bf26047e",
+      "rawSha256": "89f3640c64b3f859bca4e0fa3818acdb68dd46292ebdc60a0951b54d9b463847",
+      "playbackDuringGeneration": false
+    },
+    {
+      "id": "franko",
+      "file": "public/assets/audio/announcer/franko.wav",
+      "text": "Іван Франко!",
+      "mood": "hero",
+      "voice": "Fenrir",
+      "model": "gemini-3.1-flash-tts-preview",
+      "prompt": "Synthesize speech. A charismatic male action-game announcer with a natural low chest register, muscular dramatic arena projection and a dangerous playful grin. Use a distinctly LOWER vocal pitch and darker richer timbre than your usual bright speaking voice. Full chest resonance, powerful bass presence, dense warm harmonics. Keep NORMAL energetic game-announcer speaking speed, crisp short words and decisive accents. Do not slow the delivery or stretch syllables. Project strongly with clear consonants, no yelling, rasp, growling or whispering. Keep a natural human voice. Native standard Ukrainian. Crisp Ukrainian consonants, especially the voiced Ukrainian г in перемога; stress перемОга. Do not swallow consonants or change words. Dry clean studio voice, no music, no effects, no pitch processing. Announce a heroic entrance with proud muscular arena projection and charismatic swagger. Punchy, exciting, concise. A short single game callout. No leading or trailing pause. Speak ONLY the following transcript once.\nTRANSCRIPT:\nІван Франко!",
+      "processing": "silenceremove=start_periods=1:start_duration=0.015:start_threshold=-48dB:start_silence=0.06,areverse,silenceremove=start_periods=1:start_duration=0.015:start_threshold=-48dB:start_silence=0.06,areverse,highpass=f=60,loudnorm=I=-16:TP=-1.5:LRA=9,apad=pad_dur=0.1",
+      "seconds": 1.8377916666666667,
+      "sha256": "c4ca42e753e1445efda4ec06af5cfd3fcc51931e2fc220957429c93616e13eac",
+      "previousSha256": "832bd248698be14ea3e0451ac9bf07a442f9708aef38498238399145af71739d",
+      "rawSha256": "c20e9d4d72afde78ca2a416875161b10f6e20ef323b446f8e5a82e6c5545d4e1",
+      "playbackDuringGeneration": false
+    },
+    {
+      "id": "bandera",
+      "file": "public/assets/audio/announcer/bandera.wav",
+      "text": "Степан Бандера!",
+      "mood": "hero",
+      "voice": "Fenrir",
+      "model": "gemini-3.1-flash-tts-preview",
+      "prompt": "Synthesize speech. A charismatic male action-game announcer with a natural low chest register, muscular dramatic arena projection and a dangerous playful grin. Use a distinctly LOWER vocal pitch and darker richer timbre than your usual bright speaking voice. Full chest resonance, powerful bass presence, dense warm harmonics. Keep NORMAL energetic game-announcer speaking speed, crisp short words and decisive accents. Do not slow the delivery or stretch syllables. Project strongly with clear consonants, no yelling, rasp, growling or whispering. Keep a natural human voice. Native standard Ukrainian. Crisp Ukrainian consonants, especially the voiced Ukrainian г in перемога; stress перемОга. Do not swallow consonants or change words. Dry clean studio voice, no music, no effects, no pitch processing. Announce a heroic entrance with proud muscular arena projection and charismatic swagger. Punchy, exciting, concise. A short single game callout. No leading or trailing pause. Speak ONLY the following transcript once.\nTRANSCRIPT:\nСтепан Бандера!",
+      "processing": "silenceremove=start_periods=1:start_duration=0.015:start_threshold=-48dB:start_silence=0.06,areverse,silenceremove=start_periods=1:start_duration=0.015:start_threshold=-48dB:start_silence=0.06,areverse,highpass=f=60,loudnorm=I=-16:TP=-1.5:LRA=9,apad=pad_dur=0.1",
+      "seconds": 2.5593333333333335,
+      "sha256": "d4ad1a173948bd7bfcf6a35c0ff8db1ad242a805abaef70ad9d3f956cd4409f0",
+      "previousSha256": "fe7f4bf659141b00e44ec2ecd90a939239784ebbd898b309dadcc21df1a53fff",
+      "rawSha256": "faf2cc0f47b47f158fe1233e4b50c1d4749ea4f081b85287c07a33eeb92ab1d8",
+      "playbackDuringGeneration": false
+    },
+    {
+      "id": "bandera-bro",
+      "file": "public/assets/audio/announcer/bandera-bro.wav",
+      "text": "Бандер-Бро!",
+      "mood": "hero",
+      "voice": "Fenrir",
+      "model": "gemini-3.1-flash-tts-preview",
+      "prompt": "Synthesize speech. A charismatic male action-game announcer with a natural low chest register, muscular dramatic arena projection and a dangerous playful grin. Use a distinctly LOWER vocal pitch and darker richer timbre than your usual bright speaking voice. Full chest resonance, powerful bass presence, dense warm harmonics. Keep NORMAL energetic game-announcer speaking speed, crisp short words and decisive accents. Do not slow the delivery or stretch syllables. Project strongly with clear consonants, no yelling, rasp, growling or whispering. Keep a natural human voice. Native standard Ukrainian. Crisp Ukrainian consonants, especially the voiced Ukrainian г in перемога; stress перемОга. Do not swallow consonants or change words. Dry clean studio voice, no music, no effects, no pitch processing. Announce a heroic entrance with proud muscular arena projection and charismatic swagger. Punchy, exciting, concise. A short single game callout. No leading or trailing pause. Speak ONLY the following transcript once.\nTRANSCRIPT:\nБандер-Бро!",
+      "processing": "silenceremove=start_periods=1:start_duration=0.015:start_threshold=-48dB:start_silence=0.06,areverse,silenceremove=start_periods=1:start_duration=0.015:start_threshold=-48dB:start_silence=0.06,areverse,highpass=f=60,loudnorm=I=-16:TP=-1.5:LRA=9,apad=pad_dur=0.1",
+      "seconds": 1.9683333333333333,
+      "sha256": "9478003ebfc093c5274d846dd09c28c8359e137b3e7c668ecd3f6a59c7dbad68",
+      "previousSha256": "97ef455b67eea8fa923837a968393f628535816267ecf61c2822b1724b9dd792",
+      "rawSha256": "04cf38774d9d6d27b44cf8f5fd451d82ed5dc481a8751f92707b5b73b62bb9df",
+      "playbackDuringGeneration": false
+    },
+    {
+      "id": "mamai",
+      "file": "public/assets/audio/announcer/mamai.wav",
+      "text": "Козак Мамай!",
+      "mood": "hero",
+      "voice": "Fenrir",
+      "model": "gemini-3.1-flash-tts-preview",
+      "prompt": "Synthesize speech. A charismatic male action-game announcer with a natural low chest register, muscular dramatic arena projection and a dangerous playful grin. Use a distinctly LOWER vocal pitch and darker richer timbre than your usual bright speaking voice. Full chest resonance, powerful bass presence, dense warm harmonics. Keep NORMAL energetic game-announcer speaking speed, crisp short words and decisive accents. Do not slow the delivery or stretch syllables. Project strongly with clear consonants, no yelling, rasp, growling or whispering. Keep a natural human voice. Native standard Ukrainian. Crisp Ukrainian consonants, especially the voiced Ukrainian г in перемога; stress перемОга. Do not swallow consonants or change words. Dry clean studio voice, no music, no effects, no pitch processing. Announce a heroic entrance with proud muscular arena projection and charismatic swagger. Punchy, exciting, concise. A short single game callout. No leading or trailing pause. Speak ONLY the following transcript once.\nTRANSCRIPT:\nКозак Мамай!",
+      "processing": "silenceremove=start_periods=1:start_duration=0.015:start_threshold=-48dB:start_silence=0.06,areverse,silenceremove=start_periods=1:start_duration=0.015:start_threshold=-48dB:start_silence=0.06,areverse,highpass=f=60,loudnorm=I=-16:TP=-1.5:LRA=9,apad=pad_dur=0.1",
+      "seconds": 2.201416666666667,
+      "sha256": "15c10e8a5e77bfa6c116b8cfbf9281436cb84d28b93692778d6c604b45036cac",
+      "previousSha256": "df9e23a5a763ec2ad6e1b822d298a6490cba21d2b423caa63d878167435e03ad",
+      "rawSha256": "2d9fffe779448c09fcbc98962e269d779ffe2a90b3c675dba376d2a63fb3bda6",
+      "playbackDuringGeneration": false
+    }
+  ],
+  "retained": {
+    "skovoroda": "289df38062647892d8f5d2beb7822e6903e9bd4667fde70454b8b9713f9cdc01",
+    "plane-alert": "9cbf8bf0bfe76f07340093fd52e939d53cfaa0f126cedf0b59465359d6120b47",
+    "bayraktar": "8badd5ccf36b5dbdc004870a858fbad738b0be1acbddb313002f0e47991fd60a",
+    "respawn": "6badce764abf20172ebac4acba33699fd72e730d7c1fb9f66e097a517eab7925",
+    "victory": "16162adaf3c28356cb19652075692db718fc2e56ae7a8886241a0d814ea0fd8b",
+    "ghost": "23cab8be329e9d2053fa5fdd0d1deb3435e11690f27cd8fe37d52dc6e73d7fb9",
+    "evac-called": "d869fee13cdcf06ef198d9f805232d0306567f904b171cf0918bb4eabd65d417",
+    "drone-alert": "d8b4efb9db4311c62f20ba43f7c524933671e8d365e10cf51cdee112212a3ba5",
+    "zelensky": "7985fdd163c50bf7fc7c3e4739bbde69c308053b5da0c8579e8c7d25303ee61f",
+    "mission-start": "8fca990feb2a9e20278e7b2cbc1a267312ba43b9fe6ff3d863b66c4ba71b6025",
+    "it-army": "79b2dcc591ff32e8382a9ad57b99ee74c14d658a05716df7ed1d5ee1e21e7eb9",
+    "checkpoint": "92ec7270afc00b657d71bc3b8305760a3416830b9b7a1cf3b95356207c618e65",
+    "boarded": "d37fe3fb425be704b967a3c9fcd742d1ddf1b585b0ec96ad8b97ad64273e716b",
+    "defeat": "0cbc85f92b671e3b6d471910f5af93f223622bbaa33fa3e66f13ebb4c8215ca4",
+    "putin": "985ff5adf120cf8285f39fb7e508456f6fa2a33b210af31aa513e9e7bf1dfaad",
+    "putin-defeated": "41e5bd329000716902ec31d9df5058ab20bbf960c60f2377555d5af6ccaa205b",
+    "swarm-master": "2675e048e513ce204562df9b55bfb3e9705f3795a89e02a4fb6c9b856e470640",
+    "zelensky-shout": "710b9623b7cc941fde4e1a332e4b6de0b32f8c8110655ba0c1bd755a78188959",
+    "tank-alert": "b266cbf16a63909e141015a5ad3c753de2a8190085c66db86cae5b589ac85d9a",
+    "bilozerska": "e8e54831f6d8f94b26fb6a43ef78e163a0420d205d305d6d493fea606f63b721",
+    "iron-warden": "0d8205cd6594f9db64ad2d091c0447a14e8c19cbfa485bb34d915db019d5aff5",
+    "new-hero": "b30d1a3625d4707b9a85197f55bef695f3ba9ad60ea57a8cba809d48496043dc"
+  },
+  "transcriptionCheck": {
+    "ids": [
+      "shevchenko",
+      "lesya",
+      "franko",
+      "bandera",
+      "bandera-bro",
+      "mamai"
+    ],
+    "model": "gemini-2.5-flash",
+    "method": "Blind automatic transcription, not human listening approval",
+    "result": "**Recording 1:** Тарас Шевченко\nNo unclear or incorrect consonants.\n\n**Recording 2:** Леся Українка\nNo unclear or incorrect consonants.\n\n**Recording 3:** Іван Франко\nNo unclear or incorrect consonants.\n\n**Recording 4:** Степан Бандера\nNo unclear or incorrect consonants.\n\n**Recording 5:** Бандербро\nNo unclear or incorrect consonants.\n\n**Recording 6:** Козак Мамай\nNo unclear or incorrect consonants."
+  },
+  "rejectedModel": "gemini-2.5-flash-preview-tts",
+  "playbackDuringVerification": false,
+  "deployment": {
+    "id": "522e0540-3e84-4591-a138-0bfda4b9801e",
+    "url": "https://uaforce.thedimas.com",
+    "bundle": "game-Cg3DJ7T-.js",
+    "testsPassed": 381,
+    "publicMediaVerified": [
+      {
+        "id": "shevchenko",
+        "url": "/media/shevchenko-0f95caf2f9b3655f.mp3",
+        "sha256": "2e0618c611e2c08ca45271bbd190b1d551a416d5112a3a6436ac199709066ea1"
+      },
+      {
+        "id": "lesya",
+        "url": "/media/lesya-2879598860441977.mp3",
+        "sha256": "c1c0d664b23b237b4ac4dfc0b9375c57b3544a80c9fe91d3e180029e4231570e"
+      },
+      {
+        "id": "franko",
+        "url": "/media/franko-c4ca42e753e1445e.mp3",
+        "sha256": "f0547f591a2b701695cc2253b6cfdbf43e3a211615bd476666cd8888812ad4c3"
+      },
+      {
+        "id": "bandera",
+        "url": "/media/bandera-d4ad1a173948bd7b.mp3",
+        "sha256": "d0d465093f829a7045908331602f7909d07bf410f1220957db58f94d7f924120"
+      },
+      {
+        "id": "bandera-bro",
+        "url": "/media/bandera-bro-9478003ebfc093c5.mp3",
+        "sha256": "7df45069c94d672cbe8031c5489a88d9d53b91c5423747e54375143a2db5f778"
+      },
+      {
+        "id": "mamai",
+        "url": "/media/mamai-15c10e8a5e77bfa6.mp3",
+        "sha256": "ef55acce205ee7b561fa18c537f04625931557dee1579235a8a760804390fa30"
+      }
+    ],
+    "allSixHttpStatus": 200,
+    "allSixPublicHashesMatchBuild": true,
+    "browserErrors": 0
+  }
+}

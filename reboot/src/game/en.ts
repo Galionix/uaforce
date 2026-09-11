@@ -1,5 +1,6 @@
 // English UI catalog. Ukrainian source phrases remain stable simulation data.
 export const EN:Record<string,string>={
+  "Новий басовий голос для Шевченка, Лесі, Франка, Бандери, Бандер-Бро та Мамая.": "New deep-voiced introductions for Shevchenko, Lesya, Franko, Bandera, Bander-Bro and Mamai.",
   "Посадка в гелікоптер лише стрибком до кабіни: із землі більше не підбирає.": "Jump into the helicopter cabin to board: standing on the ground no longer extracts you.",
   "При відкритті бійця музика звучить довше й повертає гучність після імені.": "Fighter unlock music lasts longer and returns to full volume after the name.",
   "Плавна камера та нова атмосфера": "Smooth camera and new atmosphere",

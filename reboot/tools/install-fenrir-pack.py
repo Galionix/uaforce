@@ -5,7 +5,7 @@ from pathlib import Path
 root = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('generation',root/'tools/generate-fenrir-pack.py')
 generation = importlib.util.module_from_spec(spec); spec.loader.exec_module(generation)
-p=argparse.ArgumentParser();p.add_argument('--folder');p.add_argument('--model',default=generation.MODEL,choices=[generation.MODEL,'gemini-2.5-flash-preview-tts']);args=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--folder');p.add_argument('--model',default=generation.MODEL,choices=[generation.MODEL]);args=p.parse_args()
 folder = Path(args.folder) if args.folder else generation.OUT
 clips = []
 for name in generation.LINES:
@@ -25,7 +25,7 @@ intro = next(c['seconds'] for c in clips if c['id']=='new-hero')
 names = [c for c in clips if c['mood']=='hero' and c['id'] not in ('new-hero','zelensky-shout')]
 assert max(c['seconds'] for c in names)+intro+1.1+.12+1.5 <= 8.4, 'Unlock speech needs a longer musical tail'
 for clip in clips: shutil.copy2(folder/f"{clip['id']}.wav",root/clip['file'])
-manifest = {'date':'2026-09-12','voice':'Fenrir','model':args.model,'authority':'Owner chose deep Fenrir at normal tempo, approved the 2.5 voice trial and requested distinct acting per mood and every announcer replaced','playbackDuringGeneration':False,'excluded':['sirko (unused, excluded from release)'],'clips':clips,'transcriptionChecks':checks}
+manifest = {'date':'2026-09-12','voice':'Fenrir','model':args.model,'authority':'Owner chose deep Fenrir from Gemini 3.1 at normal tempo; Gemini 2.5 replacements rejected','playbackDuringGeneration':False,'excluded':['sirko (unused, excluded from release)'],'clips':clips,'transcriptionChecks':checks}
 (root/'docs/ANNOUNCER_ASSETS.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
 boss_path = root/'docs/BOSS_AUDIO_ASSETS.json'; boss=json.loads(boss_path.read_text())
 boss['clips']=[c for c in boss['clips'] if '/announcer/' not in c['file']]+[c for c in clips if c['mood']=='boss' or c['id']=='putin-defeated']
