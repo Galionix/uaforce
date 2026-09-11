@@ -1,10 +1,11 @@
+import {translate} from '../src/game/i18n.ts';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {DeathLines,DEATH_LINES,CAUSE_LINES,ROLE_LINES,ALL_DEATH_LINES,wrapDeathLine} from '../src/game/enemy-death.ts';
 import {World} from '../src/game/world.ts';import {addInfantry} from '../src/game/infantry.ts';
 test('owner-inspired gags remain short, unique and fit two readable lines',()=>{
  assert.equal(ALL_DEATH_LINES.length,72);assert.equal(new Set(ALL_DEATH_LINES).size,72);
- for(const text of ALL_DEATH_LINES){assert.ok(text.split(/\s+/).length<=8,text);assert.ok(wrapDeathLine(text).length<=2,text);assert.ok(wrapDeathLine(text).every(line=>line.length<=28),text);assert.doesNotMatch(text,/[ыэёъ]/i);}
- for(const text of ['Нас тут не було.','Усе за планом.','Моя смерть не канонічна!','Я взагалі декоративний!'])assert.ok(DEATH_LINES.includes(text));
+ for(const text of ALL_DEATH_LINES){assert.ok(text.split(/\s+/).length<=8,text);assert.ok(wrapDeathLine(text).length<=2,text);assert.ok(wrapDeathLine(text).every(line=>line.length<=28),text);assert.doesNotMatch(text,/[ыэёъ]/i);assert.doesNotMatch(text,/NPC|сейв|патч|хітбокс|респавн|катсцен|туторіал|квест|канонічн|складність|сюжетна броня/i);const english=translate(text,'en');assert.doesNotMatch(english,/[а-яіїєґ]/i);assert.ok(wrapDeathLine(english).length<=2,english);assert.ok(wrapDeathLine(english).every(line=>line.length<=28),english);}
+ for(const text of ['Нас тут не було.','Усе за планом.','У звіті я ще живий!','Втрат немає. Є уточнення.'])assert.ok(DEATH_LINES.includes(text));
 });
 test('barrel and explosion humor requires its actual context, never a random ordinary shot',()=>{
  for(const cause of ['barrel','explosion'] as const){const lines=new DeathLines();const picked=lines.next(()=>0,{cause});assert.ok(CAUSE_LINES[cause].includes(picked));}

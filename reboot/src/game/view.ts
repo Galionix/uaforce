@@ -240,7 +240,7 @@ export class View {
     for(const p of this.particles)this.rect(p.x*S-this.cameraX,266-p.y*S+this.cameraY,p.size,p.size,p.color);
     for(const p of this.gore.bits){const x=p.x*S-this.cameraX,y=266-p.y*S+this.cameraY;this.rect(x,y,p.size,p.chunk?p.size*.65:p.size,p.color);if(p.chunk)this.rect(x+1,y,2,1,'#f07669');}
     if(playing){for(const c of this.deathCaptions){c.life-=dt;c.y+=dt*.18;}this.deathCaptions=this.deathCaptions.filter(c=>c.life>0);}
-    for(const c of this.deathCaptions){const x=c.x*S-this.cameraX;if(x<-30||x>W+30)continue;this.c.font='bold 11px monospace';const lines=wrapDeathLine(c.text),half=Math.max(...lines.map(line=>this.c.measureText(line).width))/2+5,y=Math.max(40,266-c.y*S+this.cameraY);for(const [i,line]of lines.entries())this.label(line,Math.max(half,Math.min(W-half,x)),y+(i-lines.length+1)*15,'#ffe6be');}
+    for(const c of this.deathCaptions){const x=c.x*S-this.cameraX;if(x<-30||x>W+30)continue;this.c.font='bold 11px monospace';const lines=wrapDeathLine(translate(c.text)),half=Math.max(...lines.map(line=>this.c.measureText(line).width))/2+5,y=Math.max(40,266-c.y*S+this.cameraY);for(const [i,line]of lines.entries())this.label(line,Math.max(half,Math.min(W-half,x)),y+(i-lines.length+1)*15,'#ffe6be');}
     this.c.restore();
     if(playing)this.screenPulse=Math.max(0,this.screenPulse-dt);
     if(!reducedPresentation()&&this.screenPulse>0){this.c.save();this.c.globalAlpha=Math.min(.22,this.screenPulse*1.25);this.rect(0,0,W,H,'#d8f2ff');this.c.restore();}
