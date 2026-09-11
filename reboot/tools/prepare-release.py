@@ -8,6 +8,7 @@ cache=root/'.release';out=cache/'public';out.mkdir(parents=True,exist_ok=True)
 images=set()
 for source in ['src/game/content.ts','src/game/missions.ts','src/game/bosses.ts','src/game/ability-art.ts']:
  images.update(re.findall(r'/assets/[\w/-]+\.png',(root/source).read_text()))
+images.add('/assets/marketing/mobile-gameplay.png')
 images.update(['/assets/infantry-pixel-sheet.png','/assets/mavka-pixel-sheet.png'])
 images.update('/'+str(p.relative_to(root/'public')) for p in (root/'public/assets/cinematics').glob('*.png'))
 audio=[]

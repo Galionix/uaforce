@@ -1,0 +1,19 @@
+{
+  "scriptedInputs": true,
+  "touchStateUsed": true,
+  "physicalPhoneRecording": false,
+  "stagedArena": true,
+  "sameMachine": true,
+  "speakerConnected": false,
+  "barrelLift": 1,
+  "barrelThrow": 1,
+  "highFive": 1,
+  "ultimate": 2,
+  "kills": [
+    0,
+    2,
+    4
+  ],
+  "snapshots": 188,
+  "route": "direct"
+}

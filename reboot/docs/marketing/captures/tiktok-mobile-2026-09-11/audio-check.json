@@ -1,0 +1,17 @@
+[
+  {
+    "file": "01-mobile.mp4",
+    "mean_volume": "-17.6 dB",
+    "max_volume": "-1.5 dB"
+  },
+  {
+    "file": "02-coop.mp4",
+    "mean_volume": "-20.0 dB",
+    "max_volume": "-4.0 dB"
+  },
+  {
+    "file": "03-shevchenko.mp4",
+    "mean_volume": "-20.0 dB",
+    "max_volume": "-2.5 dB"
+  }
+]
