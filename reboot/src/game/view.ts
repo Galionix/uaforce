@@ -1,6 +1,6 @@
 import {SceneFx,ATMOSPHERES,stormLight} from './scene-fx.ts';
 import {translate} from './i18n.ts';
-import {mobileViewCrop,mobileCameraShift} from './mobile-view.ts';
+import {MobileFraming,cameraFollow,mobileCameraShift} from './mobile-view.ts';
 import {interactionTarget,TEAM_BOOST} from './interactions.ts';
 import {teamCamera} from './shared-screen.ts';
 import {drawFlagWipe} from './flag-wipe.ts';
@@ -29,6 +29,7 @@ export class View {
   readonly sceneFx=new SceneFx();
   invalidate(){this.needsDraw=true;}
   private requestedZoom=1;
+  private framing=new MobileFraming();private cameraReady=false;
   setZoom(value:number){if(this.requestedZoom!==value){this.requestedZoom=value;this.needsDraw=true;}}
   interactKey='F'; private enemyClock=0;
 
@@ -60,7 +61,7 @@ export class View {
     const index=HEROES.findIndex(h=>h.id===id),bounds=this.frameBounds[index]?.[0];if(!bounds)return '';
     const cv=document.createElement('canvas');cv.width=bounds[2];cv.height=bounds[3];cv.getContext('2d')!.drawImage(this.heroImages[index],...bounds as [number,number,number,number],0,0,cv.width,cv.height);return cv.toDataURL();
   }
-  reset(w:World){this.sceneFx.reset();this.needsDraw=true;this.cameraX=Math.max(0,Math.min(w.mission.length*S-W,w.player.x*S-170));this.cameraY=0;this.particles=[];this.flashes=[];this.cinematicBlasts=[];this.screenPulse=0;this.shake=0;this.gore.clear();this.deathCaptions=[];this.lastDeathCaption=-100;}
+  reset(w:World){this.framing.reset();this.cameraReady=false;this.sceneFx.reset();this.needsDraw=true;this.cameraX=Math.max(0,Math.min(w.mission.length*S-W,w.player.x*S-170));this.cameraY=0;this.particles=[];this.flashes=[];this.cinematicBlasts=[];this.screenPulse=0;this.shake=0;this.gore.clear();this.deathCaptions=[];this.lastDeathCaption=-100;}
   private rect(x:number,y:number,w:number,h:number,color:string){this.c.fillStyle=color;this.c.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));}
   private tree(x:number,y:number,scale:number,far=false){
     const colors=far?['#285d6d','#357386','#418b98']:['#294b38','#426a40','#698744'];
@@ -149,11 +150,23 @@ export class View {
   }
   render(world:World,dt:number,move:number){
     const playing=world.mode==='playing';if(!playing&&!this.needsDraw)return;this.needsDraw=false;if(playing){this.clock+=dt;this.enemyClock+=dt*(world.highFive.left>0?TEAM_BOOST.enemyRate:1);}
-    if(world.story){const camera=world.players.length>1?teamCamera(world,world.story.camera):world.story.camera;this.cameraX=Math.max(0,Math.min(world.mission.length*S-W,camera.x*S-W/2));this.cameraY=Math.max(0,camera.y*S-80);}
-    else if(world.players.length>1){const camera=teamCamera(world);this.cameraX=camera.x*S-W/2;this.cameraY=Math.max(0,camera.y*S-80);}
-    else {const targetX=Math.max(0,Math.min(world.mission.length*S-W,world.player.x*S-W*.32));this.cameraX+=Math.min(1,dt*6)*(targetX-this.cameraX);this.cameraY+=Math.min(1,dt*5)*(Math.max(0,world.player.y*S-94)-this.cameraY);}
-    if(this.requestedZoom>1&&!world.story)this.cameraX-=mobileCameraShift(world.players.map(a=>a.body.x*S-this.cameraX),W);
-    const crop=mobileViewCrop(world.story?1:this.requestedZoom,world.players.map(a=>({x:a.body.x*S-this.cameraX,y:266-a.body.y*S+this.cameraY,facing:a.body.facing,mounted:!!a.mounted})),W,H);
+    const cameraDt=playing?dt:0;
+    let targetX:number,targetY:number;
+    if(world.story){const camera=world.players.length>1?teamCamera(world,world.story.camera):world.story.camera;targetX=Math.max(0,Math.min(world.mission.length*S-W,camera.x*S-W/2));targetY=Math.max(0,camera.y*S-80);}
+    else if(world.players.length>1){const camera=teamCamera(world);targetX=camera.x*S-W/2;targetY=Math.max(0,camera.y*S-80);}
+    else {targetX=Math.max(0,Math.min(world.mission.length*S-W,world.player.x*S-W*.32));targetY=Math.max(0,world.player.y*S-94);}
+    const mobile=this.requestedZoom>1&&!world.story;
+    // Apply thumb-space composition to the target, never to the already damped camera.
+    if(mobile)targetX-=mobileCameraShift(world.players.map(a=>a.body.x*S-targetX),W);
+    if(!this.cameraReady||world.story){this.cameraX=targetX;this.cameraY=targetY;this.cameraReady=true;}
+    else {this.cameraX=cameraFollow(this.cameraX,targetX,cameraDt,mobile?10:6);this.cameraY=cameraFollow(this.cameraY,targetY,cameraDt,mobile?8:5);}
+    // Safety takes priority over lag when players separate, respawn or move between floors.
+    if(mobile||world.players.length>1){
+      const xs=world.players.map(a=>a.body.x*S),ys=world.players.map(a=>a.body.y*S);
+      this.cameraX=Math.max(Math.max(...xs)+32-W,Math.min(Math.min(...xs)-32,this.cameraX));
+      this.cameraY=Math.max(0,Math.max(...ys)-206,Math.min(Math.min(...ys)+64,this.cameraY));
+    }
+    const crop=this.framing.step(world.story?1:this.requestedZoom,world.players.map(a=>({x:a.body.x*S-this.cameraX,y:266-a.body.y*S+this.cameraY,facing:a.body.facing,mounted:!!a.mounted})),cameraDt,W,H);
     this.c=crop.zoom>1?this.frameContext:this.output;
     this.theme=world.mission.theme;this.c.imageSmoothingEnabled=false;if(playing)this.sceneFx.step(world,dt,this.cameraX,this.cameraY);this.background(world);this.sceneFx.sky(this.c,world,reducedPresentation());
     this.c.save();if(playing&&!reducedPresentation()&&this.shake>.1)this.c.translate(Math.round((Math.random()-.5)*this.shake),Math.round((Math.random()-.5)*this.shake));if(playing)this.shake=Math.max(0,this.shake-dt*28);

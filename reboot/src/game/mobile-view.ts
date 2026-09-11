@@ -1,5 +1,30 @@
 /** Presentation-only crop: never changes simulation, network state or the team tether. */
 export type ScreenActor={x:number;y:number;facing:number;mounted?:boolean};
+/** Time-based damping: equal response at 30/60/120 Hz; dt=0 freezes presentation. */
+export function cameraFollow(current:number,target:number,dt:number,rate=10){
+ return current+(target-current)*(-Math.expm1(-rate*Math.max(0,dt)));
+}
+/** Smooth facing look-ahead and zoom-in; zoom-out still fits the entire team immediately. */
+export class MobileFraming {
+ private facing:number|null=null;private facingVelocity=0;private zoom=1;
+ reset(){this.facing=null;this.facingVelocity=0;this.zoom=1;}
+ step(requested:number,actors:ScreenActor[],dt:number,width=640,height=360){
+  if(requested<=1||!actors.length){this.reset();return mobileViewCrop(1,actors,width,height);}
+  const direction=actors.length===1?actors[0].facing:0;
+  if(this.facing===null){this.facing=direction;this.zoom=requested;}
+  else {
+   // Critically damped spring: preserve velocity on reversal, without a first-frame kick.
+   const t=Math.max(0,dt),omega=18,offset=this.facing-direction;
+   const velocity=this.facingVelocity+omega*offset,decay=Math.exp(-omega*t);
+   this.facing=direction+(offset+velocity*t)*decay;
+   this.facingVelocity=(this.facingVelocity-omega*velocity*t)*decay;
+  }
+  const aimed=actors.length===1?[{...actors[0],facing:this.facing}]:actors;
+  const target=mobileViewCrop(requested,aimed,width,height);
+  this.zoom=target.zoom<this.zoom?target.zoom:cameraFollow(this.zoom,target.zoom,dt,8);
+  return mobileViewCrop(this.zoom,aimed,width,height);
+ }
+}
 /** Keep a spawn near a map edge out from under the left thumb pad. */
 export function mobileCameraShift(xs:number[],width=640){
  if(!xs.length)return 0;

@@ -1,0 +1,14 @@
+<!doctype html><html lang="uk"><meta charset="utf-8"><title>Camera reversal — silent</title><style>body{margin:0;background:#122027;color:#eee;font:16px monospace}canvas{width:min(100vw,1000px);image-rendering:pixelated}pre{white-space:pre-wrap}</style><p>Мобільне наближення 135% · автоматичні повороти без звуку</p><canvas></canvas><pre id="result">Завантаження…</pre><script type="module">
+import {World} from '/src/game/world.ts';import {View} from '/src/game/view.ts';
+import {mobileViewCrop} from '/src/game/mobile-view.ts';
+const canvas=document.querySelector('canvas'),view=new View(canvas),w=new World(0);w.mode='playing';w.player.x=40;w.player.y=0;w.enemies=[];view.setZoom(1.35);view.reset(w);
+const out=canvas.getContext('2d'),draw=out.drawImage.bind(out);let crop={x:0,width:640};out.drawImage=(...args)=>{if(args.length===9)crop={x:args[1],width:args[3]};draw(...args);};
+let frame=0,lastX=null,lastFacing=1,maxTurnStep=0,maxOldStep=0,previousOld=null,minX=640,maxX=0,ready=false;
+view.onFrame=()=>{if(!ready)return;const facing=Math.floor(frame/45)%2?-1:1;w.player.facing=facing;view.render(w,1/60,0);
+ const actorX=w.player.x*16-view.cameraX,screen=(actorX-crop.x)*640/crop.width;
+ const old=mobileViewCrop(1.35,[{x:actorX,y:266,facing}]),oldScreen=(actorX-old.x)*640/old.width;
+ if(lastX!==null&&facing!==lastFacing){maxTurnStep=Math.max(maxTurnStep,Math.abs(screen-lastX));maxOldStep=Math.max(maxOldStep,Math.abs(oldScreen-previousOld));}
+ minX=Math.min(minX,screen);maxX=Math.max(maxX,screen);lastX=screen;previousOld=oldScreen;lastFacing=facing;frame++;
+ if(frame===270){view.onFrame=()=>{};document.querySelector('#result').textContent=JSON.stringify({frames:frame,zoom:1.35,oldTurnStepPx:maxOldStep,newTurnStepPx:maxTurnStep,heroScreenRange:[minX,maxX],passed:maxTurnStep<10&&minX>40&&maxX<600,silent:true},null,2);}
+};await view.init();ready=true;
+</script></html>
