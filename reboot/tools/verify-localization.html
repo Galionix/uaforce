@@ -1,0 +1,24 @@
+<!doctype html><meta charset="utf-8"><title>UA Force localization verification (silent)</title>
+<output id="result">Running…</output><section id="fixture"></section>
+<script type="module">
+import {localizeDocument} from '/src/game/localized-dom.ts';
+import {setLocale,getLocale} from '/src/game/i18n.ts';
+const saved=getLocale(),root=document.querySelector('#fixture');let checks=0;
+const check=(value,message)=>{if(!value)throw Error(message);checks++;};
+const tick=()=>new Promise(r=>setTimeout(r,0));
+let stop;
+try{
+ setLocale('uk');root.innerHTML='<button title="Стрибок">Налаштування</button><span>Герой: Тарас Шевченко</span><input value="Тарас Шевченко"><textarea>Мій звіт</textarea><code>Хуйло</code><select translate="no"><option>Українська</option></select>';
+ stop=localizeDocument(root);const button=root.querySelector('button'),name=root.querySelector('span');
+ setLocale('en');check(button.textContent==='Settings','Static label');check(button.title==='Jump','Attribute');check(name.textContent==='Hero: Taras Shevchenko','Composite label');
+ name.textContent='Герой: Леся Українка';await tick();check(name.textContent==='Hero: Lesya Ukrainka','Dynamic text');
+ button.title='Взаємодія';await tick();check(button.title==='Interact','Dynamic attribute');
+ const later=document.createElement('b');later.textContent='Звільнено полонених: 2/4';root.append(later);await tick();check(later.textContent==='Prisoners rescued: 2/4','Added subtree');
+ setLocale('uk');await tick();check(button.textContent==='Налаштування','Restore static');check(name.textContent==='Герой: Леся Українка','Restore latest dynamic source');check(button.title==='Взаємодія','Restore updated attribute');
+ setLocale('en');await tick();check(later.textContent==='Prisoners rescued: 2/4','Repeat switch');
+ check(root.querySelector('input').value==='Тарас Шевченко'&&root.querySelector('textarea').value==='Мій звіт','User values untouched');
+ check(root.querySelector('code').textContent==='Хуйло'&&root.querySelector('option').textContent==='Українська','Excluded content untouched');
+ document.querySelector('#result').textContent=checks+' checks passed';
+}catch(e){document.querySelector('#result').textContent='FAILED: '+e.message;throw e;}
+finally{stop?.();setLocale(saved);}
+</script>

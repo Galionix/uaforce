@@ -1,3 +1,4 @@
+import {translate} from './i18n.ts';
 import type {Effect} from './world';
 import type {AbilityArt} from './ability-art';
 /** Animation follows simulation age: pausing or replaying a co-op snapshot freezes the same pose. */
@@ -29,7 +30,7 @@ export function drawHeroEffect(c:CanvasRenderingContext2D,f:Effect,x:number,y:nu
  switch(f.hero){
   case 'shevchenko':{
    const pen=x+d*(25+Math.min(1,t/.6)*115);if(t<.7)prop(0,pen,y-115,35,52,-.3,1-t*.6);
-   if(t<.9){c.save();c.font='bold 13px monospace';c.textAlign='center';c.fillStyle='#ffe39c';c.fillText('ВОЛЯ'.slice(0,Math.min(4,Math.floor(t*8)+1)),Math.round(x+d*80),Math.round(y-99));c.restore();}
+   if(t<.9){c.save();c.font='bold 13px monospace';c.textAlign='center';c.fillStyle='#ffe39c';c.fillText(translate('ВОЛЯ').slice(0,Math.min(translate('ВОЛЯ').length,Math.floor(t*12)+1)),Math.round(x+d*80),Math.round(y-99));c.restore();}
    for(let i=0;i<3;i++){const age=t-(.65+i*.22),xx=x+d*(2+i*4)*16;
     if(age<0&&age>-.55){ring(xx,y-2,14*(1+age/.55),'#dcb264',.7);sparks(xx,y-6,7,'#a5eaff',27);if(age>-.16)art.draw(c,'lightning',age<-.08?0:1,xx,y-91,94,194,1,0,.5);}
     if(age>=0&&age<.64){art.draw(c,'lightning',Math.min(7,2+Math.floor(age/.64*6)),xx,y-91,94,194);ring(xx,y-2,18+age*150,'#c3f4ff',1-age/.64);}

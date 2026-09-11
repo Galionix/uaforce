@@ -1,3 +1,5 @@
+import {getLocale,setLocale,onLocaleChange} from './game/i18n.ts';
+import {localizeDocument} from './game/localized-dom.ts';
 import {MobileControls} from './game/mobile-controls.ts';
 import {gameFullscreen} from './game/fullscreen.ts';
 import {Telemetry,RunMetrics,type MetricMode} from './game/telemetry.ts';
@@ -29,6 +31,9 @@ import { HEROES, MISSIONS } from './game/content';
 import { readProgress, saveProgress, readRecord, saveRecord } from './game/storage';
 
 const $ = <T extends HTMLElement = HTMLElement>(id:string) => document.getElementById(id) as T;
+localizeDocument(document.documentElement);
+const language=$<HTMLSelectElement>('language');language.value=getLocale();
+language.onchange=()=>setLocale(language.value);
 const canvas=$<HTMLCanvasElement>('scene'), menu=$('menu'), pauseMenu=$('pause-menu'), settings=$<HTMLDialogElement>('settings');
 for(const node of Array.from(document.querySelectorAll<HTMLElement>('[data-icon]')))node.innerHTML=icon(node.dataset.icon!);
 const updateAbilities=mountAbilities($('ability-icons'));
@@ -47,6 +52,7 @@ const input=new Input(canvas), view=new View(canvas), sound=new Sound(new URLSea
 let progress=readProgress();
 let transition=0;
 let world=new World(progress.mission,progress.unlocked,progress.hero), ready=false, accumulator=0, uiTime=0, toastTime=0, settingsWasPlaying=false, menuIndex=0;
+onLocaleChange(()=>{view.invalidate();});
 let pendingJump=false,pendingSpecial=false,pendingUltimate=false,pendingFire=false,pendingInteract=false;
 const cinematic=new Cinematic(sound,()=>{input.clear();accumulator=0;pendingJump=pendingSpecial=pendingUltimate=pendingFire=pendingInteract=false;},w=>view.reset(w));
 const flags=new FlagTransition();

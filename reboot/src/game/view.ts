@@ -1,3 +1,4 @@
+import {translate} from './i18n.ts';
 import {mobileViewCrop,mobileCameraShift} from './mobile-view.ts';
 import {interactionTarget,TEAM_BOOST} from './interactions.ts';
 import {teamCamera} from './shared-screen.ts';
@@ -24,6 +25,7 @@ const S=16,W=640,H=360;
 const hash=(x:number,y:number=0)=>{const n=Math.sin(x*127.1+y*311.7)*43758.5453;return n-Math.floor(n);};
 /** Pixel coordinates are the art grid; CSS scales the completed frame without smoothing. */
 export class View {
+  invalidate(){this.needsDraw=true;}
   private requestedZoom=1;
   setZoom(value:number){if(this.requestedZoom!==value){this.requestedZoom=value;this.needsDraw=true;}}
   interactKey='F'; private enemyClock=0;
@@ -242,10 +244,10 @@ export class View {
     this.c.restore();
     if(playing)this.screenPulse=Math.max(0,this.screenPulse-dt);
     if(!reducedPresentation()&&this.screenPulse>0){this.c.save();this.c.globalAlpha=Math.min(.22,this.screenPulse*1.25);this.rect(0,0,W,H,'#d8f2ff');this.c.restore();}
-    if(world.story){this.rect(0,0,W,30,'#071015');this.rect(0,H-58,W,58,'#071015');if(world.story.caption){this.c.font='bold 15px monospace';this.c.textAlign='center';this.c.fillStyle='#f6e9b6';this.c.fillText(world.story.caption,W/2,H-32,W-32);}if(world.story.exit!==null)drawFlagWipe(this.c,W,H,world.story.exit,false,reducedPresentation());}
+    if(world.story){this.rect(0,0,W,30,'#071015');this.rect(0,H-58,W,58,'#071015');if(world.story.caption){this.c.font='bold 15px monospace';this.c.textAlign='center';this.c.fillStyle='#f6e9b6';this.c.fillText(translate(world.story.caption),W/2,H-32,W-32);}if(world.story.exit!==null)drawFlagWipe(this.c,W,H,world.story.exit,false,reducedPresentation());}
     if(crop.zoom>1){this.output.imageSmoothingEnabled=false;this.output.drawImage(this.frame,crop.x,crop.y,crop.width,crop.height,0,0,W,H);}
   }
-  private label(text:string,x:number,y:number,color:string){this.c.font='bold 11px monospace';this.c.textAlign='center';this.c.fillStyle='#10201beb';this.c.fillRect(Math.round(x-this.c.measureText(text).width/2-3),Math.round(y-11),this.c.measureText(text).width+6,15);this.c.fillStyle='#11201b';this.c.fillText(text,Math.round(x)+1,Math.round(y)+1);this.c.fillStyle=color;this.c.fillText(text,Math.round(x),Math.round(y));}
+  private label(text:string,x:number,y:number,color:string){text=translate(text);this.c.font='bold 11px monospace';this.c.textAlign='center';this.c.fillStyle='#10201beb';this.c.fillRect(Math.round(x-this.c.measureText(text).width/2-3),Math.round(y-11),this.c.measureText(text).width+6,15);this.c.fillStyle='#11201b';this.c.fillText(text,Math.round(x)+1,Math.round(y)+1);this.c.fillStyle=color;this.c.fillText(text,Math.round(x),Math.round(y));}
   private flag(x:number,w:World){const xx=x*S-this.cameraX,yy=266+this.cameraY;this.rect(xx,yy-40,2,40,'#cdcba6');const active=x===3||(x===w.mission.exit?w.objectiveComplete:w.checkpoint>=x);this.rect(xx+2,yy-40,13,5,active?'#379bd7':'#686f61');this.rect(xx+2,yy-35,13,5,active?'#f7d252':'#565e50');}
   private helicopter(w:World){
     const e=w.evac;if(e.phase==='waiting'||e.phase==='done')return;
