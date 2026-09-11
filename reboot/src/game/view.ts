@@ -157,16 +157,16 @@ export class View {
     else {targetX=Math.max(0,Math.min(world.mission.length*S-W,world.player.x*S-W*.32));targetY=Math.max(0,world.player.y*S-94);}
     const mobile=this.requestedZoom>1&&!world.story;
     // Apply thumb-space composition to the target, never to the already damped camera.
-    if(mobile)targetX-=mobileCameraShift(world.players.map(a=>a.body.x*S-targetX),W);
+    if(mobile)targetX-=mobileCameraShift(world.players.filter(a=>a.body.hp>0||world.mode==='lost').map(a=>a.body.x*S-targetX),W);
     if(!this.cameraReady||world.story){this.cameraX=targetX;this.cameraY=targetY;this.cameraReady=true;}
     else {this.cameraX=cameraFollow(this.cameraX,targetX,cameraDt,mobile?10:6);this.cameraY=cameraFollow(this.cameraY,targetY,cameraDt,mobile?8:5);}
     // Safety takes priority over lag when players separate, respawn or move between floors.
     if(mobile||world.players.length>1){
-      const xs=world.players.map(a=>a.body.x*S),ys=world.players.map(a=>a.body.y*S);
+      const xs=world.players.filter(a=>a.body.hp>0||world.mode==='lost').map(a=>a.body.x*S),ys=world.players.filter(a=>a.body.hp>0||world.mode==='lost').map(a=>a.body.y*S);
       this.cameraX=Math.max(Math.max(...xs)+32-W,Math.min(Math.min(...xs)-32,this.cameraX));
       this.cameraY=Math.max(0,Math.max(...ys)-206,Math.min(Math.min(...ys)+64,this.cameraY));
     }
-    const crop=this.framing.step(world.story?1:this.requestedZoom,world.players.map(a=>({x:a.body.x*S-this.cameraX,y:266-a.body.y*S+this.cameraY,facing:a.body.facing,mounted:!!a.mounted})),cameraDt,W,H);
+    const crop=this.framing.step(world.story?1:this.requestedZoom,world.players.filter(a=>a.body.hp>0||world.mode==='lost').map(a=>({x:a.body.x*S-this.cameraX,y:266-a.body.y*S+this.cameraY,facing:a.body.facing,mounted:!!a.mounted})),cameraDt,W,H);
     this.c=crop.zoom>1?this.frameContext:this.output;
     this.theme=world.mission.theme;this.c.imageSmoothingEnabled=false;if(playing)this.sceneFx.step(world,dt,this.cameraX,this.cameraY);this.background(world);this.sceneFx.sky(this.c,world,reducedPresentation());
     this.c.save();if(playing&&!reducedPresentation()&&this.shake>.1)this.c.translate(Math.round((Math.random()-.5)*this.shake),Math.round((Math.random()-.5)*this.shake));if(playing)this.shake=Math.max(0,this.shake-dt*28);
@@ -224,7 +224,7 @@ export class View {
       if(f.reloading>0){const duration=FOLLOWER_WEAPONS[f.kind].reloadTime;this.rect(x-8,y-27,16*(1-f.reloading/duration),1,'#f4b456');}
     }
     for(const actor of world.players){
-    const p=actor.body;this.c.globalAlpha=p.cloak>0?.38:1;if(!actor.mounted&&world.evac.phase!=='departing'&&(world.story||p.invulnerable<=0||Math.floor(this.clock*12)%2===0))this.sprite(p.x,p.y,p.facing,world.highFive.offeredBy===actor.id||world.highFive.age<.45?0:heroFrame(p,this.clock,Math.abs(world.players.length===1&&!world.story?move:actor.move)>.1),false,false,HEROES.findIndex(h=>h.id===actor.heroId),actor.heroId==='lesya'&&p.form>0);this.c.globalAlpha=1;
+    const p=actor.body;if(p.hp<=0)continue;this.c.globalAlpha=p.cloak>0?.38:1;if(!actor.mounted&&world.evac.phase!=='departing'&&(world.story||p.invulnerable<=0||Math.floor(this.clock*12)%2===0))this.sprite(p.x,p.y,p.facing,world.highFive.offeredBy===actor.id||world.highFive.age<.45?0:heroFrame(p,this.clock,Math.abs(world.players.length===1&&!world.story?move:actor.move)>.1),false,false,HEROES.findIndex(h=>h.id===actor.heroId),actor.heroId==='lesya'&&p.form>0);this.c.globalAlpha=1;
     if(actor.heroId==='mamai'&&p.attack>0&&!world.effects.some(f=>f.kind==='weapon')){const xx=p.x*S-this.cameraX,yy=266-(p.y+1)*S+this.cameraY;this.rect(xx+p.facing*4,yy,12*p.facing,3,'#c6ad7a');this.rect(xx+p.facing*5,yy+2,4*p.facing,4,'#845b38');}
       if(world.players.length>1){const x=p.x*S-this.cameraX,y=266-p.y*S+this.cameraY;this.label('P'+(actor.id+1),x,y-42,actor.id===0?'#ffdf6a':'#70d8ff');this.rect(x-10,y-36,20,2,'#172928');this.rect(x-10,y-36,20*p.hp/100,2,actor.id===0?'#ffdf6a':'#70d8ff');}
     }
@@ -281,7 +281,7 @@ export class View {
     this.flag(3,world);
     if(world.mission.layout){for(const [i,point] of world.mission.layout.checkpoints.entries())this.flag(point.x,world,point.y,i<=world.routeProgress,i===world.routeProgress+1);}
     else for(const x of world.mission.checkpoints)this.flag(x,world);
-    this.flag(world.mission.exit,world,world.mission.layout?.exitY??0);this.helicopter(world);
+    if(!world.survival){this.flag(world.mission.exit,world,world.mission.layout?.exitY??0);this.helicopter(world);}
     if(playing){for(const f of this.flashes)f.life-=dt;for(const p of this.particles){p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy-=22*dt;}this.particles=this.particles.filter(p=>p.life>0);this.flashes=this.flashes.filter(f=>f.life>0);}
     for(const f of this.flashes){const x=f.x*S-this.cameraX,y=266-f.y*S+this.cameraY;if(f.type.includes('hot')){this.abilityArt.draw(this.c,'ordnance',7,x+3,y,20,14);}else{const radius=(f.type==='special'?22:13)*(1-f.life/.4);for(let i=0;i<8;i++){const a=i*Math.PI/4;this.rect(x+Math.cos(a)*radius-4,y+Math.sin(a)*radius-4,8,8,'#e96c2e');this.rect(x+Math.cos(a)*radius-2,y+Math.sin(a)*radius-2,4,4,'#ffe27d');}}}
     if(playing){for(const b of this.cinematicBlasts)b.age+=dt;this.cinematicBlasts=this.cinematicBlasts.filter(b=>b.age<.65);}

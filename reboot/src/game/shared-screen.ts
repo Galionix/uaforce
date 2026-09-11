@@ -3,13 +3,14 @@ import type {World} from './world.ts';
 export const SHARED_SCREEN={width:40,height:22.5,maxX:30,maxY:12,marginX:4} as const;
 export type Position={x:number;y:number};
 export function teamCamera(w:World,desired?:Position){
- const xs=w.players.map(a=>a.body.x),ys=w.players.map(a=>a.body.y),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+ const living=w.players.filter(a=>a.body.hp>0),actors=living.length?living:w.players;
+ const xs=actors.map(a=>a.body.x),ys=actors.map(a=>a.body.y),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
  const center=desired??{x:(minX+maxX)/2,y:(minY+maxY)/2};
  return {x:Math.max(20,Math.min(w.mission.length-20,Math.max(maxX-16,Math.min(minX+16,center.x)))),y:Math.max(5,Math.max(maxY-(w.story?7.625:8.875),Math.min(minY+(w.story?7.125:8.75),center.y)))};
 }
 /** Remove only movement that spreads the pair: a stationary friend is never dragged. */
 export function constrainTeam(w:World,before:Position[]){
- if(w.players.length<2)return;
+ if(w.players.length<2||w.players.some(a=>a.body.hp<=0))return;
  for(const axis of ['x','y'] as const){
   const limit=axis==='x'?SHARED_SCREEN.maxX:SHARED_SCREEN.maxY;
   const [lo,hi]=w.players[0].body[axis]<=w.players[1].body[axis]?[0,1]:[1,0];
@@ -28,7 +29,7 @@ export function constrainTeam(w:World,before:Position[]){
 }
 /** A far checkpoint cannot strand a respawned co-op actor outside the common view. */
 export function sharedRespawn(w:World){
- if(w.players.length<2)return;
+ if(w.players.length<2||w.players.some(a=>a.body.hp<=0))return;
  const p=w.player,other=w.players.find(a=>a.id!==w.actor.id)!.body;
  if(Math.abs(p.x-other.x)<=SHARED_SCREEN.maxX&&Math.abs(p.y-other.y)<=SHARED_SCREEN.maxY)return;
  const candidates=w.boxes.filter(b=>b.hp>0&&Math.abs(b.x-other.x)<10&&Math.abs(b.y+b.h-other.y)<7)

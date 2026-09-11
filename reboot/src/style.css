@@ -87,3 +87,8 @@ body:not(.menu-open) .logo{display:none}.top-actions{margin-left:auto}.utility-i
 .sound-settings{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;border:1px solid #638575;padding:12px 16px;margin:16px 0}.sound-settings legend{color:#f0d982;font-weight:700;padding:0 8px}.sound-settings label{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.sound-settings input[type=range]{width:100%;min-width:0}.sound-settings label:last-child{grid-column:1/-1}
 @media(max-width:1000px){#menu{grid-template-columns:1fr}.latest-update{justify-self:start;width:min(100%,440px);margin-top:18px}.latest-update p{margin:8px 0}}
 @media(max-width:600px){.sound-settings{grid-template-columns:1fr}.latest-update{padding:12px 16px}.update-heading h2{font-size:18px}}
+
+.survival-dialog{width:min(620px,94vw);max-height:88dvh;overflow:auto;touch-action:pan-y}
+.survival-dialog>button{margin:.4rem .5rem .4rem 0}.survival-dialog label{display:flex;align-items:center;gap:1rem;margin:1rem 0}.survival-dialog input{min-width:0;width:16rem;font:inherit;padding:.6rem;background:#101b21;color:#fff;border:2px solid #4c6a68}.survival-dialog p{font-size:1rem;line-height:1.45}.survival-board{width:100%;border-collapse:collapse;font-size:1rem;margin-top:1rem}.survival-board td,.survival-board th{padding:.6rem .3rem;border-bottom:1px solid #405450;text-align:left}.survival-board td:nth-child(2){overflow-wrap:anywhere;color:#ffdf6a}
+
+.survival-wave{display:block;text-align:center;padding:4px 8px;margin-bottom:3px;background:#102623dc;border:2px solid #66845b;color:#ffe17a;font-size:16px;line-height:1.2;max-width:300px}.touch-device .survival-wave{font-size:14px;max-width:260px}body.menu-open .survival-wave{display:none}

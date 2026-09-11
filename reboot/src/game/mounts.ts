@@ -24,7 +24,7 @@ export function stepMounts(w:World,dt:number,a:Actions,interactEdge:boolean){
  }
  for(const t of w.mounts){
   const rider=w.players.find(a=>a.mounted===t);
-  if(rider?rider.id!==w.actor.id:w.actor.id!==0)continue;
+  if(rider?rider.id!==w.actor.id:w.actor.id!==(w.players.find(a=>a.body.hp>0)?.id??0))continue;
   t.contactCooldown=Math.max(0,t.contactCooldown-dt);t.cooldown=Math.max(0,t.cooldown-dt);t.hurt=Math.max(0,t.hurt-dt);t.recoil=Math.max(0,t.recoil-dt);t.landing=Math.max(0,t.landing-dt);t.moving=false;
   // Recheck support after terrain destruction; a cached grounded flag permits air jumps.
   t.grounded=t.vy<=0&&(t.y<=-2||w.boxes.some(b=>b.hp>0&&Math.abs(b.x-t.x)<b.w/2+TANK.w/2-.3&&Math.abs(t.y-b.y-b.h)<.04));
@@ -42,8 +42,8 @@ export function stepMounts(w:World,dt:number,a:Actions,interactEdge:boolean){
    if(t.moving&&t.grounded){t.engine-=dt;if(t.engine<=0){w.emit('mountEngine',t.x,t.y);t.engine=.32;}}else t.engine=0;
    if(a.fire&&t.cooldown===0&&t.armor>0){
     // Start at the front of the turret, inside hull width, so adjacent cover cannot be skipped.
-    w.bullets.push({id:w.nextId(),x:t.x+t.dir*1.6,y:t.y+1.5,vx:t.dir*24,vy:0,life:TANK.range/24,friendly:true,damage:TANK.damage,ordnance:'shell',blastRadius:3});
-    t.cooldown=TANK.reload;t.recoil=.22;w.shots++;w.emit('mountShot',t.x+t.dir*2,t.y+1.5);
+    w.bullets.push({id:w.nextId(),x:t.x+t.dir*1.6,y:t.y+1.5,vx:t.dir*24,vy:0,life:TANK.range/24,friendly:true,damage:w.survival?65:TANK.damage,ordnance:'shell',blastRadius:3});
+    t.cooldown=w.survival?3.2:TANK.reload;t.recoil=.22;w.shots++;w.emit('mountShot',t.x+t.dir*2,t.y+1.5);
    }
   }
   t.jumpHeld=t===w.mounted&&a.jump;

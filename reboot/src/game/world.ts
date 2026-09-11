@@ -1,3 +1,4 @@
+import {stepSurvival,survivalDrop,endSurvival,type SurvivalState} from './survival.ts';
 import {buildOperation} from './build-operation.ts';
 import {doHighFive,maintainHighFiveOffer,cancelHighFiveOffer,TEAM_BOOST} from './interactions.ts';
 import {storyTrigger,stepStory,type StoryState} from './story-scenes.ts';
@@ -54,6 +55,7 @@ export class World {
 
   private deathLines=new DeathLines();
   mode: Mode = 'ready';
+  survival:SurvivalState|null=null;
   ceiling=20;
   routeProgress=-1;
   highFive={offeredBy:-1,offerAge:0,left:0,cooldown:0,age:10,x:0,y:0};
@@ -132,6 +134,7 @@ export class World {
     if(this.allies.some(a=>!a.rescued&&Math.abs(a.x-p.x)<2.2&&(a.y===undefined?p.y<2:Math.abs(p.y-a.y)<2)))return 'Звільнити полоненого';
     if(nearbyMount(this))return 'Сісти в танк';
     if(nearbyBarrel(this))return 'Підняти бочку';
+    if(this.survival)return '';
     if(this.evac.phase==='arriving')return 'Гелікоптер наближається — тримайте точку';
     if(this.evac.phase==='boarding')return 'Стрибніть у гелікоптер';
     if(this.nextPost)return 'До наступного поста';
@@ -173,13 +176,14 @@ export class World {
   }
   damagePlayer(amount: number,contact=false) {
     const p = this.player;
-    if(this.mode!=='playing')return;
+    if(this.mode!=='playing'||p.hp<=0)return;
     if(this.mounted){if(contact){if(this.mounted.contactCooldown>0)return;this.mounted.contactCooldown=.65;}damageMount(this,this.mounted,amount);return;}
     if (p.invulnerable > 0) return;
     if(this.highFive.offeredBy===this.actor.id||p.hp<=amount)cancelHighFiveOffer(this);
     p.hp = Math.max(0, p.hp - amount); p.invulnerable = .65;
     this.event('hurt', p.x, p.y + .8);
     if (p.hp === 0) {
+      if(this.survival){this.lives=0;this.clearOwned();dropBarrel(this);this.actor.move=0;p.ladder=-1;p.form=0;p.cloak=0;if(this.players.every(a=>a.body.hp<=0))endSurvival(this);return;}
       this.lives--;this.clearOwned();dropBarrel(this);if(this.players.length===1)resetBoss(this);
       if(this.players.length>1&&this.lives<=0)this.lives=1;
       if (this.lives <= 0) { this.mode = 'lost'; this.event('lost', p.x, p.y); }
@@ -195,7 +199,7 @@ export class World {
     if (!enemyActive(enemy)) return;
     enemy.hp -= damage;
     if (enemy.hp <= 0) {
-      if(enemy.boss)bossDefeated(this,enemy);this.kills++;
+      if(enemy.boss)bossDefeated(this,enemy);this.kills++;survivalDrop(this,enemy);
       if(enemy.vehicle||enemy.boss)this.event('burst',enemy.x,enemy.y+.8);
       else this.events.push({type:'enemyDeath',x:enemy.x,y:enemy.y+.9,deathRole:enemy.infantry?.kind??(enemy.heavy?'gunner':'rifle'),deathCause:cause,text:this.deathLines.next(Math.random,{cause,role:enemy.infantry?.kind})});
     }
@@ -381,14 +385,15 @@ export class World {
     dt=Math.min(dt,1/30);maintainHighFiveOffer(this,dt);this.highFive.left=Math.max(0,this.highFive.left-dt);this.highFive.cooldown=Math.max(0,this.highFive.cooldown-dt);this.highFive.age+=dt;this.time+=dt;this.noises=this.noises.filter(n=>n.until>this.time);
     // Arms recoil at .3s in View; emit once on that transition, never on a wall-clock timer.
     if(previousFiveAge<.3&&this.highFive.age>=.3)this.emitSfx('team-hand-lower',this.highFive.x,this.highFive.y);
-    this.withPlayer(this.nearestPlayer(this.mission.exit,this.mission.layout?.exitY??0).id,()=>this.stepEvac(dt));
+    if(this.survival)stepSurvival(this,dt);
+    else this.withPlayer(this.nearestPlayer(this.mission.exit,this.mission.layout?.exitY??0).id,()=>this.stepEvac(dt));
     if(this.evac.phase==='departing'||this.mode!=='playing'){
       if(this.evac.phase==='departing')for(const a of this.players){a.body.x=this.evac.x;a.body.y=this.evac.y-1;}
       return;
     }
-    for(const actor of this.players){this.withPlayer(actor.id,()=>this.stepPlayer(dt,actions[actor.id]??IDLE));if(this.cinematic)break;}
+    for(const actor of this.players){if(actor.body.hp<=0)continue;this.withPlayer(actor.id,()=>this.stepPlayer(dt,actions[actor.id]??IDLE));if(this.cinematic)break;}
     constrainTeam(this,before);
-    storyTrigger(this,before);if(this.story){cancelHighFiveOffer(this);return;}
+    if(!this.survival)storyTrigger(this,before);if(this.story){cancelHighFiveOffer(this);return;}
     if(this.players.length>1){this.stepEffects(dt);stepBarrels(this,dt);}
     if(this.cinematic){cancelHighFiveOffer(this);return;}
     maintainHighFiveOffer(this,0);
@@ -418,7 +423,7 @@ export class World {
       };
       for (const b of this.boxes) if (b.hp > 0) test(b.x, b.y, b.w, b.h, b);
       if (bullet.friendly) for (const enemy of this.enemies) { if (enemyActive(enemy)) test(enemy.x, enemy.y, enemySize(enemy).w, enemySize(enemy).h, enemy); }
-      else {for(const a of this.players)if(!a.mounted)test(a.body.x,a.body.y,.65,1.6,a);for(const t of this.mounts)if(t.armor>0)test(t.x,t.y,TANK.w,TANK.h,t);for(const f of this.followers)if(f.hp>0)test(f.x,f.y,.7,1.5,f);}
+      else {for(const a of this.players)if(a.body.hp>0&&!a.mounted)test(a.body.x,a.body.y,.65,1.6,a);for(const t of this.mounts)if(t.armor>0)test(t.x,t.y,TANK.w,TANK.h,t);for(const f of this.followers)if(f.hp>0)test(f.x,f.y,.7,1.5,f);}
       if (target) {
         bullet.life = 0;
         const hit = target as Box | Enemy | Follower | Mount | PlayerActor;

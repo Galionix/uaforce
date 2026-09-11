@@ -23,7 +23,7 @@ export function highFivePartner(w:World,range=w.highFive.offeredBy<0?TEAM_BOOST.
  return w.players.find(a=>a.id!==w.actor.id);
 }
 export function interactionTarget(w:World){
- if(w.mode!=='playing'||w.story||w.evac.phase==='departing')return;
+ if(w.player.hp<=0||w.mode!=='playing'||w.story||w.evac.phase==='departing')return;
  return objectInteraction(w)??(highFivePartner(w)?{kind:'highFive' as const,x:(w.players[0].body.x+w.players[1].body.x)/2,y:Math.max(...w.players.map(a=>a.body.y))+4.2}:undefined);
 }
 /** The invitation is host state, not an automatic action on the other player. */

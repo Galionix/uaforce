@@ -1,7 +1,7 @@
 /** Small, best-effort counters. No persistent identity, room code, URL, IP or error text. */
 export const EVENTS=['landing_view','play_click','link_copy','load_ready','load_error','mission_start','mission_win','mission_loss','mission_leave','coop_attempt','coop_connected','coop_error','coop_leave','feedback_open','playtest_open'] as const;
 export type MetricEvent=typeof EVENTS[number];
-export type MetricMode='site'|'single'|'practice'|'host'|'guest';
+export type MetricMode='site'|'single'|'practice'|'host'|'guest'|'survival'|'survival-host'|'survival-guest';
 export const SOURCES=['direct','tiktok','youtube','reddit','threads','friend','playtest','qa'] as const;
 export function trafficSource(search:string,referrer=''){
  const q=new URLSearchParams(search),value=q.get('utm_source');

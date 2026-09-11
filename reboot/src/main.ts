@@ -1,3 +1,5 @@
+import {survivalWorld,endSurvival} from './game/survival.ts';
+import {SurvivalUI,survivalTime} from './game/survival-ui.ts';
 import {UPDATES} from './game/updates.ts';
 import {CAMPAIGN_ROUTE,SIDE_OPERATIONS,FINAL_MISSION,nextCampaignMission,campaignChapter} from './game/campaign.ts';
 import {getLocale,setLocale,onLocaleChange} from './game/i18n.ts';
@@ -63,7 +65,7 @@ let outgoingEvents:typeof world.events=[];
 
 let practice=false;
 const telemetry=new Telemetry(),runMetrics=new RunMetrics((...args)=>telemetry.event(...args)),guestActions=new PendingActions();
-const metricMode=():MetricMode=>online?.role??(practice?'practice':'single');
+const metricMode=():MetricMode=>world.survival?(online?.role==='host'?'survival-host':online?.role==='guest'?'survival-guest':'survival'):online?.role??(practice?'practice':'single');
 const input=new Input(canvas), view=new View(canvas), sound=new Sound(new URLSearchParams(location.search).get('silent')==='1');
 let progress=readProgress();
 let transition=0;
@@ -82,13 +84,13 @@ const sabotageStatus=document.createElement('span');sabotageStatus.className='ob
 const bossStatus=document.createElement('div');bossStatus.id='boss-status';bossStatus.hidden=true;bossStatus.innerHTML='<span></span><progress max=1></progress>';canvas.parentElement!.append(bossStatus);
 const formatTime=(seconds:number)=>`${Math.floor(seconds/60).toString().padStart(2,'0')}:${Math.floor(seconds%60).toString().padStart(2,'0')}`;
 function toast(message:string){$('toast').textContent=message;$('toast').classList.add('visible');toastTime=1.8;}
-function remember(){if(practice||online)return;progress={...progress,unlocked:[...world.unlocked],hero:world.heroId};saveProgress(progress);}
+function remember(){if(practice||online||world.survival)return;progress={...progress,unlocked:[...world.unlocked],hero:world.heroId};saveProgress(progress);}
 function startMission(index:number){
   if(!ready)return;if(online?.role==='guest'){online.command('next');return;}practice=false;transition=0;sound.stopAll();const guestHero=world.players[1]?.heroId;world=new World(index,progress.unlocked,progress.hero);if(online?.connected){world.addPlayer(guestHero??'lesya');writer=new SnapshotWriter(world);}world.mode='playing';
   if(!online){progress.mission=index;progress.completed=false;saveProgress(progress);}view.reset(world);input.clear();accumulator=0;menu.hidden=true;pauseMenu.hidden=true;canvas.focus();sound.announce('missionStart',world.heroId);
   flags.play(index%2===1);toast(world.mission.name);
 }
-function begin(){if(practice){startPractice(world.heroId);return;}startMission(world.mode==='won'?(nextCampaignMission(world.missionIndex)??CAMPAIGN_ROUTE[0]):world.missionIndex);}
+function begin(){if(world.survival){if(online?.role==='guest'){online.command('next');return;}startSurvival(world.heroId,online?.connected?world.players[1]?.heroId:undefined);return;}if(practice){startPractice(world.heroId);return;}startMission(world.mode==='won'?(nextCampaignMission(world.missionIndex)??CAMPAIGN_ROUTE[0]):world.missionIndex);}
 function resume(focusCanvas=true){if(world.mode!=='paused')return;if(online?.role==='guest'){online.command('resume');return;}world.mode='playing';menu.hidden=true;pauseMenu.hidden=true;input.clear();if(focusCanvas)canvas.focus();void sound.enable();}
 function showMenu(){
   pauseMenu.hidden=true;menu.hidden=false;menuIndex=0;
@@ -98,16 +100,29 @@ function showMenu(){
   $('menu-copy').textContent=won?(last?'Від звільненого берега до Кремля. Джерело наказів знищено. Загін повертається додому.':side?'Додаткову операцію завершено. Повертаємося до основної кампанії.':'Наступна операція — '+MISSIONS[next!].name+'.'):lost?'Підкріплення вичерпано. Спробуйте інший маршрут, стрибайте з драбин і використовуйте здібність героя.':paused?'Гра на паузі. Продовжуйте, коли будете готові.':world.mission.name+' · '+world.mission.region;
   $('primary').textContent=paused?'Продовжити':won?(last?'Грати знову':side?'До кампанії':'Наступна операція →'):lost?'Спробувати знову':'Одиночна гра';
   if(practice){$('menu-kicker').textContent='ВИПРОБУВАННЯ БІЙЦЯ';$('menu-title').textContent=world.hero.name;$('menu-copy').textContent='J / RT — зброя · E / RB — спецприйом · Q / LT — ульта. Обери іншого бійця або повтори випробування.';if(!paused)$('primary').textContent='Повторити випробування';}
-  $('campaign-return').hidden=!practice;
+  $('campaign-return').hidden=(!practice&&!world.survival);
+  $('survival-open').hidden=!!online||!!world.survival;
+  $('survival-result').hidden=!world.survival||world.mode!=='lost';
   $('latest-update').hidden=world.mode!=='ready'||practice;
   for(const id of ['online-open','roster-open','operations-open'])$(id).hidden=!!online;
-  $('restart').hidden=!paused;$('hero-cycle').hidden=practice||paused||lost;$('mission-cycle').hidden=true;
+  $('restart').hidden=!paused;$('hero-cycle').hidden=practice||!!world.survival||paused||lost;$('mission-cycle').hidden=true;
   $('mission-cycle').textContent=`Обрати операцію: ${world.missionIndex+1}/${MISSIONS.length} · ${world.mission.region}`;
   $('operations-open').hidden=!!online||paused||practice||lost;
   $('hero-description').textContent=world.hero.description+' '+weaponDescription(world.heroId)+' Ульта відновлюється тільки з ящика боєприпасів.';
   $('hero-cycle').textContent=`Герой: ${world.hero.name} · відкрито ${world.unlocked.length}/${HEROES.length}`;
   $('result').textContent=won||lost?`${formatTime(world.time)} · ${world.kills} ворогів · ${world.rescued}/${world.allies.length} звільнено`:'';
+  if(world.survival){$('menu-kicker').textContent='НЕСКІНЧЕННА ОБОРОНА';$('menu-title').textContent=lost?'Рубіж утримано.':'Ще одна хвиля.';$('menu-copy').textContent='Кожен новий забіг — новий рекорд.';$('primary').textContent='Новий забіг';$('result').textContent=`${survivalTime(world.survival.elapsed)} · Хвиль пройдено: ${world.survival.cleared} · Ворогів знищено: ${world.kills}`;}
   input.clear();$('primary').focus();
+}
+const survivalUI=new SurvivalUI((hero,coop)=>{if(coop){$('online-open').click();$<HTMLSelectElement>('online-mode').value='survival';$<HTMLSelectElement>('online-hero').value=hero;}else startSurvival(hero);},()=>input.clear());
+$('survival-open').onclick=()=>survivalUI.choose();
+$('survival-result').onclick=()=>survivalUI.result(world);
+function startSurvival(hero:typeof HEROES[number]['id'],partner?:typeof HEROES[number]['id']){
+ if(!ready)return;practice=false;transition=0;sound.stopAll();cinematic.dismiss();survivalUI.close();world=survivalWorld(hero,partner);survivalUI.register(world);if(online?.connected)writer=new SnapshotWriter(world);
+ view.reset(world);input.clear();accumulator=0;menu.hidden=true;pauseMenu.hidden=true;canvas.focus();flags.play();sound.announce('missionStart',hero);
+}
+function endRun(reason:'quit'|'disconnect'){
+ if(!world.survival||world.survival.phase==='ended')return;endSurvival(world,reason);void survivalUI.update(world,true).catch(()=>{});
 }
 function startPractice(id:typeof HEROES[number]['id']){if(!ready||online)return;transition=0;practice=true;sound.stopAll();world=practiceWorld(id);view.reset(world);roster.close();menu.hidden=true;pauseMenu.hidden=true;input.clear();accumulator=0;canvas.focus();flags.play();sound.announce('missionStart',id);toast(world.hero.name);}
 for(const hero of HEROES){const button=document.createElement('button');button.className='roster-hero';button.innerHTML=`<span class="roster-image" data-hero="${hero.id}"></span><strong>${hero.name}</strong><span>${hero.weapon}</span>`;button.title=hero.description;button.onclick=()=>startPractice(hero.id);$('roster-grid').append(button);}
@@ -120,17 +135,17 @@ window.addEventListener('pointerdown',()=>{void sound.enable();},{once:true});
 window.addEventListener('keydown',()=>{void sound.enable();},{once:true});
 function closeRoster(){roster.close();input.clear();$(pauseMenu.hidden?'roster-open':'pause-roster').focus();}
 $('roster-close').onclick=closeRoster;roster.addEventListener('cancel',e=>{e.preventDefault();closeRoster();});
-$('campaign-return').onclick=()=>{practice=false;transition=0;sound.stopAll();world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);showMenu();};
+$('campaign-return').onclick=()=>{if(online){leaveOnline();survivalUI.close();}practice=false;transition=0;sound.stopAll();world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);showMenu();};
 function pause(reason?:string){if(world.mode!=='playing')return;if(online?.role==='guest'){online.command('pause');sound.stopAll();return;}world.mode='paused';sound.stopAll();menu.hidden=true;pauseMenu.hidden=false;menuIndex=0;input.clear();$('pause-mission').textContent=world.mission.name;$('pause-resume').focus();if(reason)toast(reason);}
 $('mission-cycle').onclick=()=>{transition=0;world=new World((world.missionIndex+1)%MISSIONS.length,progress.unlocked,progress.hero);view.reset(world);showMenu();};
 $('hero-cycle').onclick=()=>{world.followers=[];world.heroId=world.unlocked[(world.unlocked.indexOf(world.heroId)+1)%world.unlocked.length];resetWeapon(world.player,WEAPONS[world.heroId]);remember();view.reset(world);showMenu();};
 $('primary').onclick=()=>world.mode==='paused'?resume():begin();$('restart').onclick=begin;
 pauseMenu.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const buttons=Array.from(pauseMenu.querySelectorAll<HTMLButtonElement>('button'));const at=buttons.indexOf(document.activeElement as HTMLButtonElement);e.preventDefault();buttons[(at+(e.shiftKey?-1:1)+buttons.length)%buttons.length]?.focus();});
 $('pause-resume').onclick=()=>resume();
-$('pause-restart').onclick=begin;
+$('pause-restart').onclick=()=>world.survival?$('pause-main').click():begin();
 $('pause-settings').onclick=openSettings;
 $('pause-roster').onclick=()=>{$('roster-open').click();};
-$('pause-main').onclick=()=>{if(online){leaveOnline();return;}remember();practice=false;transition=0;sound.stopAll();world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);showMenu();flags.play(true);};
+$('pause-main').onclick=()=>{if(world.survival){if(online?.role==='guest'){leaveOnline();return;}endRun('quit');showMenu();survivalUI.result(world);publishOnline(.1);return;}if(online){leaveOnline();return;}remember();practice=false;transition=0;sound.stopAll();world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);showMenu();flags.play(true);};
 $('pause').onclick=()=>world.mode==='playing'?pause():resume();
 window.addEventListener('blur',()=>{sound.stopAll();pause('Пауза: вікно втратило фокус');});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){sound.stopAll();pause('Пауза: вкладку приховано');}});
@@ -206,6 +221,7 @@ function battleKey(action:keyof Bindings['buttons']){
   return padButtonLabel(input.bindings.buttons[action],input.pad?.id);
 }
 function ui(){
+  syncOnlineControls();
   const boss=world.boss;bossStatus.hidden=world.mode!=='playing'||!boss?.boss?.active||boss.hp<=0;
   if(boss?.boss){bossStatus.querySelector('span')!.textContent=BOSSES[boss.boss.id].name+' · '+['I','II','III'][boss.boss.stage-1]+(boss.boss.phase==='windup'?' · '+BOSSES[boss.boss.id].attacks[boss.boss.turn%3]:'');bossStatus.querySelector('progress')!.value=boss.hp/boss.maxHp;}
   document.body.classList.toggle('menu-open',!menu.hidden);
@@ -227,7 +243,10 @@ function ui(){
   const objectives=world.boxes.filter(b=>b.required);sabotageStatus.hidden=!objectives.length;sabotageStatus.querySelector('b')!.textContent=`${objectives.filter(b=>b.hp<=0).length}/${objectives.length}`;sabotageStatus.setAttribute('aria-label','Знищені військові цілі');
   const target=world.objectiveComplete?'helicopter':'skull';
   if($('target-icon').dataset.icon!==target){$('target-icon').dataset.icon=target;$('target-icon').innerHTML=icon(target);}
-  $('time').textContent=formatTime(world.time);$('fps').textContent=`${Math.round(view.fps)} кадр/с`;
+  $('time').textContent=formatTime(world.survival?.elapsed??world.time);
+  $('mission-name').classList.toggle('sr-only',!world.survival);$('mission-name').classList.toggle('survival-wave',!!world.survival);
+  for(const id of ['objective-rescue','objective-radio','objective-heavy'])$(id).hidden=!!world.survival;
+  if(world.survival){const s=world.survival;$('mission-name').textContent=s.phase==='break'?`Перепочинок · ${Math.ceil(s.timer)} · Хвиля ${s.wave+1}`:`Хвиля ${s.wave} · Залишилось: ${s.pending+world.enemies.filter(e=>e.hp>0).length}`;if(world.player.hp<=0&&s.phase!=='ended')$('mission-name').textContent='Напарник тримає рубіж. Повернення після хвилі.';}$('fps').textContent=`${Math.round(view.fps)} кадр/с`;
   const prompt=world.mode==='playing'?world.prompt:'';
   const sabotage=prompt==='Знищіть військові цілі',post=prompt==='До наступного поста',nextPost=sabotage?world.boxes.filter(b=>b.required&&b.hp>0).sort((a,b)=>Math.abs(a.x-world.player.x)-Math.abs(b.x-world.player.x))[0]:world.nextPost,postArrow=nextPost?Math.abs(nextPost.x-world.player.x)<8&&Math.abs(nextPost.y-world.player.y)>3?(nextPost.y>world.player.y?'↑':'↓'):(nextPost.x>world.player.x?'→':'←'):'→';
   const rescue=prompt==='Звільнити полоненого',vehicle=prompt==='Сісти в танк'||prompt==='Вийти з танка',barrel=prompt==='Підняти бочку'||prompt==='Кинути бочку';
@@ -242,25 +261,25 @@ function syncStoryControls(){
   if(storyWasActive!==inStory){input.clear();pendingJump=pendingSpecial=pendingUltimate=pendingFire=pendingInteract=false;sound.stopAll();storyWasActive=inStory;}
 }
 view.onFrame=dt=>{
-  runMetrics.observe(world,world.mode,metricMode(),world.missionIndex,world.time);
+  runMetrics.observe(world,world.mode,metricMode(),world.missionIndex,world.survival?.elapsed??world.time);
   flags.step(dt);
   syncStoryControls();
   sound.bossBattle=!!world.boss?.boss?.active;sound.scoreTheme=world.mission.score;
   view.interactKey=battleKey('interact');
   view.setZoom(mobile.sceneZoom);
-  mobile.sync(world,!menu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||updates.open||feedback.open||flags.active);
-  const frame=input.poll(dt),wasMenu=mobile.portrait||!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||updates.open||feedback.open||flags.active;
+  mobile.sync(world,!menu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||updates.open||feedback.open||survivalUI.open||flags.active);
+  const frame=input.poll(dt),wasMenu=mobile.portrait||!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||updates.open||feedback.open||survivalUI.open||flags.active;
   if(online?.role==='guest'&&online.connected){if(wasMenu||world.mode!=='playing'||world.story)guestActions.clear();else guestActions.add(frame.action);netClock+=dt;if(netClock>=1/30){online.input(wasMenu||world.mode!=='playing'||world.story?{move:0,jump:false,fire:false,special:false,interact:false}:guestActions.take(frame.action));netClock=0;}}
   if(world.mode==='cinematic'){cinematic.sync(world);cinematic.step(dt,frame.confirm||frame.action.jump);view.render(world,dt,0);sound.step(dt,false,false);publishOnline(dt);ui();return;}
   if(world.story&&world.mode==='playing'&&world.story.age>=.8&&frame.confirm)storySkip.click();
-  if(frame.pause){if(feedback.open)feedback.close();else if(onlineMenu.open)closeOnlineMenu();else if(updates.open)closeUpdates();else if(about.open)closeAbout();else if(operations.open)closeOperations();else if(roster.open)closeRoster();else if(settings.open)closeSettings();else if(world.mode==='playing')pause();else if(world.mode==='paused')resume();}
+  if(frame.pause){if(survivalUI.open)survivalUI.close();else if(feedback.open)feedback.close();else if(onlineMenu.open)closeOnlineMenu();else if(updates.open)closeUpdates();else if(about.open)closeAbout();else if(operations.open)closeOperations();else if(roster.open)closeRoster();else if(settings.open)closeSettings();else if(world.mode==='playing')pause();else if(world.mode==='paused')resume();}
   if(wasMenu){
     if(!menu.hidden){menuClock+=dt;menuFx.draw(menuClock,'menu');}
     if(frame.confirm)void sound.enable();
-    const root=feedback.open?feedback.dialog:onlineMenu.open?onlineMenu:updates.open?updates:about.open?about:operations.open?operations:roster.open?roster:settings.open?settings:!pauseMenu.hidden?pauseMenu:menu;
+    const root=survivalUI.open?survivalUI.dialog:feedback.open?feedback.dialog:onlineMenu.open?onlineMenu:updates.open?updates:about.open?about:operations.open?operations:roster.open?roster:settings.open?settings:!pauseMenu.hidden?pauseMenu:menu;
     const buttons=Array.from(root.querySelectorAll<HTMLButtonElement>('button')).filter(b=>!b.hidden&&!b.disabled&&b.getClientRects().length>0);
     if(frame.up||frame.down){menuIndex=((buttons.indexOf(document.activeElement as HTMLButtonElement)>=0?buttons.indexOf(document.activeElement as HTMLButtonElement):menuIndex)+(frame.down?1:-1)+buttons.length)%Math.max(1,buttons.length);buttons[menuIndex]?.focus();}
-    if(frame.confirm&&!input.capture){const focused=document.activeElement;((focused instanceof HTMLButtonElement&&root.contains(focused))?focused:buttons[menuIndex])?.click();}
+    if(frame.confirm&&!input.capture&&!(document.activeElement instanceof HTMLInputElement)&&!(document.activeElement instanceof HTMLSelectElement)){const focused=document.activeElement;((focused instanceof HTMLButtonElement&&root.contains(focused))?focused:buttons[menuIndex])?.click();}
   }
   if(world.mode==='playing'&&!wasMenu&&!settings.open&&online?.role!=='guest'){
     pendingJump ||= frame.action.jump;pendingSpecial ||= frame.action.special;pendingUltimate ||= !!frame.action.ultimate;pendingFire ||= frame.action.fire;pendingInteract ||= frame.action.interact;
@@ -274,25 +293,28 @@ view.onFrame=dt=>{
     if(event.type==='bossDefeated'&&event.boss)toast(BOSSES[event.boss].defeat);
     if(event.type==='evacCalled')toast('Евакуація');
     if(event.type==='won'||event.type==='lost'){
-      if(event.type==='won'&&!practice&&!online){
+      if(event.type==='won'&&!practice&&!online&&!world.survival){
         saveRecord({seconds:world.time,rescued:world.rescued,kills:world.kills,shots:world.shots,hits:world.hits},world.missionIndex);
         remember();progress.mission=nextCampaignMission(world.missionIndex)??(world.missionIndex===FINAL_MISSION?FINAL_MISSION:CAMPAIGN_ROUTE[0]);progress.completed=world.missionIndex===FINAL_MISSION;saveProgress(progress);
         if(nextCampaignMission(world.missionIndex)!==null)transition=1.2;
-      }showMenu();
+      }showMenu();if(world.survival){void survivalUI.update(world,true).catch(()=>{});if(!survivalUI.open)survivalUI.result(world);}
     }
   }
+  if(world.survival&&world.mode==='playing')void survivalUI.update(world).catch(()=>{});
   publishOnline(dt);world.events=[];cinematic.sync(world);view.render(world,dt,frame.action.move);if(!world.story)sound.syncWorld(world);sound.step(dt,!!world.story?false:musicDanger(world,frame.action.fire),world.mode==='playing',frame.action.fire,world.mode==='ready'&&!menu.hidden&&document.hasFocus()&&!document.hidden&&!settings.open);
   if(toastTime>0){toastTime-=dt;if(toastTime<=0)$('toast').classList.remove('visible');}
   if(transition>0&&!sound.announcing&&!settings.open&&!feedback.open&&document.hasFocus()&&!document.hidden){transition-=dt;if(transition<=0)startMission(nextCampaignMission(world.missionIndex)??CAMPAIGN_ROUTE[0]);}
   uiTime+=dt;if(uiTime>.08){ui();uiTime=0;}
 };
 
-function syncOnlineControls(){for(const id of ['pause-restart','pause-roster'])$(id).hidden=!!online;}
+function syncOnlineControls(){$('pause-restart').hidden=!!online;$('pause-roster').hidden=!!online||!!world.survival;}
 function leaveOnline(message?:string){
+ const endedWorld=world.survival?world:null;if(endedWorld)endRun('disconnect');
  if(online)telemetry.event(message?'coop_error':'coop_leave',online.role,world.missionIndex);guestActions.clear();
  const old=online;online=null;old?.close();writer=null;outgoingEvents=[];netClock=0;netSequence=0;guestEpoch='';
  sound.stopAll();cinematic.dismiss();onlineMenu.close();feedback.close();flags.stop();practice=false;transition=0;
- world=new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);syncOnlineControls();showMenu();
+ world=endedWorld??new World(progress.mission,progress.unlocked,progress.hero);view.reset(world);syncOnlineControls();showMenu();
+ if(endedWorld){world.events=[];survivalUI.result(world);return;}
  if(message){$('online-status').textContent=message;onlineMenu.showModal();$('online-close').focus();}
 }
 function publishOnline(dt:number){
@@ -304,12 +326,13 @@ function onlineCommand(command:RoomCommand){
  if(command==='pause')pause('Пауза друга');
  if(command==='resume')resume(false);
  if(command==='continue'){if(world.story&&world.mode==='playing')skipStory(world);else if(world.mode==='cinematic')cinematic.confirm();}
- if(command==='next'&&world.mode==='won')begin();
+ if(command==='next'&&(world.mode==='won'||!!world.survival&&world.mode==='lost'))begin();
 }
 cinematic.onConfirm=()=>{if(online?.role==='guest'){online.command('continue');return false;}return true;};
 async function enterOnline(role:'host'|'guest'){
  if(!ready||onlineLoading)return;
- if(online)leaveOnline();const attempt=++onlineAttempt;onlineLoading=true;$('online-status').textContent='Підключення…';
+ const endless=$<HTMLSelectElement>('online-mode').value==='survival';
+ if(online)leaveOnline();survivalUI.close();const attempt=++onlineAttempt;onlineLoading=true;$('online-status').textContent='Підключення…';
  try{
   const {OnlineRoom,normalizeRoom,validRoom}=await import('./game/online');
   const {connectionConfig}=await import('./game/ice');
@@ -326,16 +349,17 @@ async function enterOnline(role:'host'|'guest'){
    connected:guestHero=>{
     telemetry.event('coop_connected',role,world.missionIndex);
     if(role==='host'){
-     sound.stopAll();world=new World(world.missionIndex,HEROES.map(h=>h.id),hero);world.addPlayer(guestHero);world.mode='playing';writer=new SnapshotWriter(world);
+     sound.stopAll();world=endless?survivalWorld(hero,guestHero):new World(world.missionIndex,HEROES.map(h=>h.id),hero);if(!endless)world.addPlayer(guestHero);else survivalUI.register(world);world.mode='playing';writer=new SnapshotWriter(world);
      onlineMenu.close();menu.hidden=true;pauseMenu.hidden=true;view.reset(world);input.clear();accumulator=0;canvas.focus();flags.play();sound.announce('missionStart',hero);
     }else $('online-status').textContent='Друг поруч. Завантаження спільної операції…';
     syncOnlineControls();
    },
    snapshot:s=>{
     const fresh=s.epoch!==guestEpoch;
-    if(fresh){sound.stopAll();cinematic.dismiss();world=new World(s.mission,s.state.unlocked as typeof world.unlocked,s.players[0].heroId);guestEpoch=s.epoch;}
+    if(fresh){sound.stopAll();cinematic.dismiss();survivalUI.close();world=s.state.survival?survivalWorld(s.players[0].heroId):new World(s.mission,s.state.unlocked as typeof world.unlocked,s.players[0].heroId);guestEpoch=s.epoch;}
     const before=world.mode;applySnapshot(world,s);
     if(fresh){onlineMenu.close();menu.hidden=true;pauseMenu.hidden=true;view.reset(world);input.clear();canvas.focus();flags.play(s.mission%2===1);}
+    if(world.mode==='lost'&&before!=='lost'){showMenu();if(world.survival)survivalUI.result(world);}
     if(world.mode==='playing'){menu.hidden=true;pauseMenu.hidden=true;cinematic.dismiss();}
     if(world.mode==='paused'&&before!=='paused'){sound.stopAll();menu.hidden=true;pauseMenu.hidden=false;input.clear();$('pause-mission').textContent=world.mission.name;$('pause-resume').focus();}
    },
@@ -346,7 +370,7 @@ async function enterOnline(role:'host'|'guest'){
  finally{onlineLoading=false;}
 }
 for(const hero of HEROES)$<HTMLSelectElement>('online-hero').add(new Option(hero.name,hero.id));
-$('online-open').onclick=()=>{input.clear();$('online-status').textContent='';$('online-invite').hidden=true;onlineMenu.showModal();$('online-create').focus();};
+$('online-open').onclick=()=>{input.clear();$('online-status').textContent='';$<HTMLSelectElement>('online-mode').value='campaign';$('online-invite').hidden=true;onlineMenu.showModal();$('online-create').focus();};
 function closeOnlineMenu(){onlineAttempt++;if(online&&!online.connected){leaveOnline();return;}onlineMenu.close();input.clear();$('online-open').focus();}
 $('online-close').onclick=closeOnlineMenu;onlineMenu.addEventListener('cancel',e=>{e.preventDefault();closeOnlineMenu();});
 $('online-create').onclick=()=>void enterOnline('host');$('online-join').onclick=()=>void enterOnline('guest');
@@ -359,4 +383,4 @@ function closeAbout(){about.close();input.clear();$('about-open').focus();}
 $('about-close').onclick=closeAbout;about.addEventListener('cancel',e=>{e.preventDefault();closeAbout();});
 
 void view.init().then(()=>{telemetry.event('load_ready');ready=true;for(const node of Array.from(document.querySelectorAll<HTMLElement>('.roster-image'))){const im=document.createElement('img');im.src=view.portrait(node.dataset.hero!);im.alt='';node.append(im);}view.reset(world);$<HTMLButtonElement>('primary').disabled=false;showMenu();const invite=new URLSearchParams(location.search).get('room');if(invite){$<HTMLInputElement>('online-code').value=invite;$('online-open').click();}const record=readRecord(world.missionIndex);if(record)$('result').textContent=`Найкращий час: ${formatTime(record.seconds)}`;ui();}).catch(error=>{telemetry.event('load_error');telemetry.flush();$('primary').textContent='Не вдалося завантажити гру';$('menu-copy').textContent='Оновіть сторінку або повідомте про помилку кнопкою внизу.';console.error(error);});
-window.addEventListener('pagehide',()=>{runMetrics.leave();telemetry.flush();online?.close();input.destroy();sound.dispose();if(view.app)view.dispose();},{once:true});
+window.addEventListener('pagehide',()=>{survivalUI.finishOnUnload(world);runMetrics.leave();telemetry.flush();online?.close();input.destroy();sound.dispose();if(view.app)view.dispose();},{once:true});

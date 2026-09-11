@@ -47,7 +47,7 @@ export function stepVehicle(w:World,e:Enemy,dt:number){
  v.age+=dt;
  if(v.phase==='warning'){if(v.age<VEHICLES[v.kind].warning)return;v.phase='hunt';v.age=0;}
  const decoy=e.distracted?w.effects.find(f=>f.hero==='lesya'&&f.kind==='special'):undefined;
- const target=decoy??[...w.players.filter(a=>a.body.cloak<=0).map(a=>a.body),...w.followers.filter(f=>f.hp>0)].sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y))[0];
+ const target=decoy??[...w.players.filter(a=>a.body.hp>0&&a.body.cloak<=0).map(a=>a.body),...w.followers.filter(f=>f.hp>0)].sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y))[0];
  if(v.kind==='tank'){
   const floor=Math.max(-2,...w.boxes.filter(b=>b.hp>0&&Math.abs(b.x-e.x)<b.w/2+1.2&&b.y+b.h<=e.y+.1).map(b=>b.y+b.h));e.y=Math.max(floor,e.y-8*dt);
   e.cooldown=Math.max(0,e.cooldown-dt);
@@ -85,7 +85,7 @@ export function stepVehicle(w:World,e:Enemy,dt:number){
   let hit=2;
   const test=(x:number,y:number,width:number,height:number)=>{const t=segmentHit(oldX,oldY+.4,e.x,e.y+.4,x-width/2-.4,y-.3,x+width/2+.4,y+height);if(t!==null)hit=Math.min(hit,t);};
   for(const b of w.boxes)if(b.hp>0)test(b.x,b.y,b.w,b.h);
-  for(const a of w.players)if(!a.mounted)test(a.body.x,a.body.y,.65,1.6);for(const t of w.mounts)if(t.armor>0)test(t.x,t.y,TANK.w,TANK.h);for(const f of w.followers)if(f.hp>0)test(f.x,f.y,.7,1.5);
+  for(const a of w.players)if(a.body.hp>0&&!a.mounted)test(a.body.x,a.body.y,.65,1.6);for(const t of w.mounts)if(t.armor>0)test(t.x,t.y,TANK.w,TANK.h);for(const f of w.followers)if(f.hp>0)test(f.x,f.y,.7,1.5);
   if(hit<=1||e.y<-2||v.age>12){e.hp=0;v.active=false;const t=Math.min(1,hit);hostileBlast(w,oldX+(e.x-oldX)*t,oldY+(e.y-oldY)*t+.4,2.8,32);}
  }
 }
