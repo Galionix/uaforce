@@ -24,7 +24,7 @@ test('one interact rescues an ally exactly once without restoring the ultimate',
 test('extraction waits for commander then flies in and leaves without mandatory rescue or radio',()=>{
   const w=new World();w.mode='playing';w.player.x=w.mission.exit;w.step(1/60,{...IDLE,interact:true});assert.equal(w.mode,'playing');
   w.enemies.find(e=>e.heavy)!.hp=0;
-  for(let i=0;i<360;i++)w.step(1/60,IDLE);assert.equal(w.mode,'won');assert.equal(w.rescued,0);assert.equal(w.radioDestroyed,false);
+  for(let i=0;i<360;i++)w.step(1/60,{...IDLE,jump:w.evac.phase==='boarding'&&w.player.grounded});assert.equal(w.mode,'won');assert.equal(w.rescued,0);assert.equal(w.radioDestroyed,false);
 });
 test('damage uses checkpoint, invulnerability and finite lives',()=>{
   const w=new World();w.mode='playing';w.checkpoint=44;w.damagePlayer(100);

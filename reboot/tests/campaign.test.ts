@@ -25,7 +25,7 @@ for(let mission=0;mission<6;mission++)test(`mission ${mission+1} can be complete
   const goal=refill?.x??dropX??captive?.x??w.mission.exit;
   const travel=Math.abs(goal-p.x)<.25?0:Math.sign(goal-p.x);
   const evade=boss?.boss?.id==='putin'&&boss.boss.phase!=='recover'&&p.x>238;
-  w.step(1/60,{move:refill?travel:evade?-1:boss?(Math.abs(dx)>Math.min(w.hero.range-1,5)?Math.sign(dx):p.facing!==Math.sign(dx)?Math.sign(dx):0):travel,jump:((blocked>50&&Math.abs(goal-p.x)>.5)||!!boss&&(boss.boss!.phase==='windup'||p.y<(refill?.y??boss.y)-.2))&&p.grounded,ultimate:!!boss&&Math.abs(dx)<5&&p.energy>=100,fire:w.hero.mode==='single'?i%8===0:true,special:w.enemies.some(e=>e.hp>0&&Math.abs(e.x-p.x)<6),interact:true});
+  w.step(1/60,{move:refill?travel:evade?-1:boss?(Math.abs(dx)>Math.min(w.hero.range-1,5)?Math.sign(dx):p.facing!==Math.sign(dx)?Math.sign(dx):0):travel,jump:((w.evac.phase==='boarding')||(blocked>50&&Math.abs(goal-p.x)>.5)||!!boss&&(boss.boss!.phase==='windup'||p.y<(refill?.y??boss.y)-.2))&&p.grounded,ultimate:!!boss&&Math.abs(dx)<5&&p.energy>=100,fire:w.hero.mode==='single'?i%8===0:true,special:w.enemies.some(e=>e.hp>0&&Math.abs(e.x-p.x)<6),interact:true});
  }
  assert.equal(w.rescued,w.allies.length);
  assert.equal(w.mode,'won',JSON.stringify({x:w.player.x,mode:w.mode,phase:w.evac.phase,kills:w.kills,hp:w.enemies.find(e=>e.heavy)?.hp}));assert.equal(w.evac.phase,'done');

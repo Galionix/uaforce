@@ -44,7 +44,7 @@ for(const m of [1,2,11]){
   w.damageEnemy(e,e.maxHp*.4);stepBoss(w,e,.01);assert.equal(b.stage,2);w.damageEnemy(e,e.maxHp*.35);stepBoss(w,e,.01);assert.equal(b.stage,3);
   for(let i=0;i<600;i++)stepBoss(w,e,1/60);assert.ok(b.turn>=3);assert.ok(w.bullets.length>0||b.minions.length>0);
   w.damageEnemy(e,9999);assert.equal(b.active,false);assert.equal(w.objectiveComplete,true);assert.equal(w.bullets.filter(p=>!p.friendly).length,0);assert.ok(b.minions.every(id=>w.enemies.find(a=>a.id===id)!.hp<=0));
-  w.player.x=w.mission.exit;tick(w,360);assert.equal(w.mode,'won');assert.equal(w.events.filter(v=>v.type==='bossDefeated').length,1);
+  w.player.x=w.mission.exit;tick(w,180);assert.equal(w.evac.phase,'boarding');w.step(1/60,{...IDLE,jump:true});tick(w,180);assert.equal(w.mode,'won');assert.equal(w.events.filter(v=>v.type==='bossDefeated').length,1);
  });
 }
 test('active arena bounds hold the player; summoned drones have bounded living population',()=>{

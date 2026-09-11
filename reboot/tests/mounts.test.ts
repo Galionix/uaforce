@@ -48,9 +48,9 @@ test('tank movement emits engine only while moving and crushed barrels can damag
 test('drone collision uses the tank hull, including above the hidden pilot',()=>{
  const{w,t}=fixture();enter(w);const drone=addVehicle(w,'shahed',t.x+3,t.y+1.8,0);Object.assign(drone.vehicle!,{active:true,phase:'dive',vx:-10,vy:0});run(w,10);assert.equal(drone.hp,0);assert.ok(t.armor<TANK.armor);assert.equal(w.player.hp,67);
 });
-for(let m=0;m<6;m++)test(`mission ${m+1} has two accessible tanks and evacuation releases an occupied tank`,()=>{
+for(let m=0;m<6;m++)test(`mission ${m+1} has two accessible tanks and evacuation waits until the driver exits into the cabin`,()=>{
  const w=new World(m);assert.equal(w.mounts.length,2);for(const t of w.mounts){assert.ok(!w.boxes.some(b=>b.hp>0&&b.kind!=='platform'&&b.y+b.h>t.y+.1&&b.y<t.y+TANK.h&&Math.abs(b.x-t.x)<b.w/2+TANK.w/2));}
- w.mode='playing';w.enemies=[];w.boss=null;const t=w.mounts[0];t.x=w.mission.exit;w.player.x=t.x;enter(w);assert.equal(w.mounted,t);run(w,370);assert.equal(w.mode,'won');assert.equal(w.mounted,null);
+ w.mode='playing';w.enemies=[];w.boss=null;const t=w.mounts[0];t.x=w.mission.exit;w.player.x=t.x;enter(w);assert.equal(w.mounted,t);run(w,370);assert.equal(w.evac.phase,'boarding');assert.equal(w.mounted,t);enter(w);run(w,180);assert.equal(w.mode,'won');assert.equal(w.mounted,null);
 });
 
 test('enemy contact is a paced impact, not armor damage on every rendered frame',()=>{const{w,t}=fixture();enter(w);w.enemies.push({id:w.nextId(),x:t.x,y:0,hp:200,maxHp:200,dir:-1,cooldown:999,windup:0,anchor:t.x,heavy:false});run(w,60);assert.equal(t.armor,TANK.armor-24);assert.equal(w.player.hp,67);});

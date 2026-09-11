@@ -2,6 +2,7 @@ import {buildOperation} from './build-operation.ts';
 import {doHighFive,maintainHighFiveOffer,cancelHighFiveOffer,TEAM_BOOST} from './interactions.ts';
 import {storyTrigger,stepStory,type StoryState} from './story-scenes.ts';
 import {constrainTeam,sharedRespawn} from './shared-screen.ts';
+import {canBoardHelicopter} from './evacuation.ts';
 import {missionInfantry,stepInfantry,frighten,type Infantry,type InfantryKind} from './infantry.ts';
 import {nearbyBarrel,interactBarrel,stepBarrels,dropBarrel} from './barrels.ts';
 import {DeathLines,type DeathCause} from './enemy-death.ts';
@@ -132,7 +133,7 @@ export class World {
     if(nearbyMount(this))return 'Сісти в танк';
     if(nearbyBarrel(this))return 'Підняти бочку';
     if(this.evac.phase==='arriving')return 'Гелікоптер наближається — тримайте точку';
-    if(this.evac.phase==='boarding')return 'Підійдіть до троса біля прапора';
+    if(this.evac.phase==='boarding')return 'Стрибніть у гелікоптер';
     if(this.nextPost)return 'До наступного поста';
     if(this.boxes.some(b=>b.required&&b.hp>0))return 'Знищіть військові цілі';
     if(this.objectiveComplete)return 'До прапора евакуації →';
@@ -157,8 +158,11 @@ export class World {
     if(e.phase==='arriving'){
       e.time+=dt;const t=Math.min(1,e.time/2.6),ease=t*t*(3-2*t);e.x=x+22*(1-ease);e.y=y+3+5*(1-ease);
       if(t===1){e.phase='boarding';e.time=0;}
-    }else if(e.phase==='boarding'&&Math.abs(p.x-x)<7&&Math.abs(p.y-y)<4){
-      exitMount(this);e.phase='departing';e.time=0;p.ladder=-1;this.bullets=[];this.event('boarded',x,y+1);
+    }else if(e.phase==='boarding'){
+      // Either co-op fighter can initiate the existing team extraction. The
+      // closest fighter to the ground flag must not hide a partner's cabin jump.
+      const boarding=this.players.find(actor=>canBoardHelicopter(actor,e));
+      if(boarding){for(const actor of this.players)this.withPlayer(actor.id,()=>exitMount(this));e.phase='departing';e.time=0;boarding.body.ladder=-1;this.bullets=[];this.withPlayer(boarding.id,()=>this.event('boarded',e.x,e.y));}
     }else if(e.phase==='departing'){
       e.time+=dt;e.x=x+e.time*5;e.y=y+3+e.time*3;p.x=e.x;p.y=e.y-1;p.vy=0;
       if(e.time>=2.2){e.phase='done';this.mode='won';this.event('won',p.x,p.y);}

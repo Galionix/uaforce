@@ -303,7 +303,7 @@ export class View {
     const e=w.evac;if(e.phase==='waiting'||e.phase==='done')return;
     const x=e.x*S-this.cameraX,y=266-e.y*S+this.cameraY;
     this.abilityArt.draw(this.c,'summons',8+Math.floor(this.clock*14)%4,x,y+3,112,76,1);
-    if(e.phase==='boarding'){this.rect(x,y+18,1,32,'#d5cbaa');this.label('НА БОРТ ↓',x,y-20,'#fff1a6');}
+    if(e.phase==='boarding'){this.label('НА БОРТ ↑',x,y-20,'#fff1a6');}
     else if(e.phase==='departing'){this.sprite(e.x,e.y-1,1,3,false,false,HEROES.findIndex(h=>h.id===w.heroId));this.rect(x,y+18,1,9,'#d5cbaa');}
   }
   dispose(){cancelAnimationFrame(this.request);}

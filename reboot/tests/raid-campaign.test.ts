@@ -21,7 +21,7 @@ for(const index of [9,10,11])test(`raid ${index}: objectives block extraction an
  for(const target of objectives){if(target.hp<=0)continue;w.player.x=target.x-(target.w/2+2);w.player.y=target.y;w.player.vy=0;w.player.facing=1;
   for(let i=0;i<1200&&target.hp>0;i++)w.step(1/60,{...IDLE,fire:i%120===0});assert.ok(target.hp<=0,JSON.stringify({index,target,player:w.player.x}));
  }
- assert.equal(w.objectiveComplete,true); w.player.x=w.mission.exit;w.player.y=0;tick(w,360);assert.equal(w.mode,'won');
+ assert.equal(w.objectiveComplete,true); w.player.x=w.mission.exit;w.player.y=0;tick(w,180);assert.equal(w.evac.phase,'boarding');w.step(1/60,{...IDLE,jump:true});tick(w,180);assert.equal(w.mode,'won');
 });
 test('fuel ignition is delayed, pauses, chains into a parked jet, and synchronizes to guest',()=>{
  const w=new World(10);w.mode='playing';w.enemies=[];w.player.invulnerable=1e6;w.addPlayer('lesya');const writer=new SnapshotWriter(w);const guest=new World(10);

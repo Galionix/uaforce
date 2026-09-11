@@ -24,7 +24,7 @@ test('upper rescues, medicine and ammo cannot be collected from beneath their fl
  }
 });
 test('extraction requires route posts and correct elevation, then completes normally',()=>{
- for(const {m,i} of cases){const w=quiet(i),l=m.layout!;w.player.x=m.exit;w.player.y=l.exitY;frame(w);assert.equal(w.evac.phase,'waiting');w.routeProgress=l.checkpoints.length-1;w.player.y=0;frame(w);assert.equal(w.evac.phase,'waiting');w.player.y=l.exitY;w.player.vy=0;frame(w,320);assert.equal(w.mode,'won');}
+ for(const {m,i} of cases){const w=quiet(i),l=m.layout!;w.player.x=m.exit;w.player.y=l.exitY;frame(w);assert.equal(w.evac.phase,'waiting');w.routeProgress=l.checkpoints.length-1;w.player.y=0;frame(w);assert.equal(w.evac.phase,'waiting');w.player.x=m.exit;w.player.y=l.exitY;w.player.vy=0;frame(w,180);assert.equal(w.evac.phase,'boarding');w.step(1/60,{...IDLE,jump:true});frame(w,180);assert.equal(w.mode,'won');}
 });
 
 for(const coop of [false,true])for(const ruined of [false,true])for(const {m,i} of MISSIONS.map((m,i)=>({m,i})).filter(({m})=>m.layout))test(`${m.name}: ${coop?'coop':'solo'} ${ruined?'destroyed':'intact'} route using normal input`,()=>{
@@ -46,7 +46,7 @@ for(const coop of [false,true])for(const ruined of [false,true])for(const {m,i} 
   }
   assert.ok(ticks<1800,JSON.stringify({mission:m.name,index,target,actual:w.players.map(a=>({x:a.body.x,y:a.body.y,ladder:a.body.ladder})),route:w.routeProgress}));
  }
- frame(w,340);assert.equal(w.mode,'won');
+ frame(w,180);assert.equal(w.evac.phase,'boarding');w.stepPlayers(1/60,w.players.map(()=>({...IDLE,jump:true})));frame(w,180);assert.equal(w.mode,'won');
 });
 
 test('upper commander can be defeated with ordinary weapon fire on every new operation',()=>{

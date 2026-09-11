@@ -1,5 +1,6 @@
 // English UI catalog. Ukrainian source phrases remain stable simulation data.
 export const EN:Record<string,string>={
+  "Посадка в гелікоптер лише стрибком до кабіни: із землі більше не підбирає.": "Jump into the helicopter cabin to board: standing on the ground no longer extracts you.",
   "При відкритті бійця музика звучить довше й повертає гучність після імені.": "Fighter unlock music lasts longer and returns to full volume after the name.",
   "Плавна камера та нова атмосфера": "Smooth camera and new atmosphere",
   "Плавні повороти камери на телефоні, нова погода та потужніші вибухи.": "Smooth camera turns on phones, new weather and bigger explosions.",
@@ -273,7 +274,7 @@ export const EN:Record<string,string>={
   "Не завантажився": "Failed to load",
   "ВРЯТУЙ": "RESCUE",
   "А-А!": "AAH!",
-  "НА БОРТ ↓": "BOARD ↓",
+  "НА БОРТ ↑": "BOARD ↑",
   "Дальність": "Range",
   "м. Пауза між ударами": "m. Time between strikes",
   "Черга": "Burst of",
@@ -289,7 +290,7 @@ export const EN:Record<string,string>={
   "Сісти в танк": "Enter tank",
   "Підняти бочку": "Pick up barrel",
   "Гелікоптер наближається — тримайте точку": "Helicopter inbound — hold the position",
-  "Підійдіть до троса біля прапора": "Approach the rope by the flag",
+  "Стрибніть у гелікоптер": "Jump into the helicopter",
   "До прапора евакуації →": "To the extraction flag →",
   "Поверни телефон горизонтально": "Turn your phone sideways",
   "Пропустити · Enter": "Skip · Enter",
