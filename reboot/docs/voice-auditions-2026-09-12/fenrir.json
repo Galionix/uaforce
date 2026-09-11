@@ -1,0 +1,9 @@
+{
+  "voice": "Fenrir",
+  "model": "gemini-3.1-flash-tts-preview",
+  "text": "Перемо́га!\nНовий боєць! Тарас Шевче́нко!\nЛе́ся Украї́нка!\nДо бо́ю!",
+  "prompt": "Synthesize speech. An exuberant charismatic male action-game announcer. Athletic arena energy, playful heroic swagger, a punchy rising crescendo, clearly spoken rather than screamed. Native standard Ukrainian. Crisp Ukrainian consonants, especially the voiced Ukrainian г in перемога; stress перемОга. Do not swallow consonants or change words. Dry clean studio voice, no music, no effects, no pitch processing. Brief 0.45 second pauses between the four lines. Speak ONLY the transcript once.\nTRANSCRIPT:\nПеремо́га!\nНовий боєць! Тарас Шевче́нко!\nЛе́ся Украї́нка!\nДо бо́ю!",
+  "seconds": 10.56,
+  "sha256": "6761186d2f3d73b75faa98e7b032a465001fb1e2496f76808579922d02ace56f",
+  "playbackDuringGeneration": false
+}

@@ -1,5 +1,6 @@
 // English UI catalog. Ukrainian source phrases remain stable simulation data.
 export const EN:Record<string,string>={
+  "При відкритті бійця музика звучить довше й повертає гучність після імені.": "Fighter unlock music lasts longer and returns to full volume after the name.",
   "Плавна камера та нова атмосфера": "Smooth camera and new atmosphere",
   "Плавні повороти камери на телефоні, нова погода та потужніші вибухи.": "Smooth camera turns on phones, new weather and bigger explosions.",
   "Камера плавно змінює напрямок на телефоні. У кооперативі обидва бійці залишаються в кадрі.": "The camera turns smoothly on phones. Both fighters stay in view in co-op.",

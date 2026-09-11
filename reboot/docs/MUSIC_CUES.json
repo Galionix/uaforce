@@ -6,8 +6,8 @@
   "clips": [
     {
       "file": "public/assets/audio/cues/hero.wav",
-      "sha256": "7fda3084ed4da2c64daf88a21e6815185baf59aabe35f99e0e0c489e01981cb9",
-      "seconds": 3.15,
+      "sha256": "65aaf67e424201b11a94da057056f1f03367b7a039a90d00a3caf9f52ca773be",
+      "seconds": 8.4,
       "rms": 0.14361371099948883,
       "peak": 0.8600000143051147,
       "sourceStart": 0.17,

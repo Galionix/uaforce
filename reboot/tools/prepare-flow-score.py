@@ -12,7 +12,7 @@ MANIFEST = ROOT / 'docs/FLOW_MUSIC_REPLACEMENT.json'
 SOURCE = ROOT / 'tools/audio-source/flowmusic-2026-09-12'
 STAGE = SOURCE / 'prepared'
 RATE = 44100
-CUE_SECONDS = {'hero': 3.15, 'victory': 3.4, 'defeat': 2.5,
+CUE_SECONDS = {'hero': 8.4, 'victory': 3.4, 'defeat': 2.5,
                'checkpoint': 1.3, 'evac': 1.8, 'boss-iron': 7.5,
                'boss-swarm': 7.5, 'boss-putin': 7.5}
 

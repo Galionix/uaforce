@@ -435,13 +435,13 @@
       "sourceSeconds": 65.47201814058957,
       "prepared": {
         "file": "tools/audio-source/flowmusic-2026-09-12/prepared/cues/hero.wav",
-        "sha256": "7fda3084ed4da2c64daf88a21e6815185baf59aabe35f99e0e0c489e01981cb9",
-        "seconds": 3.15,
-        "rms": 0.14361371099948883,
+        "sha256": "65aaf67e424201b11a94da057056f1f03367b7a039a90d00a3caf9f52ca773be",
+        "seconds": 8.4,
+        "rms": 0.13065339624881744,
         "peak": 0.8600000143051147,
         "sourceStart": 0.17,
-        "sourceLength": 3.15,
-        "processing": "First sustained generated phrase (at least 55% active 10ms windows), 6ms attack and 250ms release; RMS/peak-limited gain"
+        "sourceLength": 8.4,
+        "processing": "Existing Flow hero performance extended to 8.4s; 6ms attack, 450ms release, RMS/peak-limited gain; no looping or pitch/time alteration"
       },
       "short": {
         "file": "tools/audio-source/flowmusic-2026-09-12/prepared/cues/short.wav",
@@ -2393,7 +2393,8 @@
     },
     {
       "file": "public/assets/audio/cues/hero.wav",
-      "sha256": "7fda3084ed4da2c64daf88a21e6815185baf59aabe35f99e0e0c489e01981cb9"
+      "sha256": "65aaf67e424201b11a94da057056f1f03367b7a039a90d00a3caf9f52ca773be",
+      "seconds": 8.4
     },
     {
       "file": "public/assets/audio/cues/short.wav",

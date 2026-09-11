@@ -1,0 +1,9 @@
+{
+  "voice": "Kore",
+  "model": "gemini-3.1-flash-tts-preview",
+  "text": "Перемо́га!\nНовий боєць! Тарас Шевче́нко!\nЛе́ся Украї́нка!\nДо бо́ю!",
+  "prompt": "Synthesize speech. A confident, charismatic female arena announcer. Brilliant projection, a triumphant smile, firm articulate attack and lively theatrical energy. Native standard Ukrainian. Crisp Ukrainian consonants, especially the voiced Ukrainian г in перемога; stress перемОга. Do not swallow consonants or change words. Dry clean studio voice, no music, no effects, no pitch processing. Brief 0.45 second pauses between the four lines. Speak ONLY the transcript once.\nTRANSCRIPT:\nПеремо́га!\nНовий боєць! Тарас Шевче́нко!\nЛе́ся Украї́нка!\nДо бо́ю!",
+  "seconds": 11.8,
+  "sha256": "979d04481596a18c71abc27ebb8f48e3e7b35d915e172ab9a139b38e135f8777",
+  "playbackDuringGeneration": false
+}

@@ -1,0 +1,9 @@
+{
+  "voice": "Orus",
+  "model": "gemini-3.1-flash-tts-preview",
+  "text": "Перемо́га!\nНовий боєць! Тарас Шевче́нко!\nЛе́ся Украї́нка!\nДо бо́ю!",
+  "prompt": "Synthesize speech. A charismatic male commander and arena announcer. Resonant chest voice, authoritative and victorious, clear powerful delivery, a confident smile. Native standard Ukrainian. Crisp Ukrainian consonants, especially the voiced Ukrainian г in перемога; stress перемОга. Do not swallow consonants or change words. Dry clean studio voice, no music, no effects, no pitch processing. Brief 0.45 second pauses between the four lines. Speak ONLY the transcript once.\nTRANSCRIPT:\nПеремо́га!\nНовий боєць! Тарас Шевче́нко!\nЛе́ся Украї́нка!\nДо бо́ю!",
+  "seconds": 11.88,
+  "sha256": "fca8f5ecac2fd758313ee8af3c0079f7f6a933df6f622955af4f6422cc34bfa9",
+  "playbackDuringGeneration": false
+}
