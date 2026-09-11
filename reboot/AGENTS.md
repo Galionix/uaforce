@@ -1,5 +1,10 @@
 # UaForce browser reboot
 
+- Public release notes: maintain `src/game/updates.ts` newest-first with actual release
+  dates and concise player-facing shipped changes, plus English phrases in `en.ts`.
+  Main menu shows only the latest summary; full history stays in its dialog. Sound
+  controls belong in Settings; do not restore the one-way main-menu music button.
+
 - Music replacement authority (owner, 2026-09-12): `docs/FLOW_MUSIC_REPLACEMENT.json`
   and `docs/FLOW_MUSIC_WORKFLOW.md`. Generate through Google Flow Music in the
   Codex in-app browser, one UAForce project/session, one request at a time. Wait

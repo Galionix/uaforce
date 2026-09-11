@@ -1,3 +1,4 @@
+import {UPDATES} from './game/updates.ts';
 import {CAMPAIGN_ROUTE,SIDE_OPERATIONS,FINAL_MISSION,nextCampaignMission,campaignChapter} from './game/campaign.ts';
 import {getLocale,setLocale,onLocaleChange} from './game/i18n.ts';
 import {localizeDocument} from './game/localized-dom.ts';
@@ -42,6 +43,20 @@ const roster=$<HTMLDialogElement>('roster'), operations=$<HTMLDialogElement>('op
 const menuFx=new PresentationFx($<HTMLCanvasElement>('menu-fx'));
 let menuClock=0;
 const onlineMenu=$<HTMLDialogElement>('online-menu'),about=$<HTMLDialogElement>('about-game');
+
+const updates=$<HTMLDialogElement>('updates');
+const latestDate=$<HTMLTimeElement>('latest-update-date');latestDate.dateTime=UPDATES[0].date;latestDate.textContent=UPDATES[0].displayDate;
+$('latest-update-summary').textContent=UPDATES[0].summary;
+for(const entry of UPDATES){
+  const article=document.createElement('article'),date=document.createElement('time'),title=document.createElement('h3'),list=document.createElement('ul');
+  date.dateTime=entry.date;date.textContent=entry.displayDate;title.textContent=entry.title;
+  for(const line of entry.items){const li=document.createElement('li');li.textContent=line;list.append(li);}
+  article.append(date,title,list);$('updates-list').append(article);
+}
+$('updates-open').onclick=()=>{input.clear();menuIndex=0;updates.showModal();$('updates-close').focus();};
+function closeUpdates(){updates.close();input.clear();$('updates-open').focus();}
+$('updates-close').onclick=closeUpdates;updates.addEventListener('cancel',e=>{e.preventDefault();closeUpdates();});
+
 let onlineAttempt=0;
 let online:OnlineRoom|null=null,onlineLoading=false,roomCode='',writer:SnapshotWriter|null=null,netClock=0,netSequence=0,guestEpoch='';
 let outgoingEvents:typeof world.events=[];
@@ -84,6 +99,7 @@ function showMenu(){
   $('primary').textContent=paused?'Продовжити':won?(last?'Грати знову':side?'До кампанії':'Наступна операція →'):lost?'Спробувати знову':'Одиночна гра';
   if(practice){$('menu-kicker').textContent='ВИПРОБУВАННЯ БІЙЦЯ';$('menu-title').textContent=world.hero.name;$('menu-copy').textContent='J / RT — зброя · E / RB — спецприйом · Q / LT — ульта. Обери іншого бійця або повтори випробування.';if(!paused)$('primary').textContent='Повторити випробування';}
   $('campaign-return').hidden=!practice;
+  $('latest-update').hidden=world.mode!=='ready'||practice;
   for(const id of ['online-open','roster-open','operations-open'])$(id).hidden=!!online;
   $('restart').hidden=!paused;$('hero-cycle').hidden=practice||paused||lost;$('mission-cycle').hidden=true;
   $('mission-cycle').textContent=`Обрати операцію: ${world.missionIndex+1}/${MISSIONS.length} · ${world.mission.region}`;
@@ -100,7 +116,6 @@ for(const [label,ids] of [['На Москву',CAMPAIGN_ROUTE],['Додатко�
 $('operations-open').onclick=()=>{input.clear();operations.showModal();operations.querySelector('button')?.focus();};
 function closeOperations(){operations.close();input.clear();$('operations-open').focus();}
 $('operations-close').onclick=closeOperations;operations.addEventListener('cancel',e=>{e.preventDefault();closeOperations();});
-$('menu-audio').onclick=()=>{sound.music=true;$<HTMLInputElement>('music').checked=true;try{localStorage.setItem('uaforce.audio.background','on');}catch{}void sound.enable();};
 window.addEventListener('pointerdown',()=>{void sound.enable();},{once:true});
 window.addEventListener('keydown',()=>{void sound.enable();},{once:true});
 function closeRoster(){roster.close();input.clear();$(pauseMenu.hidden?'roster-open':'pause-roster').focus();}
@@ -143,7 +158,9 @@ $('settings-open').onclick=openSettings;$('menu-controls').onclick=openSettings;
 settings.addEventListener('cancel',event=>{event.preventDefault();if(input.capture){input.capture=null;$('capture-hint').textContent='Призначення скасовано.';}else closeSettings();});
 $('reset-controls').onclick=()=>{input.bindings=freshBindings();input.save();drawBindings();};
 for(const[id,key]of[['move-axis','moveAxis'],['deadzone','deadzone']]as const)$<HTMLInputElement>(id).oninput=()=>{const val=Number($<HTMLInputElement>(id).value);if(Number.isFinite(val))input.bindings[key]=key==='deadzone'?Math.max(.05,Math.min(.5,val)):Math.max(0,Math.min(15,Math.round(val)));input.save();$('deadzone-value').textContent=input.bindings.deadzone.toFixed(2);};
-$<HTMLInputElement>('volume').oninput=()=>{sound.setVolume(Number($<HTMLInputElement>('volume').value));void sound.enable();};
+try{const saved=localStorage.getItem('uaforce.audio.master');if(saved!==null&&Number.isFinite(Number(saved)))sound.setVolume(Math.max(0,Math.min(1,Number(saved))));}catch{}
+$<HTMLInputElement>('volume').value=String(sound.volume);
+$<HTMLInputElement>('volume').oninput=()=>{sound.setVolume(Number($<HTMLInputElement>('volume').value));try{localStorage.setItem('uaforce.audio.master',String(sound.volume));}catch{}void sound.enable();};
 try{sound.music=localStorage.getItem('uaforce.audio.background')!=='off';}catch{}
 $<HTMLInputElement>('music').checked=sound.music;
 $<HTMLInputElement>('music').onchange=()=>{sound.music=$<HTMLInputElement>('music').checked;try{localStorage.setItem('uaforce.audio.background',sound.music?'on':'off');}catch{}void sound.enable();};
@@ -151,7 +168,7 @@ for(const channel of ['effects','music','voice'] as const){
   const control=$<HTMLInputElement>(channel+'-volume');
   try{const saved=localStorage.getItem('uaforce.audio.'+channel);if(saved!==null)sound.setMix(channel,Number(saved));}catch{}
   control.value=String(channel==='effects'?sound.effectsVolume:channel==='music'?sound.musicVolume:sound.voiceVolume);
-  control.oninput=()=>{sound.setMix(channel,Number(control.value));try{localStorage.setItem('uaforce.audio.'+channel,control.value);}catch{}};
+  control.oninput=()=>{sound.setMix(channel,Number(control.value));void sound.enable();try{localStorage.setItem('uaforce.audio.'+channel,control.value);}catch{}};
 }
 const previewSelect=$<HTMLSelectElement>('voice-preview-select');
 for(const h of ANNOUNCER_NAMES)previewSelect.add(new Option(h.name,h.id));
@@ -231,17 +248,16 @@ view.onFrame=dt=>{
   sound.bossBattle=!!world.boss?.boss?.active;sound.scoreTheme=world.mission.score;
   view.interactKey=battleKey('interact');
   view.setZoom(mobile.sceneZoom);
-  mobile.sync(world,!menu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||feedback.open||flags.active);
-  const frame=input.poll(dt),wasMenu=mobile.portrait||!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||feedback.open||flags.active;
+  mobile.sync(world,!menu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||updates.open||feedback.open||flags.active);
+  const frame=input.poll(dt),wasMenu=mobile.portrait||!menu.hidden||!pauseMenu.hidden||settings.open||roster.open||operations.open||onlineMenu.open||about.open||updates.open||feedback.open||flags.active;
   if(online?.role==='guest'&&online.connected){if(wasMenu||world.mode!=='playing'||world.story)guestActions.clear();else guestActions.add(frame.action);netClock+=dt;if(netClock>=1/30){online.input(wasMenu||world.mode!=='playing'||world.story?{move:0,jump:false,fire:false,special:false,interact:false}:guestActions.take(frame.action));netClock=0;}}
   if(world.mode==='cinematic'){cinematic.sync(world);cinematic.step(dt,frame.confirm||frame.action.jump);view.render(world,dt,0);sound.step(dt,false,false);publishOnline(dt);ui();return;}
   if(world.story&&world.mode==='playing'&&world.story.age>=.8&&frame.confirm)storySkip.click();
-  if(frame.pause){if(feedback.open)feedback.close();else if(onlineMenu.open)closeOnlineMenu();else if(about.open)closeAbout();else if(operations.open)closeOperations();else if(roster.open)closeRoster();else if(settings.open)closeSettings();else if(world.mode==='playing')pause();else if(world.mode==='paused')resume();}
+  if(frame.pause){if(feedback.open)feedback.close();else if(onlineMenu.open)closeOnlineMenu();else if(updates.open)closeUpdates();else if(about.open)closeAbout();else if(operations.open)closeOperations();else if(roster.open)closeRoster();else if(settings.open)closeSettings();else if(world.mode==='playing')pause();else if(world.mode==='paused')resume();}
   if(wasMenu){
     if(!menu.hidden){menuClock+=dt;menuFx.draw(menuClock,'menu');}
     if(frame.confirm)void sound.enable();
-    $('menu-audio').textContent=sound.audioReady&&sound.music?'♫ Музика увімкнена':'♫ Увімкнути музику';
-    const root=feedback.open?feedback.dialog:onlineMenu.open?onlineMenu:about.open?about:operations.open?operations:roster.open?roster:settings.open?settings:!pauseMenu.hidden?pauseMenu:menu;
+    const root=feedback.open?feedback.dialog:onlineMenu.open?onlineMenu:updates.open?updates:about.open?about:operations.open?operations:roster.open?roster:settings.open?settings:!pauseMenu.hidden?pauseMenu:menu;
     const buttons=Array.from(root.querySelectorAll<HTMLButtonElement>('button')).filter(b=>!b.hidden&&!b.disabled&&b.getClientRects().length>0);
     if(frame.up||frame.down){menuIndex=((buttons.indexOf(document.activeElement as HTMLButtonElement)>=0?buttons.indexOf(document.activeElement as HTMLButtonElement):menuIndex)+(frame.down?1:-1)+buttons.length)%Math.max(1,buttons.length);buttons[menuIndex]?.focus();}
     if(frame.confirm&&!input.capture){const focused=document.activeElement;((focused instanceof HTMLButtonElement&&root.contains(focused))?focused:buttons[menuIndex])?.click();}

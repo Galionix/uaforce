@@ -31,7 +31,7 @@
  .touch-device #menu{padding:12px max(76px,env(safe-area-inset-right)) 12px max(24px,env(safe-area-inset-left));display:block;min-height:100dvh}
  .touch-device .brief{max-width:660px}.touch-device #menu h1{font-size:32px;margin:5px 0}.touch-device #menu .eyebrow{font-size:12px}.touch-device .brief>p{font-size:14px;margin:5px 0}
  .touch-device #menu .menu-buttons{display:grid;max-width:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0}.touch-device #menu .menu-buttons button{grid-column:auto!important;min-height:44px;padding:7px;font-size:15px}
- .touch-device #menu .menu-buttons #primary{grid-column:1/3!important}.touch-device .project-links{gap:12px;margin:5px 0}.touch-device .project-links button{font-size:14px;padding:5px;min-height:36px}.touch-device .menu-audio{position:static;margin-top:4px;font-size:14px;min-height:36px}
+ .touch-device #menu .menu-buttons #primary{grid-column:1/3!important}.touch-device .project-links{gap:12px;margin:5px 0}.touch-device .project-links button{font-size:14px;padding:5px;min-height:36px}
  .touch-device .topbar{align-items:flex-start}.touch-device.menu-open .top-actions{flex-direction:column}.touch-device #hud{top:8px;left:50%;transform:translateX(-50%);right:auto}.touch-device #hud .objectives{gap:6px}.touch-device #hud .objective{height:30px;font-size:14px}.touch-device #hud .objective svg{width:24px;height:24px}.touch-device .mission-time{font-size:14px}
  .touch-device #battle-footer{inset:8px auto auto max(8px,env(safe-area-inset-left));padding:0;display:block}.touch-device #hero-status{height:40px;gap:6px}.touch-device #hero-portrait{width:32px;height:40px}.touch-device .hero-vitals{min-width:48px}.touch-device .life-count{font-size:16px}.touch-device .life-count svg{width:16px;height:16px}.touch-device .health{height:6px;width:64px}.touch-device #ability-icons{display:none}
  .touch-device #boss-status{top:52px;font-size:14px;padding:3px 8px;width:48vw}.touch-device #toast{top:52px;font-size:15px;max-width:64vw}.touch-device #interact-prompt{bottom:8px;font-size:14px}.touch-device .story-skip{right:max(10px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom));min-height:44px}
@@ -58,4 +58,10 @@ body:not(.touch-device) .mobile-setting{display:none}
 @media(orientation:landscape) and (max-height:340px){
  #touch-stick{bottom:max(12px,env(safe-area-inset-bottom));left:max(12px,env(safe-area-inset-left))}
  .touch-buttons{bottom:max(12px,env(safe-area-inset-bottom));right:max(12px,env(safe-area-inset-right))}
+}
+
+@media(orientation:landscape) and (max-height:600px){
+ .touch-device .latest-update{max-width:660px;width:100%;margin-top:8px;padding:8px 12px;display:grid;grid-template-columns:1fr auto;column-gap:12px}
+ .touch-device .update-heading{justify-content:start;gap:14px}.touch-device .update-heading h2{font-size:16px}.touch-device .latest-update time{font-size:12px}
+ .touch-device .latest-update p{grid-column:1;font-size:14px;margin:4px 0;line-height:1.3}.touch-device .latest-update button{grid-column:2;grid-row:1/3;font-size:14px;align-self:center}
 }
