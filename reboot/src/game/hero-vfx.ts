@@ -1,3 +1,4 @@
+import {drawTankBody} from './mount-view.ts';
 import {translate} from './i18n.ts';
 import type {Effect} from './world';
 import type {AbilityArt} from './ability-art';
@@ -11,12 +12,30 @@ export function drawHeroEffect(c:CanvasRenderingContext2D,f:Effect,x:number,y:nu
  const newHero=['usyk','almaziv','klychko','taira','prytula'].includes(f.hero);
  const reinforcement=(cell:number,xx=x,yy=y-20,size=48)=>art.draw(c,'reinforcements',cell,xx,yy,size,size,d,0,fade);
  if(newHero){
-  if(f.kind==='weapon'){reinforcement(f.hero==='taira'?1:Math.min(3,Math.floor(t*16)),x+d*22,y-19,f.hero==='klychko'?64:48);return;}
-  if(f.hero==='usyk'){for(let i=0;i<(f.kind==='ultimate'?3:1);i++)reinforcement((frame+i)%4,x-d*i*18,y-20,45+i*4);sparks(x,y-18,15,'#ffe078',55);}
-  if(f.hero==='klychko'){if(f.kind==='special')reinforcement(1,x+d*18,y-23,55);else {ring(x,y-8,45+Math.sin(t*5)*8,'#a1e1ee');reinforcement(frame,x+d*20,y-20,54);}}
-  if(f.hero==='taira'){reinforcement(f.kind==='special'?4+Math.min(2,Math.floor(t*4)):7,x,y-24,f.kind==='special'?45:85);sparks(x,y-18,12,'#79dbc0',45);}
-  if(f.hero==='almaziv'){reinforcement(f.kind==='special'?1:12,x+d*22,y-20,42);if(f.kind==='ultimate')for(let i=0;i<3;i++)blast(x+d*(i*35+20),y-25,t-.15-i*.5,60);}
-  if(f.hero==='prytula'){reinforcement(f.kind==='special'?8+frame:t<1?14:15,x,y-35-(f.kind==='ultimate'?Math.max(0,1-t)*90:0),f.kind==='ultimate'?105:48);}
+  // Contact sparks are small, short-lived and follow real strikes, never giant glove icons.
+  if(f.kind==='weapon'){reinforcement(Math.min(3,Math.floor(t/.22*4)),x+d*22,y-19,f.hero==='klychko'?36:24);return;}
+  if(f.hero==='usyk'){
+   // Dash dust at the feet; the ultimate accelerates actual punches rather than faking extra hits.
+   if(f.kind==='special'&&t<.3)reinforcement(7,x-d*14,y-3,24);
+   if(f.kind==='ultimate')sparks(x-d*7,y-12,5,'#ffe078',18);
+  }
+  if(f.hero==='klychko'){
+   if(f.kind==='special'){ring(x+d*12,y-19,12,'#d7e6cc',.5);}
+   else {ring(x,y-3,40,'#a1c8ce',.35);sparks(x,y-12,6,'#a1c8ce',38);}
+  }
+  if(f.hero==='taira'){
+   if(t<.65)reinforcement(4,x,y-20-Math.floor(t*8),24);
+   ring(x,y-3,Math.min(40,t*60), '#79b89a',Math.max(0,1-t));
+   if(f.kind==='ultimate')sparks(x,y-18,8,'#a3d6b3',32);
+  }
+  if(f.hero==='almaziv'){
+   if(f.kind==='special'&&t<.2)reinforcement(Math.min(3,Math.floor(t*20)),x+d*21,y-17,28);
+   // Grenades and explosions are rendered at their simulated positions, not painted ahead.
+  }
+  if(f.hero==='prytula'&&f.kind==='ultimate'){
+   if(t<1){const yy=y-Math.round((1-t)*90);reinforcement(6,x,yy-66,72);drawTankBody(c,{dir:d,landing:0,armor:200,moving:false,recoil:0,hurt:0},x,yy,t,false);}
+   else if(t<1.35)reinforcement(7,x,y-3,48);
+  }
   return;
  }
  if(f.kind==='weapon'){

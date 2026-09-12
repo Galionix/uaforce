@@ -1,5 +1,12 @@
 // English UI catalog. Ukrainian source phrases remain stable simulation data.
 export const EN:Record<string,string>={
+  "Техніка й обрушення": "Vehicles and collapse",
+  "Чіткі піксельні ефекти · обмежений боєзапас танків · падіння конструкцій.": "Crisp pixel effects \u00b7 limited tank ammunition \u00b7 collapsing structures.",
+  "Танки мають 8 снарядів; танк у режимі хвиль — 5. Посадка не поповнює боєзапас.": "Tanks carry 8 shells; the wave-mode tank carries 5. Getting back in does not refill them.",
+  "Чисті спрайти вмінь: короткі спалахи ударів, єдиний вигляд танків і роботів без намальованих слідів руху.": "Clean ability sprites: brief contact flashes and consistent tanks and robots without painted motion trails.",
+  "Розбий опору: конструкція затріщить, впаде й може вдарити ворога. Обов’язкові платформи маршруту збережено.": "Break a support: the structure cracks, falls and can hit enemies. Essential route platforms remain protected.",
+
+  "Боєзапас вичерпано.": "Out of shells.",
   "П’ять нових бійців · самонавідні дрони · нові зв’язки вмінь.": "Five new fighters · homing drones · new ability combinations.",
   "Усик — швидкі комбінації та ривок; Кличко — блок, контрудар і сповільнення ворогів.": "Usyk: fast combos and a dash; Klitschko: block, counterpunch and enemy time slow.",
   "Алмазів — гранатомет із дугою та відскоком; Тайра — лікування й порятунок напарника.": "Almaziv: arcing, bouncing grenades; Taira: healing and teammate rescue.",

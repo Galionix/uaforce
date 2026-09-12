@@ -27,3 +27,13 @@ test('lightning strike advances actual atlas frames; summons advance their own f
  const later=sprites(effect('shevchenko',.86)).find(x=>x[1]==='lightning');assert.ok(first&&later);assert.notEqual(first[2],later[2]);
  for(const [hero,row] of [['bandera',0],['mamai',4],['zelensky',8]] as const){const a=sprites(effect(hero,.01)).find(x=>x[1]==='summons'),b=sprites(effect(hero,.12)).find(x=>x[1]==='summons');assert.ok(a&&b);assert.ok(Number(a[2])>=row&&Number(a[2])<row+4);assert.notEqual(a[2],b[2]);}
 });
+
+test('new melee contacts use small four-frame sparks rather than oversized glove art',()=>{
+ for(const hero of ['usyk','klychko','taira'] as const){const sprites=capture(effect(hero,.05,'weapon')).filter(c=>c[0]==='sprite');assert.equal(sprites.length,1);assert.equal(sprites[0][1],'reinforcements');assert.ok(Number(sprites[0][2])<4);assert.ok(Number(sprites[0][5])<=36);}
+});
+test('summoning never paints duplicate stationary robots or stale tank art over physical units',()=>{
+ assert.equal(capture(effect('prytula',.5,'special')).filter(c=>c[0]==='sprite').length,0);
+ const early=capture(effect('prytula',.5)).filter(c=>c[0]==='sprite');assert.equal(early.length,1);assert.equal(early[0][2],6,'parachute is separate from the shared tank body');
+ const late=capture(effect('prytula',1.5)).filter(c=>c[0]==='sprite');assert.equal(late.length,0);
+ assert.equal(capture(effect('almaziv',.6)).filter(c=>c[0]==='sprite').length,0,'explosions must occur at projectile collisions');
+});

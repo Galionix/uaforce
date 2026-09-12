@@ -12,12 +12,12 @@ export function knockback(w:World,e:Enemy,dir:number,distance:number){
  for(let moved=0;moved<distance;moved+=.2){const x=e.x+dir*.2;if(x<1||x>w.mission.length-2||w.boxes.some(b=>b.hp>0&&b.kind!=='platform'&&Math.abs(x-b.x)<b.w/2+.35&&e.y+1.5>b.y+.05&&e.y<b.y+b.h-.05))break;e.x=x;}
 }
 export function meleeStrike(w:World,damage:number,range:number,push=0){
- const p=w.player;
+ const p=w.player;let contacts=0;
+ const contact=(x:number,y:number)=>{if(contacts++<3)w.effects.push({playerId:w.actor.id,kind:'weapon',hero:w.heroId,x:x-p.facing*22/16,y,dir:p.facing,life:.22,age:0,hit:new Set()});};
  for(const e of w.enemies)if(enemyActive(e)&&(e.x-p.x)*p.facing>=-.2&&(e.x-p.x)*p.facing<range&&Math.abs(e.y-p.y)<2&&clearShot(w,p,e)){
-  w.damageEnemy(e,damage);knockback(w,e,p.facing,push);w.emitSfx(w.heroId+'-hit',e.x,e.y,w.heroId);
+  contact(e.x,e.y);w.damageEnemy(e,damage);knockback(w,e,p.facing,push);w.emitSfx(w.heroId+'-hit',e.x,e.y,w.heroId);
  }
- for(const b of w.boxes)if(b.hp>0&&b.y+b.h>p.y+.2&&b.y<p.y+2&&(b.x-p.x)*p.facing>=-.2&&(b.x-p.x)*p.facing<range+b.w/2)w.damageBox(b,damage);
- w.effects.push({playerId:w.actor.id,kind:'weapon',hero:w.heroId,x:p.x,y:p.y,dir:p.facing,life:.22,age:0,hit:new Set()});
+ for(const b of w.boxes)if(b.hp>0&&b.y+b.h>p.y+.2&&b.y<p.y+2&&(b.x-p.x)*p.facing>=-.2&&(b.x-p.x)*p.facing<range+b.w/2){if(Number.isFinite(b.hp))contact(b.x,Math.max(p.y,b.y));w.damageBox(b,damage);}
 }
 export function grenade(w:World,damage=80,vx=13,vy=9,life=1.6){
  const p=w.player;w.bullets.push({id:w.nextId(),playerId:w.actor.id,x:p.x+p.facing*.5,y:p.y+1.1,vx:p.facing*vx,vy,life,friendly:true,hero:'almaziv',damage,ordnance:'shell',blastRadius:2.8,gravity:16,bounces:1});
@@ -36,7 +36,7 @@ export function deliverySite(w:World,p:{x:number;y:number}=w.player,offsets=[5,-
   return{x,y:p.y};
  }
 }
-export function canExpansionUltimate(w:World){return w.heroId!=='prytula'||!w.mounts.some(t=>t.summoner===w.actor.id&&t.armor>0)&&!!deliverySite(w);}
+export function canExpansionUltimate(w:World){return w.heroId!=='prytula'||!w.mounts.some(t=>t.summoner===w.actor.id&&t.armor>0&&t.rounds>0)&&!!deliverySite(w);}
 export function startExpansion(w:World,f:Effect){
  const p=w.player;
  if(f.kind==='special')switch(f.hero){

@@ -52,7 +52,7 @@ function clearWave(w:World){
  w.ammoCrates.push({x:22,y:8,used:false});
  // Keep rewards finite in memory, and never replace/refill a surviving tank.
  w.mounts=w.mounts.filter(t=>t.armor>0);
- if(s.wave%SURVIVAL.firstTankWave===0&&!w.mounts.length){const t=addMount(w,22);t.armor=t.maxArmor=180;w.emit('mountEnter',22,1);}
+ if(s.wave%SURVIVAL.firstTankWave===0&&!w.mounts.length){const t=addMount(w,22);t.armor=t.maxArmor=180;t.rounds=t.maxRounds=5;w.emit('mountEnter',22,1);}
  w.emit('checkpoint',22,8);
 }
 export function stepSurvival(w:World,dt:number){

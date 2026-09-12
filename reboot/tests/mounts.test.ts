@@ -34,7 +34,7 @@ test('cannon has mandatory reload, finite travel, damages enemies and consumes n
  const ui=abilityStates(w);assert.match(ui[0].label,/Танкова гармата/);assert.match(ui[2].label,/Броня/);assert.equal(w.events.filter(e=>e.type==='shot').length,0);
 });
 test('cannon cannot shoot through adjacent cover and tracks stop at a solid wall',()=>{
- const{w,t}=fixture();enter(w);w.boxes.push({id:w.nextId(),x:14.2,y:0,w:.2,h:3,hp:1000,maxHp:1000,kind:'wall'});w.enemies.push({id:w.nextId(),x:19,y:0,hp:200,maxHp:200,dir:-1,cooldown:99,windup:0,anchor:19,heavy:false});run(w,60,{...IDLE,move:1,fire:true});assert.ok(t.x<12.2);assert.equal(w.enemies[0].hp,200);assert.ok(w.boxes.at(-1)!.hp<1000);
+ const{w,t}=fixture();enter(w);w.boxes.push({id:w.nextId(),x:14.2,y:-.1,w:1,h:.1,hp:Infinity,maxHp:Infinity,kind:'platform'});w.boxes.push({id:w.nextId(),x:14.2,y:0,w:.2,h:3,hp:1000,maxHp:1000,kind:'wall'});w.enemies.push({id:w.nextId(),x:19,y:0,hp:200,maxHp:200,dir:-1,cooldown:99,windup:0,anchor:19,heavy:false});run(w,60,{...IDLE,move:1,fire:true});assert.ok(t.x<12.2);assert.equal(w.enemies[0].hp,200);assert.ok(w.boxes.at(-1)!.hp<1000);
 });
 test('pause and cinematics freeze hull, reload, armor, and engine cues; parked tank keeps its damage',()=>{
  const{w,t}=fixture();enter(w);run(w,20,{...IDLE,move:1,fire:true});damageMount(w,t,50);w.mode='paused';let before=JSON.stringify(w);run(w,600,{...IDLE,move:1,fire:true});assert.equal(JSON.stringify(w),before);
@@ -69,4 +69,11 @@ test('tank can clear a low wall and jump out of a two-unit crater, but cannot do
 test('solid ceilings stop a jumping hull; destroyed supporting ground cannot grant an air jump',()=>{
  const{w,t}=fixture();enter(w);w.boxes.push({id:w.nextId(),x:12,y:4,w:8,h:1,hp:1000,maxHp:1000,kind:'wall'});w.step(1/60,{...IDLE,jump:true});let peak=t.y;for(let i=0;i<90;i++){w.step(1/60,IDLE);peak=Math.max(peak,t.y);}assert.ok(peak<=4-TANK.h+.001);assert.equal(t.grounded,true);
  w.boxes=[];w.step(1/60,{...IDLE,jump:true});assert.ok(t.vy<0);assert.equal(w.events.filter(e=>e.type==='mountJump').length,1);
+});
+
+test('all tanks have eight finite shells; leaving and reentering never replenishes them',()=>{
+ const{w,t}=fixture();enter(w);assert.equal(t.rounds,8);assert.equal(t.maxRounds,8);
+ for(let i=0;i<12;i++){t.cooldown=0;w.step(1/60,{...IDLE,fire:true});}
+ assert.equal(w.events.filter(e=>e.type==='mountShot').length,8);assert.equal(t.rounds,0);assert.equal(abilityStates(w)[0].ready,false);
+ w.step(1/60,{...IDLE,interact:true});w.player.x=t.x;w.player.y=t.y;w.player.vy=0;w.step(1/60,IDLE);enter(w);assert.equal(w.mounted,t);assert.equal(t.rounds,0);
 });

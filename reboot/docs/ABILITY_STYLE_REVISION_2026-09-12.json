@@ -1,0 +1,19 @@
+{
+  "date": "2026-09-12",
+  "generator": "built-in image_gen",
+  "prompt": "Production low-resolution PIXEL SPRITE SHEET. Exactly 4 columns and 2 rows, 8 equal cells. Each cell must look like an actual 24x24 pixel sprite enlarged with nearest neighbor: BIG SQUARE PIXELS, a maximum of 6 flat colors per sprite, no fine texture whatsoever. Transparent background. Row 1 is 4 animation frames of one small punch impact: compact yellow-white contact star, expands, breaks into 5 square chips, dissipates to 3 chips. NO fist or glove. Row 2 cell 4 a very simple olive medic satchel with a white cross, cell 5 one simple olive grenade, cell 6 an olive supply parachute canopy with thin stepped pixel ropes and empty harness, cell 7 small gray landing dust puff. Tiny gameplay assets, NOT icons or illustrations. All isolated, generous margins, no cell borders, no text, no gradients, no anti-aliasing, no glow, no shading texture, no miniature rivets or surface details. Use chunky economical shapes readable at 24 pixels. Do not add tanks, robots, arrows, or speed lines.",
+  "asset": "public/assets/abilities/reinforcements-v2.png",
+  "sha256": "bc1232cb7f365a4ce6fd09500fcadcbfe65fa36f2de52af254b43626f0c15f0f",
+  "import": {
+    "columns": 4,
+    "rows": 2,
+    "logicalCellPixels": 24,
+    "sampling": "nearest neighbor; existing game palette; alpha threshold 170"
+  },
+  "rejected": "Detailed 4x4 atlas exec-cf14e60a was rejected by the owner and never installed. Previous reinforcements.png is no longer referenced by the release.",
+  "reuse": {
+    "tank": "Existing drawTankBody code-native pixel renderer for parked, summoned and descending tank.",
+    "robot": "Existing summons.png frames 12–15 for Prytula and IT-Army."
+  },
+  "characterSprites": "Unchanged."
+}

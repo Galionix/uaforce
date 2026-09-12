@@ -6,7 +6,7 @@ import {icon,HERO_ICONS} from './hud-icons.ts';
 export type AbilityState={progress:number;ready:boolean;charges:number[];label:string};
 export function abilityStates(world:World):AbilityState[]{
  const p=world.player,h=world.hero;
- if(world.mounted){const t=world.mounted;return [{progress:1-t.cooldown/(t.summoner!==undefined||world.survival?3.2:TANK.reload),ready:t.cooldown===0&&(t.rounds??1)>0,charges:[],label:`Танкова гармата. ${t.rounds!==undefined?t.rounds+' / 8. ':''}${t.cooldown>0?'Перезаряджання: '+t.cooldown.toFixed(1)+' с.':'Готово.'}`},{progress:1,ready:true,charges:[],label:'Вийти з танка'},{progress:t.armor/t.maxArmor,ready:true,charges:[],label:`Броня: ${Math.ceil(t.armor)}/${t.maxArmor}`}];}
+ if(world.mounted){const t=world.mounted;return [{progress:1-t.cooldown/(t.summoner!==undefined||world.survival?3.2:TANK.reload),ready:t.cooldown===0&&t.rounds>0,charges:[],label:`Танкова гармата. ${t.rounds+' / '+t.maxRounds+'. '}${t.rounds===0?'Боєзапас вичерпано.':t.cooldown>0?'Перезаряджання: '+t.cooldown.toFixed(1)+' с.':'Готово.'}`},{progress:1,ready:true,charges:[],label:'Вийти з танка'},{progress:t.armor/t.maxArmor,ready:true,charges:[],label:`Броня: ${Math.ceil(t.armor)}/${t.maxArmor}`}];}
  const squadOrder=world.heroId==='zelensky'&&world.followers.filter(f=>f.hp>0&&f.kind==='infantry'&&(f.playerId??0)===world.actor.id).length===2;
  const recover=p.specialRecovery.map(t=>1-t/h.specialCooldown);
  const charges=[...Array.from({length:world.specialCharges},()=>1),...recover];

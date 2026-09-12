@@ -1,7 +1,7 @@
 import {importAbilityPixels} from './ability-palette.ts';
 import {assetUrl} from './assets.ts';
 export const ABILITY_ATLASES={
- reinforcements:{url:'/assets/abilities/reinforcements.png',cols:4,rows:4},
+ reinforcements:{url:'/assets/abilities/reinforcements-v2.png',cols:4,rows:2},
  weapons:{url:'/assets/abilities/weapons.png',cols:4,rows:2},
  lightning:{url:'/assets/abilities/lightning.png',cols:4,rows:2},
  jet:{url:'/assets/abilities/jet.png',cols:2,rows:2},
@@ -21,7 +21,7 @@ export class AbilityArt {
   const image=new Image();await new Promise<void>((resolve,reject)=>{image.onload=()=>resolve();image.onerror=()=>reject(Error('Не завантажилися ефекти: '+spec.url));image.src=assetUrl(spec.url);});
   // Import every generated sheet onto an explicit pixel grid. Never smooth at runtime.
   // Chroma key is an atlas import option, not a painted backdrop in the game.
-  const cellW=key==='jet'?96:48,cellH=key==='jet'?40:key==='lightning'?96:48;
+  const cellW=key==='jet'?96:key==='reinforcements'?24:48,cellH=key==='jet'?40:key==='lightning'?96:key==='reinforcements'?24:48;
   const canvas=document.createElement('canvas');canvas.width=spec.cols*cellW;canvas.height=spec.rows*cellH;const c=canvas.getContext('2d')!;c.imageSmoothingEnabled=false;c.drawImage(image,0,0,canvas.width,canvas.height);
   const data=c.getImageData(0,0,canvas.width,canvas.height),pixels=data.data;
   importAbilityPixels(pixels);

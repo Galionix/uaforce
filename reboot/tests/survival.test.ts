@@ -29,7 +29,7 @@ test('solo has one life, downed actor cannot move or be hurt repeatedly; coop ca
 });
 test('tank delayed until fifth clear, not refilled, survival-only shell nerf',()=>{
  const w=survivalWorld();for(let wave=1;wave<=4;wave++){w.survival!.wave=wave;clear(w);}assert.equal(w.mounts.length,0);
- w.survival!.wave=5;clear(w);assert.equal(w.mounts.length,1);assert.equal(w.mounts[0].armor,180);w.mounts[0].armor=10;w.survival!.wave=10;clear(w);assert.equal(w.mounts[0].armor,10);assert.equal(w.mounts.length,1);
+ w.survival!.wave=5;clear(w);assert.equal(w.mounts.length,1);assert.equal(w.mounts[0].armor,180);assert.equal(w.mounts[0].rounds,5);assert.equal(w.mounts[0].maxRounds,5);w.mounts[0].armor=10;w.survival!.wave=10;clear(w);assert.equal(w.mounts[0].armor,10);assert.equal(w.mounts.length,1);
  w.mounted=w.mounts[0];stepMounts(w,1/60,{...IDLE,fire:true},false);assert.equal(w.bullets[0].damage,65);assert.ok(w.mounted.cooldown>TANK.reload);
  const normal=new World();assert.equal(addMount(normal,10).armor,TANK.armor);
 });

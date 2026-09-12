@@ -92,7 +92,7 @@ export class View {
     }this.tiles.set(key,cv);return cv;
   }
   private box(b:Box){
-    const x=Math.round((b.x-b.w/2)*S-this.cameraX),y=Math.round(266-(b.y+b.h)*S+this.cameraY),ww=Math.round(b.w*S),hh=Math.round(b.h*S);
+    const x=Math.round((b.x-b.w/2)*S-this.cameraX)+((b.collapseDelay??0)>0?Math.floor(this.clock*22)%3-1:0),y=Math.round(266-(b.y+b.h)*S+this.cameraY),ww=Math.round(b.w*S),hh=Math.round(b.h*S);
     if(x>W+30||x+ww<-30||y>H+30||y+hh<-30)return;
     if(b.sabotage){
       if(b.sabotage==='jet'){this.abilityArt.draw(this.c,'weapons',4,x+ww/2,y+hh/2,ww,hh+16);this.rect(x+15,y+hh-2,10,3,'#141b20');this.rect(x+ww-25,y+hh-2,10,3,'#141b20');}
@@ -112,7 +112,7 @@ export class View {
     }else{
       this.rect(x,y,ww,hh,'#232f2b');this.rect(x+2,y+3,ww-4,hh-6,'#556052');this.rect(x+4,y+5,ww-8,8,'#142b29');this.rect(x+6,y+7,8,2,'#9cc278');for(let j=0;j<3;j++)this.rect(x+4,y+17+j*4,ww-8,1,'#25342b');this.rect(x+ww/2,y-24,2,24,'#a0a58c');this.rect(x+ww/2-8,y-20,18,1,'#b3b297');this.rect(x+ww/2-5,y-15,12,1,'#b3b297');this.rect(x+ww/2-1,y-26,4,3,Math.floor(this.clock*3)%2?'#ff6a3d':'#b93726');
     }
-    if(b.hp<b.maxHp&&Number.isFinite(b.maxHp)){this.rect(x,y+hh/2,ww/2,1,'#111c19');this.rect(x+ww/2,y+hh/2,1,4,'#111c19');}
+    if((b.hp<b.maxHp||(b.collapseDelay??0)>0||b.falling)&&Number.isFinite(b.maxHp)){this.rect(x,y+hh/2,ww/2,1,'#111c19');this.rect(x+ww/2,y+hh/2,1,4,'#111c19');}
   }
   private sprite(x:number,y:number,dir:number,frame:number,enemy=false,heavy=false,heroIndex=0,mavka=false){
     if(!enemy&&frame>=8){
@@ -214,14 +214,14 @@ export class View {
     }
     drawArena(this.c,world,this.cameraX,this.cameraY);
     if(world.boss&&world.boss.hp<=0)drawBossWreck(this.c,world.boss,world.boss.x*S-this.cameraX,266-world.boss.y*S+this.cameraY,world.time);
-    for(const tank of world.mounts)drawMount(this.c,tank,tank.x*S-this.cameraX,266-tank.y*S+this.cameraY,this.clock,world.players.some(a=>a.mounted===tank),this.abilityArt);
+    for(const tank of world.mounts)drawMount(this.c,tank,tank.x*S-this.cameraX,266-tank.y*S+this.cameraY,this.clock,world.players.some(a=>a.mounted===tank));
     for(const enemy of world.enemies)if(enemyActive(enemy)||enemy.hp>0&&enemy.hacked){if(enemy.boss){drawBoss(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.bossArt.get(enemy.boss.id),this.enemyClock);continue;}if(enemy.vehicle){drawVehicle(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.enemyClock,this.abilityArt);continue;}if(enemy.infantry?.kind!=='demolition')this.sprite(enemy.x,enemy.y,enemy.dir,enemy.infantry?.moving?Math.floor(this.enemyClock*(enemy.panic?16:10))%2:enemy.heavy||(enemy.infantry?.attack??0)>0||enemy.infantry?.kind==='gunner'?2:0,true,enemy.heavy||enemy.infantry?.kind==='gunner');drawInfantryGear(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.enemyClock);if(enemy.heavy){const x=enemy.x*S-this.cameraX;this.rect(x-13,266-enemy.y*S-42+this.cameraY,26,2,'#402f27');this.rect(x-13,266-enemy.y*S-42+this.cameraY,26*enemy.hp/enemy.maxHp,2,'#db5a39');}}
     for(const f of world.followers)if(f.hp>0){
       const x=Math.round(f.x*S-this.cameraX),y=Math.round(266-f.y*S+this.cameraY);
       this.c.globalAlpha=f.hurt>0?.55:1;
       if(f.kind==='infantry'){this.sprite(f.x,f.y,f.dir,f.moving?Math.floor(this.clock*9)%2:0,true);this.rect(f.x*S-this.cameraX-6,266-f.y*S+this.cameraY-17,5,2,'#3a91d2');this.rect(f.x*S-this.cameraX-6,266-f.y*S+this.cameraY-15,5,2,'#f5d363');}
       else {
-        this.abilityArt.draw(this.c,f.owner==='prytula'?'reinforcements':'summons',(f.owner==='prytula'?8:12)+(f.moving?Math.floor(this.clock*10)%4:0),x,y-18,f.owner==='prytula'?39:32,37,f.dir);
+        this.abilityArt.draw(this.c,'summons',12+(f.moving?Math.floor(this.clock*10)%4:0),x,y-18,32,37,f.dir);
       }
       this.c.globalAlpha=1;
       this.rect(x-3,y-36,6,2,'#4ba4dd');this.rect(x-3,y-34,6,2,'#ffdf6a');
@@ -262,7 +262,7 @@ export class View {
     }
     for(const b of world.bullets){
       const x=b.x*S-this.cameraX,y=266-b.y*S+this.cameraY,dir=Math.sign(b.vx);
-      if(b.gravity){this.abilityArt.draw(this.c,'reinforcements',12,x,y,12,12,1,this.clock*6);}
+      if(b.gravity){this.abilityArt.draw(this.c,'reinforcements',5,x,y,12,12,1,this.clock*6);}
       else if(b.ordnance){this.abilityArt.draw(this.c,'weapons',3,x,y,22,8,1,Math.atan2(-b.vy,b.vx));
       }else if(b.hero==='shevchenko'){
         this.abilityArt.draw(this.c,'auras',12+Math.floor(this.clock*12)%3,x,y,24,28,dir);
