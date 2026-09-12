@@ -76,3 +76,9 @@
   single-player, silent tests, Cloudflare Pages URL and optional support. Online is two-player
   host-authoritative; no guest simulation, no progression writes from co-op. Payment provider
   credentials and raw mailbox/Knowledge evidence must never enter this public repository.
+
+- Owner ability-art correction, 2026-09-12: detailed replacement atlas was rejected.
+  Current authority: `docs/ABILITY_STYLE_AND_COLLAPSE_2026-09-12.md`. Use the 24-pixel
+  `reinforcements-v2.png` atlas, existing walking robot and shared tank renderer. No baked
+  motion trails, giant glove icons or texture-heavy replacements. Character sheets are unchanged.
+  All player tanks have finite shells (8, wave reward 5); preserve host-authoritative collapse.
