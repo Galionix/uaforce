@@ -53,7 +53,7 @@ export class MobileControls {
  clear(){this.state.clear();this.stickPointer=null;this.knob.style.transform='translate(0px,0px)';for(const b of this.buttons.values())b.classList.remove('pressed');}
  private resize(){
   const before=this.portrait;this.enabled=this.preference.value==='on'||this.preference.value!=='off'&&touchDevice(this.coarse.matches,navigator.maxTouchPoints,navigator.userAgent,navigator.platform);
-  this.portrait=this.enabled&&innerHeight>innerWidth;document.body.classList.toggle('touch-device',this.enabled);document.getElementById('mobile-tip')!.hidden=!this.enabled;document.getElementById('menu-fullscreen')!.hidden=!this.enabled;
+  this.portrait=this.enabled&&innerHeight>innerWidth;document.body.classList.toggle('touch-device',this.enabled);document.getElementById('menu-fullscreen')!.hidden=!this.enabled;
   this.clear();if(before!==this.portrait)this.requestedPause=false;
  }
  sync(world:World,blocked:boolean){

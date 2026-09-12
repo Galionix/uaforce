@@ -32,7 +32,7 @@ import {mountAbilities} from './game/hud';
 import {icon} from './game/hud-icons';
 import {ANNOUNCER_NAMES} from './game/announcer';
 import { HEROES, MISSIONS } from './game/content';
-import { readProgress, saveProgress, readRecord, saveRecord } from './game/storage';
+import { readProgress, saveProgress, saveRecord } from './game/storage';
 
 const $ = <T extends HTMLElement = HTMLElement>(id:string) => document.getElementById(id) as T;
 localizeDocument(document.documentElement);
@@ -95,6 +95,7 @@ function resume(focusCanvas=true){if(world.mode!=='paused')return;if(online?.rol
 function showMenu(){
   pauseMenu.hidden=true;menu.hidden=false;menuIndex=0;
   const won=world.mode==='won',lost=world.mode==='lost',paused=world.mode==='paused',last=world.missionIndex===FINAL_MISSION,side=campaignChapter(world.missionIndex)===0,next=nextCampaignMission(world.missionIndex);
+  $('menu-kicker').hidden=$('menu-copy').hidden=world.mode==='ready'&&!practice&&!world.survival;
   $('menu-kicker').textContent=won?(last?'КАМПАНІЮ ЗАВЕРШЕНО':'ЕВАКУАЦІЯ УСПІШНА'):lost?'ЗАГІН ВТРАЧЕНО':paused?'ОПЕРАЦІЮ ПРИЗУПИНЕНО':'ЗА СВОЇХ. ДО КІНЦЯ.';
   $('menu-title').textContent=won?(last?'Хуйло переможено.':side?'Операцію завершено.':'Летимо далі.'):lost?'Ще одна спроба.':paused?'Тримаємо позицію.':'UA FORCE';
   $('menu-copy').textContent=won?(last?'Від звільненого берега до Кремля. Джерело наказів знищено. Загін повертається додому.':side?'Додаткову операцію завершено. Повертаємося до основної кампанії.':'Наступна операція — '+MISSIONS[next!].name+'.'):lost?'Підкріплення вичерпано. Спробуйте інший маршрут, стрибайте з драбин і використовуйте здібність героя.':paused?'Гра на паузі. Продовжуйте, коли будете готові.':world.mission.name+' · '+world.mission.region;
@@ -382,5 +383,5 @@ $('about-open').onclick=()=>{input.clear();about.showModal();$('about-close').fo
 function closeAbout(){about.close();input.clear();$('about-open').focus();}
 $('about-close').onclick=closeAbout;about.addEventListener('cancel',e=>{e.preventDefault();closeAbout();});
 
-void view.init().then(()=>{telemetry.event('load_ready');ready=true;for(const node of Array.from(document.querySelectorAll<HTMLElement>('.roster-image'))){const im=document.createElement('img');im.src=view.portrait(node.dataset.hero!);im.alt='';node.append(im);}view.reset(world);$<HTMLButtonElement>('primary').disabled=false;showMenu();const invite=new URLSearchParams(location.search).get('room');if(invite){$<HTMLInputElement>('online-code').value=invite;$('online-open').click();}const record=readRecord(world.missionIndex);if(record)$('result').textContent=`Найкращий час: ${formatTime(record.seconds)}`;ui();}).catch(error=>{telemetry.event('load_error');telemetry.flush();$('primary').textContent='Не вдалося завантажити гру';$('menu-copy').textContent='Оновіть сторінку або повідомте про помилку кнопкою внизу.';console.error(error);});
+void view.init().then(()=>{telemetry.event('load_ready');ready=true;for(const node of Array.from(document.querySelectorAll<HTMLElement>('.roster-image'))){const im=document.createElement('img');im.src=view.portrait(node.dataset.hero!);im.alt='';node.append(im);}view.reset(world);$<HTMLButtonElement>('primary').disabled=false;showMenu();const invite=new URLSearchParams(location.search).get('room');if(invite){$<HTMLInputElement>('online-code').value=invite;$('online-open').click();}ui();}).catch(error=>{telemetry.event('load_error');telemetry.flush();$('primary').textContent='Не вдалося завантажити гру';$('menu-copy').hidden=false;$('menu-copy').textContent='Оновіть сторінку або повідомте про помилку кнопкою внизу.';console.error(error);});
 window.addEventListener('pagehide',()=>{survivalUI.finishOnUnload(world);runMetrics.leave();telemetry.flush();online?.close();input.destroy();sound.dispose();if(view.app)view.dispose();},{once:true});

@@ -20,7 +20,6 @@
 .touch-action.unavailable .touch-art{opacity:.45}.touch-action.pressed{background:#456660;border-color:#fff1bd;transform:translateY(2px)}.touch-action.nearby{border-color:#ffe399;box-shadow:0 0 0 3px #ffe39944}
 #rotate-device{position:fixed;inset:0;z-index:12;background:#07151af7;display:grid;place-items:center;text-align:center;padding:30px 20px}#rotate-device p{line-height:1.5}.rotate-phone{display:block;color:#ffdc63;font:700 54px monospace;animation:phone-turn 2s steps(6) infinite}#rotate-device button{min-height:48px}
 @keyframes phone-turn{0%,100%{transform:rotate(0)}50%{transform:rotate(-8deg)}}
-.touch-device #mobile-tip{font-size:14px;line-height:1.4;color:#8ee1ec;max-width:38em}
 .touch-device #fullscreen{display:block}.touch-device .topbar{padding-top:max(6px,env(safe-area-inset-top));padding-right:max(8px,env(safe-area-inset-right));padding-left:max(8px,env(safe-area-inset-left))}
 .touch-device .top-actions button{width:42px;height:42px;min-width:42px;padding:6px}.touch-device .top-actions{gap:6px}
 .touch-device dialog{max-height:calc(100dvh - 20px);max-width:calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right) - 20px);overscroll-behavior:contain}
