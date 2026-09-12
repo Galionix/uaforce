@@ -1,0 +1,32 @@
+{
+  "model": "Stable Audio 3 Small SFX",
+  "jobs": [
+    {
+      "id": "klychko-gather-v5",
+      "prompt": "A long smooth gust of wind sucking air through a narrow opening. Continuous airy swoosh, soft at first then growing louder. Pure wind foley with no hits, no bangs, no explosions, no crackles, no music, no voices.",
+      "seconds": 0.85,
+      "seed": 912815,
+      "loop": false,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "klychko-ready-v4",
+      "prompt": "One sharp powerful crack of a thick leather boxing glove being clenched, heavy dry leather creak with a short deep thud. Isolated physical foley, no voice, music or electronic tones.",
+      "seconds": 0.3,
+      "seed": 912811,
+      "loop": false,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "taira-field-v2",
+      "prompt": "A short pressurized medical aerosol spray, soft air hiss and cloth bandage rustling, close dry equipment foley. No speech, no music, no melody, no electronic beeps.",
+      "seconds": 0.7,
+      "seed": 912812,
+      "loop": false,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    }
+  ]
+}

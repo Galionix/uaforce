@@ -1,5 +1,14 @@
 // English UI catalog. Ukrainian source phrases remain stable simulation data.
 export const EN:Record<string,string>={
+"Сила заряду та польова допомога":"Charged power and field aid",
+"Кулачний заряд із частинками · пробиття щитів · медпункт Тайри.":"Fist charge particles · shield breaking · Taira’s aid station.",
+"Повний заряд Кличка пробиває щити, підкидає ворогів і змінює розліт при добиванні. Швидкі удари слабші.":"Klitschko’s full charge breaks shields, launches enemies and gives finishing blows a directional spray. Quick punches are weaker.",
+"Частинки стягуються до кулака. Нові звуки накопичення сили та готовності; звук обривається при відпусканні.":"Particles gather around the fist. New charging and readiness sounds; releasing the button stops the charging sound.",
+"Тайра відштовхує ворогів слабким ударом і ставить медпункт: лікування групи одразу та протягом 3 секунд.":"Taira pushes enemies away with a weaker strike and places an aid station: immediate group healing followed by 3 seconds of recovery.",
+
+"Утримуй атаку 0,9 с до спалаху кулака та відпусти: повний заряд пробиває щит, підкидає піхоту й трощить укриття. Швидка тичка слабка. Аперкот підкидає бійця та ворога; нокаут б’є об землю.":"Hold attack for 0.9 seconds until the fist flashes, then release: full charge breaks shields, launches infantry and shatters cover. Quick jabs are weak. Uppercut launches both fighter and enemy; Knockout slams the ground.",
+"Поштовх завдає 22 шкоди й збиває прицілювання піхоти. Медпункт на 3 с лікує всіх своїх у радіусі 4 м: 20 ОЗ одразу та ще 15 поступово. Ульта рятує павшого напарника у хвилях або лікує й захищає загін.":"A shove deals 22 damage and interrupts infantry aim. A 3-second aid station heals every friendly within 4 m: 20 HP immediately and 15 more over time. The ultimate revives a fallen wave-mode teammate or heals and protects the squad.",
+
  "Кличко: важкий удар":"Klitschko: heavy hitter",
  "Заряджений кулак · аперкот · нокаут · склад із пасткою.":"Charged fist · uppercut · knockout · depot trap.",
  "Усик дістає відкриті частини ворогів і танків на сходинку нижче. Суцільні стіни захищають від ударів.":"Usyk can hit exposed enemies and tanks one step below. Solid walls still block punches.",

@@ -59,8 +59,9 @@ test('recorded combat routes all heroes, exact phases, lifetimes, pause and dist
   context.currentTime++;const distantDeath=starts.length;
   sound.event({type:'enemyDeath',deathRole:'gunner',x:100,y:0},0);sound.event({type:'goreLand',x:100,y:0},0);
   assert.equal(starts.length,distantDeath,'deaths and landings have finite audible range');
+  context.currentTime++;sound.event({type:'sfx',sfx:'klychko-gather-v5',soundOwner:0,x:0,y:0});expectClip('klychko-gather-v5');const gathering=starts.at(-1)!.source;sound.event({type:'sfx',sfx:'klychko-charge-stop',soundOwner:0,x:0,y:0});assert.ok(stops.includes(gathering),'release cancels the charging whoosh');
   for(const {id:hero}of HEROES){
-   for(const type of ['special','ultimate'] as const){sound.event({type,hero,x:0,y:0});expectClip(hero==='klychko'?(type==='special'?'klychko-uppercut-v2':'klychko-charge-v3'):hero+'-'+type);}
+   for(const type of ['special','ultimate'] as const){sound.event({type,hero,x:0,y:0});expectClip(hero==='klychko'?(type==='special'?'klychko-uppercut-v2':'klychko-charge-v3'):hero==='taira'&&type==='special'?'taira-field-v2':hero+'-'+type);}
    for(let i=0;i<3;i++)sound.event({type:'shot',hero,x:0,y:0});
    for(const kind of ['step','climb','jump','land','hurt','ready'] as const){context.currentTime++;const type=({step:'footstep',climb:'climbContact',jump:'jump',land:'land',hurt:'hurt',ready:'abilityReady'}as const)[kind];sound.event({type,hero,x:0,y:0});assert.ok(starts.at(-1)!.args[2]<=.3);}
   }

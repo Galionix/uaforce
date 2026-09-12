@@ -93,10 +93,13 @@ export class Sound {
   syncWorld(world:World){
     const ctx=this.context,buffer=this.buffers.get('combatBank');
     if(world.mode!=='playing'||!ctx||ctx.state!=='running'||!buffer){this.stopLoops();return;}
+    const charging=new Set(world.players.filter(a=>a.heroId==='klychko'&&a.body.hp>0&&a.body.klychkoHold>0&&!a.mounted).map(a=>'charge:'+a.id));
+    for(const [,scope]of this.voices)if(scope.startsWith('charge:')&&!charging.has(scope))this.stopKind(scope);
     const living=new Set(world.followers.filter(f=>f.hp>0).map(f=>'follower:'+f.id));
     for(const [,scope]of this.voices)if(scope.startsWith('follower:')&&!living.has(scope))this.stopKind(scope);
     const wanted=new Map<string,{key:SfxId;x:number;level:number}>(),ordinals=new Map<string,number>();
     for(const f of world.effects){
+      if(f.hero==='klychko'||f.hero==='taira'&&f.kind==='special')continue;
       const key=`${f.hero}-${f.kind}-loop` as SfxId;
       const group=`effect:${f.playerId??0}:${f.hero}:${f.kind}`,ordinal=ordinals.get(group)??0;ordinals.set(group,ordinal+1);
       // Co-op snapshots replace JS objects. A stable presentation slot keeps
@@ -147,6 +150,8 @@ export class Sound {
     const level=Math.max(.12,1-distance/24),sample=(key:string,v=.45,gate=0)=>this.sample(key,v*level,gate,e.soundOwner!==undefined?'follower:'+e.soundOwner:key);
     if(['shot','enemyShot','special','ultimate','hostileBlast','mountShot','tankShot'].includes(e.type))this.lastCombat=this.context?.currentTime??-100;
     if(e.type==='followerDown'&&e.soundOwner!==undefined)this.stopKind('follower:'+e.soundOwner);
+    if(e.sfx==='klychko-charge-stop'){this.stopKind('charge:'+e.soundOwner);return;}
+    if(e.sfx==='klychko-gather-v5'){this.sample(e.sfx,.55*level,0,'charge:'+e.soundOwner);return;}
     if(e.sfx){sample(e.sfx,e.sfx.includes('hit')?.3:.4,e.sfx.includes('hit')||['roots','ricochet'].includes(e.sfx)?.09:0);return;}
     const foleyKind=({footstep:'step',climbContact:'climb',jump:'jump',land:'land',abilityReady:'ready',wallJump:'jump',wallVault:'land'} as Partial<Record<Event['type'],FoleyKind>>)[e.type];
     if(foleyKind&&e.hero){this.foley(e.hero,foleyKind);return;}
@@ -184,7 +189,7 @@ export class Sound {
       else sample('legacy-shot',.25);
     }else if((e.type==='special'||e.type==='ultimate')&&e.hero){
       if(e.type==='ultimate')for(const h of ['lesya','bandera','mamai','bayraktar','ghost','zelensky','bilozerska','it-army'])this.stopKind(h+'-reload');
-      sample(e.hero==='klychko'?(e.type==='special'?'klychko-uppercut-v2':'klychko-charge-v3'):`${e.hero}-${e.type}`,e.type==='ultimate'?.65:.5);
+      sample(e.hero==='klychko'?(e.type==='special'?'klychko-uppercut-v2':'klychko-charge-v3'):e.hero==='taira'&&e.type==='special'?'taira-field-v2':`${e.hero}-${e.type}`,e.type==='ultimate'?.65:.5);
     }else if(e.type==='reloadStart'&&e.hero){this.stopKind(e.hero+'-reload');sample(e.hero+'-reload',.28);}
     else if(e.type==='reloadEnd'&&e.hero){this.stopKind(e.hero+'-reload');sample(e.hero+'-reload-end',.25);}
     else if(e.type==='voiceWave'){const now=this.context?.currentTime??0;if(now-this.lastVoice>3){this.lastVoice=now;this.play('voiceWave',.55*level,this.buffers.get('voiceWave')?.duration??0);}sample('zelensky-hit',.3);}

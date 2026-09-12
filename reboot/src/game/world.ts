@@ -18,13 +18,13 @@ import {stepFollowers, clearShot, type Follower} from './followers.ts';
 import {cycleWeapon,resetWeapon,WEAPONS} from './weapons.ts';
 import {attack,canSpecial,launchEffect,stepHeroEffect,effectAudioPhase} from './hero-combat.ts';
 import { ACTIVE_HEROES, HEROES, MISSIONS, heroById, type HeroId, type Mission } from './content.ts';
-export type Effect={playerId?:number;kind:'weapon'|'special'|'ultimate';hero:HeroId;x:number;y:number;dir:number;life:number;age:number;hit:Set<number>;originX?:number;originY?:number;target?:number;audioMarks?:Set<string>;impactAge?:number};
+export type Effect={playerId?:number;kind:'weapon'|'special'|'ultimate';hero:HeroId;x:number;y:number;dir:number;life:number;age:number;hit:Set<number>;originX?:number;originY?:number;target?:number;audioMarks?:Set<string>;impactAge?:number;power?:number};
 export type Mode = 'ready' | 'playing' | 'paused' | 'lost' | 'won' | 'cinematic';
 export type Actions = { move: number; jump: boolean; jumpHeld?:boolean; fire: boolean; special: boolean; ultimate?: boolean; interact: boolean; climb?: number };
 export type Box = { id: number; x: number; y: number; w: number; h: number; hp: number; maxHp: number; sabotage?:'ammo'|'fuel'|'jet';required?:boolean;fuse?:number; vx?:number;vy?:number;falling?:boolean;collapseDelay?:number; kind: 'crate' | 'barrel' | 'wall' | 'radio' | 'platform' | 'earth' | 'stone' };
 export type Enemy = { id: number; x: number; y: number; hp: number; maxHp: number; dir: number; cooldown: number; windup: number; anchor: number; heavy: boolean; vehicle?:Vehicle;infantry?:Infantry;boss?:BossActor; panic?:{remaining:number;playerId:number;hero:HeroId;kind:Effect['kind'];voiceIn:number}; hacked?:{playerId:number;left:number};marked?:number;rooted?:number; poison?:number; distracted?:number };
 export type Bullet = { id: number; x: number; y: number; vx: number; vy: number; life: number; friendly: boolean; damage: number; hero?:HeroId;playerId?:number;gravity?:number;bounces?:number;ordnance?:'shell'|'rocket';blastRadius?:number };
-export type Event = { type: 'highFive' | 'enemySuspect' | 'enemyPanic' | 'goreLand' | 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; deathRole?:InfantryKind;deathCause?:DeathCause;soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
+export type Event = { type: 'healed' | 'highFive' | 'enemySuspect' | 'enemyPanic' | 'goreLand' | 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; launchDir?:number;deathRole?:InfantryKind;deathCause?:DeathCause;soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
 export const IDLE: Actions = { move: 0, jump: false, fire: false, special: false, interact: false };
 
 export function createPlayerBody(){return { klychkoHold:0,klychkoPower:0,mamaiHold:0,mamaiFired:false,dashTime:0,dashDir:1,aimTime:0,x: 3, y: 0, vy: 0, hp: 100, facing: 1, grounded: true, invulnerable: 0, cooldown: 0, energy: 100, coyote: 0.12, wallSide:0,wallLock:0,wallVx:0,wallClimbing:false,platformDrop:0,platformDropY:0,ladder: -1, ladderLock: 0, detachVx: 0, ladderNeedsRelease:false, cast:0, attack:0, specialCooldown:0, specialRecovery:[] as number[], form:0, cloak:0, fireCount:0, ammo:0, reloading:0, burstShots:0, weaponTrigger:false };}
@@ -198,13 +198,13 @@ export class World {
     f.hp=Math.max(0,f.hp-damage);f.hurt=.16;
     this.events.push({type:f.hp===0?'followerDown':'followerHurt',x:f.x,y:f.y+.8,hero:f.owner,soundOwner:f.id});
   }
-  damageEnemy(enemy: Enemy, damage: number, cause:DeathCause='combat',allowFriendly=false) {
+  damageEnemy(enemy: Enemy, damage: number, cause:DeathCause='combat',allowFriendly=false,launchDir?:number) {
     if (!enemyActive(enemy)&&!(allowFriendly&&enemy.hp>0&&enemy.hacked)) return;
     enemy.hp -= damage;
     if (enemy.hp <= 0) {
       if(enemy.boss)bossDefeated(this,enemy);this.kills++;survivalDrop(this,enemy);
       if(enemy.vehicle||enemy.boss)this.event('burst',enemy.x,enemy.y+.8);
-      else this.events.push({type:'enemyDeath',x:enemy.x,y:enemy.y+.9,deathRole:enemy.infantry?.kind??(enemy.heavy?'gunner':'rifle'),deathCause:cause,text:this.deathLines.next(Math.random,{cause,role:enemy.infantry?.kind})});
+      else this.events.push({type:'enemyDeath',launchDir,x:enemy.x,y:enemy.y+.9,deathRole:enemy.infantry?.kind??(enemy.heavy?'gunner':'rifle'),deathCause:cause,text:this.deathLines.next(Math.random,{cause,role:enemy.infantry?.kind})});
     }
   }
   damageBox(box: Box, damage: number) {
@@ -312,7 +312,7 @@ export class World {
     const ladder=climbing?this.ladders[p.ladder]:null;
     p.dashTime=Math.max(0,p.dashTime-dt);
     const previousX=p.x;
-    p.x+=(p.dashTime>0?p.dashDir*22:p.wallLock>0?p.wallVx:move*this.hero.speed*(p.klychkoHold>0?.45:p.cloak>0?1.8:1)+(move?0:p.detachVx))*dt;p.detachVx*=Math.max(0,1-dt*5);
+    p.x+=(p.dashTime>0?p.dashDir*22:p.wallLock>0?p.wallVx:move*this.hero.speed*(p.klychkoHold>0?.75:p.cloak>0?1.8:1)+(move?0:p.detachVx))*dt;p.detachVx*=Math.max(0,1-dt*5);
     if(!climbing)for(const b of this.boxes){
       if(b.hp<=0||b.kind==='platform'||b.id===this.heldBarrel)continue;
       if(p.y+1.55>b.y+.05&&p.y<b.y+b.h-.05&&Math.abs(p.x-b.x)<b.w/2+.32){if(b.kind==='barrel'&&move)b.vx=move*3;p.x=b.x+(previousX<b.x?-1:1)*(b.w/2+.32);}
@@ -346,9 +346,9 @@ export class World {
     }
     if(this.heroId==='klychko'){
       if(action.fire&&!action.special&&!action.ultimate){
-        if(p.cooldown<=dt){if(p.klychkoHold===0)this.emitSfx('klychko-charge-v3',p.x,p.y,'klychko');const before=p.klychkoHold;p.klychkoHold=Math.min(.9,before+dt);if(before<.9&&p.klychkoHold>=.9)this.emitSfx('foley-klychko-ready-0',p.x,p.y,'klychko');}
+        if(p.cooldown<=dt){const before=p.klychkoHold;p.klychkoHold=Math.min(.9,before+dt);if(before<.12&&p.klychkoHold>=.12)this.events.push({type:'sfx',sfx:'klychko-gather-v5',soundOwner:this.actor.id,x:p.x,y:p.y});if(before<.9&&p.klychkoHold>=.9)this.emitSfx('klychko-ready-v4',p.x,p.y,'klychko');}
         fire=false;
-      }else{fire=!action.special&&!action.ultimate&&p.klychkoHold>0;p.klychkoPower=p.klychkoHold/.9;p.klychkoHold=0;}
+      }else{if(p.klychkoHold>0)this.events.push({type:'sfx',sfx:'klychko-charge-stop',soundOwner:this.actor.id,x:p.x,y:p.y});fire=!action.special&&!action.ultimate&&p.klychkoHold>0;p.klychkoPower=p.klychkoHold/.9;p.klychkoHold=0;}
     }
     const cycle=cycleWeapon(p,this.hero,dt,fire,melee);
     if(this.heroId==='bilozerska'&&!p.reloading&&beforeWeaponCooldown>1.28&&p.cooldown<=1.28)this.emitSfx('bolt',p.x,p.y+1);

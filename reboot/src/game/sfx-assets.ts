@@ -2192,6 +2192,18 @@ export const SFX_ASSETS = {
   "klychko-slam-v2": {
     "offset": 269.83575,
     "seconds": 1.1
+  },
+  "klychko-gather-v5": {
+    "offset": 270.97575,
+    "seconds": 0.85
+  },
+  "klychko-ready-v4": {
+    "offset": 271.86575,
+    "seconds": 0.3
+  },
+  "taira-field-v2": {
+    "offset": 272.20575,
+    "seconds": 0.7
   }
 } as const;
 export type SfxId=keyof typeof SFX_ASSETS;

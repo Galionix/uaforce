@@ -126,8 +126,8 @@ export type Stain={x:number;y:number;w:number;h:number;life:number;box:number;co
 export class Gore{
  bits:Gib[]=[];stains:Stain[]=[];
  clear(){this.bits=[];this.stains=[];}
- burst(x:number,y:number,random=Math.random){
-  for(let i=0;i<34;i++)this.bits.push({x,y,vx:(random()-.5)*14,vy:2+random()*10,life:i<7?3:1.5+random(),size:i<7?3+Math.floor(random()*3):1+Math.floor(random()*2),color:['#c62e33','#8c1827','#ec4b46','#561526'][i%4],chunk:i<7,bounced:false});
+ burst(x:number,y:number,random=Math.random,launchDir=0){
+  for(let i=0;i<34;i++)this.bits.push({x,y,vx:launchDir?launchDir*(10+random()*12):(random()-.5)*14,vy:(launchDir?6:2)+random()*10,life:i<7?3:1.5+random(),size:i<7?3+Math.floor(random()*3):1+Math.floor(random()*2),color:['#c62e33','#8c1827','#ec4b46','#561526'][i%4],chunk:i<7,bounced:false});
   if(this.bits.length>420)this.bits.splice(0,this.bits.length-420);
  }
  step(dt:number,boxes:Box[],onImpact?:(x:number,y:number)=>void){

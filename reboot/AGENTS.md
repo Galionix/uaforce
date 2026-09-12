@@ -88,3 +88,8 @@
   ground slam. Preserve Usyk's rapid combo. Melee must hit exposed portions of lower targets
   without ignoring solid cover. Depot intermediate deck is intentionally collapsible;
   preserve the upper bypass and the three new locally generated physical SFX.
+
+- Owner charge/medic feedback, 2026-09-12: current balance and presentation are in
+  `docs/CHARGE_MEDIC_DELIVERY_2026-09-12.md`. Klitschko quick tap 18, full charge 210
+  with shield break and directional finish; charge particles and cancellable gather audio.
+  Taira melee 22; preventive 3-second group aid station (20 + 15 HP), not a generic heavy hitter.

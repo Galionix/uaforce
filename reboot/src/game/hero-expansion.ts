@@ -23,12 +23,14 @@ export function meleeContact(w:World,e:Enemy,range:number,dir=w.player.facing){
  }
  return null;
 }
-export function meleeStrike(w:World,damage:number,range:number,push=0){
+export function meleeStrike(w:World,damage:number,range:number,push=0,heavy=false){
  const p=w.player,hits:Enemy[]=[];let contacts=0;
- const contact=(x:number,y:number)=>{if(contacts++<3)w.effects.push({playerId:w.actor.id,kind:'weapon',hero:w.heroId,x:x-p.facing*22/16,y:y-19/16,dir:p.facing,life:.22,age:0,hit:new Set()});};
+ const contact=(x:number,y:number)=>{if(contacts++<3)w.effects.push({playerId:w.actor.id,kind:'weapon',hero:w.heroId,x:x-p.facing*22/16,y:y-19/16,dir:p.facing,power:heavy?1:0,life:.22,age:0,hit:new Set()});};
  for(const e of w.enemies)if(enemyActive(e)){
   const point=meleeContact(w,e,range);if(!point)continue;
-  contact(point.x,point.y);w.damageEnemy(e,damage);hits.push(e);knockback(w,e,p.facing,push);w.emitSfx(w.heroId+'-hit',point.x,point.y,w.heroId);
+  contact(point.x,point.y);
+  if(['klychko','taira'].includes(w.heroId)&&e.infantry?.shield&&p.facing*e.dir<0){e.infantry.shield=heavy?0:Math.max(0,e.infantry.shield-damage);w.emit('enemyShieldHit',e.x,e.y+1);if(!heavy)continue;}
+  w.damageEnemy(e,damage,'combat',false,heavy?p.facing:undefined);hits.push(e);knockback(w,e,p.facing,push);if(heavy)lift(e,10);w.emitSfx(w.heroId+'-hit',point.x,point.y,w.heroId);
  }
  for(const b of w.boxes)if(b.hp>0&&b.y+b.h>p.y+.2&&b.y<p.y+2&&(b.x-p.x)*p.facing>=-.2&&(b.x-p.x)*p.facing<range+b.w/2){if(Number.isFinite(b.hp))contact(b.x,Math.max(p.y+1,b.y));w.damageBox(b,damage);}
  return hits;
@@ -49,6 +51,14 @@ export function healTarget(w:World){
  return [...w.players.filter(a=>a.id!==w.actor.id&&a.body.hp>0&&a.body.hp<100&&Math.hypot(a.body.x-p.x,a.body.y-p.y)<9).map(a=>a.body),
  ...w.followers.filter(f=>f.hp>0&&f.hp<f.maxHp&&Math.hypot(f.x-p.x,f.y-p.y)<9),...(p.hp<100?[p]:[])][0];
 }
+/** A placed aid station restores every living friendly body inside its small, unobstructed radius. */
+function healField(w:World,f:Effect,amount:number){
+ const targets=[...w.players.map(a=>a.body),...w.followers];
+ for(const t of targets){const max='maxHp' in t?t.maxHp:100;if(t.hp<=0||t.hp>=max||Math.hypot(t.x-f.x,t.y-f.y)>4)continue;
+  if(w.boxes.some(b=>b.hp>0&&segmentHit(f.x,f.y+.7,t.x,t.y+.7,b.x-b.w/2,b.y,b.x+b.w/2,b.y+b.h)!==null))continue;
+  t.hp=Math.min(max,t.hp+amount);w.events.push({type:'healed',hero:'taira',x:t.x,y:t.y+1});
+ }
+}
 export function deliverySite(w:World,p:{x:number;y:number}=w.player,offsets=[5,-5,8,-8,0]){
  for(const d of offsets){
   const x=p.x+d;if(x<TANK.w||x>w.mission.length-TANK.w)continue;
@@ -65,19 +75,20 @@ export function startExpansion(w:World,f:Effect){
   case 'klychko':{p.klychkoHold=0;p.ladder=-1;p.ladderLock=.8;p.vy=12;p.grounded=false;p.invulnerable=Math.max(p.invulnerable,.35);for(const e of meleeStrike(w,110,3.4,1))lift(e,14);break;}
   case 'usyk':p.dashTime=.22;p.dashDir=p.facing;p.invulnerable=Math.max(p.invulnerable,.26);p.ladder=-1;break;
   case 'almaziv':for(const a of [-.3,-.15,0,.15,.3])w.bullets.push({id:w.nextId(),x:p.x+p.facing*.45,y:p.y+1,vx:p.facing*32,vy:a*32,life:.2,friendly:true,damage:28,hero:f.hero,playerId:w.actor.id});break;
-  case 'taira':{const target=healTarget(w);if(target){target.hp=Math.min('maxHp' in target?target.maxHp:100,target.hp+25);f.x=target.x;f.y=target.y;}break;}
+  case 'taira':{const target=healTarget(w)??p;f.x=target.x;f.y=target.y;healField(w,f,20);break;}
   case 'prytula':summonFollowers(w,'turret');for(const other of w.players)if(other.body.hp>0&&Math.hypot(other.body.x-p.x,other.body.y-p.y)<9){other.body.ammo=heroById(other.heroId).magazine;other.body.reloading=0;}break;
  }else if(f.kind==='ultimate'&&f.hero==='klychko'){p.klychkoHold=0;p.ladder=-1;p.ladderLock=.8;p.vy=14;p.grounded=false;p.invulnerable=Math.max(p.invulnerable,1.2);
  }else if(f.kind==='ultimate'&&f.hero==='prytula'){
   const site=deliverySite(w);if(site){f.x=site.x;f.y=site.y;}
  }else if(f.kind==='ultimate'&&f.hero==='taira'){
   const fallen=w.survival?w.players.find(a=>a.id!==w.actor.id&&a.body.hp<=0):undefined;
-  if(fallen){Object.assign(fallen.body,{hp:35,x:p.x-p.facing,y:p.y,vy:0,invulnerable:2});fallen.lives=1;}
-  else for(const a of w.players)if(a.body.hp>0&&Math.hypot(a.body.x-p.x,a.body.y-p.y)<10){a.body.hp=Math.min(100,a.body.hp+40);a.body.invulnerable=Math.max(a.body.invulnerable,2);}
+  if(fallen){Object.assign(fallen.body,{hp:35,x:p.x-p.facing,y:p.y,vy:0,invulnerable:2});fallen.lives=1;w.events.push({type:'healed',hero:'taira',x:fallen.body.x,y:fallen.body.y+1});}
+  else for(const a of w.players)if(a.body.hp>0&&Math.hypot(a.body.x-p.x,a.body.y-p.y)<10){a.body.hp=Math.min(100,a.body.hp+40);a.body.invulnerable=Math.max(a.body.invulnerable,2);w.events.push({type:'healed',hero:'taira',x:a.body.x,y:a.body.y+1});}
  }
 }
 export function stepExpansion(w:World,f:Effect,dt:number){
  const p=w.player;
+ if(f.hero==='taira'&&f.kind==='special'){for(let i=1;i<=5;i++)if(f.age>=i*.5&&!f.hit.has(-100-i)){f.hit.add(-100-i);healField(w,f,3);}}
  if(f.hero==='klychko'){
   if(f.kind==='special'){f.x=p.x;f.y=p.y;}
   if(f.kind==='ultimate'&&!f.hit.has(-1)){

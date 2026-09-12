@@ -2,6 +2,14 @@ import {drawTankBody} from './mount-view.ts';
 import {translate} from './i18n.ts';
 import type {Effect} from './world';
 import type {AbilityArt} from './ability-art';
+/** Bounded, screen-pixel particles flow into the glove; simulation charge owns readiness. */
+export function drawCharge(c:CanvasRenderingContext2D,x:number,y:number,dir:number,hold:number,time:number){
+ const q=Math.min(1,hold/.9),cx=x+dir*9,cy=y-20;c.save();
+ for(let i=0;i<30;i++){const phase=(time*(1.2+q)+i*.137)%1,a=i*2.399,r=(1-phase)*(18+q*24);c.globalAlpha=(.35+phase*.65)*(.4+q*.6);c.fillStyle=i%3?'#eab75b':'#fff1b5';const px=Math.round((cx+Math.cos(a)*r)/2)*2,py=Math.round((cy+Math.sin(a)*r*.8)/2)*2;c.fillRect(px,py,2,2);}
+ c.globalAlpha=1;c.fillStyle=q>=1?'#fff1b5':'#df9850';const z=q>=1?6:2;c.fillRect(Math.round(cx)-z/2,Math.round(cy)-z/2,z,z);
+ if(q>=1){c.globalAlpha=.5+Math.sin(time*18)*.25;for(const [dx,dy]of [[-6,0],[6,0],[0,-6],[0,6]])c.fillRect(Math.round(cx+dx),Math.round(cy+dy),2,2);}
+ c.restore();
+}
 /** Animation follows simulation age: pausing or replaying a co-op snapshot freezes the same pose. */
 export function drawHeroEffect(c:CanvasRenderingContext2D,f:Effect,x:number,y:number,_time:number,art:AbilityArt){
  const t=f.age,d=f.dir,fade=Math.min(1,f.life*5),pulse=1+Math.sin(t*9)*.045,frame=Math.floor(t*10)%4;
@@ -13,7 +21,7 @@ export function drawHeroEffect(c:CanvasRenderingContext2D,f:Effect,x:number,y:nu
  const reinforcement=(cell:number,xx=x,yy=y-20,size=48)=>art.draw(c,'reinforcements',cell,xx,yy,size,size,d,0,fade);
  if(newHero){
   // Contact sparks are small, short-lived and follow real strikes, never giant glove icons.
-  if(f.kind==='weapon'){reinforcement(Math.min(3,Math.floor(t/.22*4)),x+d*22,y-19,f.hero==='klychko'?36:24);return;}
+  if(f.kind==='weapon'){if(f.power)sparks(x+d*22,y-19,12,'#ffe3a0',32);reinforcement(Math.min(3,Math.floor(t/.22*4)),x+d*22,y-19,f.power?48:f.hero==='taira'?28:24);return;}
   if(f.hero==='usyk'){
    // Dash dust at the feet; the ultimate accelerates actual punches rather than faking extra hits.
    if(f.kind==='special'&&t<.3)reinforcement(7,x-d*14,y-3,24);
@@ -27,9 +35,10 @@ export function drawHeroEffect(c:CanvasRenderingContext2D,f:Effect,x:number,y:nu
    }else if(f.kind==='ultimate'&&t>.35){sparks(x,y-5,8,'#d9b16d',22);}
   }
   if(f.hero==='taira'){
-   if(t<.65)reinforcement(4,x,y-20-Math.floor(t*8),24);
-   ring(x,y-3,Math.min(40,t*60), '#79b89a',Math.max(0,1-t));
-   if(f.kind==='ultimate')sparks(x,y-18,8,'#a3d6b3',32);
+   if(f.kind==='special'){
+    reinforcement(4,x,y-9,20);ring(x,y-1,64,'#6fcca3',.55);ring(x,y-1,64*((t*2)%1),'#bbf3cc',.45);
+    for(let i=0;i<5;i++){const xx=x+(i-2)*23,yy=y-7-((t*14+i*7)%24);c.save();c.globalAlpha=.6*fade;c.fillStyle='#9fefbd';c.fillRect(Math.round(xx)-1,Math.round(yy)-3,2,6);c.fillRect(Math.round(xx)-3,Math.round(yy)-1,6,2);c.restore();}
+   }else{ring(x,y-3,Math.min(65,t*80),'#79b89a',Math.max(.15,1-t));sparks(x,y-18,14,'#a3d6b3',48);}
   }
   if(f.hero==='almaziv'){
    if(f.kind==='special'&&t<.2)reinforcement(Math.min(3,Math.floor(t*20)),x+d*21,y-17,28);

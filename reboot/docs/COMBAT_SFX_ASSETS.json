@@ -16843,13 +16843,94 @@
           "at": 0
         }
       ]
+    },
+    {
+      "id": "klychko-gather-v5",
+      "file": "public/assets/audio/sfx/klychko-gather-v5.wav",
+      "seconds": 0.85,
+      "loop": false,
+      "peak": 0.5812170191374729,
+      "rms": 0.14,
+      "sha256": "0eb208a9881cc9d551f53d0ac528f2d7125a1fe730dd0f9ba0bf05e9ecd127f5",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "klychko-gather-v5.wav",
+          "sourceSha256": "28a633444aee5b886b84af3dd81fc622200680bb8fdf17913c4238271434feca",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 912815,
+          "prompt": "A long smooth gust of wind sucking air through a narrow opening. Continuous airy swoosh, soft at first then growing louder. Pure wind foley with no hits, no bangs, no explosions, no crackles, no music, no voices.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 0.357,
+          "rate": 1,
+          "cut": 0.85,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "klychko-ready-v4",
+      "file": "public/assets/audio/sfx/klychko-ready-v4.wav",
+      "seconds": 0.3,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.041179543338909295,
+      "sha256": "8ed9d393fc8b931f3dd30a0d059f2dd4f8ffc598984dd8560ad66e421b342856",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "klychko-ready-v4.wav",
+          "sourceSha256": "48ccac574be42d4a218088027ca8922f8fb6a1cb4c54893cf0d04a1fd031dcf9",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 912811,
+          "prompt": "One sharp powerful crack of a thick leather boxing glove being clenched, heavy dry leather creak with a short deep thud. Isolated physical foley, no voice, music or electronic tones.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 4.372,
+          "rate": 1,
+          "cut": 0.3,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "taira-field-v2",
+      "file": "public/assets/audio/sfx/taira-field-v2.wav",
+      "seconds": 0.7,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.1122276525339375,
+      "sha256": "cd3e07d1bb61a4df6722e0088cb90c3760cdb933e6bd70cf0b429e989e82f6a0",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "taira-field-v2.wav",
+          "sourceSha256": "4f735c0f81818a69e45d5294b5cda6f94f4e98e848c22cf7f40955f3da42457d",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 912812,
+          "prompt": "A short pressurized medical aerosol spray, soft air hiss and cloth bandage rustling, close dry equipment foley. No speech, no music, no melody, no electronic beeps.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 4.002,
+          "rate": 1,
+          "cut": 0.7,
+          "gain": 1,
+          "at": 0
+        }
+      ]
     }
   ],
   "missing": [],
   "bank": {
     "file": "public/assets/audio/sfx/combat-bank.wav",
-    "sha256": "a29650e612070a7e0d053159b814d5f9610cd6e303c9451ae74789e752604a0e",
-    "seconds": 270.97575000000006
+    "sha256": "fd8d988254ecd2c43052d05988bad67a7ace6ac8372fc3d5a5c156c904ed4e89",
+    "seconds": 272.94575000000003
   },
   "review": {
     "status": "local-playtest-candidate",
