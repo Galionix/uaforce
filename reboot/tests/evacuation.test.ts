@@ -27,3 +27,4 @@ test('guest jumping into the cabin can extract the team while the nearer host st
  const remote=new World();applySnapshot(remote,JSON.parse(JSON.stringify(new SnapshotWriter(w).snapshot(1,[event]))));
  assert.equal(remote.evac.phase,'departing');assert.equal(remote.events[0].type,'boarded');
 });
+test('helicopter lowers its cabin above a crater but still requires a real jump',()=>{const w=fixture();w.boxes=w.boxes.filter(b=>Math.abs(b.x-w.mission.exit)>5||b.y+b.h<=-2);w.player.y=-2;tick(w,200);assert.equal(w.evac.phase,'boarding');assert.equal(w.evac.y,1);assert.equal(w.events.some(e=>e.type==='boarded'),false);w.step(1/60,{...IDLE,jump:true});tick(w,25);assert.equal(w.evac.phase,'departing');});

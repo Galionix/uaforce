@@ -50,7 +50,7 @@ test('reinforcement cap preserves survivors and replaces only casualties',()=>{
 });
 test('mobile hack survives losing radio, enforces capacity, and allows replacement after death',()=>{
  const w=fixture('turret');w.followers=[];const node={id:w.nextId(),x:23,y:0,w:1.6,h:2.2,hp:150,maxHp:150,kind:'radio' as const};w.boxes.push(node);
- w.step(1/60,{...IDLE,special:true});assert.equal(w.followers.length,1);assert.equal(w.followers[0].source,node.id);node.hp=0;run(w,1);assert.equal(w.followers.length,1);
+ w.step(1/60,{...IDLE,special:true});assert.equal(w.followers.length,1);assert.equal(w.followers[0].source,undefined);node.hp=0;run(w,1);assert.equal(w.followers.length,1);
  w.step(1/60,{...IDLE,special:true});assert.equal(w.specialCharges,1);w.damageFollower(w.followers[0],200);node.hp=150;w.step(1/60,{...IDLE,special:true});assert.equal(w.followers.length,1);assert.equal(w.specialCharges,0);
 });
 test('pause freezes AI; respawn and rescued hero change clear companions',()=>{

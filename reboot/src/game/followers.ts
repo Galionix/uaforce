@@ -5,7 +5,7 @@ import type {HeroId} from './content.ts';
 export type Follower = WeaponState & {
  id:number; playerId?:number; kind:'infantry'|'turret'; owner:HeroId; source?:number; slot:number;
  x:number;y:number;vy:number;dir:number;hp:number;maxHp:number;
- state:'follow'|'approach'|'attack'|'return';target?:number;grounded:boolean;
+ hold?:{x:number;y:number};state:'follow'|'approach'|'attack'|'return';target?:number;grounded:boolean;
  ladder:number;moving:boolean;attack:number;hurt:number;contactCooldown:number;stepSound?:number;
 };
 export const FOLLOWER_WEAPONS:Record<Follower['kind'],WeaponSpec>={
@@ -80,7 +80,8 @@ export function stepFollowers(w:World,dt:number){
   let target=f.state==='return'?undefined:w.enemies.find(e=>e.id===f.target&&eligible(e));
   if(!target&&f.state!=='return')target=w.enemies.filter(eligible).sort((a,b)=>Math.hypot(a.x-f.x,a.y-f.y)-Math.hypot(b.x-f.x,b.y-f.y))[0];
   f.target=target?.id;
-  let tx=p.x-p.facing*(2.4+f.slot*1.8),ty=p.y;
+  let tx=f.hold?.x??p.x-p.facing*(2.4+f.slot*1.8),ty=f.hold?.y??p.y;
+  if(f.hold&&ownerDistance>16)f.hold=undefined;
   if(target){
    const distance=Math.abs(target.x-f.x),aligned=Math.abs(target.y-f.y)<.55,clear=clearShot(w,f,target);
    f.state=distance<=8&&aligned&&clear?'attack':'approach';
@@ -88,6 +89,7 @@ export function stepFollowers(w:World,dt:number){
    // Cover between the pair requires moving around it instead of firing through it.
    if(!clear)tx=target.x;
   }else if(f.state!=='return')f.state='follow';
+  if(f.hold){tx=f.hold.x;ty=f.hold.y;}
   tx=Math.max(1,Math.min(w.mission.length-2,tx));
   if(!target&&Math.abs(tx-f.x)<.4&&Math.abs(ty-f.y)<.6)tx=f.x;
   // Move out of the owner's space when holding a firing position; crossing paths stays possible.

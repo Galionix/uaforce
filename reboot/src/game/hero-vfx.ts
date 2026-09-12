@@ -8,7 +8,22 @@ export function drawHeroEffect(c:CanvasRenderingContext2D,f:Effect,x:number,y:nu
  const ring=(xx:number,yy:number,r:number,color:string,a=1)=>{if(r<=0||a<=0)return;c.save();c.globalAlpha*=Math.min(1,a)*fade;c.fillStyle=color;const steps=Math.max(24,Math.ceil(r*3));for(let i=0;i<steps;i++){const angle=i*Math.PI*2/steps;c.fillRect(Math.round((xx+Math.cos(angle)*r)/2)*2,Math.round((yy+Math.sin(angle)*r*.38)/2)*2,2,2);}c.restore();};
  const sparks=(xx:number,yy:number,count:number,color:string,spread=65)=>{c.save();c.fillStyle=color;for(let i=0;i<count;i++){const a=i*2.399,phase=(t*.7+i*.113)%1,r=phase*spread;c.globalAlpha=(1-phase)*fade;c.fillRect(Math.round(xx+Math.cos(a)*r),Math.round(yy+Math.sin(a)*r*.7-phase*20),2,2);}c.restore();};
  const blast=(xx:number,yy:number,age:number,size=80)=>{if(age>=0&&age<.65)art.draw(c,'blast',Math.min(7,Math.floor(age/.65*8)),xx,yy,size,size);};
+ const newHero=['usyk','almaziv','klychko','taira','prytula'].includes(f.hero);
+ const reinforcement=(cell:number,xx=x,yy=y-20,size=48)=>art.draw(c,'reinforcements',cell,xx,yy,size,size,d,0,fade);
+ if(newHero){
+  if(f.kind==='weapon'){reinforcement(f.hero==='taira'?1:Math.min(3,Math.floor(t*16)),x+d*22,y-19,f.hero==='klychko'?64:48);return;}
+  if(f.hero==='usyk'){for(let i=0;i<(f.kind==='ultimate'?3:1);i++)reinforcement((frame+i)%4,x-d*i*18,y-20,45+i*4);sparks(x,y-18,15,'#ffe078',55);}
+  if(f.hero==='klychko'){if(f.kind==='special')reinforcement(1,x+d*18,y-23,55);else {ring(x,y-8,45+Math.sin(t*5)*8,'#a1e1ee');reinforcement(frame,x+d*20,y-20,54);}}
+  if(f.hero==='taira'){reinforcement(f.kind==='special'?4+Math.min(2,Math.floor(t*4)):7,x,y-24,f.kind==='special'?45:85);sparks(x,y-18,12,'#79dbc0',45);}
+  if(f.hero==='almaziv'){reinforcement(f.kind==='special'?1:12,x+d*22,y-20,42);if(f.kind==='ultimate')for(let i=0;i<3;i++)blast(x+d*(i*35+20),y-25,t-.15-i*.5,60);}
+  if(f.hero==='prytula'){reinforcement(f.kind==='special'?8+frame:t<1?14:15,x,y-35-(f.kind==='ultimate'?Math.max(0,1-t)*90:0),f.kind==='ultimate'?105:48);}
+  return;
+ }
  if(f.kind==='weapon'){
+  if(f.hero==='franko'){prop(2,x+d*20,y-20,40,48,-1+t*8);blast(x+d*22,y-5,t,48);return;}
+  if(f.hero==='shevchenko'&&f.target!==undefined){art.draw(c,'lightning',Math.min(7,2+Math.floor(t*9)),x,y-90,94,194);return;}
+  if(f.hero==='lesya'){for(let i=0;i<4;i++)art.draw(c,'nature',4+Math.min(3,Math.floor(t*10)),x+d*i*22,y-28-i*8,42,60,d);return;}
+
   if(f.hero==='skovoroda')prop(15,x+d*22,y-16,36,36,-1+t*12);
   else {art.draw(c,f.hero==='zelensky'?'auras':'ordnance',f.hero==='zelensky'?12+Math.min(3,Math.floor(t*12)):6,x+d*22,y-16,38,40,d,t*2);sparks(x+d*20,y-15,8,'#ffe9ac',30);}return;
  }
@@ -16,7 +31,7 @@ export function drawHeroEffect(c:CanvasRenderingContext2D,f:Effect,x:number,y:nu
   switch(f.hero){
    case 'shevchenko':prop(0,x,y-30,32,40,-.3);for(let i=0;i<3;i++)ring(x,y-16,Math.max(0,t*210-i*24),'#ffe6a1',1-t/.8);sparks(x,y-20,20,'#ffe092',100);break;
    case 'lesya':for(let i=0;i<7;i++){const a=t*2+i*.9;art.draw(c,'nature',(Math.floor(t*12)+i)%4,x+Math.sin(a)*76,y-44+Math.cos(t*3+i)*19,35,35,Math.cos(a)>0?1:-1,.15*Math.sin(a),fade);}sparks(x,y-25,9,'#9cbbe2');break;
-   case 'franko':{const rise=Math.min(1,t*5);prop(3,x,y-32*rise,30,64*rise);if(t<.5)blast(x,y-4,t,48);break;}
+   case 'franko':{const rise=Math.min(1,t*5);prop(3,x,y-17.6*rise,30,35.2*rise);if(t<.5)blast(x,y-4,t,48);break;}
    case 'bandera':if(t<.65)prop(4,x,y-10,22,30,t*5);else for(let i=-2;i<=2;i++)art.draw(c,'blast',2+Math.floor((t*8+i+20)%3),x+i*18,y-17,35,44,1,0,.85);break;
    case 'mamai':prop(5,x,y,34,40,t*8);sparks(x,y,7,'#ffe49f',28);break;
    case 'skovoroda':prop(6,x,y,38,31,Math.sin(t*5)*.4);sparks(x,y,8,'#f7e4a2',35);break;

@@ -1,0 +1,92 @@
+{
+  "usyk": {
+    "file": "public/assets/usyk-pixel-sheet.png",
+    "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-ff3244ac-2785-4bc0-8323-ae2af705b20d.png",
+    "sha256": "46d5d499be7d7a79b3cd14b5c94791ad1731fd73461597ea7b32f60748fe6dcd",
+    "importGrid": [
+      192,
+      128
+    ],
+    "palette": "ABILITY_PALETTE",
+    "background": "magenta chroma",
+    "poses": "4x2; runtime articulated run cycle",
+    "cinematic": {
+      "file": "public/assets/cinematics/usyk.png",
+      "sha256": "0d77661d665c95704ce4df5832f851cf8f9e777357ef549deab7b5fdeba081a7",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-4825c4cd-f6eb-4cd7-928c-bdf18406b33d.png",
+      "cell": 0
+    }
+  },
+  "almaziv": {
+    "file": "public/assets/almaziv-pixel-sheet.png",
+    "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-11172734-e42f-4970-9ff5-0ad88aa88a3a.png",
+    "sha256": "d24c70da16388f02e00456b88abbc0d557dc58d952a5b6f9cb53e800900f1782",
+    "importGrid": [
+      192,
+      128
+    ],
+    "palette": "ABILITY_PALETTE",
+    "background": "magenta chroma",
+    "poses": "4x2; runtime articulated run cycle",
+    "cinematic": {
+      "file": "public/assets/cinematics/almaziv.png",
+      "sha256": "9d153e15c87295b08af58947455ee4731f7e22145dc03f5793e97d6a9face549",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-4825c4cd-f6eb-4cd7-928c-bdf18406b33d.png",
+      "cell": 1
+    }
+  },
+  "klychko": {
+    "file": "public/assets/klychko-pixel-sheet.png",
+    "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-b5629a4c-1415-4ff6-9c89-d2bf12f5fec8.png",
+    "sha256": "1ac1f709443c0e8cabc9dc998d60b4a7c579dc4d974e80282e3ccae29b2b596c",
+    "importGrid": [
+      192,
+      128
+    ],
+    "palette": "ABILITY_PALETTE",
+    "background": "magenta chroma",
+    "poses": "4x2; runtime articulated run cycle",
+    "cinematic": {
+      "file": "public/assets/cinematics/klychko.png",
+      "sha256": "c281b7bf7fde199ec037380007bf68c1b3f51dcf477d0a10e940bc797bcadc23",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-4825c4cd-f6eb-4cd7-928c-bdf18406b33d.png",
+      "cell": 2
+    }
+  },
+  "taira": {
+    "file": "public/assets/taira-pixel-sheet.png",
+    "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-2aae1d1a-eb8c-4352-b751-cf728cc39f82.png",
+    "sha256": "2c1688e6e224a90a394209833834a91710a9f4ba9ed455e00a76eec1f2796ce2",
+    "importGrid": [
+      192,
+      128
+    ],
+    "palette": "ABILITY_PALETTE",
+    "background": "magenta chroma",
+    "poses": "4x2; runtime articulated run cycle",
+    "cinematic": {
+      "file": "public/assets/cinematics/taira.png",
+      "sha256": "30b47a31b176ce3f1959e34b22d354165a324d02f05dbcd368c8692560e48485",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-4825c4cd-f6eb-4cd7-928c-bdf18406b33d.png",
+      "cell": 3
+    }
+  },
+  "prytula": {
+    "file": "public/assets/prytula-pixel-sheet.png",
+    "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-d816e4f2-dada-476d-85b2-e1d3536bd4e3.png",
+    "sha256": "152a66de96066a50a10e536718f87617f3ff4c17086978d8a8831f087a700d79",
+    "importGrid": [
+      192,
+      128
+    ],
+    "palette": "ABILITY_PALETTE",
+    "background": "magenta chroma",
+    "poses": "4x2; runtime articulated run cycle",
+    "cinematic": {
+      "file": "public/assets/cinematics/prytula.png",
+      "sha256": "506fb2f257196c9fcdcfa49ee8e4c1a500da411e87d6a2b3fe01ac21f49746c3",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-4825c4cd-f6eb-4cd7-928c-bdf18406b33d.png",
+      "cell": 4
+    }
+  }
+}

@@ -1,3 +1,5 @@
+import {importAbilityPixels} from './ability-palette.ts';
+import {NEW_HEROES} from './hero-expansion.ts';
 import {SceneFx,ATMOSPHERES,stormLight} from './scene-fx.ts';
 import {translate} from './i18n.ts';
 import {MobileFraming,cameraFollow,mobileCameraShift} from './mobile-view.ts';
@@ -47,6 +49,9 @@ export class View {
     const load=(im:HTMLImageElement,url:string)=>new Promise<void>((resolve,reject)=>{im.onload=()=>resolve();im.onerror=()=>reject(Error('Не завантажився '+url));im.src=assetUrl(url);});
     await this.abilityArt.load();
     await Promise.all([...MISSIONS.map((m,i)=>load(this.backdrops[i],m.background)),...HEROES.map((h,i)=>load(this.heroImages[i],h.sheet)),load(this.infantry,'/assets/infantry-pixel-sheet.png'),load(this.mavka,'/assets/mavka-pixel-sheet.png')]);
+    for(const h of NEW_HEROES){
+      const im=this.heroImages[HEROES.findIndex(a=>a.id===h)];const cv=document.createElement('canvas');cv.width=192;cv.height=128;const c=cv.getContext('2d')!;c.imageSmoothingEnabled=false;c.drawImage(im,0,0,192,128);const pixels=c.getImageData(0,0,192,128);importAbilityPixels(pixels.data);c.putImageData(pixels,0,0);await new Promise<void>(resolve=>{im.onload=()=>resolve();im.src=cv.toDataURL();});
+    }
     await Promise.all((Object.keys(BOSSES) as BossId[]).map(async id=>{const image=new Image();await load(image,BOSSES[id].sprite);const cv=document.createElement('canvas');cv.width=image.width;cv.height=image.height;const c=cv.getContext('2d')!;c.drawImage(image,0,0);const bounds=isolatedBounds(c.getImageData(0,0,image.width,image.height).data,image.width,image.height);this.bossArt.set(id,{image,bounds});}));
     // Crop each actor without neighboring frame spill; generated source pixels remain intact.
     this.frameBounds=[...this.heroImages,this.infantry,this.mavka].map((im,index)=>{
@@ -209,14 +214,14 @@ export class View {
     }
     drawArena(this.c,world,this.cameraX,this.cameraY);
     if(world.boss&&world.boss.hp<=0)drawBossWreck(this.c,world.boss,world.boss.x*S-this.cameraX,266-world.boss.y*S+this.cameraY,world.time);
-    for(const tank of world.mounts)drawMount(this.c,tank,tank.x*S-this.cameraX,266-tank.y*S+this.cameraY,this.clock,world.players.some(a=>a.mounted===tank));
-    for(const enemy of world.enemies)if(enemyActive(enemy)){if(enemy.boss){drawBoss(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.bossArt.get(enemy.boss.id),this.enemyClock);continue;}if(enemy.vehicle){drawVehicle(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.enemyClock,this.abilityArt);continue;}if(enemy.infantry?.kind!=='demolition')this.sprite(enemy.x,enemy.y,enemy.dir,enemy.infantry?.moving?Math.floor(this.enemyClock*(enemy.panic?16:10))%2:enemy.heavy||(enemy.infantry?.attack??0)>0||enemy.infantry?.kind==='gunner'?2:0,true,enemy.heavy||enemy.infantry?.kind==='gunner');drawInfantryGear(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.enemyClock);if(enemy.heavy){const x=enemy.x*S-this.cameraX;this.rect(x-13,266-enemy.y*S-42+this.cameraY,26,2,'#402f27');this.rect(x-13,266-enemy.y*S-42+this.cameraY,26*enemy.hp/enemy.maxHp,2,'#db5a39');}}
+    for(const tank of world.mounts)drawMount(this.c,tank,tank.x*S-this.cameraX,266-tank.y*S+this.cameraY,this.clock,world.players.some(a=>a.mounted===tank),this.abilityArt);
+    for(const enemy of world.enemies)if(enemyActive(enemy)||enemy.hp>0&&enemy.hacked){if(enemy.boss){drawBoss(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.bossArt.get(enemy.boss.id),this.enemyClock);continue;}if(enemy.vehicle){drawVehicle(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.enemyClock,this.abilityArt);continue;}if(enemy.infantry?.kind!=='demolition')this.sprite(enemy.x,enemy.y,enemy.dir,enemy.infantry?.moving?Math.floor(this.enemyClock*(enemy.panic?16:10))%2:enemy.heavy||(enemy.infantry?.attack??0)>0||enemy.infantry?.kind==='gunner'?2:0,true,enemy.heavy||enemy.infantry?.kind==='gunner');drawInfantryGear(this.c,enemy,enemy.x*S-this.cameraX,266-enemy.y*S+this.cameraY,this.enemyClock);if(enemy.heavy){const x=enemy.x*S-this.cameraX;this.rect(x-13,266-enemy.y*S-42+this.cameraY,26,2,'#402f27');this.rect(x-13,266-enemy.y*S-42+this.cameraY,26*enemy.hp/enemy.maxHp,2,'#db5a39');}}
     for(const f of world.followers)if(f.hp>0){
       const x=Math.round(f.x*S-this.cameraX),y=Math.round(266-f.y*S+this.cameraY);
       this.c.globalAlpha=f.hurt>0?.55:1;
       if(f.kind==='infantry'){this.sprite(f.x,f.y,f.dir,f.moving?Math.floor(this.clock*9)%2:0,true);this.rect(f.x*S-this.cameraX-6,266-f.y*S+this.cameraY-17,5,2,'#3a91d2');this.rect(f.x*S-this.cameraX-6,266-f.y*S+this.cameraY-15,5,2,'#f5d363');}
       else {
-        this.abilityArt.draw(this.c,'summons',12+(f.moving?Math.floor(this.clock*10)%4:0),x,y-18,32,37,f.dir);
+        this.abilityArt.draw(this.c,f.owner==='prytula'?'reinforcements':'summons',(f.owner==='prytula'?8:12)+(f.moving?Math.floor(this.clock*10)%4:0),x,y-18,f.owner==='prytula'?39:32,37,f.dir);
       }
       this.c.globalAlpha=1;
       this.rect(x-3,y-36,6,2,'#4ba4dd');this.rect(x-3,y-34,6,2,'#ffdf6a');
@@ -257,7 +262,8 @@ export class View {
     }
     for(const b of world.bullets){
       const x=b.x*S-this.cameraX,y=266-b.y*S+this.cameraY,dir=Math.sign(b.vx);
-      if(b.ordnance){this.abilityArt.draw(this.c,'weapons',3,x,y,22,8,1,Math.atan2(-b.vy,b.vx));
+      if(b.gravity){this.abilityArt.draw(this.c,'reinforcements',12,x,y,12,12,1,this.clock*6);}
+      else if(b.ordnance){this.abilityArt.draw(this.c,'weapons',3,x,y,22,8,1,Math.atan2(-b.vy,b.vx));
       }else if(b.hero==='shevchenko'){
         this.abilityArt.draw(this.c,'auras',12+Math.floor(this.clock*12)%3,x,y,24,28,dir);
       }else if(b.hero==='lesya'){
@@ -266,8 +272,9 @@ export class View {
         this.abilityArt.draw(this.c,'weapons',2,x,y,34,23,dir,-.5);
       }else if(b.hero==='it-army'){this.abilityArt.draw(this.c,'ordnance',5,x,y,14,14,dir);}else if(b.hero==='skovoroda'){this.abilityArt.draw(this.c,'props',15,x,y,23,23,dir,this.clock*10);}else if(b.hero==='bilozerska'){this.rect(x-dir*16,y,18,1,'#f2edcf');}else{this.rect(x-dir*5,y,7,2,'#ff7841');this.rect(x,y,3,1,'#fffac5');}
     }
+    for(const e of world.enemies)if(e.hp>0&&(e.hacked||(e.marked??0)>0)){const x=e.x*S-this.cameraX,y=266-e.y*S+this.cameraY;this.rect(x-7,y-43,14,3,e.hacked?'#79dbc0':'#ffe078');if(e.hacked)this.rect(x-7,y-43,14*e.hacked.left/8,3,'#fff1c3');}
     const panicCaptionXs:number[]=[];
-    for(const enemy of world.enemies)if(enemyActive(enemy)){
+    for(const enemy of world.enemies)if(enemyActive(enemy)||enemy.hp>0&&enemy.hacked){
       const x=enemy.x*S-this.cameraX,y=266-enemy.y*S-30+this.cameraY;
       if(enemy.poison)for(let i=0;i<3;i++)this.rect(x-5+i*5,y+6+Math.sin(this.clock*5+i)*3,2,3,'#7fef72');
       if(enemy.panic){if(!panicCaptionXs.some(px=>Math.abs(px-x)<36)){panicCaptionXs.push(x);this.label('А-А!',x,y-8+Math.sin(this.clock*22)*2,'#ffdd83');}for(let i=0;i<2;i++)this.rect(x-enemy.dir*(8+i*5),y+14+(this.clock*20+i*3)%7,3,1,'#e6d4ac');}

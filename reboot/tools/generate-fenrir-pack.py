@@ -19,6 +19,11 @@ LINES = {
  'bilozerska': ('Олена Білозерська!', 'hero'),
  'it-army': ('Айті-армія!', 'hero'),
  'skovoroda': ('Григорій Сковорода!', 'hero'),
+ 'usyk': ('Олександр Усик!', 'hero'),
+ 'almaziv': ('Олекса Алмазів!', 'hero'),
+ 'klychko': ('Віталій Кличко!', 'hero'),
+ 'taira': ('Тайра!', 'hero'),
+ 'prytula': ('Сергій Притула!', 'hero'),
  'new-hero': ('Новий боєць!', 'hero'),
  'mission-start': ('До бою!', 'routine'),
  'checkpoint': ('Тримаємо рубіж!', 'routine'),
@@ -79,13 +84,13 @@ def main():
  OUT.mkdir(parents=True, exist_ok=True)
  backup = OUT / 'previous'; backup.mkdir(exist_ok=True)
  for index, (name, (text, mood)) in enumerate(LINES.items(), 1):
-  if args.only and name != args.only: continue
+  if args.only and name not in args.only.split(','): continue
   meta_path = OUT / f'{name}.json'; final = OUT / f'{name}.wav'
   if meta_path.exists() and final.exists():
    assert hashlib.sha256(final.read_bytes()).hexdigest() == json.loads(meta_path.read_text())['sha256']
    print(f'{index}/{len(LINES)} {name}: already staged', flush=True); continue
   old = ROOT / f'public/assets/audio/announcer/{name}.wav'
-  if not (backup / old.name).exists(): shutil.copy2(old, backup / old.name)
+  if old.exists() and not (backup / old.name).exists(): shutil.copy2(old, backup / old.name)
   prompt = BASE + MOODS[mood] + ' A short single game callout. No leading or trailing pause. Speak ONLY the following transcript once.\nTRANSCRIPT:\n' + text
   if MODEL=='gemini-2.5-flash-preview-tts':
    prompt='Read the Ukrainian text below exactly once. A charismatic male game announcer, Fenrir, in a LOW powerful resonant bass-baritone chest voice, at normal energetic speaking speed. Clear native Ukrainian articulation. Dry studio voice only. '+MOODS[mood]+'\n\n'+text
@@ -104,7 +109,7 @@ def main():
   subprocess.run(['ffmpeg','-v','error','-y','-i',str(raw),'-af',filters,'-ar','24000','-ac','1',str(final)],check=True)
   with wave.open(str(final)) as f: seconds = f.getnframes()/f.getframerate()
   assert .3 < seconds < 10, f'Unexpected duration {name}: {seconds}'
-  meta = {'id':name,'file':str(old.relative_to(ROOT)), 'text':text,'mood':mood,'voice':'Fenrir','model':MODEL,'prompt':prompt,'processing':filters,'seconds':seconds,'sha256':hashlib.sha256(final.read_bytes()).hexdigest(),'previousSha256':hashlib.sha256((backup/old.name).read_bytes()).hexdigest(),'rawSha256':hashlib.sha256(raw.read_bytes()).hexdigest(),'playbackDuringGeneration':False}
+  meta = {'id':name,'file':str(old.relative_to(ROOT)), 'text':text,'mood':mood,'voice':'Fenrir','model':MODEL,'prompt':prompt,'processing':filters,'seconds':seconds,'sha256':hashlib.sha256(final.read_bytes()).hexdigest(),'previousSha256':(hashlib.sha256((backup/old.name).read_bytes()).hexdigest() if (backup/old.name).exists() else None),'rawSha256':hashlib.sha256(raw.read_bytes()).hexdigest(),'playbackDuringGeneration':False}
   meta_path.write_text(json.dumps(meta,ensure_ascii=False,indent=2)+'\n')
   print(f'{index}/{len(LINES)} STAGED {name}: {seconds:.3f}s',flush=True)
   time.sleep(2)

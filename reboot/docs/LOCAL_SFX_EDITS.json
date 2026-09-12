@@ -1816,5 +1816,29 @@
     "rate": 1.03,
     "start": 2.122,
     "seconds": 0.32
+  },
+  "drone-lock": {
+    "sourceId": "source-rotor-0",
+    "masterSha256": "b38880446b7ad82000ff18f757c1af253de755e04bff8e13458074a2b29f4947",
+    "start": 2.392,
+    "rate": 1,
+    "seconds": 0.7,
+    "reason": "Raw new take rejected by PCM semantic screening; use screened generated material in the same style."
+  },
+  "grenade-bounce": {
+    "sourceId": "source-metal-1",
+    "masterSha256": "ebf241ce858568daa704cdcbbce9e4ce02f3eb6c3e877059f4275104afa13f0f",
+    "start": 4.8,
+    "rate": 1,
+    "seconds": 0.3,
+    "reason": "Raw new take rejected by PCM semantic screening; use screened generated material in the same style."
+  },
+  "taira-ultimate": {
+    "masterSha256": "441045980206586a6f99917107c66ebe112b65091ef1670254baaf6f2ab04334",
+    "rate": 1.03,
+    "start": 2.122,
+    "seconds": 0.65,
+    "sourceId": "team-hand-raise",
+    "reason": "Rescue cloth deployment; screened local cloth source, no static/noise."
   }
 }

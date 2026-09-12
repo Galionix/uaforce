@@ -1,0 +1,103 @@
+{
+  "generator": "built-in image_gen",
+  "prompts": [
+    {
+      "id": "shevchenko",
+      "prompt": "Use case: stylized-concept. Asset: a standalone cinematic character reveal illustration for UaForce, NOT a gameplay sprite or spritesheet. Wide 3:2 composition, detailed chunky pixel art with hard pixel edges, restricted arcade palette, dramatic rim lighting, no smooth painting or 3D rendering. Large waist-up character occupying right two thirds, left third dark negative space for separately rendered UI text. No text, no letters, no logos. Entirely original composition. Taras Shevchenko as a fantasy action hero, recognizable mature Ukrainian poet face and thick mustache, fur hat, dark coat, holding a powerful ornate mace radiating golden written-word energy. Background night Dnipro reeds, blue and warm golden light."
+    },
+    {
+      "id": "lesya",
+      "prompt": "Use case: stylized-concept. Asset: a standalone cinematic character reveal illustration for UaForce, NOT a gameplay sprite or spritesheet. Wide 3:2 composition, detailed chunky pixel art with hard pixel edges, restricted arcade palette, dramatic rim lighting, no smooth painting or 3D rendering. Large waist-up character occupying right two thirds, left third dark negative space for separately rendered UI text. No text, no letters, no logos. Entirely original composition. Lesya Ukrainka as a fantasy action heroine, recognizable Ukrainian poet woman, dark hair pinned with subtle red flowers, cream embroidered blouse and dark green battle cloak, poison crossbow cradled diagonally, spectral green leaves and crow feathers. Night forest background."
+    },
+    {
+      "id": "franko",
+      "prompt": "Use case: stylized-concept. Asset: a standalone cinematic character reveal illustration for UaForce, NOT a gameplay sprite or spritesheet. Wide 3:2 composition, detailed chunky pixel art with hard pixel edges, restricted arcade palette, dramatic rim lighting, no smooth painting or 3D rendering. Large waist-up character occupying right two thirds, left third dark negative space for separately rendered UI text. No text, no letters, no logos. Entirely original composition. Ivan Franko as a fantasy action hero, recognizable red-haired mustached Ukrainian writer, cream embroidered shirt, rolled sleeves, powerful stone mason hammer gripped across shoulders. Quarry stone shards and amber sparks behind."
+    },
+    {
+      "id": "bandera",
+      "prompt": "Use case: stylized-concept. Asset: a standalone cinematic character reveal illustration for UaForce, NOT a gameplay sprite or spritesheet. Wide 3:2 composition, detailed chunky pixel art with hard pixel edges, restricted arcade palette, dramatic rim lighting, no smooth painting or 3D rendering. Large waist-up character occupying right two thirds, left third dark negative space for separately rendered UI text. No text, no letters, no logos. Entirely original composition. Stepan Bandera as a fictionalized action-game depiction of the historical man, recognizable short dark parted hair and slender face, olive jacket, holding a PPSh with drum magazine lowered. Night resistance hideout, amber lamplight. No insignia, no political slogans."
+    },
+    {
+      "id": "mamai",
+      "prompt": "Use case: stylized-concept. Asset: a standalone cinematic character reveal illustration for UaForce, NOT a gameplay sprite or spritesheet. Wide 3:2 composition, detailed chunky pixel art with hard pixel edges, restricted arcade palette, dramatic rim lighting, no smooth painting or 3D rendering. Large waist-up character occupying right two thirds, left third dark negative space for separately rendered UI text. No text, no letters, no logos. Entirely original composition. Kozak Mamai, the named Ukrainian folkloric hero, older mustached warrior with shaved head and oseledets forelock, embroidered shirt and red sash, ornate bandura and sheathed saber. Blue night steppe with golden spectral horse silhouettes."
+    },
+    {
+      "id": "bayraktar",
+      "prompt": "Use case: stylized-concept. Asset: a standalone cinematic character reveal illustration for UaForce, NOT a gameplay sprite or spritesheet. Wide 3:2 composition, detailed chunky pixel art with hard pixel edges, restricted arcade palette, dramatic rim lighting, no smooth painting or 3D rendering. Large waist-up character occupying right two thirds, left third dark negative space for separately rendered UI text. No text, no letters, no logos. Entirely original composition. Bayraktarchyk, a fictional Ukrainian young drone engineer action hero, goggles, amber scarf, olive utility vest, compact backpack turret visible over shoulder, small quadcopter hovering by hand. Golden circuit-like sparks against dark workshop."
+    },
+    {
+      "id": "ghost",
+      "prompt": "Use case: stylized-concept. Asset: a standalone cinematic character reveal illustration for UaForce, NOT a gameplay sprite or spritesheet. Wide 3:2 composition, detailed chunky pixel art with hard pixel edges, restricted arcade palette, dramatic rim lighting, no smooth painting or 3D rendering. Large waist-up character occupying right two thirds, left third dark negative space for separately rendered UI text. No text, no letters, no logos. Entirely original composition. Ghost of Kyiv, fictional collective fighter pilot hero, dark blue flight suit, flight helmet with reflective cyan visor and oxygen mask, confident heroic pose holding helmet strap. Jet silhouette and night city radar glow behind."
+    },
+    {
+      "id": "zelensky",
+      "prompt": "Use case: stylized-concept. Asset: a standalone cinematic character reveal illustration for UaForce, NOT a gameplay sprite or spritesheet. Wide 3:2 composition, detailed chunky pixel art with hard pixel edges, restricted arcade palette, dramatic rim lighting, no smooth painting or 3D rendering. Large waist-up character occupying right two thirds, left third dark negative space for separately rendered UI text. No text, no letters, no logos. Entirely original composition. Volodymyr Zelenskyy as a fictionalized Ukrainian action hero, recognizable short dark hair and stubble, olive T-shirt and field vest, microphone in one hand and lowered pistol in other, determined expression. Blue-gold lights and distant allied silhouettes."
+    },
+    {
+      "id": "bilozerska",
+      "prompt": "Use case: stylized-concept. Asset: a standalone cinematic character reveal illustration for UaForce, NOT a gameplay sprite or spritesheet. Wide 3:2 composition, detailed chunky pixel art with hard pixel edges, restricted arcade palette, dramatic rim lighting, no smooth painting or 3D rendering. Large waist-up character occupying right two thirds, left third dark negative space for separately rendered UI text. No text, no letters, no logos. Entirely original composition. Olena Bilozerska as a fictionalized Ukrainian sniper heroine, mature woman with short blonde/light-brown hair under tactical cap, olive combat uniform, long precision rifle across chest, focused expression. Sepia dusk ruined rooftop and distant telescope glint."
+    },
+    {
+      "id": "it-army",
+      "prompt": "Use case: stylized-concept. Asset: a standalone cinematic character reveal illustration for UaForce, NOT a gameplay sprite or spritesheet. Wide 3:2 composition, detailed chunky pixel art with hard pixel edges, restricted arcade palette, dramatic rim lighting, no smooth painting or 3D rendering. Large waist-up character occupying right two thirds, left third dark negative space for separately rendered UI text. No text, no letters, no logos. Entirely original composition. IT-Army UA, a fictional Ukrainian cyber defender, anonymous young adult in dark purple hood and tactical half mask, luminous teal laptop held open, walking robotic turret silhouette behind. Dark server bunker, teal circuitry and electric sparks."
+    },
+    {
+      "id": "skovoroda",
+      "prompt": "Use case: stylized-concept. Asset: a standalone cinematic character reveal illustration for UaForce, NOT a gameplay sprite or spritesheet. Wide 3:2 composition, detailed chunky pixel art with hard pixel edges, restricted arcade palette, dramatic rim lighting, no smooth painting or 3D rendering. Large waist-up character occupying right two thirds, left third dark negative space for separately rendered UI text. No text, no letters, no logos. Entirely original composition. Hryhorii Skovoroda as a fantasy Ukrainian philosopher action hero, recognizable slender thoughtful face, brown hair, modest long blue-gray traveling coat and cream shirt, cast iron frying pan in one hand and old book in other. Starry indigo steppe and floating golden manuscript pages."
+    },
+    {
+      "id": "iron-warden",
+      "prompt": "Use case: stylized-concept. Original coarse 16-bit PIXEL ART standalone character portrait for Ukrainian satirical arcade game UaForce. Wide 1536x1024, visible chunky square pixels, limited palette, hard edges, no smooth or painterly rendering. Right half is large three-quarter waist-up character portrait; left third dark empty for separately rendered Ukrainian UI. Threatening antagonist presentation, not a celebratory heroic portrait. Dark command room, red alarm lighting and orange industrial sparks, hard black shadows. No written text or logos, no gore, no injuries. Recognizable satirical likeness of Russian general Valery Gerasimov: broad heavy lined face, short grey hair, square jowls, cold narrow eyes, olive Russian military uniform and shoulder boards, small white-blue-red sleeve patch. He operates controls in the open command hatch of a massive olive tracked armored vehicle with artillery barrel.",
+      "method": "built-in image_gen",
+      "file": "public/assets/cinematics/iron-warden.png",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-d7f66c75-10b7-4f4f-bf55-12102813c10d.png",
+      "sha256": "349036c6446c811a8be0db0360d0ad92381064828fdfa7aa7f7deade980ce819"
+    },
+    {
+      "id": "swarm-master",
+      "prompt": "Use case: stylized-concept. Original coarse 16-bit PIXEL ART standalone character portrait for Ukrainian satirical arcade game UaForce. Wide 1536x1024, visible chunky square pixels, limited palette, hard edges, no smooth or painterly rendering. Right half is large three-quarter waist-up character portrait; left third dark empty for separately rendered Ukrainian UI. Threatening antagonist presentation, not a celebratory heroic portrait. Dark command room, red alarm lighting and orange industrial sparks, hard black shadows. No written text or logos, no gore, no injuries. Recognizable satirical likeness of Russian general Sergey Surovikin: bald round heavy head, broad neck, furrowed brow and tight scowling mouth, olive Russian military uniform with small white-blue-red sleeve patch. He grips a rugged drone-control console; silhouettes of delta-wing military drones and missile launch equipment in the background.",
+      "method": "built-in image_gen",
+      "file": "public/assets/cinematics/swarm-master.png",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-de750963-3b11-4dea-8a22-8f1a06d0644c.png",
+      "sha256": "42602392b841d0350545dad1a9a6e599dc630da208bfa080ffd8490503a7eae7"
+    },
+    {
+      "id": "usyk",
+      "prompt": "Standalone cinematic pixel art waist-up heroic portrait, blue yellow flag and pixel explosions, no typography. Oleksandr Usyk",
+      "sourceAtlas": "exec-4825c4cd-f6eb-4cd7-928c-bdf18406b33d.png",
+      "cell": 0
+    },
+    {
+      "id": "almaziv",
+      "prompt": "Standalone cinematic pixel art waist-up heroic portrait, blue yellow flag and pixel explosions, no typography. Oleksa Almaziv",
+      "sourceAtlas": "exec-4825c4cd-f6eb-4cd7-928c-bdf18406b33d.png",
+      "cell": 1
+    },
+    {
+      "id": "klychko",
+      "prompt": "Standalone cinematic pixel art waist-up heroic portrait, blue yellow flag and pixel explosions, no typography. Vitali Klitschko",
+      "sourceAtlas": "exec-4825c4cd-f6eb-4cd7-928c-bdf18406b33d.png",
+      "cell": 2
+    },
+    {
+      "id": "taira",
+      "prompt": "Standalone cinematic pixel art waist-up heroic portrait, blue yellow flag and pixel explosions, no typography. Yulia “Taira” Paievska",
+      "sourceAtlas": "exec-4825c4cd-f6eb-4cd7-928c-bdf18406b33d.png",
+      "cell": 3
+    },
+    {
+      "id": "prytula",
+      "prompt": "Standalone cinematic pixel art waist-up heroic portrait, blue yellow flag and pixel explosions, no typography. Serhiy Prytula",
+      "sourceAtlas": "exec-4825c4cd-f6eb-4cd7-928c-bdf18406b33d.png",
+      "cell": 4
+    }
+  ],
+  "putin": {
+    "id": "putin",
+    "prompt": "Use case: stylized-concept. Original coarse 16-bit PIXEL ART standalone character portrait for Ukrainian satirical arcade game UaForce. Wide 1536x1024, visible chunky square pixels, limited palette, hard edges, no smooth or painterly rendering. Right half is large three-quarter waist-up character portrait; left third dark empty for separately rendered Ukrainian UI. Threatening antagonist presentation, not a celebratory heroic portrait. Dark command room, red alarm lighting and orange industrial sparks, hard black shadows. No written text or logos, no gore, no injuries. Recognizable satirical likeness of Vladimir Putin, receding light grey hair, long pale face, thin tightly pressed lips, cold blue narrow eyes with hostile scowl, dark suit and dark red tie. He leans forward gripping the armored command console in a huge sinister tracked mobile bunker; missile tubes and Russian white-blue-red markings on machinery, red alarm lamps. His face must be the unmistakable central antagonist focus. Dark ominous mood.",
+    "method": "built-in image_gen",
+    "file": "public/assets/cinematics/putin.png",
+    "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-9a511d04-f3ca-4d4f-ab71-d1c4801b69ea.png",
+    "sha256": "af68d216c3e5dbca105cd58ae80d1e560a20d88b7ffe551fdea58a545959b7e2"
+  }
+}

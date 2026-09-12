@@ -15,6 +15,11 @@ export const RUN_RIGS:Record<HeroId,RunRig>={
  bilozerska:{mask:[10,25,14,7],hip:23,center:17,back:[10,26,7,6],front:[18,26,6,6],width:4},
  'it-army':{mask:[12,29,14,3],hip:27,center:18,back:[12,29,6,3],front:[20,29,6,3],width:4},
  skovoroda:{mask:[12,29,14,3],hip:27,center:18,back:[12,29,6,3],front:[20,29,6,3],width:4},
+ usyk:{mask:[12,25,15,7],hip:23,center:19,back:[12,26,6,6],front:[21,26,6,6],width:4},
+ almaziv:{mask:[12,25,15,7],hip:23,center:19,back:[12,26,6,6],front:[21,26,6,6],width:4},
+ klychko:{mask:[12,25,15,7],hip:23,center:19,back:[12,26,6,6],front:[21,26,6,6],width:4},
+ taira:{mask:[12,25,15,7],hip:23,center:19,back:[12,26,6,6],front:[21,26,6,6],width:4},
+ prytula:{mask:[12,25,15,7],hip:23,center:19,back:[12,26,6,6],front:[21,26,6,6],width:4},
 };
 export const MAVKA_RUN_RIG:RunRig={mask:[14,29,12,3],hip:27,center:20,back:[14,29,6,3],front:[21,29,5,3],width:4};
 // Contact → support → toe-off → recovery → opposite contact, never idle inserts.

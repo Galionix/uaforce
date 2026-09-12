@@ -1,3 +1,4 @@
+import {HEROES} from '../src/game/content.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {survivalWorld,stepSurvival,waveBudget,endSurvival,SURVIVAL} from '../src/game/survival.ts';
@@ -7,7 +8,7 @@ import {TANK,addMount,stepMounts} from '../src/game/mounts.ts';
 const tick=(w:World,seconds:number)=>{for(let i=0;i<seconds*60;i++){for(const a of w.players)a.body.invulnerable=100;w.stepPlayers(1/60,[IDLE,IDLE]);w.events=[];}};
 function clear(w:World){const s=w.survival!;s.phase='combat';s.pending=0;w.enemies=[];stepSurvival(w,1/60);}
 test('survival arena isolates campaign, supports every hero, no extraction or story',()=>{
- const w=survivalWorld('lesya','franko');assert.equal(w.players.length,2);assert.equal(w.players[1].heroId,'franko');assert.equal(w.unlocked.length,11);assert.equal(w.survival!.phase,'break');
+ const w=survivalWorld('lesya','franko');assert.equal(w.players.length,2);assert.equal(w.players[1].heroId,'franko');assert.equal(w.unlocked.length,HEROES.length);assert.equal(w.survival!.phase,'break');
  tick(w,8.2);assert.equal(w.survival!.wave,1);assert.ok(w.survival!.elapsed<.25);assert.equal(w.evac.phase,'waiting');assert.equal(w.story,null);assert.equal(new World().survival,null);
 });
 test('wave budgets grow without a final wave; active population and memory stay bounded',()=>{

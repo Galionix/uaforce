@@ -13,6 +13,11 @@ export const WEAPONS:Record<HeroId,WeaponSpec>={
  bilozerska:{mode:'single',magazine:3,reloadTime:4.8,cooldown:1.65,damage:82,projectileSpeed:100,range:28,burst:0,burstPause:0},
  'it-army':{mode:'single',magazine:4,reloadTime:2,cooldown:.65,damage:24,projectileSpeed:22,range:10,burst:0,burstPause:0},
  skovoroda:{mode:'melee',magazine:0,reloadTime:0,cooldown:.6,damage:78,projectileSpeed:18,range:2.3,burst:0,burstPause:0},
+ usyk:{"mode": "melee", "magazine": 0, "reloadTime": 0, "cooldown": 0.26, "damage": 38, "projectileSpeed": 20, "range": 2.5, "burst": 0, "burstPause": 0},
+ almaziv:{"mode": "single", "magazine": 4, "reloadTime": 3, "cooldown": 0.65, "damage": 80, "projectileSpeed": 15, "range": 25, "burst": 0, "burstPause": 0},
+ klychko:{"mode": "melee", "magazine": 0, "reloadTime": 0, "cooldown": 0.7, "damage": 85, "projectileSpeed": 20, "range": 2.8, "burst": 0, "burstPause": 0},
+ taira:{"mode": "melee", "magazine": 0, "reloadTime": 0, "cooldown": 0.45, "damage": 52, "projectileSpeed": 20, "range": 2.6, "burst": 0, "burstPause": 0},
+ prytula:{"mode": "burst", "magazine": 15, "reloadTime": 2.3, "cooldown": 0.12, "damage": 19, "projectileSpeed": 40, "range": 16, "burst": 3, "burstPause": 0.5},
 };
 export type WeaponState={ammo:number;reloading:number;burstShots:number;weaponTrigger:boolean;cooldown:number};
 export function resetWeapon(p:WeaponState,s:WeaponSpec){p.ammo=s.magazine;p.reloading=0;p.burstShots=0;p.weaponTrigger=false;p.cooldown=0;}

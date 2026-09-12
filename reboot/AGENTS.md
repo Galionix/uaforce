@@ -64,7 +64,12 @@
 
 - SFX regeneration backlog: `docs/SFX_REGENERATION_AUDIT.md` and `.json`, AUDIO-05 in `docs/BACKLOG.md`. Historical audit is complete; replacements are now delivered in `docs/COMBAT_SFX_DELIVERY.md` and `docs/COMBAT_SFX_ASSETS.json`. `tools/build-combat-sfx.py` produces sample-based SFX and the single PCM bank; preserve exact offsets in release. Do not reintroduce runtime oscillator/PCM placeholders. Preserve approved music/announcer and keep all checks silent.
 
-- Future hero expansion: `docs/HERO_EXPANSION.md`, HERO-01. Owner requested Klitschko and Usyk; Vitali identity is an assumption. They are designed, not implemented; Prytula/Khlyvnyuk are proposals. Current playable roster remains eleven.
+- Hero expansion authority (owner, 2026-09-12): keep Bayraktarchyk and homing drones.
+  Implemented wave: Usyk, Almaziv, Vitali Klitschko, Taira, Prytula. 16 identities remain
+  available for saves/practice; 14 active random unlocks exclude Ghost and Skovoroda.
+  Details: `docs/HERO_WAVE_DELIVERY_2026-09-12.md`. Preserve generated pixel assets and
+  local sample SFX. New named Fenrir audio remains staged until approved; never use
+  rejected 2.5 voices. Generic approved new-hero cue is the fallback.
 
 - Public-demo/co-op authority: `docs/PUBLIC_DEMO_AND_COOP.md` (owner, 2026-09-09).
   Public name UA Force; keep internal references out of public positioning. Preserve independent

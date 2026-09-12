@@ -1,0 +1,572 @@
+{
+  "generator": "built-in image_gen",
+  "date": "2026-09-09",
+  "reference": "public/assets/shevchenko-mace-sheet.png",
+  "clips": [
+    {
+      "id": "bandera",
+      "file": "public/assets/bandera-pixel-sheet.png",
+      "sha256": "a17c041b664b7488a9ec6ee66d6034cca319f301e2d2fa845271c0d636c5bcf4",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-e0ffc42c-cd58-4c5c-9b82-c8a2084a8810.png",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "frames": [
+        [
+          23,
+          87,
+          357,
+          482
+        ],
+        [
+          33,
+          93,
+          374,
+          484
+        ],
+        [
+          32,
+          89,
+          367,
+          485
+        ],
+        [
+          32,
+          57,
+          366,
+          437
+        ],
+        [
+          30,
+          28,
+          314,
+          456
+        ],
+        [
+          18,
+          83,
+          384,
+          456
+        ],
+        [
+          0,
+          57,
+          323,
+          461
+        ],
+        [
+          87,
+          54,
+          319,
+          461
+        ]
+      ],
+      "prompt": "Production pixel-art sprite sheet for UaForce. Style reference attached only. Exactly 4 columns by 2 rows, 8 right-facing full-body frames: idle, run A, run B, jump, weapon windup, weapon release, ladder climb A, ladder climb B. Equal cells, consistent scale and foot baseline. Big head, short legs, coarse square pixels, thick dark outline, flat 16-color palette. Body reads at 27 logical pixels. No smooth drawing, no gradients, no text, no borders. Export REAL transparent PNG alpha background. Do NOT paint a checkerboard or any background. Subject: Lean clean-shaven Stepan Bandera with short combed brown hair, round black glasses, brown civilian jacket, red scarf, PPSh with round drum."
+    },
+    {
+      "id": "bilozerska",
+      "file": "public/assets/bilozerska-pixel-sheet.png",
+      "sha256": "c32a2660eb531c321df60599eeca4586f9e4da76f4860684cfc5f300d4592263",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-87dd8582-396d-44b2-8ee2-9bba51498b65.png",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "frames": [
+        [
+          15,
+          91,
+          371,
+          512
+        ],
+        [
+          4,
+          91,
+          384,
+          448
+        ],
+        [
+          0,
+          91,
+          384,
+          448
+        ],
+        [
+          0,
+          81,
+          373,
+          431
+        ],
+        [
+          23,
+          0,
+          384,
+          435
+        ],
+        [
+          0,
+          101,
+          384,
+          435
+        ],
+        [
+          0,
+          46,
+          335,
+          451
+        ],
+        [
+          81,
+          46,
+          302,
+          444
+        ]
+      ],
+      "prompt": "Production pixel-art sprite sheet for UaForce. Style reference attached only. Exactly 4 columns by 2 rows, 8 right-facing full-body frames: idle, run A, run B, jump, weapon windup, weapon release, ladder climb A, ladder climb B. Equal cells, consistent scale and foot baseline. Big head, short legs, coarse square pixels, thick dark outline, flat 16-color palette. Body reads at 27 logical pixels. No smooth drawing, no gradients, no text, no borders. Export REAL transparent PNG alpha background. Do NOT paint a checkerboard or any background. Subject: Olena Bilozerska, woman sniper with brown ponytail, olive field cap and jacket, very long scoped rifle."
+    },
+    {
+      "id": "zelensky",
+      "file": "public/assets/zelensky-pixel-sheet.png",
+      "sha256": "2df82532dbe9c0b797df1f689ac241be0d6af92d2d96879183c0136c73f5b1be",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-02da092b-834c-4758-8fc2-1e74660a1434.png",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "frames": [
+        [
+          79,
+          86,
+          314,
+          476
+        ],
+        [
+          46,
+          100,
+          341,
+          476
+        ],
+        [
+          49,
+          103,
+          343,
+          476
+        ],
+        [
+          74,
+          66,
+          354,
+          429
+        ],
+        [
+          65,
+          13,
+          317,
+          467
+        ],
+        [
+          65,
+          85,
+          384,
+          467
+        ],
+        [
+          0,
+          15,
+          333,
+          467
+        ],
+        [
+          121,
+          12,
+          347,
+          467
+        ]
+      ],
+      "prompt": "A PNG sprite sheet with transparent background for a retro pixel video game: one stocky short-haired bearded man in a plain olive green short-sleeve t-shirt and olive green cargo trousers, with a black microphone in left hand and a small black pistol in right hand. Eight action poses in exactly four columns and two rows: standing, running A, running B, jumping, raising microphone, firing pistol, climbing A, climbing B. All face right, full body in each equal cell. Coarse large square pixels, black outline, 16 colors. No text. A truly transparent empty background, no backdrop, no scenery, no checker pattern. Deliver RGBA with alpha."
+    },
+    {
+      "id": "mamai",
+      "file": "public/assets/mamai-pixel-sheet.png",
+      "sha256": "667ed1a36eb0b9d6df452b69cfa6e98237b2600f50f80826b3edd206f8fb76f4",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-cdfb92c2-2df8-4d32-bdb9-af631ebcd89f.png",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "frames": [
+        [
+          73,
+          106,
+          369,
+          472
+        ],
+        [
+          42,
+          93,
+          374,
+          472
+        ],
+        [
+          33,
+          106,
+          360,
+          472
+        ],
+        [
+          26,
+          20,
+          354,
+          472
+        ],
+        [
+          40,
+          2,
+          319,
+          451
+        ],
+        [
+          7,
+          89,
+          384,
+          452
+        ],
+        [
+          0,
+          33,
+          327,
+          455
+        ],
+        [
+          55,
+          33,
+          315,
+          455
+        ]
+      ],
+      "prompt": "Production pixel-art sprite sheet for UaForce. Style reference attached only. Exactly 4 columns by 2 rows, 8 right-facing full-body frames: idle, run A, run B, jump, weapon windup, weapon release, ladder climb A, ladder climb B. Equal cells, consistent scale and foot baseline. Big head, short legs, coarse square pixels, thick dark outline, flat 16-color palette. Body reads at 27 logical pixels. No smooth drawing, no gradients, no text, no borders. Export REAL transparent PNG alpha background. Do NOT paint a checkerboard or any background. Subject: Named Ukrainian folk hero Kozak Mamai, long black moustache, shaved head with single oseledets lock, cream shirt blue vest red wide trousers black boots, curved saber, flintlock pistol, small wooden bandura strapped on back."
+    },
+    {
+      "id": "bayraktar",
+      "file": "public/assets/bayraktar-pixel-sheet.png",
+      "sha256": "0aa03ab989b1aac6b39768258d5acc98d697bd090a750f83d864d0a2cdac209c",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-866e1ed7-a84d-4fe5-b1bc-4011f6c94b50.png",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "frames": [
+        [
+          52,
+          101,
+          303,
+          458
+        ],
+        [
+          35,
+          99,
+          305,
+          456
+        ],
+        [
+          40,
+          101,
+          312,
+          457
+        ],
+        [
+          48,
+          64,
+          321,
+          406
+        ],
+        [
+          38,
+          80,
+          384,
+          434
+        ],
+        [
+          0,
+          86,
+          384,
+          434
+        ],
+        [
+          0,
+          46,
+          348,
+          433
+        ],
+        [
+          49,
+          46,
+          322,
+          433
+        ]
+      ],
+      "prompt": "Production pixel-art sprite sheet for UaForce. Style reference attached only. Exactly 4 columns by 2 rows, 8 right-facing full-body frames: idle, run A, run B, jump, weapon windup, weapon release, ladder climb A, ladder climb B. Equal cells, consistent scale and foot baseline. Big head, short legs, coarse square pixels, thick dark outline, flat 16-color palette. Body reads at 27 logical pixels. No smooth drawing, no gradients, no text, no borders. Export REAL transparent PNG alpha background. Do NOT paint a checkerboard or any background. Subject: Bayraktarchyk, a playful personification of a Ukrainian drone operator, compact blue-grey flight helmet with big amber goggles, dark blue flight suit, backpack with clearly protruding small automated twin-barrel turret, yellow scarf. Turret fires horizontally forward."
+    },
+    {
+      "id": "ghost",
+      "file": "public/assets/ghost-pixel-sheet.png",
+      "sha256": "0998099a634b3660d041ad7cd65d8fb925101746a914c298460fbc725a6fe0ff",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-cbd5b287-de4e-479b-b0a1-4176011caf76.png",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "frames": [
+        [
+          46,
+          117,
+          326,
+          483
+        ],
+        [
+          41,
+          125,
+          338,
+          483
+        ],
+        [
+          39,
+          125,
+          341,
+          483
+        ],
+        [
+          52,
+          84,
+          349,
+          452
+        ],
+        [
+          38,
+          51,
+          319,
+          452
+        ],
+        [
+          12,
+          100,
+          384,
+          452
+        ],
+        [
+          0,
+          52,
+          332,
+          455
+        ],
+        [
+          87,
+          55,
+          324,
+          457
+        ]
+      ],
+      "prompt": "Production pixel-art sprite sheet for UaForce. Style reference attached only. Exactly 4 columns by 2 rows, 8 right-facing full-body frames: idle, run A, run B, jump, weapon windup, weapon release, ladder climb A, ladder climb B. Equal cells, consistent scale and foot baseline. Big head, short legs, coarse square pixels, thick dark outline, flat 16-color palette. Body reads at 27 logical pixels. No smooth drawing, no gradients, no text, no borders. Export REAL transparent PNG alpha background. Do NOT paint a checkerboard or any background. Subject: Ghost of Kyiv, mysterious fighter pilot, pale grey flight helmet with opaque dark teal visor and oxygen mask, blue flight suit, compact SMG held horizontally, no exposed face. Small cyan scarf."
+    },
+    {
+      "id": "it-army",
+      "file": "public/assets/it-army-pixel-sheet.png",
+      "sha256": "3ad168bbc522ab9e4a7a693fb735e97341731a45dbf95405de6df66167fc513c",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-1db61e61-a8ad-4fc2-ab25-a38e8563a59a.png",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "frames": [
+        [
+          64,
+          81,
+          334,
+          468
+        ],
+        [
+          51,
+          91,
+          350,
+          468
+        ],
+        [
+          54,
+          85,
+          358,
+          468
+        ],
+        [
+          48,
+          57,
+          360,
+          447
+        ],
+        [
+          52,
+          84,
+          360,
+          458
+        ],
+        [
+          39,
+          106,
+          384,
+          458
+        ],
+        [
+          0,
+          65,
+          327,
+          458
+        ],
+        [
+          94,
+          66,
+          321,
+          453
+        ]
+      ],
+      "prompt": "Production pixel-art sprite sheet for UaForce. Style reference attached only. Exactly 4 columns by 2 rows, 8 right-facing full-body frames: idle, run A, run B, jump, weapon windup, weapon release, ladder climb A, ladder climb B. Equal cells, consistent scale and foot baseline. Big head, short legs, coarse square pixels, thick dark outline, flat 16-color palette. Body reads at 27 logical pixels. No smooth drawing, no gradients, no text, no borders. Export REAL transparent PNG alpha background. Do NOT paint a checkerboard or any background. Subject: IT-Armiia UA, collective hacker personification, dark violet hood covering top of head, green luminous square glasses, dark pants, carrying an OPEN LAPTOP held at waist facing right, cyan screen and gold detail, no gun."
+    },
+    {
+      "id": "skovoroda",
+      "file": "public/assets/skovoroda-pixel-sheet.png",
+      "sha256": "a2d7241b1f7902809ea55a4934d298e257a20d87c84ca1249101ab016683e34e",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-1f0e2362-e5f7-4d77-ac8d-28c58ac64723.png",
+      "mode": "RGBA",
+      "width": 1536,
+      "height": 1024,
+      "frames": [
+        [
+          41,
+          80,
+          340,
+          471
+        ],
+        [
+          33,
+          80,
+          359,
+          467
+        ],
+        [
+          39,
+          80,
+          360,
+          468
+        ],
+        [
+          49,
+          71,
+          363,
+          438
+        ],
+        [
+          31,
+          8,
+          304,
+          439
+        ],
+        [
+          15,
+          85,
+          384,
+          439
+        ],
+        [
+          0,
+          53,
+          310,
+          448
+        ],
+        [
+          87,
+          53,
+          310,
+          448
+        ]
+      ],
+      "prompt": "Production pixel-art sprite sheet for UaForce. Style reference attached only. Exactly 4 columns by 2 rows, 8 right-facing full-body frames: idle, run A, run B, jump, weapon windup, weapon release, ladder climb A, ladder climb B. Equal cells, consistent scale and foot baseline. Big head, short legs, coarse square pixels, thick dark outline, flat 16-color palette. Body reads at 27 logical pixels. No smooth drawing, no gradients, no text, no borders. Export REAL transparent PNG alpha background. Do NOT paint a checkerboard or any background. Subject: Hryhorii Skovoroda, traveling philosopher, silver swept back hair, kind clean shaven face with long nose, long dark blue historical coat over cream shirt, brown shoulder satchel, holding a cast-iron frying pan with long handle, small brown book at belt."
+    },
+    {
+      "id": "usyk",
+      "file": "public/assets/usyk-pixel-sheet.png",
+      "sha256": "46d5d499be7d7a79b3cd14b5c94791ad1731fd73461597ea7b32f60748fe6dcd",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "prompt": "UA Force coarse pixel art, 4 by 2 sprite atlas, flat magenta key, full body facing right. Consistent dark outline, limited flat palette, no gradients or smoothing. usyk",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-ff3244ac-2785-4bc0-8323-ae2af705b20d.png"
+    },
+    {
+      "id": "almaziv",
+      "file": "public/assets/almaziv-pixel-sheet.png",
+      "sha256": "d24c70da16388f02e00456b88abbc0d557dc58d952a5b6f9cb53e800900f1782",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "prompt": "UA Force coarse pixel art, 4 by 2 sprite atlas, flat magenta key, full body facing right. Consistent dark outline, limited flat palette, no gradients or smoothing. almaziv",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-11172734-e42f-4970-9ff5-0ad88aa88a3a.png"
+    },
+    {
+      "id": "klychko",
+      "file": "public/assets/klychko-pixel-sheet.png",
+      "sha256": "1ac1f709443c0e8cabc9dc998d60b4a7c579dc4d974e80282e3ccae29b2b596c",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "prompt": "UA Force coarse pixel art, 4 by 2 sprite atlas, flat magenta key, full body facing right. Consistent dark outline, limited flat palette, no gradients or smoothing. klychko",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-b5629a4c-1415-4ff6-9c89-d2bf12f5fec8.png"
+    },
+    {
+      "id": "taira",
+      "file": "public/assets/taira-pixel-sheet.png",
+      "sha256": "2c1688e6e224a90a394209833834a91710a9f4ba9ed455e00a76eec1f2796ce2",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "prompt": "UA Force coarse pixel art, 4 by 2 sprite atlas, flat magenta key, full body facing right. Consistent dark outline, limited flat palette, no gradients or smoothing. taira",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-2aae1d1a-eb8c-4352-b751-cf728cc39f82.png"
+    },
+    {
+      "id": "prytula",
+      "file": "public/assets/prytula-pixel-sheet.png",
+      "sha256": "152a66de96066a50a10e536718f87617f3ff4c17086978d8a8831f087a700d79",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "prompt": "UA Force coarse pixel art, 4 by 2 sprite atlas, flat magenta key, full body facing right. Consistent dark outline, limited flat palette, no gradients or smoothing. prytula",
+      "source": "/Users/dmitry/.codex/generated_images/01a081ce-253d-7b62-9ad6-69e653f9af1f/exec-d816e4f2-dada-476d-85b2-e1d3536bd4e3.png"
+    }
+  ]
+}

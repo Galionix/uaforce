@@ -1616,6 +1616,570 @@ export const SFX_ASSETS = {
   "team-hand-lower": {
     "offset": 216.38575,
     "seconds": 0.32
+  },
+  "usyk-punch": {
+    "offset": 216.74575,
+    "seconds": 1.0
+  },
+  "usyk-special": {
+    "offset": 217.78575,
+    "seconds": 1.0
+  },
+  "usyk-ultimate": {
+    "offset": 218.82575,
+    "seconds": 1.0
+  },
+  "almaziv-weapon": {
+    "offset": 219.86575,
+    "seconds": 1.0
+  },
+  "almaziv-special": {
+    "offset": 220.90575,
+    "seconds": 1.0
+  },
+  "almaziv-ultimate": {
+    "offset": 221.94575,
+    "seconds": 1.0
+  },
+  "klychko-weapon": {
+    "offset": 222.98575,
+    "seconds": 1.0
+  },
+  "klychko-special": {
+    "offset": 224.02575,
+    "seconds": 1.0
+  },
+  "taira-weapon": {
+    "offset": 225.06575,
+    "seconds": 1.0
+  },
+  "taira-special": {
+    "offset": 226.10575,
+    "seconds": 1.0
+  },
+  "taira-ultimate": {
+    "offset": 227.14575,
+    "seconds": 0.65
+  },
+  "prytula-weapon": {
+    "offset": 227.83575,
+    "seconds": 1.0
+  },
+  "prytula-special": {
+    "offset": 228.87575,
+    "seconds": 1.0
+  },
+  "prytula-ultimate": {
+    "offset": 229.91575,
+    "seconds": 1.0
+  },
+  "drone-lock": {
+    "offset": 230.95575,
+    "seconds": 0.7
+  },
+  "grenade-bounce": {
+    "offset": 231.69575,
+    "seconds": 0.3
+  },
+  "usyk-weapon-0": {
+    "offset": 232.03575,
+    "seconds": 0.33
+  },
+  "usyk-weapon-1": {
+    "offset": 232.40575,
+    "seconds": 0.33
+  },
+  "usyk-weapon-2": {
+    "offset": 232.77575,
+    "seconds": 0.33
+  },
+  "usyk-hit": {
+    "offset": 233.14575,
+    "seconds": 0.25
+  },
+  "usyk-special-end": {
+    "offset": 233.43575,
+    "seconds": 0.28
+  },
+  "usyk-ultimate-end": {
+    "offset": 233.75575,
+    "seconds": 0.28
+  },
+  "foley-usyk-step-0": {
+    "offset": 234.07575,
+    "seconds": 0.2
+  },
+  "foley-usyk-step-1": {
+    "offset": 234.31575,
+    "seconds": 0.2
+  },
+  "foley-usyk-step-2": {
+    "offset": 234.55575,
+    "seconds": 0.2
+  },
+  "foley-usyk-climb-0": {
+    "offset": 234.79575,
+    "seconds": 0.2
+  },
+  "foley-usyk-climb-1": {
+    "offset": 235.03575,
+    "seconds": 0.2
+  },
+  "foley-usyk-climb-2": {
+    "offset": 235.27575,
+    "seconds": 0.2
+  },
+  "foley-usyk-jump-0": {
+    "offset": 235.51575,
+    "seconds": 0.2
+  },
+  "foley-usyk-jump-1": {
+    "offset": 235.75575,
+    "seconds": 0.2
+  },
+  "foley-usyk-jump-2": {
+    "offset": 235.99575,
+    "seconds": 0.2
+  },
+  "foley-usyk-land-0": {
+    "offset": 236.23575,
+    "seconds": 0.26
+  },
+  "foley-usyk-land-1": {
+    "offset": 236.53575,
+    "seconds": 0.26
+  },
+  "foley-usyk-land-2": {
+    "offset": 236.83575,
+    "seconds": 0.26
+  },
+  "foley-usyk-hurt-0": {
+    "offset": 237.13575,
+    "seconds": 0.2
+  },
+  "foley-usyk-hurt-1": {
+    "offset": 237.37575,
+    "seconds": 0.2
+  },
+  "foley-usyk-hurt-2": {
+    "offset": 237.61575,
+    "seconds": 0.2
+  },
+  "foley-usyk-ready-0": {
+    "offset": 237.85575,
+    "seconds": 0.2
+  },
+  "foley-usyk-ready-1": {
+    "offset": 238.09575,
+    "seconds": 0.2
+  },
+  "foley-usyk-ready-2": {
+    "offset": 238.33575,
+    "seconds": 0.2
+  },
+  "almaziv-weapon-0": {
+    "offset": 238.57575,
+    "seconds": 0.5
+  },
+  "almaziv-weapon-1": {
+    "offset": 239.11575,
+    "seconds": 0.5
+  },
+  "almaziv-weapon-2": {
+    "offset": 239.65575,
+    "seconds": 0.5
+  },
+  "almaziv-hit": {
+    "offset": 240.19575,
+    "seconds": 0.25
+  },
+  "almaziv-special-end": {
+    "offset": 240.48575,
+    "seconds": 0.28
+  },
+  "almaziv-ultimate-end": {
+    "offset": 240.80575,
+    "seconds": 0.28
+  },
+  "almaziv-reload": {
+    "offset": 241.12575,
+    "seconds": 0.65
+  },
+  "almaziv-reload-end": {
+    "offset": 241.81575,
+    "seconds": 0.23
+  },
+  "foley-almaziv-step-0": {
+    "offset": 242.08575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-step-1": {
+    "offset": 242.32575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-step-2": {
+    "offset": 242.56575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-climb-0": {
+    "offset": 242.80575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-climb-1": {
+    "offset": 243.04575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-climb-2": {
+    "offset": 243.28575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-jump-0": {
+    "offset": 243.52575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-jump-1": {
+    "offset": 243.76575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-jump-2": {
+    "offset": 244.00575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-land-0": {
+    "offset": 244.24575,
+    "seconds": 0.26
+  },
+  "foley-almaziv-land-1": {
+    "offset": 244.54575,
+    "seconds": 0.26
+  },
+  "foley-almaziv-land-2": {
+    "offset": 244.84575,
+    "seconds": 0.26
+  },
+  "foley-almaziv-hurt-0": {
+    "offset": 245.14575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-hurt-1": {
+    "offset": 245.38575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-hurt-2": {
+    "offset": 245.62575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-ready-0": {
+    "offset": 245.86575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-ready-1": {
+    "offset": 246.10575,
+    "seconds": 0.2
+  },
+  "foley-almaziv-ready-2": {
+    "offset": 246.34575,
+    "seconds": 0.2
+  },
+  "klychko-weapon-0": {
+    "offset": 246.58575,
+    "seconds": 0.33
+  },
+  "klychko-weapon-1": {
+    "offset": 246.95575,
+    "seconds": 0.33
+  },
+  "klychko-weapon-2": {
+    "offset": 247.32575,
+    "seconds": 0.33
+  },
+  "klychko-hit": {
+    "offset": 247.69575,
+    "seconds": 0.25
+  },
+  "klychko-ultimate": {
+    "offset": 247.98575,
+    "seconds": 1.2
+  },
+  "klychko-special-end": {
+    "offset": 249.22575,
+    "seconds": 0.28
+  },
+  "klychko-ultimate-end": {
+    "offset": 249.54575,
+    "seconds": 0.28
+  },
+  "foley-klychko-step-0": {
+    "offset": 249.86575,
+    "seconds": 0.2
+  },
+  "foley-klychko-step-1": {
+    "offset": 250.10575,
+    "seconds": 0.2
+  },
+  "foley-klychko-step-2": {
+    "offset": 250.34575,
+    "seconds": 0.2
+  },
+  "foley-klychko-climb-0": {
+    "offset": 250.58575,
+    "seconds": 0.2
+  },
+  "foley-klychko-climb-1": {
+    "offset": 250.82575,
+    "seconds": 0.2
+  },
+  "foley-klychko-climb-2": {
+    "offset": 251.06575,
+    "seconds": 0.2
+  },
+  "foley-klychko-jump-0": {
+    "offset": 251.30575,
+    "seconds": 0.2
+  },
+  "foley-klychko-jump-1": {
+    "offset": 251.54575,
+    "seconds": 0.2
+  },
+  "foley-klychko-jump-2": {
+    "offset": 251.78575,
+    "seconds": 0.2
+  },
+  "foley-klychko-land-0": {
+    "offset": 252.02575,
+    "seconds": 0.26
+  },
+  "foley-klychko-land-1": {
+    "offset": 252.32575,
+    "seconds": 0.26
+  },
+  "foley-klychko-land-2": {
+    "offset": 252.62575,
+    "seconds": 0.26
+  },
+  "foley-klychko-hurt-0": {
+    "offset": 252.92575,
+    "seconds": 0.2
+  },
+  "foley-klychko-hurt-1": {
+    "offset": 253.16575,
+    "seconds": 0.2
+  },
+  "foley-klychko-hurt-2": {
+    "offset": 253.40575,
+    "seconds": 0.2
+  },
+  "foley-klychko-ready-0": {
+    "offset": 253.64575,
+    "seconds": 0.2
+  },
+  "foley-klychko-ready-1": {
+    "offset": 253.88575,
+    "seconds": 0.2
+  },
+  "foley-klychko-ready-2": {
+    "offset": 254.12575,
+    "seconds": 0.2
+  },
+  "taira-weapon-0": {
+    "offset": 254.36575,
+    "seconds": 0.33
+  },
+  "taira-weapon-1": {
+    "offset": 254.73575,
+    "seconds": 0.33
+  },
+  "taira-weapon-2": {
+    "offset": 255.10575,
+    "seconds": 0.33
+  },
+  "taira-hit": {
+    "offset": 255.47575,
+    "seconds": 0.25
+  },
+  "taira-special-end": {
+    "offset": 255.76575,
+    "seconds": 0.28
+  },
+  "taira-ultimate-end": {
+    "offset": 256.08575,
+    "seconds": 0.28
+  },
+  "foley-taira-step-0": {
+    "offset": 256.40575,
+    "seconds": 0.2
+  },
+  "foley-taira-step-1": {
+    "offset": 256.64575,
+    "seconds": 0.2
+  },
+  "foley-taira-step-2": {
+    "offset": 256.88575,
+    "seconds": 0.2
+  },
+  "foley-taira-climb-0": {
+    "offset": 257.12575,
+    "seconds": 0.2
+  },
+  "foley-taira-climb-1": {
+    "offset": 257.36575,
+    "seconds": 0.2
+  },
+  "foley-taira-climb-2": {
+    "offset": 257.60575,
+    "seconds": 0.2
+  },
+  "foley-taira-jump-0": {
+    "offset": 257.84575,
+    "seconds": 0.2
+  },
+  "foley-taira-jump-1": {
+    "offset": 258.08575,
+    "seconds": 0.2
+  },
+  "foley-taira-jump-2": {
+    "offset": 258.32575,
+    "seconds": 0.2
+  },
+  "foley-taira-land-0": {
+    "offset": 258.56575,
+    "seconds": 0.26
+  },
+  "foley-taira-land-1": {
+    "offset": 258.86575,
+    "seconds": 0.26
+  },
+  "foley-taira-land-2": {
+    "offset": 259.16575,
+    "seconds": 0.26
+  },
+  "foley-taira-hurt-0": {
+    "offset": 259.46575,
+    "seconds": 0.2
+  },
+  "foley-taira-hurt-1": {
+    "offset": 259.70575,
+    "seconds": 0.2
+  },
+  "foley-taira-hurt-2": {
+    "offset": 259.94575,
+    "seconds": 0.2
+  },
+  "foley-taira-ready-0": {
+    "offset": 260.18575,
+    "seconds": 0.2
+  },
+  "foley-taira-ready-1": {
+    "offset": 260.42575,
+    "seconds": 0.2
+  },
+  "foley-taira-ready-2": {
+    "offset": 260.66575,
+    "seconds": 0.2
+  },
+  "prytula-weapon-0": {
+    "offset": 260.90575,
+    "seconds": 0.33
+  },
+  "prytula-weapon-1": {
+    "offset": 261.27575,
+    "seconds": 0.33
+  },
+  "prytula-weapon-2": {
+    "offset": 261.64575,
+    "seconds": 0.33
+  },
+  "prytula-hit": {
+    "offset": 262.01575,
+    "seconds": 0.25
+  },
+  "prytula-special-end": {
+    "offset": 262.30575,
+    "seconds": 0.28
+  },
+  "prytula-ultimate-end": {
+    "offset": 262.62575,
+    "seconds": 0.28
+  },
+  "prytula-reload": {
+    "offset": 262.94575,
+    "seconds": 0.65
+  },
+  "prytula-reload-end": {
+    "offset": 263.63575,
+    "seconds": 0.23
+  },
+  "foley-prytula-step-0": {
+    "offset": 263.90575,
+    "seconds": 0.2
+  },
+  "foley-prytula-step-1": {
+    "offset": 264.14575,
+    "seconds": 0.2
+  },
+  "foley-prytula-step-2": {
+    "offset": 264.38575,
+    "seconds": 0.2
+  },
+  "foley-prytula-climb-0": {
+    "offset": 264.62575,
+    "seconds": 0.2
+  },
+  "foley-prytula-climb-1": {
+    "offset": 264.86575,
+    "seconds": 0.2
+  },
+  "foley-prytula-climb-2": {
+    "offset": 265.10575,
+    "seconds": 0.2
+  },
+  "foley-prytula-jump-0": {
+    "offset": 265.34575,
+    "seconds": 0.2
+  },
+  "foley-prytula-jump-1": {
+    "offset": 265.58575,
+    "seconds": 0.2
+  },
+  "foley-prytula-jump-2": {
+    "offset": 265.82575,
+    "seconds": 0.2
+  },
+  "foley-prytula-land-0": {
+    "offset": 266.06575,
+    "seconds": 0.26
+  },
+  "foley-prytula-land-1": {
+    "offset": 266.36575,
+    "seconds": 0.26
+  },
+  "foley-prytula-land-2": {
+    "offset": 266.66575,
+    "seconds": 0.26
+  },
+  "foley-prytula-hurt-0": {
+    "offset": 266.96575,
+    "seconds": 0.2
+  },
+  "foley-prytula-hurt-1": {
+    "offset": 267.20575,
+    "seconds": 0.2
+  },
+  "foley-prytula-hurt-2": {
+    "offset": 267.44575,
+    "seconds": 0.2
+  },
+  "foley-prytula-ready-0": {
+    "offset": 267.68575,
+    "seconds": 0.2
+  },
+  "foley-prytula-ready-1": {
+    "offset": 267.92575,
+    "seconds": 0.2
+  },
+  "foley-prytula-ready-2": {
+    "offset": 268.16575,
+    "seconds": 0.2
   }
 } as const;
 export type SfxId=keyof typeof SFX_ASSETS;

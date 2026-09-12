@@ -1,6 +1,7 @@
 import {importAbilityPixels} from './ability-palette.ts';
 import {assetUrl} from './assets.ts';
 export const ABILITY_ATLASES={
+ reinforcements:{url:'/assets/abilities/reinforcements.png',cols:4,rows:4},
  weapons:{url:'/assets/abilities/weapons.png',cols:4,rows:2},
  lightning:{url:'/assets/abilities/lightning.png',cols:4,rows:2},
  jet:{url:'/assets/abilities/jet.png',cols:2,rows:2},

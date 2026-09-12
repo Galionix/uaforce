@@ -13,7 +13,7 @@ test('all eleven heroes have recorded movement and contact variants in the runti
    const c=manifest.clips.find((c:any)=>c.id===`foley-${h.id}-${kind}-${variant}`);
    assert.ok(c);assert.ok(c.seconds<=.3&&c.rms>.001&&c.peak<.8);signatures.add(c.sha256);
   }
-  assert.equal(signatures.size,33,'hero/material variants remain distinct');
+  assert.equal(signatures.size,HEROES.length*3,'hero/material variants remain distinct');
  }
 });
 

@@ -42,6 +42,13 @@ const art:Record<string,string>={
  book:path('#a67a55','M2 6h12v2h4V6h12v22H18v2h-4v-2H2z')+path(light,'M4 8h9v17H4zM19 8h9v17h-9z')+path('#bda972','M6 12h5v2H6zM21 12h5v2h-5zM6 17h5v2H6zM21 17h5v2h-5z'),
  peace:path('#b9c8f2','M12 2h8v3h6v4h4v14h-4v5h-6v2h-8v-2H6v-5H2V9h4V5h6z')+path(ink,'M12 5h8v3h5v4h2v9h-4v4h-4v2h-6v-2H9v-4H5v-9h2V8h5z')+path(light,'M14 9h4v9h5v3h-7v-3h-2z'),
  heart:path('#f07866','M5 8h8v3h6V8h8v4h3v8h-4v4h-5v4H11v-4H6v-4H2v-8h3z')+path('#ffcb9e','M6 10h6v3H6z'),
+ fist:path(gold,'M5 10h4V5h5v4h2V4h5v6h5v12h-4v6H10v-6H5z')+path(ink,'M10 14h12v3H10z'),
+ dash:path(light,'M2 9h12v3H2zM5 17h9v3H5zM17 4l13 12-13 12v-8h-4v-8h4z'),
+ combo:path(gold,'M2 7h7v18H2zM12 11h7v14h-7zM22 3h8v22h-8z'),
+ clock:path(light,'M8 2h16v4h4v22H4V6h4z')+path(ink,'M14 6h4v10h6v4H14z'),
+ medical:path(light,'M3 7h26v22H3z')+path('#36b8a4','M13 10h6v5h5v6h-5v5h-6v-5H8v-6h5z'),
+ launcher:path(stone,'M3 7h24v8H14v6h-4v8H5V15H3z')+path(gold,'M16 15h10v10H16z'),
+ blast:path(gold,'M15 1l4 9 10-4-5 11 7 5-12 2-3 8-5-9-10 3 5-10L1 8l10 3z'),
  captive:path(light,'M12 3h8v8h-8zM7 14h18v9h-4v6h-4v-8h-2v8h-4v-6H7z')+path('#81b6be','M4 2h2v28H4zM26 2h2v28h-2z'),
  radio:path('#9fb8ab','M7 12h20v17H5V12zM10 3h2v10h-2zM13 5h5v2h-5zM16 2h7v2h-7z')+path('#243a35','M8 16h8v7H8zM19 16h5v2h-5zM19 21h5v2h-5z')+path(gold,'M10 18h4v3h-4z'),
  skull:path('#efd5b3','M9 4h14v3h4v14h-5v7H10v-7H5V7h4z')+path(ink,'M8 11h6v6H8zM18 11h6v6h-6zM14 18h4v3h-4zM13 24h2v4h-2zM18 24h2v4h-2z'),
@@ -51,4 +58,4 @@ const art:Record<string,string>={
  pause:path(light,'M7 5h6v22H7zM19 5h6v22h-6z'),
 };
 export function icon(name:string){return `<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges">${art[name]??art.mace}</svg>`;}
-export const HERO_ICONS:Record<HeroId,readonly string[]>={shevchenko:['mace','scroll','quill'],lesya:['crossbow','crow','mavka'],franko:['hammer','wall','fracture'],bandera:['ppsh','molotov','car'],mamai:['saber','bandura','cavalry'],bayraktar:['turret','drone','rockets'],ghost:['smg','cloak','jet'],zelensky:['microphone','squad','flagdrone'],bilozerska:['sniper','mine','rail'],'it-army':['laptop','hack','ddos'],skovoroda:['pan','book','peace']};
+export const HERO_ICONS:Record<HeroId,readonly string[]>={shevchenko:['mace','scroll','quill'],lesya:['crossbow','crow','mavka'],franko:['hammer','wall','fracture'],bandera:['ppsh','molotov','car'],mamai:['saber','bandura','cavalry'],bayraktar:['turret','drone','rockets'],ghost:['smg','cloak','jet'],zelensky:['microphone','squad','flagdrone'],bilozerska:['sniper','mine','rail'],'it-army':['laptop','hack','ddos'],skovoroda:['pan','book','peace'],usyk:['fist','dash','combo'],almaziv:['launcher','blast','rockets'],klychko:['fist','wall','clock'],taira:['fist','medical','peace'],prytula:['smg','turret','car']};

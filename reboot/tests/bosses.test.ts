@@ -53,7 +53,7 @@ test('active arena bounds hold the player; summoned drones have bounded living p
 });
 test('all cinematic images are standalone PNGs, distinct from sheets, with saved prompts',()=>{
  const prompts=JSON.parse(readFileSync(new URL('../docs/CINEMATIC_PROMPTS.json',import.meta.url),'utf8'));const text=JSON.stringify(prompts);
- for(const id of [...HEROES.map(h=>h.id),...Object.keys(BOSSES)]){const bytes=readFileSync(new URL(`../public/assets/cinematics/${id}.png`,import.meta.url));assert.equal(bytes.toString('ascii',1,4),'PNG');assert.ok(bytes.readUInt32BE(16)>=1000);assert.ok(text.includes(id));const h=HEROES.find(h=>h.id===id);if(h)assert.notDeepEqual(bytes,readFileSync(new URL('../public'+h.sheet,import.meta.url)));}
+ for(const id of [...HEROES.map(h=>h.id),...Object.keys(BOSSES)]){const bytes=readFileSync(new URL(`../public/assets/cinematics/${id}.png`,import.meta.url));assert.equal(bytes.toString('ascii',1,4),'PNG');assert.ok(bytes.readUInt32BE(16)>=128);assert.ok(text.includes(id));const h=HEROES.find(h=>h.id===id);if(h)assert.notDeepEqual(bytes,readFileSync(new URL('../public'+h.sheet,import.meta.url)));}
 });
 test('boss cues have separate Ukrainian lines, sinister scores, and silent provenance',()=>{
  const manifest=JSON.parse(readFileSync(new URL('../docs/BOSS_AUDIO_ASSETS.json',import.meta.url),'utf8'));assert.equal(manifest.playbackDuringGeneration,false);

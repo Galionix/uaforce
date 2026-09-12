@@ -1,6 +1,6 @@
 import type {World,Actions} from './world.ts';
 import {BOSSES} from './bosses.ts';
-export type Mount={id:number;kind:'tank';x:number;y:number;vy:number;grounded:boolean;jumpHeld:boolean;landing:number;dir:number;armor:number;maxArmor:number;cooldown:number;contactCooldown:number;moving:boolean;engine:number;hurt:number;recoil:number};
+export type Mount={id:number;summoner?:number;rounds?:number;kind:'tank';x:number;y:number;vy:number;grounded:boolean;jumpHeld:boolean;landing:number;dir:number;armor:number;maxArmor:number;cooldown:number;contactCooldown:number;moving:boolean;engine:number;hurt:number;recoil:number};
 export const TANK={w:4,h:2.2,speed:4.2,jump:13,gravity:20,reload:2.5,armor:360,damage:105,range:26};
 export function addMount(w:World,x:number){const t:Mount={id:w.nextId(),kind:'tank',x,y:0,vy:0,grounded:false,jumpHeld:false,landing:0,dir:1,armor:TANK.armor,maxArmor:TANK.armor,cooldown:0,contactCooldown:0,moving:false,engine:0,hurt:0,recoil:0};w.mounts.push(t);return t;}
 export function missionMounts(w:World){for(const x of w.mission.mounts)addMount(w,x);}
@@ -20,7 +20,7 @@ export function stepMounts(w:World,dt:number,a:Actions,interactEdge:boolean){
  let consumed=!!w.mounted;
  if(w.mounted&&interactEdge){exitMount(w);return true;}
  if(!w.mounted&&interactEdge&&!w.allies.some(c=>!c.rescued&&Math.abs(c.x-w.player.x)<2.2&&w.player.y<2)){
-  const t=nearbyMount(w);if(t){w.mounted=t;consumed=true;w.player.ladder=-1;w.player.cloak=0;w.player.form=0;w.player.attack=0;w.player.cast=0;w.player.detachVx=0;w.emit('mountEnter',t.x,t.y+1);}
+  const t=nearbyMount(w);if(t){w.mounted=t;consumed=true;w.player.ladder=-1;w.player.cloak=0;w.player.form=0;w.player.attack=0;w.player.cast=0;w.player.detachVx=0;Object.assign(w.player,{mamaiHold:0,mamaiFired:false,dashTime:0,aimTime:0});w.emit('mountEnter',t.x,t.y+1);}
  }
  for(const t of w.mounts){
   const rider=w.players.find(a=>a.mounted===t);
@@ -40,10 +40,11 @@ export function stepMounts(w:World,dt:number,a:Actions,interactEdge:boolean){
    else if(rise-t.y<=.55&&!w.boxes.some(b=>b.hp>0&&Math.abs(next-b.x)<b.w/2+TANK.w/2&&b.y+b.h>rise+.05&&b.y<rise+TANK.h)) {t.y=rise;t.x=next;}
    const bounds=w.boss?.boss?.active?BOSSES[w.boss.boss.id]:{left:0,right:w.mission.length};t.x=Math.max(bounds.left+TANK.w/2,Math.min(bounds.right-TANK.w/2,t.x));t.moving=Math.abs(t.x-old)>.001;
    if(t.moving&&t.grounded){t.engine-=dt;if(t.engine<=0){w.emit('mountEngine',t.x,t.y);t.engine=.32;}}else t.engine=0;
-   if(a.fire&&t.cooldown===0&&t.armor>0){
+   if(a.fire&&t.cooldown===0&&t.armor>0&&(t.rounds??1)>0){
     // Start at the front of the turret, inside hull width, so adjacent cover cannot be skipped.
     w.bullets.push({id:w.nextId(),x:t.x+t.dir*1.6,y:t.y+1.5,vx:t.dir*24,vy:0,life:TANK.range/24,friendly:true,damage:w.survival?65:TANK.damage,ordnance:'shell',blastRadius:3});
-    t.cooldown=w.survival?3.2:TANK.reload;t.recoil=.22;w.shots++;w.emit('mountShot',t.x+t.dir*2,t.y+1.5);
+    if(t.rounds!==undefined)t.rounds--;
+    t.cooldown=t.summoner!==undefined?3.2:w.survival?3.2:TANK.reload;t.recoil=.22;w.shots++;w.emit('mountShot',t.x+t.dir*2,t.y+1.5);
    }
   }
   t.jumpHeld=t===w.mounted&&a.jump;

@@ -8,7 +8,7 @@ export const VEHICLES={
  plane:{name:'Ракетоносець',hp:160,w:4.8,h:1.3,warning:1.8},
  shahed:{name:'Шахед',hp:32,w:1.8,h:.8,warning:1.3},
 } as const;
-export const enemyActive=(e:Enemy)=>e.hp>0&&(!e.vehicle||e.vehicle.active)&&(!e.boss||e.boss.active);
+export const enemyActive=(e:Enemy)=>e.hp>0&&!e.hacked&&(!e.vehicle||e.vehicle.active)&&(!e.boss||e.boss.active);
 export const enemySize=(e:Enemy)=>e.boss?BOSSES[e.boss.id]:e.vehicle?VEHICLES[e.vehicle.kind]:{w:e.heavy||e.infantry?.kind==='gunner'?1:.7,h:e.heavy||e.infantry?.kind==='gunner'?2:1.6};
 export function addVehicle(w:World,kind:VehicleKind,x:number,y:number,trigger=x-18){
  const e:Enemy={id:w.nextId(),x,y,hp:VEHICLES[kind].hp,maxHp:VEHICLES[kind].hp,dir:-1,cooldown:0,windup:0,anchor:x,heavy:false,vehicle:{kind,trigger,active:false,phase:'warning',age:0,aimX:x,aimY:y,vx:0,vy:0,shots:0,engine:0}};
@@ -24,9 +24,11 @@ export function hostileBlast(w:World,x:number,y:number,radius:number,damage:numb
  // Determine shielding before damaging the wall, so one explosion cannot erase it then hit through it.
  const playersHit=w.players.filter(a=>!a.mounted&&Math.hypot(a.body.x-x,a.body.y+.8-y)<radius&&exposed(a.body));
  const tanks=w.mounts.filter(t=>{if(t.armor<=0)return false;const point={x:Math.max(t.x-TANK.w/2,Math.min(t.x+TANK.w/2,x)),y:Math.max(t.y,Math.min(t.y+TANK.h,y))};return Math.hypot(point.x-x,point.y-y)<radius&&exposed({x:point.x,y:point.y-.8});});
+ const hacked=w.enemies.filter(e=>e.hp>0&&e.hacked&&Math.hypot(e.x-x,e.y+1-y)<radius&&exposed(e));
  const followers=w.followers.filter(f=>f.hp>0&&Math.hypot(f.x-x,f.y+.8-y)<radius&&exposed(f));
  for(const b of w.boxes)if(b.hp>0&&Math.hypot(b.x-x,b.y+b.h/2-y)<radius)w.damageBox(b,damage*2);
  for(const t of tanks)damageMount(w,t,damage);
+ for(const e of hacked)w.damageEnemy(e,damage,'explosion',true);
  for(const f of followers)w.damageFollower(f,damage);
  for(const a of playersHit)w.withPlayer(a.id,()=>w.damagePlayer(damage));
 }
@@ -47,7 +49,7 @@ export function stepVehicle(w:World,e:Enemy,dt:number){
  v.age+=dt;
  if(v.phase==='warning'){if(v.age<VEHICLES[v.kind].warning)return;v.phase='hunt';v.age=0;}
  const decoy=e.distracted?w.effects.find(f=>f.hero==='lesya'&&f.kind==='special'):undefined;
- const target=decoy??[...w.players.filter(a=>a.body.hp>0&&a.body.cloak<=0).map(a=>a.body),...w.followers.filter(f=>f.hp>0)].sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y))[0];
+ const target=decoy??[...w.players.filter(a=>a.body.hp>0&&a.body.cloak<=0).map(a=>a.body),...w.followers.filter(f=>f.hp>0),...w.enemies.filter(e=>e.hp>0&&e.hacked)].sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y))[0];
  if(v.kind==='tank'){
   const floor=Math.max(-2,...w.boxes.filter(b=>b.hp>0&&Math.abs(b.x-e.x)<b.w/2+1.2&&b.y+b.h<=e.y+.1).map(b=>b.y+b.h));e.y=Math.max(floor,e.y-8*dt);
   e.cooldown=Math.max(0,e.cooldown-dt);

@@ -3663,6 +3663,159 @@
       "dtype": "fp32",
       "cfg": 1,
       "loop": false
+    },
+    {
+      "id": "usyk-punch",
+      "prompt": "Fast boxing leather glove punch, short breath of air and fleshy impact. Isolated dry close sound effect, no music, no speech, no melodic notes.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912400,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "usyk-special",
+      "prompt": "Fast evasive swoosh of cloth, quick athletic foot shuffle. Isolated dry close sound effect, no music, no speech, no melodic notes.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912401,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "usyk-ultimate",
+      "prompt": "Rapid sequence of six heavy boxing glove impacts and whipping air. Isolated dry close sound effect, no music, no speech, no melodic notes.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912402,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "almaziv-weapon",
+      "prompt": "Grenade launcher deep hollow thump, metallic spring release. Isolated dry close sound effect, no music, no speech, no melodic notes.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912403,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "almaziv-special",
+      "prompt": "A single loud shotgun blast. Isolated close sound effect, no music, no voice.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912444,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "almaziv-ultimate",
+      "prompt": "Three heavy artillery launches in quick succession, mechanical cannon recoil. Isolated dry close sound effect, no music, no speech, no melodic notes.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912405,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "klychko-weapon",
+      "prompt": "Single extremely heavy boxing punch, deep solid thud. Isolated dry close sound effect, no music, no speech, no melodic notes.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912406,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "klychko-special",
+      "prompt": "Boxing glove blocking a heavy impact followed by a powerful counterpunch. Isolated dry close sound effect, no music, no speech, no melodic notes.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912407,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "klychko-ultimate",
+      "prompt": "Deep cinematic air suction slowing down into a short low rushing rumble, sound effect. Isolated dry close sound effect, no music, no speech, no melodic notes.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912408,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "taira-weapon",
+      "prompt": "Martial arts body throw landing on cloth mat with quick cloth rustle. Isolated dry close sound effect, no music, no speech, no melodic notes.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912409,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "taira-special",
+      "prompt": "Opening and closing a zipper on a cloth bag. Isolated close sound effect, no music, no voice.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912450,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "taira-ultimate",
+      "prompt": "A large canvas sheet flapping in a strong gust of wind. Isolated close sound effect, no music, no voice.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912451,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "prytula-weapon",
+      "prompt": "Compact automatic rifle firing a short three shot burst. Isolated dry close sound effect, no music, no speech, no melodic notes.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912412,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "prytula-special",
+      "prompt": "A small electric motor turning and a metal ratchet clicking. Isolated close sound effect, no music, no voice.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912453,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "prytula-ultimate",
+      "prompt": "A heavy metal crate dropped on a concrete floor with a thud. Isolated close sound effect, no music, no voice.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912454,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "drone-lock",
+      "prompt": "A quadcopter propeller motor starting and accelerating. Isolated close sound effect, no music, no voice.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912455,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "grenade-bounce",
+      "prompt": "A metal ball bouncing on a concrete floor. Isolated close sound effect, no music, no voice.",
+      "seconds": 1,
+      "loop": false,
+      "seed": 912456,
+      "generateSeconds": 6,
+      "dtype": "fp32"
     }
   ]
 }

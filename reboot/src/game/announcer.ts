@@ -8,14 +8,15 @@ export const ANNOUNCER_NAMES = [
 ] as const;
 export type Announcement = {key:string;voices:string[];riff?:'hero'|'short'|'victory'|'defeat'|'checkpoint'|'evac'|'boss-iron'|'boss-swarm'|'boss-putin';priority:number};
 export function announcement(event:string,hero='shevchenko',unlocked=false):Announcement|null{
+  const named=ANNOUNCER_NAMES.some(n=>n.id===hero);
   switch(event){
     case 'bossEncounter':return{key:`boss:${hero}`,voices:[hero],riff:hero==='putin'?'boss-putin':hero==='iron-warden'?'boss-iron':'boss-swarm',priority:3};
     case 'bossDefeated':return{key:event,voices:hero==='putin'?['putin-defeated']:[],riff:'victory',priority:3};
     case 'tankAlert':return{key:event,voices:['tank-alert'],priority:1};
     case 'planeAlert':return{key:event,voices:['plane-alert'],priority:1};
     case 'droneAlert':return{key:event,voices:['drone-alert'],priority:1};
-    case 'missionStart':return{key:'start',voices:[hero,'mission-start'],priority:2};
-    case 'heroChanged':return{key:`hero:${hero}`,voices:unlocked?['new-hero',hero]:[hero],riff:unlocked?'hero':undefined,priority:2};
+    case 'missionStart':return{key:'start',voices:named?[hero,'mission-start']:['mission-start'],priority:2};
+    case 'heroChanged':return{key:`hero:${hero}`,voices:unlocked?(named?['new-hero',hero]:['new-hero']):(named?[hero]:[]),riff:unlocked?'hero':undefined,priority:2};
     case 'checkpoint':return{key:event,voices:['checkpoint'],riff:'checkpoint',priority:0};
     case 'evacCalled':return{key:event,voices:['evac-called'],riff:'evac',priority:2};
     case 'boarded':return{key:event,voices:['boarded'],priority:2};
