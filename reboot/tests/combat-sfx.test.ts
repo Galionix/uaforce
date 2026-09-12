@@ -18,7 +18,7 @@ test('every playable kit and reload has measured, traceable PCM matching the sam
   const pcm=bytes.subarray(44),start=44+Math.round(entry.offset*24000)*2;
   assert.ok(bank.subarray(start,start+pcm.length).equals(pcm),c.id+' exact bank slice');
  }
- for(const h of HEROES){for(const key of ['weapon-0','special','ultimate','hit'])assert.ok(m.clips.some((c:any)=>c.id===h.id+'-'+key));if(h.magazine)for(const key of ['reload','reload-end'])assert.ok(m.clips.some((c:any)=>c.id===h.id+'-'+key));}
+ for(const h of HEROES){for(const key of ['weapon-0','special','ultimate','hit'])assert.ok(m.clips.some((c:any)=>c.id===h.id+'-'+key));if(h.magazine)for(const key of ['reload','reload-end'])assert.ok(m.clips.some((c:any)=>c.id===(h.id==='taira'?(key==='reload'?'taira-cell-v1':'taira-cell-ready-v2'):h.id+'-'+key)));}
 });
 function fixture(hero:HeroId){const w=new World(0,HEROES.map(h=>h.id),hero);w.mode='playing';w.player.x=5;w.mounts=[];w.enemies=[];w.allies=[];w.boxes=w.boxes.filter(b=>b.y<0);return w;}
 const run=(w:World,n:number)=>{for(let i=0;i<n;i++)w.step(1/60,IDLE);};

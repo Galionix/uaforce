@@ -2204,6 +2204,26 @@ export const SFX_ASSETS = {
   "taira-field-v2": {
     "offset": 272.20575,
     "seconds": 0.7
+  },
+  "taira-arc-v2": {
+    "offset": 272.94575,
+    "seconds": 0.36
+  },
+  "taira-prime-v1": {
+    "offset": 273.34575,
+    "seconds": 0.4
+  },
+  "taira-overload-v1": {
+    "offset": 273.78575,
+    "seconds": 1.05
+  },
+  "taira-cell-v1": {
+    "offset": 274.87575,
+    "seconds": 0.85
+  },
+  "taira-cell-ready-v2": {
+    "offset": 275.76575,
+    "seconds": 0.2
   }
 } as const;
 export type SfxId=keyof typeof SFX_ASSETS;

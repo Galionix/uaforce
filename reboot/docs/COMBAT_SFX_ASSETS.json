@@ -16924,13 +16924,148 @@
           "at": 0
         }
       ]
+    },
+    {
+      "id": "taira-arc-v2",
+      "file": "public/assets/audio/sfx/taira-arc-v2.wav",
+      "seconds": 0.36,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.06222266016106564,
+      "sha256": "56352a58da2efa39b639fa1180c909e17533be6675e6408736fe988e0c85e05d",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "taira-arc-v2.wav",
+          "sourceSha256": "ebc63a4578572a75a04981b25ff1072621604945aef82b470b92a734f9f9fad5",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 912920,
+          "prompt": "Electricity sparking and crackling. A sustained loud high voltage electrical arc, rapid sizzling crackles and buzzing sparks.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 4.022,
+          "rate": 1,
+          "cut": 0.36,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "taira-prime-v1",
+      "file": "public/assets/audio/sfx/taira-prime-v1.wav",
+      "seconds": 0.4,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.03512146856356629,
+      "sha256": "2c769f20e98cc7f0f3af9fd9984bf01b9f37579d5607f8ca7e1994ca2b653be4",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "taira-prime-v1.wav",
+          "sourceSha256": "9eeb4e89407de50129bf0daa372d460d777418639d2d266243b5cbe82843cbea",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 912901,
+          "prompt": "Short rising crackle of an electrical capacitor powering up, gritty electrical fizz building into tension. Physical sound effect, no music, no melody, no voice.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 2.507,
+          "rate": 1,
+          "cut": 0.4,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "taira-overload-v1",
+      "file": "public/assets/audio/sfx/taira-overload-v1.wav",
+      "seconds": 1.05,
+      "loop": false,
+      "peak": 0.5676296317869173,
+      "rms": 0.13999999999999999,
+      "sha256": "c4bebdf70a8ad400cc8125e7a2caeac51a2b388a48c3b6127969f8245616a4bc",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "taira-overload-v1.wav",
+          "sourceSha256": "2a58d5494c812a41b9f87e3f51cae32cb186c3851734365f2f74b6897817157c",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 912902,
+          "prompt": "A single violent electrical transformer explosion, heavy low boom and sharp crack followed by sizzling sparks and scattered metal debris. Short physical arcade impact, no music, no voice.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 2.212,
+          "rate": 1,
+          "cut": 1.05,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "taira-cell-v1",
+      "file": "public/assets/audio/sfx/taira-cell-v1.wav",
+      "seconds": 0.85,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.01924544697264649,
+      "sha256": "656d343678905a9f4216942a1a77ecce94a24e7c4caa13024a345d3e2b4c90aa",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "taira-cell-v1.wav",
+          "sourceSha256": "1c061bc06d4e8307499adafcfccae85e27aa3e46f63e5868edbe02423861310c",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 912903,
+          "prompt": "Remove and insert a heavy battery cartridge into a handheld device, two dry mechanical clunks with plastic friction and a latch click. Close foley, no voice, no music, no beeps.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 5.562,
+          "rate": 1,
+          "cut": 0.85,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "taira-cell-ready-v2",
+      "file": "public/assets/audio/sfx/taira-cell-ready-v2.wav",
+      "seconds": 0.2,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.05186639388687437,
+      "sha256": "bed4c8064849024453963536b7aae46c67d1131b3085428dc5a567389c26a58d",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "taira-cell-ready-v2.wav",
+          "sourceSha256": "98717de300e79259b9663ea7029ce9a19451aae04687c408c260b72ea0a47303",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 912924,
+          "prompt": "A metal latch clicking shut. One sharp metallic mechanical click.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 2.612,
+          "rate": 1,
+          "cut": 0.2,
+          "gain": 1,
+          "at": 0
+        }
+      ]
     }
   ],
   "missing": [],
   "bank": {
     "file": "public/assets/audio/sfx/combat-bank.wav",
-    "sha256": "fd8d988254ecd2c43052d05988bad67a7ace6ac8372fc3d5a5c156c904ed4e89",
-    "seconds": 272.94575000000003
+    "sha256": "a263806ae401206436231c1cab4ef529b867d06b8128623b96b9cce3bc9d7f34",
+    "seconds": 276.00575000000003
   },
   "review": {
     "status": "local-playtest-candidate",

@@ -1,0 +1,167 @@
+{
+  "playback": false,
+  "humanAudition": false,
+  "note": "Screening only; prime-v1 is an ambiguous short equipment/electrical contact. Artistic quality requires owner audition.",
+  "clips": {
+    "taira-arc-v2": {
+      "sha256": "56352a58da2efa39b639fa1180c909e17533be6675e6408736fe988e0c85e05d",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "Electricity sparking and crackling. A sustained loud high voltage electrical arc, rapid sizzling crackles and buzzing sparks.",
+      "expectedScore": 0.3336353302001953,
+      "top": [
+        {
+          "description": "One short sharp electrical arc crack, a real high voltage spark snapping between contacts, dry sizzling crackle with a short punchy thump. Isolated physical sound effect, no music, no melody, no beeps, no voice.",
+          "similarity": 0.4736
+        },
+        {
+          "description": "short sputtering burning fuse, accelerating dry crackles",
+          "similarity": 0.4324
+        },
+        {
+          "description": "Electricity sparking and crackling.",
+          "similarity": 0.3961
+        },
+        {
+          "description": "short electrical spark discharge and relay snap",
+          "similarity": 0.3835
+        },
+        {
+          "description": "The sound of fire crackling.",
+          "similarity": 0.3833
+        }
+      ],
+      "musicScore": -0.2166,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    "taira-prime-v1": {
+      "sha256": "2c769f20e98cc7f0f3af9fd9984bf01b9f37579d5607f8ca7e1994ca2b653be4",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "Short rising crackle of an electrical capacitor powering up, gritty electrical fizz building into tension. Physical sound effect, no music, no melody, no voice.",
+      "expectedScore": 0.3542799949645996,
+      "top": [
+        {
+          "description": "one small crisp equipment latch click, thick paper and leather coat",
+          "similarity": 0.5697
+        },
+        {
+          "description": "One short sharp electrical arc crack, a real high voltage spark snapping between contacts, dry sizzling crackle with a short punchy thump. Isolated physical sound effect, no music, no melody, no beeps, no voice.",
+          "similarity": 0.5666
+        },
+        {
+          "description": "Electricity sparking and crackling.",
+          "similarity": 0.4959
+        },
+        {
+          "description": "one small crisp equipment latch click, leather belt and military boots",
+          "similarity": 0.4927
+        },
+        {
+          "description": "short electrical spark discharge and relay snap",
+          "similarity": 0.4893
+        }
+      ],
+      "musicScore": -0.0695,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    "taira-overload-v1": {
+      "sha256": "c4bebdf70a8ad400cc8125e7a2caeac51a2b388a48c3b6127969f8245616a4bc",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "A single violent electrical transformer explosion, heavy low boom and sharp crack followed by sizzling sparks and scattered metal debris. Short physical arcade impact, no music, no voice.",
+      "expectedScore": 0.5218473672866821,
+      "top": [
+        {
+          "description": "The sound of a loud explosion.",
+          "similarity": 0.7459
+        },
+        {
+          "description": "One massive impact on a concrete floor, deep body slam thud, concrete cracking and chunks of rubble scattering with a short gritty tail. Physical arcade action sound effect. No voices, no music, no electronic sounds.",
+          "similarity": 0.6233
+        },
+        {
+          "description": "Three heavy artillery launches in quick succession, mechanical cannon recoil. Isolated dry close sound effect, no music, no speech, no melodic notes.",
+          "similarity": 0.5982
+        },
+        {
+          "description": "massive rock smashing with a deep earth-shaking crack",
+          "similarity": 0.5629
+        },
+        {
+          "description": "massive armor-piercing rifle shot with tearing air",
+          "similarity": 0.5596
+        }
+      ],
+      "musicScore": -0.0631,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    "taira-cell-v1": {
+      "sha256": "656d343678905a9f4216942a1a77ecce94a24e7c4caa13024a345d3e2b4c90aa",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "Remove and insert a heavy battery cartridge into a handheld device, two dry mechanical clunks with plastic friction and a latch click. Close foley, no voice, no music, no beeps.",
+      "expectedScore": 0.2686511278152466,
+      "top": [
+        {
+          "description": "one small crisp equipment latch click, leather belt and military boots",
+          "similarity": 0.6324
+        },
+        {
+          "description": "one small crisp equipment latch click, cloth and light leather boots",
+          "similarity": 0.6226
+        },
+        {
+          "description": "one small crisp equipment latch click, flight jacket and light boots",
+          "similarity": 0.6202
+        },
+        {
+          "description": "one small crisp equipment latch click, thick paper and leather coat",
+          "similarity": 0.6195
+        },
+        {
+          "description": "One crisp loud palm to palm high five hand clap, followed by a short powerful airy swoosh. Exaggerated cartoon action celebration, dry close sound effect, no speech, no music, no electronic tones.",
+          "similarity": 0.6075
+        }
+      ],
+      "musicScore": -0.0241,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    },
+    "taira-cell-ready-v2": {
+      "sha256": "bed4c8064849024453963536b7aae46c67d1131b3085428dc5a567389c26a58d",
+      "model": "laion/clap-htsat-unfused",
+      "modelRevision": "8fa0f1c6d0433df6e97c127f64b2a1d6c0dcda8a",
+      "expected": "A metal latch clicking shut. One sharp metallic mechanical click.",
+      "expectedScore": 0.4840368926525116,
+      "top": [
+        {
+          "description": "One crisp mechanical latch closing on a battery compartment, short firm click and metallic tick. Dry close equipment foley, no music, no voice.",
+          "similarity": 0.5899
+        },
+        {
+          "description": "one small crisp equipment latch click, leather belt and military boots",
+          "similarity": 0.5885
+        },
+        {
+          "description": "one small crisp equipment latch click, thick paper and leather coat",
+          "similarity": 0.5688
+        },
+        {
+          "description": "one small crisp equipment latch click, flight jacket and light boots",
+          "similarity": 0.5528
+        },
+        {
+          "description": "Fast boxing leather glove punch, short breath of air and fleshy impact. Isolated dry close sound effect, no music, no speech, no melodic notes.",
+          "similarity": 0.5161
+        }
+      ],
+      "musicScore": 0.029,
+      "playback": false,
+      "status": "screened-not-an-artistic-approval"
+    }
+  }
+}

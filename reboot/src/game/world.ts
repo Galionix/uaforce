@@ -18,11 +18,11 @@ import {stepFollowers, clearShot, type Follower} from './followers.ts';
 import {cycleWeapon,resetWeapon,WEAPONS} from './weapons.ts';
 import {attack,canSpecial,launchEffect,stepHeroEffect,effectAudioPhase} from './hero-combat.ts';
 import { ACTIVE_HEROES, HEROES, MISSIONS, heroById, type HeroId, type Mission } from './content.ts';
-export type Effect={playerId?:number;kind:'weapon'|'special'|'ultimate';hero:HeroId;x:number;y:number;dir:number;life:number;age:number;hit:Set<number>;originX?:number;originY?:number;target?:number;audioMarks?:Set<string>;impactAge?:number;power?:number};
+export type Effect={playerId?:number;kind:'weapon'|'special'|'ultimate';hero:HeroId;x:number;y:number;dir:number;life:number;age:number;hit:Set<number>;originX?:number;originY?:number;target?:number;audioMarks?:Set<string>;impactAge?:number;power?:number;links?:{x:number;y:number;toX:number;toY:number}[]};
 export type Mode = 'ready' | 'playing' | 'paused' | 'lost' | 'won' | 'cinematic';
 export type Actions = { move: number; jump: boolean; jumpHeld?:boolean; fire: boolean; special: boolean; ultimate?: boolean; interact: boolean; climb?: number };
 export type Box = { id: number; x: number; y: number; w: number; h: number; hp: number; maxHp: number; sabotage?:'ammo'|'fuel'|'jet';required?:boolean;fuse?:number; vx?:number;vy?:number;falling?:boolean;collapseDelay?:number; kind: 'crate' | 'barrel' | 'wall' | 'radio' | 'platform' | 'earth' | 'stone' };
-export type Enemy = { id: number; x: number; y: number; hp: number; maxHp: number; dir: number; cooldown: number; windup: number; anchor: number; heavy: boolean; vehicle?:Vehicle;infantry?:Infantry;boss?:BossActor; panic?:{remaining:number;playerId:number;hero:HeroId;kind:Effect['kind'];voiceIn:number}; hacked?:{playerId:number;left:number};marked?:number;rooted?:number; poison?:number; distracted?:number };
+export type Enemy = { id: number; x: number; y: number; hp: number; maxHp: number; dir: number; cooldown: number; windup: number; anchor: number; heavy: boolean; vehicle?:Vehicle;infantry?:Infantry;boss?:BossActor; panic?:{remaining:number;playerId:number;hero:HeroId;kind:Effect['kind'];voiceIn:number}; hacked?:{playerId:number;left:number};marked?:number;ionized?:number;rooted?:number; poison?:number; distracted?:number };
 export type Bullet = { id: number; x: number; y: number; vx: number; vy: number; life: number; friendly: boolean; damage: number; hero?:HeroId;playerId?:number;gravity?:number;bounces?:number;ordnance?:'shell'|'rocket';blastRadius?:number };
 export type Event = { type: 'healed' | 'highFive' | 'enemySuspect' | 'enemyPanic' | 'goreLand' | 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; launchDir?:number;deathRole?:InfantryKind;deathCause?:DeathCause;soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
 export const IDLE: Actions = { move: 0, jump: false, fire: false, special: false, interact: false };
@@ -265,7 +265,7 @@ export class World {
         for(const b of this.boxes)if(!f.hit.has(b.id)&&Math.abs(b.x-f.x)<radius&&b.y>=f.y&&b.y<f.y+5){f.hit.add(b.id);this.damageBox(b,280);}
       }
     });
-    for(const f of this.effects)if(f.life<=0&&f.kind!=='weapon'&&f.hero!=='klychko')this.emitSfx(`${f.hero}-${f.kind}-end`,f.x,f.y,f.hero);
+    for(const f of this.effects)if(f.life<=0&&f.kind!=='weapon'&&f.hero!=='klychko'&&!(f.hero==='taira'&&f.kind==='ultimate'))this.emitSfx(`${f.hero}-${f.kind}-end`,f.x,f.y,f.hero);
     this.effects=this.effects.filter(f=>f.life>0);
   }
   private stepPlayer(dt:number,action:Actions){
@@ -429,7 +429,7 @@ export class World {
     for (const enemy of this.enemies) {
       if (enemy.hp <= 0) continue;
       if(enemy.hacked){stepHacked(this,enemy,dt);continue;}
-      enemy.marked=Math.max(0,(enemy.marked??0)-dt);
+      enemy.marked=Math.max(0,(enemy.marked??0)-dt);enemy.ionized=Math.max(0,(enemy.ionized??0)-dt);
       const poisoned=Math.min(dt,enemy.poison??0);enemy.poison=Math.max(0,(enemy.poison??0)-dt);if(poisoned)this.damageEnemy(enemy,18*poisoned);if(enemy.hp<=0)continue;
       enemy.distracted=Math.max(0,(enemy.distracted??0)-dt);
       this.withPlayer(this.nearestPlayer(enemy.x,enemy.y).id,()=>{

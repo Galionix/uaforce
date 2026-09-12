@@ -93,3 +93,8 @@
   `docs/CHARGE_MEDIC_DELIVERY_2026-09-12.md`. Klitschko quick tap 18, full charge 210
   with shield break and directional finish; charge particles and cancellable gather audio.
   Taira melee 22; preventive 3-second group aid station (20 + 15 HP), not a generic heavy hitter.
+
+- Owner Taira solo-play correction, 2026-09-12: `docs/TAIRA_COMBAT_DELIVERY_2026-09-12.md`
+  supersedes her melee/double-heal kit above. Chain arc (52/36/24, 3-shot battery), aid station,
+  and offensive marked overload; keep finite range, cover checks and 250 per-target blast cap.
+  Pixel lightning/blast atlases and five local sample recordings; no hero sheet changes.

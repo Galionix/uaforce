@@ -99,7 +99,7 @@ export class Sound {
     for(const [,scope]of this.voices)if(scope.startsWith('follower:')&&!living.has(scope))this.stopKind(scope);
     const wanted=new Map<string,{key:SfxId;x:number;level:number}>(),ordinals=new Map<string,number>();
     for(const f of world.effects){
-      if(f.hero==='klychko'||f.hero==='taira'&&f.kind==='special')continue;
+      if(f.hero==='klychko'||f.hero==='taira')continue;
       const key=`${f.hero}-${f.kind}-loop` as SfxId;
       const group=`effect:${f.playerId??0}:${f.hero}:${f.kind}`,ordinal=ordinals.get(group)??0;ordinals.set(group,ordinal+1);
       // Co-op snapshots replace JS objects. A stable presentation slot keeps
@@ -185,13 +185,14 @@ export class Sound {
       sample(this.deathVariant('gore-gib-land'),.11);return;
     }
     if(e.type==='shot'){
+      if(e.hero==='taira'){sample('taira-arc-v2',.55);return;}
       if(e.hero)sample(`${e.hero}${e.variant==='melee'&&e.hero==='mamai'?'-melee':''}-weapon-${this.sampleSerial++%3}`,e.hero==='bilozerska'?.6:.4);
       else sample('legacy-shot',.25);
     }else if((e.type==='special'||e.type==='ultimate')&&e.hero){
       if(e.type==='ultimate')for(const h of ['lesya','bandera','mamai','bayraktar','ghost','zelensky','bilozerska','it-army'])this.stopKind(h+'-reload');
-      sample(e.hero==='klychko'?(e.type==='special'?'klychko-uppercut-v2':'klychko-charge-v3'):e.hero==='taira'&&e.type==='special'?'taira-field-v2':`${e.hero}-${e.type}`,e.type==='ultimate'?.65:.5);
-    }else if(e.type==='reloadStart'&&e.hero){this.stopKind(e.hero+'-reload');sample(e.hero+'-reload',.28);}
-    else if(e.type==='reloadEnd'&&e.hero){this.stopKind(e.hero+'-reload');sample(e.hero+'-reload-end',.25);}
+      sample(e.hero==='klychko'?(e.type==='special'?'klychko-uppercut-v2':'klychko-charge-v3'):e.hero==='taira'?(e.type==='special'?'taira-field-v2':'taira-prime-v1'):`${e.hero}-${e.type}`,e.type==='ultimate'?.65:.5);
+    }else if(e.type==='reloadStart'&&e.hero){this.stopKind(e.hero+'-reload');sample(e.hero==='taira'?'taira-cell-v1':e.hero+'-reload',.28);}
+    else if(e.type==='reloadEnd'&&e.hero){this.stopKind(e.hero+'-reload');if(e.hero==='taira')this.stopKind('taira-cell-v1');sample(e.hero==='taira'?'taira-cell-ready-v2':e.hero+'-reload-end',.25);}
     else if(e.type==='voiceWave'){const now=this.context?.currentTime??0;if(now-this.lastVoice>3){this.lastVoice=now;this.play('voiceWave',.55*level,this.buffers.get('voiceWave')?.duration??0);}sample('zelensky-hit',.3);}
     else if(e.type==='hurt'){if(e.hero)this.foley(e.hero,'hurt');else sample('legacy-hurt',.4);}
     else if(e.type==='enemyShot')sample('support-infantry',.18,.055);

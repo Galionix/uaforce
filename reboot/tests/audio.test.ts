@@ -61,13 +61,14 @@ test('recorded combat routes all heroes, exact phases, lifetimes, pause and dist
   assert.equal(starts.length,distantDeath,'deaths and landings have finite audible range');
   context.currentTime++;sound.event({type:'sfx',sfx:'klychko-gather-v5',soundOwner:0,x:0,y:0});expectClip('klychko-gather-v5');const gathering=starts.at(-1)!.source;sound.event({type:'sfx',sfx:'klychko-charge-stop',soundOwner:0,x:0,y:0});assert.ok(stops.includes(gathering),'release cancels the charging whoosh');
   for(const {id:hero}of HEROES){
-   for(const type of ['special','ultimate'] as const){sound.event({type,hero,x:0,y:0});expectClip(hero==='klychko'?(type==='special'?'klychko-uppercut-v2':'klychko-charge-v3'):hero==='taira'&&type==='special'?'taira-field-v2':hero+'-'+type);}
+   for(const type of ['special','ultimate'] as const){sound.event({type,hero,x:0,y:0});expectClip(hero==='klychko'?(type==='special'?'klychko-uppercut-v2':'klychko-charge-v3'):hero==='taira'?(type==='special'?'taira-field-v2':'taira-prime-v1'):hero+'-'+type);}
    for(let i=0;i<3;i++)sound.event({type:'shot',hero,x:0,y:0});
    for(const kind of ['step','climb','jump','land','hurt','ready'] as const){context.currentTime++;const type=({step:'footstep',climb:'climbContact',jump:'jump',land:'land',hurt:'hurt',ready:'abilityReady'}as const)[kind];sound.event({type,hero,x:0,y:0});assert.ok(starts.at(-1)!.args[2]<=.3);}
   }
   sound.event({type:'sfx',sfx:'klychko-slam-v2',hero:'klychko',x:0,y:0});expectClip('klychko-slam-v2');
+  sound.event({type:'shot',hero:'taira',x:0,y:0});expectClip('taira-arc-v2');sound.event({type:'burst',hero:'taira',sfx:'taira-overload-v1',x:0,y:0});expectClip('taira-overload-v1');
   sound.event({type:'shot',hero:'mamai',variant:'melee',x:0,y:0});assert.ok([0,1,2].some(v=>starts.at(-1)!.args[1]===SFX_ASSETS[`mamai-melee-weapon-${v}` as SfxId].offset));
-  for(const {id:hero,magazine}of HEROES)if(magazine){sound.event({type:'reloadStart',hero,x:0,y:0});expectClip(hero+'-reload');const reloadSource=starts.at(-1)!.source;sound.event({type:'reloadEnd',hero,x:0,y:0});expectClip(hero+'-reload-end');assert.ok(stops.includes(reloadSource));}
+  for(const {id:hero,magazine}of HEROES)if(magazine){sound.event({type:'reloadStart',hero,x:0,y:0});expectClip(hero==='taira'?'taira-cell-v1':hero+'-reload');const reloadSource=starts.at(-1)!.source;sound.event({type:'reloadEnd',hero,x:0,y:0});expectClip(hero==='taira'?'taira-cell-ready-v2':hero+'-reload-end');assert.ok(stops.includes(reloadSource));}
   const idle=starts.length;sound.step(10,false,true);assert.equal(starts.length,idle,'idle cannot invent a reload');
   for(const type of ['tankEngine','planeEngine','droneEngine','mountShot','enemyAlert','enemyFuse','burst']as const){context.currentTime++;sound.event({type,x:0,y:0});}
   const distant=starts.length;sound.event({type:'shot',hero:'bilozerska',x:100,y:0},0);assert.equal(starts.length,distant);

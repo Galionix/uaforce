@@ -3,6 +3,8 @@ import type {HeroId} from './content';
 const path=(color:string,d:string)=>`<path fill="${color}" d="${d}"/>`;
 const ink='#10191e',gold='#ffd476',light='#fff0c6',green='#80e6b1',stone='#aeb8c0';
 const art:Record<string,string>={
+ defib:path(stone,'M2 7h8v16H2zM22 7h8v16h-8z')+path(green,'M4 10h4v8H4zM24 10h4v8h-4z')+path(light,'M16 3h6v3h-3v6h-4v4h6v4h-4v9h-5v-4h2v-6h-4v-6h4V8h2z'),
+ overload:path('#71cddc','M12 2h8v3h6v5h4v12h-4v5h-6v3h-8v-3H6v-5H2V10h4V5h6z')+path(ink,'M12 5h8v3h4v4h3v8h-3v4h-4v3h-8v-3H8v-4H5v-8h3V8h4z')+path(light,'M16 7h5v4h-4v3h5v4h-4v7h-5v-5h2v-3h-5v-4h6z'),
  bug:path(gold,'M11 3h3v4h4V3h3v5h3v5h5v3h-5v4h5v3h-5v5h-4v3h-8v-3H8v-5H3v-3h5v-4H3v-3h5V8h3z')+path(ink,'M14 12h4v14h-4zM11 9h3v3h-3zM18 9h3v3h-3z'),
  barrel:path(ink,'M6 2h20v28H6z')+path('#c03d2a','M8 4h16v24H8z')+path('#e6ae77','M5 7h22v3H5zM5 22h22v3H5z')+path(light,'M13 12h6v6h-6zM12 19h8v2h-8z')+path(ink,'M14 14h1v2h-1zM17 14h1v2h-1z'),
  tank:path(stone,'M2 19h27v8H2zM6 13h18v7H6zM10 8h11v6H10zM20 11h11v3H20z')+path(ink,'M5 22h4v3H5zM12 22h4v3h-4zM20 22h4v3h-4z')+path(green,'M7 15h7v3H7z'),
@@ -59,4 +61,4 @@ const art:Record<string,string>={
  pause:path(light,'M7 5h6v22H7zM19 5h6v22h-6z'),
 };
 export function icon(name:string){return `<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges">${art[name]??art.mace}</svg>`;}
-export const HERO_ICONS:Record<HeroId,readonly string[]>={shevchenko:['mace','scroll','quill'],lesya:['crossbow','crow','mavka'],franko:['hammer','wall','fracture'],bandera:['ppsh','molotov','car'],mamai:['saber','bandura','cavalry'],bayraktar:['turret','drone','rockets'],ghost:['smg','cloak','jet'],zelensky:['microphone','squad','flagdrone'],bilozerska:['sniper','mine','rail'],'it-army':['laptop','hack','ddos'],skovoroda:['pan','book','peace'],usyk:['fist','dash','combo'],almaziv:['launcher','blast','rockets'],klychko:['fist','uppercut','fracture'],taira:['fist','medical','peace'],prytula:['smg','turret','car']};
+export const HERO_ICONS:Record<HeroId,readonly string[]>={shevchenko:['mace','scroll','quill'],lesya:['crossbow','crow','mavka'],franko:['hammer','wall','fracture'],bandera:['ppsh','molotov','car'],mamai:['saber','bandura','cavalry'],bayraktar:['turret','drone','rockets'],ghost:['smg','cloak','jet'],zelensky:['microphone','squad','flagdrone'],bilozerska:['sniper','mine','rail'],'it-army':['laptop','hack','ddos'],skovoroda:['pan','book','peace'],usyk:['fist','dash','combo'],almaziv:['launcher','blast','rockets'],klychko:['fist','uppercut','fracture'],taira:['defib','medical','overload'],prytula:['smg','turret','car']};

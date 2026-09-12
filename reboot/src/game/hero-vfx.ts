@@ -19,6 +19,10 @@ export function drawHeroEffect(c:CanvasRenderingContext2D,f:Effect,x:number,y:nu
  const blast=(xx:number,yy:number,age:number,size=80)=>{if(age>=0&&age<.65)art.draw(c,'blast',Math.min(7,Math.floor(age/.65*8)),xx,yy,size,size);};
  const newHero=['usyk','almaziv','klychko','taira','prytula'].includes(f.hero);
  const reinforcement=(cell:number,xx=x,yy=y-20,size=48)=>art.draw(c,'reinforcements',cell,xx,yy,size,size,d,0,fade);
+ const arcs=()=>{for(const l of f.links??[]){const sx=x+(l.x-f.x)*16,sy=y-(l.y-f.y)*16,ex=x+(l.toX-f.x)*16,ey=y-(l.toY-f.y)*16;art.draw(c,'lightning',2+Math.min(5,Math.floor(t*25)%6),(sx+ex)/2,(sy+ey)/2,22,Math.hypot(ex-sx,ey-sy),1,Math.atan2(ey-sy,ex-sx)-Math.PI/2,fade);}};
+ if(f.hero==='taira'&&f.kind==='weapon'){
+  if(f.power===2){blast(x,y-12,t,72);ring(x,y,16+t*90,'#9de8ef',1-t/.6);sparks(x,y-12,12,'#c3f4ff',45);}else arcs();return;
+ }
  if(newHero){
   // Contact sparks are small, short-lived and follow real strikes, never giant glove icons.
   if(f.kind==='weapon'){if(f.power)sparks(x+d*22,y-19,12,'#ffe3a0',32);reinforcement(Math.min(3,Math.floor(t/.22*4)),x+d*22,y-19,f.power?48:f.hero==='taira'?28:24);return;}
@@ -38,7 +42,9 @@ export function drawHeroEffect(c:CanvasRenderingContext2D,f:Effect,x:number,y:nu
    if(f.kind==='special'){
     reinforcement(4,x,y-9,20);ring(x,y-1,64,'#6fcca3',.55);ring(x,y-1,64*((t*2)%1),'#bbf3cc',.45);
     for(let i=0;i<5;i++){const xx=x+(i-2)*23,yy=y-7-((t*14+i*7)%24);c.save();c.globalAlpha=.6*fade;c.fillStyle='#9fefbd';c.fillRect(Math.round(xx)-1,Math.round(yy)-3,2,6);c.fillRect(Math.round(xx)-3,Math.round(yy)-1,6,2);c.restore();}
-   }else{ring(x,y-3,Math.min(65,t*80),'#79b89a',Math.max(.15,1-t));sparks(x,y-18,14,'#a3d6b3',48);}
+   }else if(f.impactAge===undefined){
+    ring(x,y-2,Math.max(4,42-t*100),'#9de8ef',.8);sparks(x,y-19,18,'#c3f4ff',24);
+   }else{const a=t-f.impactAge;blast(x,y-18,a,112);ring(x,y-3,18+a*145,'#c3f4ff',1-a/.75);sparks(x,y-18,30,'#9de8ef',105);if(a<.24)arcs();}
   }
   if(f.hero==='almaziv'){
    if(f.kind==='special'&&t<.2)reinforcement(Math.min(3,Math.floor(t*20)),x+d*21,y-17,28);

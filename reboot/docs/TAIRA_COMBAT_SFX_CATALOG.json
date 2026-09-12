@@ -1,0 +1,50 @@
+{
+  "model": "Stable Audio 3 Small SFX",
+  "jobs": [
+    {
+      "id": "taira-arc-v2",
+      "prompt": "Electricity sparking and crackling. A sustained loud high voltage electrical arc, rapid sizzling crackles and buzzing sparks.",
+      "seconds": 0.36,
+      "loop": false,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "seed": 912920
+    },
+    {
+      "id": "taira-prime-v1",
+      "prompt": "Short rising crackle of an electrical capacitor powering up, gritty electrical fizz building into tension. Physical sound effect, no music, no melody, no voice.",
+      "seconds": 0.4,
+      "loop": false,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "seed": 912901
+    },
+    {
+      "id": "taira-overload-v1",
+      "prompt": "A single violent electrical transformer explosion, heavy low boom and sharp crack followed by sizzling sparks and scattered metal debris. Short physical arcade impact, no music, no voice.",
+      "seconds": 1.05,
+      "loop": false,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "seed": 912902
+    },
+    {
+      "id": "taira-cell-v1",
+      "prompt": "Remove and insert a heavy battery cartridge into a handheld device, two dry mechanical clunks with plastic friction and a latch click. Close foley, no voice, no music, no beeps.",
+      "seconds": 0.85,
+      "loop": false,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "seed": 912903
+    },
+    {
+      "id": "taira-cell-ready-v2",
+      "prompt": "A metal latch clicking shut. One sharp metallic mechanical click.",
+      "seconds": 0.2,
+      "loop": false,
+      "generateSeconds": 6,
+      "dtype": "fp32",
+      "seed": 912924
+    }
+  ]
+}

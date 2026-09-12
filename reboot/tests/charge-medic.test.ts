@@ -2,8 +2,8 @@ import test from 'node:test';import assert from 'node:assert/strict';
 import {World,IDLE} from '../src/game/world.ts';import {addInfantry} from '../src/game/infantry.ts';import {Gore} from '../src/game/enemy-death.ts';import {SnapshotWriter,applySnapshot} from '../src/game/coop-state.ts';
 function setup(hero:'klychko'|'taira'){const w=new World(0,[hero],hero);w.mode='playing';w.enemies=[];w.mounts=[];w.allies=[];w.ladders=[];w.boxes=[{id:9999,x:20,y:-1,w:80,h:1,hp:Infinity,maxHp:Infinity,kind:'earth'}];w.player.x=20;w.player.invulnerable=999;return w;}
 const frames=(w:World,n:number,a=IDLE)=>{for(let i=0;i<n;i++)w.step(1/60,a);};
-test('quick punches leave full-health infantry alive; charged finish sends directional death',()=>{
- for(const hero of ['klychko','taira'] as const){const w=setup(hero),e=addInfantry(w,'rifle',22);e.infantry!.reaction=100;frames(w,1,{...IDLE,fire:true});frames(w,1);assert.equal(e.hp,96-(hero==='taira'?22:18));assert.ok(e.hp>0);}
+test('basic attacks leave full-health infantry alive; charged finish sends directional death',()=>{
+ for(const hero of ['klychko','taira'] as const){const w=setup(hero),e=addInfantry(w,'rifle',22);e.infantry!.reaction=100;frames(w,1,{...IDLE,fire:true});frames(w,1);assert.equal(e.hp,96-(hero==='taira'?52:18));assert.ok(e.hp>0);}
  const w=setup('klychko'),e=addInfantry(w,'gunner',22);e.infantry!.reaction=100;frames(w,55,{...IDLE,fire:true});assert.equal(e.hp,160);frames(w,1);assert.ok(e.hp<=0);assert.equal(w.events.find(e=>e.type==='enemyDeath')?.launchDir,1);
 });
 test('full charge breaks a frontal shield; quick tap only chips it',()=>{

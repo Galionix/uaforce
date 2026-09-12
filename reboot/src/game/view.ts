@@ -125,8 +125,9 @@ export class View {
     this.c.drawImage(enemy?this.infantry:mavka?this.mavka:this.heroImages[heroIndex],...bounds as [number,number,number,number],-Math.round(w*.47),-h,w,h);this.c.restore();
   }
   event(e:Event){
-    this.sceneFx.emit(e,this.cameraX,this.cameraY);
+    if(!(e.type==='ultimate'&&e.hero==='taira'))this.sceneFx.emit(e,this.cameraX,this.cameraY);
     if(this.particles.length>360)this.particles.splice(0,this.particles.length-360);if(this.flashes.length>60)this.flashes.splice(0,this.flashes.length-60);
+    if(e.sfx==='taira-overload-v1'){this.shake=Math.max(this.shake,8);this.screenPulse=.15;}
     if(e.sfx==='klychko-slam-v2'){this.shake=Math.max(this.shake,8);this.screenPulse=.12;return;}
     if(e.sfx==='klychko-uppercut-v2'){this.shake=Math.max(this.shake,4);this.screenPulse=.06;}
     if(e.type==='healed'){for(let i=0;i<7;i++)this.particles.push({x:e.x+(i%3-1)*.25,y:e.y,vx:(i%3-1)*.4,vy:1+i*.25,life:.5,max:.5,size:2,color:i%2?'#b9f7cf':'#57ba9c'});return;}
@@ -147,6 +148,7 @@ export class View {
     if(e.type==='followerHurt'||e.type==='followerDown'){for(let i=0;i<(e.type==='followerDown'?14:3);i++)this.particles.push({x:e.x,y:e.y,vx:(Math.random()-.5)*5,vy:Math.random()*5,life:.4,max:.4,size:2,color:i%2?'#8ab9aa':'#f4cb77'});return;}
     if(e.type==='ammoPickup'){for(let i=0;i<9;i++)this.particles.push({x:e.x,y:e.y,vx:(Math.random()-.5)*3,vy:2+Math.random()*3,life:.6,max:.6,size:2,color:i%2?'#ffe395':'#94e0b9'});return;}
     if(e.type==='debris'){for(let i=0;i<5;i++)this.particles.push({x:e.x,y:e.y,vx:(Math.random()-.5)*5,vy:Math.random()*5,life:.3+Math.random()*.3,max:.6,size:2,color:['#998966','#645a40','#bbad83'][i%3]});return;}
+    if(e.type==='ultimate'&&e.hero==='taira')return;
     if(e.type==='special'||e.type==='ultimate'){this.shake=Math.max(this.shake,e.type==='ultimate'?7:1);if(e.type==='ultimate')this.screenPulse=.08;return;}
     if(e.type==='thunder'||e.type==='railShot'){this.shake=Math.max(this.shake,12);this.screenPulse=.18;return;}
     if(['burst','hurt','hostileBlast'].includes(e.type)){
@@ -280,6 +282,7 @@ export class View {
     const panicCaptionXs:number[]=[];
     for(const enemy of world.enemies)if(enemyActive(enemy)||enemy.hp>0&&enemy.hacked){
       const x=enemy.x*S-this.cameraX,y=266-enemy.y*S-30+this.cameraY;
+      if((enemy.ionized??0)>0){this.rect(x-4,y-9,3,5,'#94f5ef');this.rect(x-1,y-6,3,5,'#e8ffff');this.rect(x-3,y-2,3,4,'#94f5ef');}
       if(enemy.poison)for(let i=0;i<3;i++)this.rect(x-5+i*5,y+6+Math.sin(this.clock*5+i)*3,2,3,'#7fef72');
       if(enemy.panic){if(!panicCaptionXs.some(px=>Math.abs(px-x)<36)){panicCaptionXs.push(x);this.label('А-А!',x,y-8+Math.sin(this.clock*22)*2,'#ffdd83');}for(let i=0;i<2;i++)this.rect(x-enemy.dir*(8+i*5),y+14+(this.clock*20+i*3)%7,3,1,'#e6d4ac');}
       else if(enemy.rooted){this.label('…',x,y-6,'#ade8f3');}

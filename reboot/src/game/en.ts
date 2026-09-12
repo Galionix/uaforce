@@ -1,5 +1,16 @@
 // English UI catalog. Ukrainian source phrases remain stable simulation data.
 export const EN:Record<string,string>={
+"Тайра: бойове перевантаження":"Taira: combat overload",
+"Ланцюговий розряд · батарея на 3 постріли · підрив міток.":"Chain lightning \u00b7 three-shot battery \u00b7 marked detonations.",
+"Тайра б’є розрядом по трьох цілях. Мітки тримаються 4 секунди; батарея автоматично змінюється після трьох пострілів.":"Taira arcs between three targets. Marks last 4 seconds; the battery is automatically replaced after three shots.",
+"Медпункт лікує загін. Ульта тепер підриває ворогів і помічені цілі, замість повторного лікування.":"Aid station heals the squad. The ultimate now blasts enemies and marked targets instead of repeating healing.",
+"Піксельні блискавки, вторинні вибухи та п’ять нових локально згенерованих звуків.":"Pixel lightning, secondary explosions and five new locally generated sound effects.",
+
+"Бойовий дефібрилятор":"Combat defibrillator",
+"Медпункт":"Aid station",
+"Перевантаження":"Overload",
+"Розряд до 6 м перескакує між трьома ворогами й залишає мітки на 4 с. Батарея: 3 постріли, заміна — 1,8 с. Медпункт відновлює загону 20 + 15 ОЗ. Перевантаження підриває ворогів навколо; мітки додають вторинні вибухи. У хвилях також рятує павшого напарника.":"An arc reaches 6 m, jumps between three enemies and marks them for 4 s. Battery: 3 shots, 1.8 s replacement. Aid station restores 20 + 15 HP to the squad. Overload blasts nearby enemies; marks trigger secondary explosions. Also rescues a fallen teammate in waves.",
+
 "Сила заряду та польова допомога":"Charged power and field aid",
 "Кулачний заряд із частинками · пробиття щитів · медпункт Тайри.":"Fist charge particles · shield breaking · Taira’s aid station.",
 "Повний заряд Кличка пробиває щити, підкидає ворогів і змінює розліт при добиванні. Швидкі удари слабші.":"Klitschko’s full charge breaks shields, launches enemies and gives finishing blows a directional spray. Quick punches are weaker.",

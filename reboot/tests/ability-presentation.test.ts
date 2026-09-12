@@ -29,7 +29,7 @@ test('lightning strike advances actual atlas frames; summons advance their own f
 });
 
 test('new melee contacts use small four-frame sparks rather than oversized glove art',()=>{
- for(const hero of ['usyk','klychko','taira'] as const){const sprites=capture(effect(hero,.05,'weapon')).filter(c=>c[0]==='sprite');assert.equal(sprites.length,1);assert.equal(sprites[0][1],'reinforcements');assert.ok(Number(sprites[0][2])<4);assert.ok(Number(sprites[0][5])<=36);}
+ for(const hero of ['usyk','klychko'] as const){const sprites=capture(effect(hero,.05,'weapon')).filter(c=>c[0]==='sprite');assert.equal(sprites.length,1);assert.equal(sprites[0][1],'reinforcements');assert.ok(Number(sprites[0][2])<4);assert.ok(Number(sprites[0][5])<=36);}
 });
 test('summoning never paints duplicate stationary robots or stale tank art over physical units',()=>{
  assert.equal(capture(effect('prytula',.5,'special')).filter(c=>c[0]==='sprite').length,0);
@@ -37,3 +37,5 @@ test('summoning never paints duplicate stationary robots or stale tank art over 
  const late=capture(effect('prytula',1.5)).filter(c=>c[0]==='sprite');assert.equal(late.length,0);
  assert.equal(capture(effect('almaziv',.6)).filter(c=>c[0]==='sprite').length,0,'explosions must occur at projectile collisions');
 });
+
+test('Taira arcs use the existing pixel lightning atlas and detonation uses the blast atlas',()=>{const f=effect('taira',.05,'weapon');f.links=[{x:10,y:1,toX:14,toY:1},{x:14,y:1,toX:16,toY:2}];const calls=capture(f).filter(c=>c[0]==='sprite');assert.equal(calls.length,2);assert.ok(calls.every(c=>c[1]==='lightning'));f.power=2;assert.ok(capture(f).some(c=>c[0]==='sprite'&&c[1]==='blast'));const ult=effect('taira',.42);ult.impactAge=.35;assert.ok(capture(ult).some(c=>c[0]==='sprite'&&c[1]==='blast'));});

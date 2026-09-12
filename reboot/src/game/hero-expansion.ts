@@ -83,7 +83,7 @@ export function startExpansion(w:World,f:Effect){
  }else if(f.kind==='ultimate'&&f.hero==='taira'){
   const fallen=w.survival?w.players.find(a=>a.id!==w.actor.id&&a.body.hp<=0):undefined;
   if(fallen){Object.assign(fallen.body,{hp:35,x:p.x-p.facing,y:p.y,vy:0,invulnerable:2});fallen.lives=1;w.events.push({type:'healed',hero:'taira',x:fallen.body.x,y:fallen.body.y+1});}
-  else for(const a of w.players)if(a.body.hp>0&&Math.hypot(a.body.x-p.x,a.body.y-p.y)<10){a.body.hp=Math.min(100,a.body.hp+40);a.body.invulnerable=Math.max(a.body.invulnerable,2);w.events.push({type:'healed',hero:'taira',x:a.body.x,y:a.body.y+1});}
+
  }
 }
 export function stepExpansion(w:World,f:Effect,dt:number){
@@ -102,7 +102,7 @@ export function stepExpansion(w:World,f:Effect,dt:number){
   f.hit.add(-1);const site=deliverySite(w,f,[0]);if(site){const t=addMount(w,site.x);Object.assign(t,{y:site.y,armor:200,maxArmor:200,summoner:w.actor.id,rounds:8});w.emitSfx('prytula-ultimate-end',site.x,site.y);}
   else p.energy=100;
  }
- if(f.kind==='ultimate'&&['usyk','taira'].includes(f.hero)){f.x=p.x;f.y=p.y;}
+ if(f.kind==='ultimate'&&f.hero==='usyk'){f.x=p.x;f.y=p.y;}
 }
 export function stepHacked(w:World,e:Enemy,dt:number){
  const hack=e.hacked!;hack.left-=dt;
