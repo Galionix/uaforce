@@ -39,7 +39,9 @@ for(const coop of [false,true])for(const ruined of [false,true])for(const {m,i} 
     const climbing=Math.abs(dx)<.18&&Math.abs(dy)>.01;
     const ladderHere=w.ladders.some(l=>Math.abs(l.x-p.x)<.65&&p.y>=l.bottom-.15&&p.y<=l.top+.15);
     const gap=!w.boxes.some(b=>b.hp>0&&Math.abs(p.x+Math.sign(dx)*.8-b.x)<b.w/2&&Math.abs(b.y+b.h-p.y)<.15);
-    return {...IDLE,move:Math.abs(dx)>.18?Math.sign(dx):0,climb:climbing?Math.sign(dy):0,jump:p.grounded&&(climbing&&dy<-.4||!(climbing&&ladderHere)&&(dy>.4||Math.abs(dx)>.5&&(gap||stuck[id]>12))),jumpHeld:true};
+    // The depot ground route deliberately asks players to break its two support columns.
+    const breakSupport=!!m.layout!.supports?.some(s=>Math.abs(s.x-p.x)<3&&p.y<s.y+s.h)&&stuck[id]>12;
+    return {...IDLE,fire:breakSupport,move:Math.abs(dx)>.18?Math.sign(dx):0,climb:climbing?Math.sign(dy):0,jump:p.grounded&&(climbing&&dy<-.4||!(climbing&&ladderHere)&&(dy>.4||Math.abs(dx)>.5&&(gap||stuck[id]>12))),jumpHeld:true};
    });
    w.stepPlayers(1/60,actions);
    if(coop){assert.ok(Math.abs(w.players[0].body.y-w.players[1].body.y)<=12.001);assert.ok(Math.abs(w.players[0].body.x-w.players[1].body.x)<=30.001);}

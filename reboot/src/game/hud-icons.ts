@@ -42,6 +42,7 @@ const art:Record<string,string>={
  book:path('#a67a55','M2 6h12v2h4V6h12v22H18v2h-4v-2H2z')+path(light,'M4 8h9v17H4zM19 8h9v17h-9z')+path('#bda972','M6 12h5v2H6zM21 12h5v2h-5zM6 17h5v2H6zM21 17h5v2h-5z'),
  peace:path('#b9c8f2','M12 2h8v3h6v4h4v14h-4v5h-6v2h-8v-2H6v-5H2V9h4V5h6z')+path(ink,'M12 5h8v3h5v4h2v9h-4v4h-4v2h-6v-2H9v-4H5v-9h2V8h5z')+path(light,'M14 9h4v9h5v3h-7v-3h-2z'),
  heart:path('#f07866','M5 8h8v3h6V8h8v4h3v8h-4v4h-5v4H11v-4H6v-4H2v-8h3z')+path('#ffcb9e','M6 10h6v3H6z'),
+ uppercut:path(gold,'M12 3h8v3h5v10h-5v13h-8V16H7V6h5z')+path(ink,'M11 8h10v3H11z')+path(light,'M1 18h3v-4h3v9H4v6H1zM27 18h3v11h-3z'),
  fist:path(gold,'M5 10h4V5h5v4h2V4h5v6h5v12h-4v6H10v-6H5z')+path(ink,'M10 14h12v3H10z'),
  dash:path(light,'M2 9h12v3H2zM5 17h9v3H5zM17 4l13 12-13 12v-8h-4v-8h4z'),
  combo:path(gold,'M2 7h7v18H2zM12 11h7v14h-7zM22 3h8v22h-8z'),
@@ -58,4 +59,4 @@ const art:Record<string,string>={
  pause:path(light,'M7 5h6v22H7zM19 5h6v22h-6z'),
 };
 export function icon(name:string){return `<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" shape-rendering="crispEdges">${art[name]??art.mace}</svg>`;}
-export const HERO_ICONS:Record<HeroId,readonly string[]>={shevchenko:['mace','scroll','quill'],lesya:['crossbow','crow','mavka'],franko:['hammer','wall','fracture'],bandera:['ppsh','molotov','car'],mamai:['saber','bandura','cavalry'],bayraktar:['turret','drone','rockets'],ghost:['smg','cloak','jet'],zelensky:['microphone','squad','flagdrone'],bilozerska:['sniper','mine','rail'],'it-army':['laptop','hack','ddos'],skovoroda:['pan','book','peace'],usyk:['fist','dash','combo'],almaziv:['launcher','blast','rockets'],klychko:['fist','wall','clock'],taira:['fist','medical','peace'],prytula:['smg','turret','car']};
+export const HERO_ICONS:Record<HeroId,readonly string[]>={shevchenko:['mace','scroll','quill'],lesya:['crossbow','crow','mavka'],franko:['hammer','wall','fracture'],bandera:['ppsh','molotov','car'],mamai:['saber','bandura','cavalry'],bayraktar:['turret','drone','rockets'],ghost:['smg','cloak','jet'],zelensky:['microphone','squad','flagdrone'],bilozerska:['sniper','mine','rail'],'it-army':['laptop','hack','ddos'],skovoroda:['pan','book','peace'],usyk:['fist','dash','combo'],almaziv:['launcher','blast','rockets'],klychko:['fist','uppercut','fracture'],taira:['fist','medical','peace'],prytula:['smg','turret','car']};

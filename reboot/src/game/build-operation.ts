@@ -17,14 +17,18 @@ export function buildOperation(w:World){
   if(s.permanent)box((s.left+s.right)/2,s.top-depth,s.right-s.left,depth,Infinity,s.kind);
   else {
    for(let x=s.left;x<s.right;x++)box(x+.5,s.top-depth,1,depth,65,s.kind);
+   if(!s.fragile){
    // A maintenance catwalk below each floor remains reachable after a collapse.
    box((s.left+s.right)/2,s.top-3.25,s.right-s.left,.25,Infinity,'platform');
    // Short supports leave visible holes in the destroyed main floor.
    for(let x=s.left;x<s.right;x+=5)box(x+1.5,s.top-.25,Math.min(3,s.right-x),.25,Infinity,'platform');
+   }
   }
  }
+ // A narrow column breaks as one object: no head-height slit that traps a climbing fighter.
+ for(const s of l.supports??[])box(s.x,s.y,s.w,s.h,s.hp,'stone');
  // Ladder exits and objective platforms survive an ability destroying the surrounding floor.
- for(const a of l.ladders){box(a.x,a.top-.25,3,.25,Infinity,'platform');box(a.x,a.bottom-.25,3,.25,Infinity,'platform');}
+ for(const a of l.ladders)if(!a.fragile){box(a.x,a.top-.25,3,.25,Infinity,'platform');box(a.x,a.bottom-.25,3,.25,Infinity,'platform');}
  for(const a of [...l.route,...l.checkpoints,...l.allies,...l.ammo,...l.medkits,{x:w.mission.exit,y:l.exitY}])box(a.x,a.y-.25,3,.25,Infinity,'platform');
  for(const p of l.props)box(p.x,p.y,p.kind==='wall'?1.4:1,p.kind==='wall'?1.6:1,p.kind==='barrel'?25:50,p.kind);
  box(w.mission.radio,l.radioY,1.6,2.2,150,'radio');

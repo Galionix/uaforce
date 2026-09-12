@@ -127,6 +127,7 @@ export class View {
   event(e:Event){
     this.sceneFx.emit(e,this.cameraX,this.cameraY);
     if(this.particles.length>360)this.particles.splice(0,this.particles.length-360);if(this.flashes.length>60)this.flashes.splice(0,this.flashes.length-60);
+    if(e.sfx==='klychko-slam-v2'){this.shake=Math.max(this.shake,8);this.screenPulse=.12;return;}
     if(e.type==='highFive'){this.shake=Math.max(this.shake,2);this.screenPulse=.07;return;}
     if(e.type==='enemyDeath'){
       this.gore.burst(e.x,e.y);this.shake=Math.max(this.shake,1.4);
@@ -230,6 +231,7 @@ export class View {
     }
     for(const actor of world.players){
     const p=actor.body;if(p.hp<=0)continue;this.c.globalAlpha=p.cloak>0?.38:1;if(!actor.mounted&&world.evac.phase!=='departing'&&(world.story||p.invulnerable<=0||Math.floor(this.clock*12)%2===0))this.sprite(p.x,p.y,p.facing,world.highFive.offeredBy===actor.id||world.highFive.age<.45?0:heroFrame(p,this.clock,Math.abs(world.players.length===1&&!world.story?move:actor.move)>.1),false,false,HEROES.findIndex(h=>h.id===actor.heroId),actor.heroId==='lesya'&&p.form>0);this.c.globalAlpha=1;
+    if(actor.heroId==='klychko'&&p.klychkoHold>0&&!actor.mounted){const x=p.x*S-this.cameraX,y=266-p.y*S+this.cameraY;this.rect(x-12,y-37,24,4,'#172928');this.rect(x-11,y-36,22*Math.min(1,p.klychkoHold/.9),2,p.klychkoHold>=.9?'#fff2bb':'#e8ab64');}
     if(actor.heroId==='mamai'&&p.attack>0&&!world.effects.some(f=>f.kind==='weapon')){const xx=p.x*S-this.cameraX,yy=266-(p.y+1)*S+this.cameraY;this.rect(xx+p.facing*4,yy,12*p.facing,3,'#c6ad7a');this.rect(xx+p.facing*5,yy+2,4*p.facing,4,'#845b38');}
       if(world.players.length>1){const x=p.x*S-this.cameraX,y=266-p.y*S+this.cameraY;this.label('P'+(actor.id+1),x,y-42,actor.id===0?'#ffdf6a':'#70d8ff');this.rect(x-10,y-36,20,2,'#172928');this.rect(x-10,y-36,20*p.hp/100,2,actor.id===0?'#ffdf6a':'#70d8ff');}
     }

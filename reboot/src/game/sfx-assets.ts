@@ -2180,6 +2180,18 @@ export const SFX_ASSETS = {
   "foley-prytula-ready-2": {
     "offset": 268.16575,
     "seconds": 0.2
+  },
+  "klychko-charge-v3": {
+    "offset": 268.40575,
+    "seconds": 0.65
+  },
+  "klychko-uppercut-v2": {
+    "offset": 269.09575,
+    "seconds": 0.7
+  },
+  "klychko-slam-v2": {
+    "offset": 269.83575,
+    "seconds": 1.1
   }
 } as const;
 export type SfxId=keyof typeof SFX_ASSETS;

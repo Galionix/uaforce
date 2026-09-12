@@ -3816,6 +3816,42 @@
       "seed": 912456,
       "generateSeconds": 6,
       "dtype": "fp32"
+    },
+    {
+      "id": "klychko-charge-v2",
+      "prompt": "Leather boxing glove tightening and cloth stretching with a short rising breath of air, physical tension before a heavy punch. Dry close isolated foley. No voices, music, melody, electronic beeps.",
+      "seconds": 0.65,
+      "loop": false,
+      "seed": 912700,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "klychko-charge-v3",
+      "prompt": "A thick leather strap slowly pulled taut, creaking and stretching softly. Continuous dry leather friction and fabric rustle, isolated close foley. No impacts, no thumps, no punches, no knocks, no music, no voice, no electronic sound.",
+      "seconds": 0.65,
+      "loop": false,
+      "seed": 912709,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "klychko-uppercut-v2",
+      "prompt": "One heavy boxing uppercut: forceful upward air whoosh followed by a deep leather glove impact, dry exaggerated arcade physical foley. No voice, music or melody.",
+      "seconds": 0.7,
+      "loop": false,
+      "seed": 912701,
+      "generateSeconds": 6,
+      "dtype": "fp32"
+    },
+    {
+      "id": "klychko-slam-v2",
+      "prompt": "One massive impact on a concrete floor, deep body slam thud, concrete cracking and chunks of rubble scattering with a short gritty tail. Physical arcade action sound effect. No voices, no music, no electronic sounds.",
+      "seconds": 1.1,
+      "loop": false,
+      "seed": 912702,
+      "generateSeconds": 6,
+      "dtype": "fp32"
     }
   ]
 }

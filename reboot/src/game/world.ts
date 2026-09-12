@@ -18,7 +18,7 @@ import {stepFollowers, clearShot, type Follower} from './followers.ts';
 import {cycleWeapon,resetWeapon,WEAPONS} from './weapons.ts';
 import {attack,canSpecial,launchEffect,stepHeroEffect,effectAudioPhase} from './hero-combat.ts';
 import { ACTIVE_HEROES, HEROES, MISSIONS, heroById, type HeroId, type Mission } from './content.ts';
-export type Effect={playerId?:number;kind:'weapon'|'special'|'ultimate';hero:HeroId;x:number;y:number;dir:number;life:number;age:number;hit:Set<number>;originX?:number;originY?:number;target?:number;audioMarks?:Set<string>};
+export type Effect={playerId?:number;kind:'weapon'|'special'|'ultimate';hero:HeroId;x:number;y:number;dir:number;life:number;age:number;hit:Set<number>;originX?:number;originY?:number;target?:number;audioMarks?:Set<string>;impactAge?:number};
 export type Mode = 'ready' | 'playing' | 'paused' | 'lost' | 'won' | 'cinematic';
 export type Actions = { move: number; jump: boolean; jumpHeld?:boolean; fire: boolean; special: boolean; ultimate?: boolean; interact: boolean; climb?: number };
 export type Box = { id: number; x: number; y: number; w: number; h: number; hp: number; maxHp: number; sabotage?:'ammo'|'fuel'|'jet';required?:boolean;fuse?:number; vx?:number;vy?:number;falling?:boolean;collapseDelay?:number; kind: 'crate' | 'barrel' | 'wall' | 'radio' | 'platform' | 'earth' | 'stone' };
@@ -27,7 +27,7 @@ export type Bullet = { id: number; x: number; y: number; vx: number; vy: number;
 export type Event = { type: 'highFive' | 'enemySuspect' | 'enemyPanic' | 'goreLand' | 'sfx' | 'barrelLift' | 'barrelThrow' | 'enemyDeath' | 'enemyAlert' | 'enemyAim' | 'enemyFuse' | 'enemyReload' | 'enemySniperShot' | 'enemyShieldHit' | 'shot' | 'enemyShot' | 'debris' | 'burst' | 'hurt' | 'rescue' | 'checkpoint' | 'won' | 'lost' | 'special' | 'ultimate' | 'thunder' | 'heroChanged' | 'evacCalled' | 'boarded' | 'respawn' | 'supportShot' | 'voiceWave' | 'railShot' | 'reloadStart' | 'reloadEnd' | 'followerHurt' | 'followerDown' | 'tankAlert' | 'planeAlert' | 'droneAlert' | 'tankEngine' | 'planeEngine' | 'droneEngine' | 'tankAim' | 'tankShot' | 'rocketLaunch' | 'droneDive' | 'hostileBlast' | 'ammoPickup' | 'bossEncounter' | 'bossDefeated' | 'bossWindup' | 'mountEnter' | 'mountExit' | 'mountBroken' | 'armorHit' | 'mountEngine' | 'mountShot' | 'mountJump' | 'mountLand' | 'wallJump' | 'wallVault' | 'footstep' | 'climbContact' | 'jump' | 'land' | 'abilityReady'; deathRole?:InfantryKind;deathCause?:DeathCause;soundOwner?:number;sfx?:string;variant?:'melee'|'pistol'|'infantry'|'turret';text?:string; boss?:BossId; hero?: HeroId; unlocked?: boolean; x: number; y: number };
 export const IDLE: Actions = { move: 0, jump: false, fire: false, special: false, interact: false };
 
-export function createPlayerBody(){return { mamaiHold:0,mamaiFired:false,dashTime:0,dashDir:1,aimTime:0,x: 3, y: 0, vy: 0, hp: 100, facing: 1, grounded: true, invulnerable: 0, cooldown: 0, energy: 100, coyote: 0.12, wallSide:0,wallLock:0,wallVx:0,wallClimbing:false,platformDrop:0,platformDropY:0,ladder: -1, ladderLock: 0, detachVx: 0, ladderNeedsRelease:false, cast:0, attack:0, specialCooldown:0, specialRecovery:[] as number[], form:0, cloak:0, fireCount:0, ammo:0, reloading:0, burstShots:0, weaponTrigger:false };}
+export function createPlayerBody(){return { klychkoHold:0,klychkoPower:0,mamaiHold:0,mamaiFired:false,dashTime:0,dashDir:1,aimTime:0,x: 3, y: 0, vy: 0, hp: 100, facing: 1, grounded: true, invulnerable: 0, cooldown: 0, energy: 100, coyote: 0.12, wallSide:0,wallLock:0,wallVx:0,wallClimbing:false,platformDrop:0,platformDropY:0,ladder: -1, ladderLock: 0, detachVx: 0, ladderNeedsRelease:false, cast:0, attack:0, specialCooldown:0, specialRecovery:[] as number[], form:0, cloak:0, fireCount:0, ammo:0, reloading:0, burstShots:0, weaponTrigger:false };}
 export type PlayerActor={id:number;body:ReturnType<typeof createPlayerBody>;heroId:HeroId;lives:number;checkpoint:number;checkpointY:number;mounted:Mount|null;heldBarrel:number|null;interactHeld:boolean;motionFoley:MotionFoley;move:number};
 function createActor(id:number,heroId:HeroId):PlayerActor {return {id,body:createPlayerBody(),heroId,lives:3,checkpoint:3,checkpointY:0,mounted:null,heldBarrel:null,interactHeld:false,motionFoley:new MotionFoley(),move:0};}
 
@@ -53,7 +53,7 @@ export class World {
   withPlayer<T>(id:number,fn:()=>T):T {const before=this.activePlayer;this.selectPlayer(id);try{return fn();}finally{this.activePlayer=before;}}
   addPlayer(hero:HeroId=this.heroId){if(this.players.length>=2)throw new Error("Two players maximum");const actor=createActor(1,hero);actor.body.x=this.player.x+1;actor.body.y=this.player.y;resetWeapon(actor.body,WEAPONS[hero]);this.players.push(actor);return actor;}
   nearestPlayer(x:number,y:number){return [...this.players].filter(a=>a.lives>0).sort((a,b)=>Math.hypot(a.body.x-x,a.body.y-y)-Math.hypot(b.body.x-x,b.body.y-y))[0]??this.players[0];}
-  clearOwned(){Object.assign(this.player,{mamaiHold:0,mamaiFired:false,dashTime:0,aimTime:0});const id=this.actor.id;this.followers=this.followers.filter(f=>(f.playerId??0)!==id);this.effects=this.effects.filter(f=>(f.playerId??0)!==id);}
+  clearOwned(){Object.assign(this.player,{klychkoHold:0,klychkoPower:0,mamaiHold:0,mamaiFired:false,dashTime:0,aimTime:0});const id=this.actor.id;this.followers=this.followers.filter(f=>(f.playerId??0)!==id);this.effects=this.effects.filter(f=>(f.playerId??0)!==id);}
 
   private deathLines=new DeathLines();
   mode: Mode = 'ready';
@@ -151,7 +151,7 @@ export class World {
     const newlyUnlocked=closed.length>0;
     const pool=newlyUnlocked?closed:this.unlocked.filter(id=>id!==this.heroId&&ACTIVE_HEROES.some(h=>h.id===id));
     const next=pool[Math.floor(this.heroRandom()*pool.length)]??this.heroId;
-    this.clearOwned();if(this.players.length===1)this.bullets=this.bullets.filter(b=>!b.friendly);this.player.cloak=0;this.player.fireCount=0;this.player.cooldown=0;this.player.form=0;this.player.specialCooldown=0;this.player.specialRecovery=[];Object.assign(this.player,{mamaiHold:0,mamaiFired:false,dashTime:0,aimTime:0});
+    this.clearOwned();if(this.players.length===1)this.bullets=this.bullets.filter(b=>!b.friendly);this.player.cloak=0;this.player.fireCount=0;this.player.cooldown=0;this.player.form=0;this.player.specialCooldown=0;this.player.specialRecovery=[];Object.assign(this.player,{klychkoHold:0,klychkoPower:0,mamaiHold:0,mamaiFired:false,dashTime:0,aimTime:0});
     this.heroId=next;
     resetWeapon(this.player,WEAPONS[this.heroId]);
     if(newlyUnlocked){this.unlocked.push(next);this.beginCinematic('hero',next);}
@@ -190,7 +190,7 @@ export class World {
       this.lives--;this.clearOwned();dropBarrel(this);if(this.players.length===1)resetBoss(this);
       if(this.players.length>1&&this.lives<=0)this.lives=1;
       if (this.lives <= 0) { this.mode = 'lost'; this.event('lost', p.x, p.y); }
-      else { this.motionFoley.reset();p.x = this.checkpoint; p.y = this.actor.checkpointY; p.ladder=-1;p.ladderLock=0;p.detachVx=0;p.wallSide=0;p.wallLock=0;p.wallVx=0;p.wallClimbing=false;p.platformDrop=0;p.ladderNeedsRelease=false; p.vy = 0; p.hp = 100; p.invulnerable = 2.5; if(this.players.length===1)this.bullets = []; this.clearOwned();p.form=0;p.cloak=0;p.fireCount=0;Object.assign(p,{mamaiHold:0,mamaiFired:false,dashTime:0,aimTime:0});resetWeapon(p,WEAPONS[this.heroId]);sharedRespawn(this);this.event('respawn',p.x,p.y); }
+      else { this.motionFoley.reset();p.x = this.checkpoint; p.y = this.actor.checkpointY; p.ladder=-1;p.ladderLock=0;p.detachVx=0;p.wallSide=0;p.wallLock=0;p.wallVx=0;p.wallClimbing=false;p.platformDrop=0;p.ladderNeedsRelease=false; p.vy = 0; p.hp = 100; p.invulnerable = 2.5; if(this.players.length===1)this.bullets = []; this.clearOwned();p.form=0;p.cloak=0;p.fireCount=0;Object.assign(p,{klychkoHold:0,klychkoPower:0,mamaiHold:0,mamaiFired:false,dashTime:0,aimTime:0});resetWeapon(p,WEAPONS[this.heroId]);sharedRespawn(this);this.event('respawn',p.x,p.y); }
     }
   }
   damageFollower(f:Follower,damage:number){
@@ -265,7 +265,7 @@ export class World {
         for(const b of this.boxes)if(!f.hit.has(b.id)&&Math.abs(b.x-f.x)<radius&&b.y>=f.y&&b.y<f.y+5){f.hit.add(b.id);this.damageBox(b,280);}
       }
     });
-    for(const f of this.effects)if(f.life<=0&&f.kind!=='weapon')this.emitSfx(`${f.hero}-${f.kind}-end`,f.x,f.y,f.hero);
+    for(const f of this.effects)if(f.life<=0&&f.kind!=='weapon'&&f.hero!=='klychko')this.emitSfx(`${f.hero}-${f.kind}-end`,f.x,f.y,f.hero);
     this.effects=this.effects.filter(f=>f.life>0);
   }
   private stepPlayer(dt:number,action:Actions){
@@ -312,7 +312,7 @@ export class World {
     const ladder=climbing?this.ladders[p.ladder]:null;
     p.dashTime=Math.max(0,p.dashTime-dt);
     const previousX=p.x;
-    p.x+=(p.dashTime>0?p.dashDir*22:p.wallLock>0?p.wallVx:move*this.hero.speed*(p.cloak>0?1.8:1)+(move?0:p.detachVx))*dt;p.detachVx*=Math.max(0,1-dt*5);
+    p.x+=(p.dashTime>0?p.dashDir*22:p.wallLock>0?p.wallVx:move*this.hero.speed*(p.klychkoHold>0?.45:p.cloak>0?1.8:1)+(move?0:p.detachVx))*dt;p.detachVx*=Math.max(0,1-dt*5);
     if(!climbing)for(const b of this.boxes){
       if(b.hp<=0||b.kind==='platform'||b.id===this.heldBarrel)continue;
       if(p.y+1.55>b.y+.05&&p.y<b.y+b.h-.05&&Math.abs(p.x-b.x)<b.w/2+.32){if(b.kind==='barrel'&&move)b.vx=move*3;p.x=b.x+(previousX<b.x?-1:1)*(b.w/2+.32);}
@@ -343,6 +343,12 @@ export class World {
     if(this.heroId==='mamai'){
       if(action.fire){p.mamaiHold+=dt;if(p.mamaiHold>=.3&&!p.mamaiFired){p.weaponTrigger=false;fire=true;}else fire=false;}
       else {melee=p.mamaiHold>0&&!p.mamaiFired;fire=melee;p.mamaiHold=0;p.mamaiFired=false;}
+    }
+    if(this.heroId==='klychko'){
+      if(action.fire&&!action.special&&!action.ultimate){
+        if(p.cooldown<=dt){if(p.klychkoHold===0)this.emitSfx('klychko-charge-v3',p.x,p.y,'klychko');const before=p.klychkoHold;p.klychkoHold=Math.min(.9,before+dt);if(before<.9&&p.klychkoHold>=.9)this.emitSfx('foley-klychko-ready-0',p.x,p.y,'klychko');}
+        fire=false;
+      }else{fire=!action.special&&!action.ultimate&&p.klychkoHold>0;p.klychkoPower=p.klychkoHold/.9;p.klychkoHold=0;}
     }
     const cycle=cycleWeapon(p,this.hero,dt,fire,melee);
     if(this.heroId==='bilozerska'&&!p.reloading&&beforeWeaponCooldown>1.28&&p.cooldown<=1.28)this.emitSfx('bolt',p.x,p.y+1);
@@ -419,7 +425,7 @@ export class World {
     if(this.finale>0){const before=Math.ceil(this.finale/.2);this.finale=Math.max(0,this.finale-dt);if(Math.ceil(this.finale/.2)<before){const x=237+(18-before)*1.8;this.emit('burst',x,3+before%4);this.emit('debris',x,8);for(const b of this.boxes)if(b.hp>0&&Number.isFinite(b.hp)&&b.y>3&&Math.abs(b.x-x)<4)this.damageBox(b,200);}}
     stepStructures(this,dt);
     stepFollowers(this,dt);
-    const enemyDt=dt*(this.highFive.left>0?TEAM_BOOST.enemyRate:this.effects.some(f=>f.hero==='klychko'&&f.kind==='ultimate'&&f.life>0)?.35:1);
+    const enemyDt=dt*(this.highFive.left>0?TEAM_BOOST.enemyRate:1);
     for (const enemy of this.enemies) {
       if (enemy.hp <= 0) continue;
       if(enemy.hacked){stepHacked(this,enemy,dt);continue;}

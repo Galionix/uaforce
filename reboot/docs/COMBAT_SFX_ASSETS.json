@@ -16762,13 +16762,94 @@
         "extra": null
       },
       "humanAudition": false
+    },
+    {
+      "id": "klychko-charge-v3",
+      "file": "public/assets/audio/sfx/klychko-charge-v3.wav",
+      "seconds": 0.65,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.02800431276819227,
+      "sha256": "33974537298ff767da5a8638c910a60d3cc8ac4ba752d6fdcba42a551b958f09",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "klychko-charge-v3.wav",
+          "sourceSha256": "4d1df2363f65fe11585a46c4f7b8eccf95b8ec662d7eeb72d27f4b2b5a292837",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 912709,
+          "prompt": "A thick leather strap slowly pulled taut, creaking and stretching softly. Continuous dry leather friction and fabric rustle, isolated close foley. No impacts, no thumps, no punches, no knocks, no music, no voice, no electronic sound.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 4.797,
+          "rate": 1,
+          "cut": 0.65,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "klychko-uppercut-v2",
+      "file": "public/assets/audio/sfx/klychko-uppercut-v2.wav",
+      "seconds": 0.7,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.06665117295512482,
+      "sha256": "c76fedbe8c8aca6d2b4c2174ddab81d1301450bcecc0c1ab4525f3203935bc27",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "klychko-uppercut-v2.wav",
+          "sourceSha256": "cee3b63591f7a88deff9793dc0bed69aa57e81815639a3bed9126585477d7cf1",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 912701,
+          "prompt": "One heavy boxing uppercut: forceful upward air whoosh followed by a deep leather glove impact, dry exaggerated arcade physical foley. No voice, music or melody.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 4.337,
+          "rate": 1,
+          "cut": 0.7,
+          "gain": 1,
+          "at": 0
+        }
+      ]
+    },
+    {
+      "id": "klychko-slam-v2",
+      "file": "public/assets/audio/sfx/klychko-slam-v2.wav",
+      "seconds": 1.1,
+      "loop": false,
+      "peak": 0.76,
+      "rms": 0.10406698548565016,
+      "sha256": "f5c446769f0d7943eefee33637cf137b90340be785d8308c5f851944a9932ee7",
+      "processing": "35Hz highpass, 10.5kHz lowpass, mono 24kHz, envelope and level; no synthesis",
+      "layers": [
+        {
+          "source": "klychko-slam-v2.wav",
+          "sourceSha256": "c3dd3d71d2f63976d2283d5aed139b75d03848360f38e213f7142d4e9344478d",
+          "model": "Stable Audio 3 Small SFX",
+          "seed": 912702,
+          "prompt": "One massive impact on a concrete floor, deep body slam thud, concrete cracking and chunks of rubble scattering with a short gritty tail. Physical arcade action sound effect. No voices, no music, no electronic sounds.",
+          "cfg": 1,
+          "negativePrompt": null,
+          "runtimeCommit": "779434a908193105335fd8d833418603625b2859",
+          "start": 0.132,
+          "rate": 1,
+          "cut": 1.1,
+          "gain": 1,
+          "at": 0
+        }
+      ]
     }
   ],
   "missing": [],
   "bank": {
     "file": "public/assets/audio/sfx/combat-bank.wav",
-    "sha256": "ea8bb80660663e8d18d423cd06dacc687e3216f5db8c444de91082262de7f3b2",
-    "seconds": 268.40575
+    "sha256": "a29650e612070a7e0d053159b814d5f9610cd6e303c9451ae74789e752604a0e",
+    "seconds": 270.97575000000006
   },
   "review": {
     "status": "local-playtest-candidate",

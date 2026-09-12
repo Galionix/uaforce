@@ -20,7 +20,7 @@ export function stepMounts(w:World,dt:number,a:Actions,interactEdge:boolean){
  let consumed=!!w.mounted;
  if(w.mounted&&interactEdge){exitMount(w);return true;}
  if(!w.mounted&&interactEdge&&!w.allies.some(c=>!c.rescued&&Math.abs(c.x-w.player.x)<2.2&&w.player.y<2)){
-  const t=nearbyMount(w);if(t){w.mounted=t;consumed=true;w.player.ladder=-1;w.player.cloak=0;w.player.form=0;w.player.attack=0;w.player.cast=0;w.player.detachVx=0;Object.assign(w.player,{mamaiHold:0,mamaiFired:false,dashTime:0,aimTime:0});w.emit('mountEnter',t.x,t.y+1);}
+  const t=nearbyMount(w);if(t){w.mounted=t;consumed=true;w.player.ladder=-1;w.player.cloak=0;w.player.form=0;w.player.attack=0;w.player.cast=0;w.player.detachVx=0;Object.assign(w.player,{klychkoHold:0,klychkoPower:0,mamaiHold:0,mamaiFired:false,dashTime:0,aimTime:0});w.emit('mountEnter',t.x,t.y+1);}
  }
  for(const t of w.mounts){
   const rider=w.players.find(a=>a.mounted===t);

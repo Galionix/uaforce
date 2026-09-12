@@ -1,7 +1,7 @@
 import {World,IDLE,type Actions,type Event,type Box} from './world.ts';
 import type {HeroId} from './content.ts';
 /** Versioned wire format. Only the host runs World.stepPlayers. No guest world edits. */
-export const COOP_VERSION='uaforce-coop-9';
+export const COOP_VERSION='uaforce-coop-10';
 export function cleanActions(value:unknown):Actions|null{
  if(!value||typeof value!=='object')return null;
  const v=value as Record<string,unknown>;

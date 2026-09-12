@@ -49,8 +49,8 @@ export function stepStructures(w:World,dt:number){
  for(const b of falling){
   if(b.collapseDelay!==undefined){b.collapseDelay=Math.max(0,b.collapseDelay-dt);if(b.collapseDelay>0)continue;b.collapseDelay=undefined;b.falling=true;}
   const old=b.y;b.vy=(b.vy??0)-24*dt;b.y+=b.vy*dt;
-  let floor=-2;
-  for(const a of grid.near(b.x-b.w/2,b.y,b.x+b.w/2,old))if(a!==b&&a.hp>0&&Math.abs(a.x-b.x)<(a.w+b.w)/2-.02&&old>=a.y+a.h-.025&&b.y<=a.y+a.h)floor=Math.max(floor,a.y+a.h);
+  let floor=-2,landing:Box|undefined;
+  for(const a of grid.near(b.x-b.w/2,b.y,b.x+b.w/2,old))if(a!==b&&a.hp>0&&Math.abs(a.x-b.x)<(a.w+b.w)/2-.02&&old>=a.y+a.h-.025&&b.y<=a.y+a.h){if(a.y+a.h>floor){floor=a.y+a.h;landing=a;}}
   b.y=Math.max(b.y,floor);
   let crush=false;
   if(b.vy<-5){
@@ -60,6 +60,6 @@ export function stepStructures(w:World,dt:number){
    }
    for(const a of w.players)if(a.body.hp>0&&!hitPlayers.has(a.id)&&Math.abs(a.body.x-b.x)<b.w/2+.4&&old>=a.body.y&&b.y<a.body.y+1.6&&old+b.h>a.body.y){hitPlayers.add(a.id);w.withPlayer(a.id,()=>w.damagePlayer(18));crush=true;}
   }
-  if(b.y<=floor||crush){b.y=Math.max(b.y,floor);w.damageBox(b,b.hp);b.vy=0;b.falling=false;}
+  if(b.y<=floor||crush){if(b.y<=floor&&landing&&(landing.kind==='barrel'||landing.sabotage)&&b.vy<-5)w.damageBox(landing,100);b.y=Math.max(b.y,floor);w.damageBox(b,b.hp);b.vy=0;b.falling=false;}
  }
 }

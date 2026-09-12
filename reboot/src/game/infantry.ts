@@ -3,7 +3,7 @@ import {clearShot,navigateGround} from './followers.ts';
 import {hostileBlast} from './enemies.ts';
 import {cycleWeapon,resetWeapon,type WeaponSpec,type WeaponState} from './weapons.ts';
 export type InfantryKind='rifle'|'assault'|'gunner'|'sniper'|'scout'|'shield'|'demolition';
-export type Infantry=WeaponState & {kind:InfantryKind;state:'patrol'|'suspicious'|'idle'|'alert'|'pursue'|'attack'|'reload'|'search'|'fuse'|'panic';patrolDir:number;patrolWait:number;suspicion:number;suspectCooldown:number;alert:number;reaction:number;memory:number;lastX:number;lastY:number;vy:number;grounded:boolean;ladder:number;moving:boolean;fuse:number;shield:number;attack:number};
+export type Infantry=WeaponState & {kind:InfantryKind;state:'patrol'|'suspicious'|'idle'|'alert'|'pursue'|'attack'|'reload'|'search'|'fuse'|'panic';patrolDir:number;patrolWait:number;suspicion:number;suspectCooldown:number;alert:number;reaction:number;memory:number;lastX:number;lastY:number;vy:number;grounded:boolean;ladder:number;moving:boolean;fuse:number;shield:number;attack:number;knockup?:boolean};
 const weapon=(range:number,magazine:number,burst:number,damage:number,pause:number,reload:number):WeaponSpec=>({mode:'burst',range,magazine,burst,damage,burstPause:pause,reloadTime:reload,cooldown:.19,projectileSpeed:24});
 /** Arcade roles inspired by equipment; these are not real unit rosters or ballistics. */
 export const INFANTRY={
@@ -41,6 +41,7 @@ export function stepInfantry(w:World,e:Enemy,dt:number){
  a.suspicion=Math.max(0,a.suspicion-dt);a.suspectCooldown=Math.max(0,a.suspectCooldown-dt);
  a.alert=Math.max(0,a.alert-dt);a.attack=Math.max(0,a.attack-dt);a.moving=false;
  const navigate=(tx:number,ty:number,speed:number)=>{const body={x:e.x,y:e.y,dir:e.dir,vy:a.vy,grounded:a.grounded,ladder:a.ladder,moving:false};navigateGround(w,body,tx,ty,dt,speed);e.x=body.x;e.y=body.y;e.dir=body.dir;a.vy=body.vy;a.grounded=body.grounded;a.ladder=body.ladder;a.moving=body.moving;};
+ if(a.knockup){navigate(e.x,e.y,0);a.reaction=Math.max(a.reaction,.3);e.windup=0;if(a.grounded)a.knockup=false;return;}
  // Quiet guards walk on their current floor; do not leap off roofs or into craters.
  const safeWalk=(tx:number,speed:number)=>{
   const dir=Math.sign(tx-e.x),ahead=e.x+dir*1.05;

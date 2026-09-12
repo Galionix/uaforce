@@ -4,8 +4,8 @@ import {enemyActive} from './enemies.ts';
 import {summonFollowers} from './followers.ts';
 import type {World, Effect} from './world.ts';
 import type {HeroId} from './content.ts';
-export const SPECIAL_LIFE:Record<HeroId,number>={shevchenko:3,lesya:4,franko:4,bandera:4.8,mamai:1.4,bayraktar:6,ghost:3,zelensky:6,bilozerska:30,'it-army':8,skovoroda:1.8,usyk:.24,almaziv:.4,klychko:.65,taira:.8,prytula:1};
-export const ULTIMATE_LIFE:Record<HeroId,number>={shevchenko:1.6,lesya:6,franko:1,bandera:2.7,mamai:2.4,bayraktar:3,ghost:3.5,zelensky:5,bilozerska:1.1,'it-army':5,skovoroda:5,usyk:5,almaziv:2,klychko:5,taira:5,prytula:1.2};
+export const SPECIAL_LIFE:Record<HeroId,number>={shevchenko:3,lesya:4,franko:4,bandera:4.8,mamai:1.4,bayraktar:6,ghost:3,zelensky:6,bilozerska:30,'it-army':8,skovoroda:1.8,usyk:.24,almaziv:.4,klychko:.55,taira:.8,prytula:1};
+export const ULTIMATE_LIFE:Record<HeroId,number>={shevchenko:1.6,lesya:6,franko:1,bandera:2.7,mamai:2.4,bayraktar:3,ghost:3.5,zelensky:5,bilozerska:1.1,'it-army':5,skovoroda:5,usyk:5,almaziv:2,klychko:3,taira:5,prytula:1.2};
 export function hackTarget(w:World){return w.boxes.filter(b=>b.kind==='radio'&&b.hp>0&&Math.hypot(b.x-w.player.x,b.y-w.player.y)<14&&!w.followers.some(f=>f.hp>0&&f.source===b.id)).sort((a,b)=>Math.abs(a.x-w.player.x)-Math.abs(b.x-w.player.x))[0];}
 export function canSpecial(w:World){
  if(w.heroId==='taira')return !!healTarget(w);
@@ -28,9 +28,10 @@ export function attack(w:World,melee=false){
  p.cloak=0;p.fireCount++;
  if(id==='lesya'&&p.form>0){for(const e of w.enemies)if(enemyActive(e)&&Math.hypot(e.x-p.x,e.y-p.y)<7&&(e.x-p.x)*p.facing>-.5){w.damageEnemy(e,60);e.rooted=.5;w.emitSfx('roots',e.x,e.y,id);}w.effects.push({playerId:w.actor.id,kind:'weapon',hero:id,x:p.x,y:p.y,dir:p.facing,life:.35,age:0,hit:new Set()});w.events.push({type:'shot',hero:id,x:p.x,y:p.y});return;}
 
- if(['usyk','klychko','taira'].includes(id)){
+ if(id==='klychko'){const power=p.klychkoPower;meleeStrike(w,45+Math.round(145*power),2.6+power*1.5,1+power*4);p.cooldown=.45+power*.4;w.events.push({type:'shot',hero:id,x:p.x,y:p.y+1});return;}
+ if(['usyk','taira'].includes(id)){
   const boosted=w.effects.some(f=>f.hero==='usyk'&&f.kind==='ultimate'&&f.playerId===w.actor.id);
-  const combo=id==='usyk'?p.fireCount%3:0;meleeStrike(w,id==='usyk'?(combo===0?68:38):w.hero.damage,id==='usyk'?2.8:3,combo===0?2:id==='klychko'?3:1);
+  const combo=id==='usyk'?p.fireCount%3:0;meleeStrike(w,id==='usyk'?(combo===0?68:38):w.hero.damage,id==='usyk'?2.8:3,combo===0?2:1);
   if(boosted)p.cooldown=.13;w.events.push({type:'shot',hero:id,x:p.x,y:p.y+1});return;
  }
  if(id==='franko'){meleeStrike(w,p.grounded?85:115,3.2,1.6);w.events.push({type:'shot',hero:id,x:p.x,y:p.y+1});return;}

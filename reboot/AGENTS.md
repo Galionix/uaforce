@@ -82,3 +82,9 @@
   `reinforcements-v2.png` atlas, existing walking robot and shared tank renderer. No baked
   motion trails, giant glove icons or texture-heavy replacements. Character sheets are unchanged.
   All player tanks have finite shells (8, wave reward 5); preserve host-authoritative collapse.
+
+- Owner melee/hero correction, 2026-09-12: `docs/KLYCHKO_REWORK_2026-09-12.md`.
+  Klitschko now charges on hold and punches on release, uses an uppercut and a landing-driven
+  ground slam. Preserve Usyk's rapid combo. Melee must hit exposed portions of lower targets
+  without ignoring solid cover. Depot intermediate deck is intentionally collapsible;
+  preserve the upper bypass and the three new locally generated physical SFX.

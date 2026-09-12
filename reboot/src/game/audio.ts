@@ -184,7 +184,7 @@ export class Sound {
       else sample('legacy-shot',.25);
     }else if((e.type==='special'||e.type==='ultimate')&&e.hero){
       if(e.type==='ultimate')for(const h of ['lesya','bandera','mamai','bayraktar','ghost','zelensky','bilozerska','it-army'])this.stopKind(h+'-reload');
-      sample(`${e.hero}-${e.type}`,e.type==='ultimate'?.65:.5);
+      sample(e.hero==='klychko'?(e.type==='special'?'klychko-uppercut-v2':'klychko-charge-v3'):`${e.hero}-${e.type}`,e.type==='ultimate'?.65:.5);
     }else if(e.type==='reloadStart'&&e.hero){this.stopKind(e.hero+'-reload');sample(e.hero+'-reload',.28);}
     else if(e.type==='reloadEnd'&&e.hero){this.stopKind(e.hero+'-reload');sample(e.hero+'-reload-end',.25);}
     else if(e.type==='voiceWave'){const now=this.context?.currentTime??0;if(now-this.lastVoice>3){this.lastVoice=now;this.play('voiceWave',.55*level,this.buffers.get('voiceWave')?.duration??0);}sample('zelensky-hit',.3);}

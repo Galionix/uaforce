@@ -1,11 +1,12 @@
 import type {InfantryKind} from './infantry.ts';
 export type Point={x:number;y:number};
 export type OperationLayout={
+ supports?:{x:number;y:number;w:number;h:number;hp:number}[];
  targets?:{x:number;y:number;skin:'ammo'|'fuel'|'jet';required:boolean}[];
  spawn:Point;exitY:number;radioY:number;
  checkpoints:Point[];allies:Point[];ammo:Point[];medkits:Point[];
- ladders:{x:number;bottom:number;top:number}[];
- surfaces:{left:number;right:number;top:number;depth?:number;kind:'stone'|'earth'|'platform';permanent?:boolean}[];
+ ladders:{x:number;bottom:number;top:number;fragile?:boolean}[];
+ surfaces:{left:number;right:number;top:number;depth?:number;kind:'stone'|'earth'|'platform';permanent?:boolean;fragile?:boolean}[];
  props:{x:number;y:number;kind:'crate'|'barrel'|'wall'}[];
  guards:{x:number;y:number;role:InfantryKind;commander?:boolean}[];
  rooms:{left:number;right:number;bottom:number;top:number}[];

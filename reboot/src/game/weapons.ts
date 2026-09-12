@@ -38,4 +38,4 @@ export function cycleWeapon(p:WeaponState,s:WeaponSpec,dt:number,trigger:boolean
  }
  return {fired,reloadStarted,reloadFinished};
 }
-export function weaponDescription(id:HeroId){const s=WEAPONS[id];if(!s.magazine)return `Дальність ${s.range} м. Пауза між ударами ${s.cooldown} с.`;return `${s.mode==='burst'?`Черга ${s.burst} пострілів, пауза ${s.burstPause} с.`:'Один постріл на натискання.'} Магазин: ${s.magazine}. Автоперезаряджання: ${s.reloadTime} с. Дальність: ${s.range} м.`;}
+export function weaponDescription(id:HeroId){if(id==='klychko')return 'Утримуй атаку до 0,9 с та відпусти. Сильніший заряд — дальший і потужніший удар.';const s=WEAPONS[id];if(!s.magazine)return `Дальність ${s.range} м. Пауза між ударами ${s.cooldown} с.`;return `${s.mode==='burst'?`Черга ${s.burst} пострілів, пауза ${s.burstPause} с.`:'Один постріл на натискання.'} Магазин: ${s.magazine}. Автоперезаряджання: ${s.reloadTime} с. Дальність: ${s.range} м.`;}

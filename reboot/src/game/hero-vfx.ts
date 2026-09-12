@@ -20,8 +20,11 @@ export function drawHeroEffect(c:CanvasRenderingContext2D,f:Effect,x:number,y:nu
    if(f.kind==='ultimate')sparks(x-d*7,y-12,5,'#ffe078',18);
   }
   if(f.hero==='klychko'){
-   if(f.kind==='special'){ring(x+d*12,y-19,12,'#d7e6cc',.5);}
-   else {ring(x,y-3,40,'#a1c8ce',.35);sparks(x,y-12,6,'#a1c8ce',38);}
+   if(f.kind==='special'&&t<.25)reinforcement(7,x-d*6,y+Math.floor(t*65),28);
+   if(f.kind==='ultimate'&&f.impactAge!==undefined){
+    const a=t-f.impactAge;reinforcement(7,x,y-4,48+Math.min(1,a*4)*48);
+    for(const side of [-1,1]){ring(x+side*a*100,y-2,9+a*15,'#ddbd85',1-a/.65);sparks(x+side*a*85,y-3,8,'#bdad89',35);}
+   }else if(f.kind==='ultimate'&&t>.35){sparks(x,y-5,8,'#d9b16d',22);}
   }
   if(f.hero==='taira'){
    if(t<.65)reinforcement(4,x,y-20-Math.floor(t*8),24);

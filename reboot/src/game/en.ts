@@ -1,5 +1,19 @@
 // English UI catalog. Ukrainian source phrases remain stable simulation data.
 export const EN:Record<string,string>={
+ "Кличко: важкий удар":"Klitschko: heavy hitter",
+ "Заряджений кулак · аперкот · нокаут · склад із пасткою.":"Charged fist · uppercut · knockout · depot trap.",
+ "Усик дістає відкриті частини ворогів і танків на сходинку нижче. Суцільні стіни захищають від ударів.":"Usyk can hit exposed enemies and tanks one step below. Solid walls still block punches.",
+ "Кличко: утримуй і відпусти атаку для потужного удару. Аперкот підкидає піхоту, нокаут б’є об землю й ламає опори.":"Klitschko: hold and release attack for a powerful punch. Uppercut launches infantry; Knockout slams the ground and breaks supports.",
+ "На складі «Планове займання» можна обвалити настил на арсенал. Верхній обхід залишається доступним.":"In Planned Ignition, collapse the deck onto the arsenal. The upper bypass remains accessible.",
+ "Нові фізичні звуки заряджання удару, аперкоту та приземлення Кличка.":"New physical sounds for Klitschko’s punch charge, uppercut and landing.",
+
+ "Утримуй атаку до 0,9 с та відпусти. Сильніший заряд — дальший і потужніший удар.": "Hold attack for up to 0.9 seconds and release. More charge gives the punch greater reach and power.",
+  "Стальний кулак": "Steel fist",
+  "Аперкот": "Uppercut",
+  "Нокаут": "Knockout",
+  "Утримуй атаку до 0,9 с та відпусти: заряджений удар відкидає ворогів і трощить укриття. Аперкот підкидає піхоту й самого бійця. Нокаут — стрибок та удар об землю з обрушенням опор.": "Hold attack for up to 0.9 seconds and release: a charged punch knocks enemies back and breaks cover. Uppercut launches infantry and the fighter. Knockout leaps up and slams the ground, destroying supports.",
+  "За кордоном — склад, який живить наступ. Знищіть три арсенали. Бийте по опорах настилу над другим арсеналом: уламки підривають боєзапас. Обходьте бій по землі, настилу або верхніх містках. Наступна ціль — аеродром.": "Beyond the border lies an invasion supply depot. Destroy three arsenals. Break the supports over the second arsenal: falling rubble detonates the ammunition. Choose the ground, intermediate deck or upper walkways. The airfield is next.",
+
   "Техніка й обрушення": "Vehicles and collapse",
   "Чіткі піксельні ефекти · обмежений боєзапас танків · падіння конструкцій.": "Crisp pixel effects \u00b7 limited tank ammunition \u00b7 collapsing structures.",
   "Танки мають 8 снарядів; танк у режимі хвиль — 5. Посадка не поповнює боєзапас.": "Tanks carry 8 shells; the wave-mode tank carries 5. Getting back in does not refill them.",
